@@ -42,10 +42,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Account.cs" />
+    <Compile Include="CloudAccount.cs" />
+    <Compile Include="DataCenter.cs" />
+    <Compile Include="Deployment.cs" />
+    <Compile Include="IdentityProider.cs" />
+    <Compile Include="Image.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Instance.cs" />
+    <Compile Include="InstanceCustomLodgement.cs" />
+    <Compile Include="InstanceType.cs" />
+    <Compile Include="IPAddress.cs" />
+    <Compile Include="IPAddressBinding.cs" />
+    <Compile Include="MonitoringMetric.cs" />
+    <Compile Include="MultiCloudImage.cs" />
+    <Compile Include="MultiCloudImageSetting.cs" />
+    <Compile Include="Objects\Action.cs" />
+    <Compile Include="AlertSpec.cs" />
+    <Compile Include="AuditEntry.cs" />
+    <Compile Include="Backup.cs" />
+    <Compile Include="ChildAccount.cs" />
+    <Compile Include="Cloud.cs" />
     <Compile Include="Core\APIClient.cs" />
+    <Compile Include="Objects\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityGroup.cs" />
     <Compile Include="SimpleJson.cs" />
+    <Compile Include="VolumeSnapshot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

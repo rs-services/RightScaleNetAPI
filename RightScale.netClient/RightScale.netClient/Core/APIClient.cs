@@ -50,6 +50,30 @@ namespace RightScale.netClient.Core
             }
         }
 
+        #region API Call Wrappers
+
+        public void Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Put()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Post()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region Request formatting helpers
 
         public static string BuildFilterString(List<KeyValuePair<string, string>> filterSet)
