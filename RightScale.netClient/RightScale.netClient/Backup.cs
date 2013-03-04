@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class Backup
+    public class Backup :Core.RightScaleObjectBase<Backup>
     {
         public string name { get; set; }
         public string lineage { get; set; }
@@ -19,9 +19,24 @@ namespace RightScale.netClient
         public bool committed { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
-            
-		#region Backup.index methods
-		
+
+        #region Backup.show() methods
+
+        public static Backup show(string backupID)
+        {
+            Utility.CheckStringIsNumeric(backupID);
+
+            string getURL = string.Format("/api/backups/{0}", backupID);
+
+            string jsonString = Core.APIClient.Instance.Get(getURL);
+
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region Backup.index methods
+
         public static List<Backup> index()
         {
             return index(null, null);

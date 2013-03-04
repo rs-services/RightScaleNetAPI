@@ -6,14 +6,28 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class Cloud
+    public class Cloud:Core.RightScaleObjectBase<Cloud>
     {
         public string name { get; set; }
         public string cloud_type { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
 
-        
+        #region Cloud.show() methods
+
+        public static Cloud show(string cloudID)
+        {
+            Utility.CheckStringIsNumeric(cloudID);
+
+            string getURL = string.Format("/api/clouds/{0}", cloudID);
+
+            string jsonString = Core.APIClient.Instance.Get(getURL);
+
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
         #region Cloud.index methods
 
         public static List<Cloud> index()

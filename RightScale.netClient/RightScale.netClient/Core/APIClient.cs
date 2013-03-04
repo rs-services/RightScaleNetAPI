@@ -34,13 +34,18 @@ namespace RightScale.netClient.Core
 
         private APIClient()
         {
+            InitWebClient();
+        }
+
+        public void InitWebClient()
+        {
             this.isAuthenticated = false;
             this.isAuthenticating = false;
             this.cookieContainer = new CookieContainer();
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
             this.webClient = new HttpClient(this.clientHandler);
             //this.webClient.BaseAddress = new Uri(apiBaseAddress);
-            this.webClient.DefaultRequestHeaders.Add("X_API_VERSION", "1.5");
+            this.webClient.DefaultRequestHeaders.Add("X_API_Version", "1.5");
         }
 
         public static APIClient Instance

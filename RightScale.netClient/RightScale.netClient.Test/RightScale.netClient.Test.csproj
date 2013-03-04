@@ -56,6 +56,9 @@
     <Compile Include="AccountGroupTest.cs" />
     <Compile Include="AccountTest.cs" />
     <Compile Include="AlertSpecTest.cs" />
+    <Compile Include="AuditEntryTest.cs" />
+    <Compile Include="BackupTest.cs" />
+    <Compile Include="CloudTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">

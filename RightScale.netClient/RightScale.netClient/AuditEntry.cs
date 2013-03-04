@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RightScale.netClient
 {
     //audit_entry
-    public class AuditEntry
+    public class AuditEntry : Core.RightScaleObjectBase<AuditEntry>
     {
         public List<Action> actions { get; set; }
         public string updated_at { get; set; }
@@ -16,7 +16,37 @@ namespace RightScale.netClient
         public int detail_size { get; set; }
         public string user_email { get; set; }
 
-        
+
+        public AuditEntry()
+            : base()
+        {
+
+        }
+
+        public AuditEntry(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        public AuditEntry(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+
+        }
+
+        public static AuditEntry show(string auditEntryID)
+        {
+            //TODO: currently not working as expected
+            Utility.CheckStringIsNumeric(auditEntryID);
+
+            string getURL = string.Format("/api/audit_entries/{0}", auditEntryID);
+            string queryString = "view=default";
+
+            string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
+
+            return deserialize(jsonString);
+        }
+
         #region AuditEntry.index methods
 
         public static List<AuditEntry> index(DateTime start_date)
