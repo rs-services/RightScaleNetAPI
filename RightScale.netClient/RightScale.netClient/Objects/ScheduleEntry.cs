@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    class ScheduleEntry
+    public class ScheduleEntry
     {
         public int max_count { get; set; }
         public string time { get; set; }

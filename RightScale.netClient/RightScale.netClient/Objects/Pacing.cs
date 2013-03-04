@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    class Pacing
+    public class Pacing
     {
         public string resize_down_by { get; set; }
         public string resize_up_by { get; set; }

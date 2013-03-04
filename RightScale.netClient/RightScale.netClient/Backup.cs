@@ -19,5 +19,38 @@ namespace RightScale.netClient
         public bool committed { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
+            
+		#region Backup.index methods
+		
+        public static List<Backup> index()
+        {
+            return index(null, null);
+        }
+
+        public static List<Backup> index(List<KeyValuePair<string, string>> filter)
+        {
+            return index(filter, null);
+        }
+
+        public static List<Backup> index(string view)
+        {
+            return index(null, view);
+        }
+
+        public static List<Backup> index(List<KeyValuePair<string, string>> filter, string lineage)
+        {
+            if(string.IsNullOrWhiteSpace(lineage))
+            {
+                throw new ArgumentException("Input 'lineage' is requred for api calls to gather information about a given backup");
+            }
+			
+            List<string> validFilters = new List<string>() { "cloud_href", "committed", "completed", "from_master", "latest_before" };
+            Utility.CheckFilterInput("filter", validFilters, filter);
+
+            //TODO: implement Backup.index
+            throw new NotImplementedException();
+        }
+		#endregion
+		
     }
 }

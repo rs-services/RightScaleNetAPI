@@ -8,7 +8,7 @@ namespace RightScale.netClient
 {
     public static class Utility
     {
-        public static const string argumentExceptionFormat = "Input '{0}' is not valid, it must be one of the following: '{1}' and was set to '{2}'";
+        public static string argumentExceptionFormat = "Input '{0}' is not valid, it must be one of the following: '{1}' and was set to '{2}'";
 
         public static bool CheckStringInput(string inputName, List<string> validViews, string actualName)
         {

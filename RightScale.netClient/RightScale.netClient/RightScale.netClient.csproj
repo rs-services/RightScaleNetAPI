@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="AccountGroup.cs" />
     <Compile Include="Objects\CurrentInstance.cs" />
     <Compile Include="Objects\NextInstance.cs" />
     <Compile Include="Objects\Bounds.cs" />
@@ -51,7 +52,7 @@
     <Compile Include="CloudAccount.cs" />
     <Compile Include="DataCenter.cs" />
     <Compile Include="Deployment.cs" />
-    <Compile Include="IdentityProider.cs" />
+    <Compile Include="IdentityProvider.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Instance.cs" />

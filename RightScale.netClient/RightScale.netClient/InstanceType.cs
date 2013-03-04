@@ -19,5 +19,44 @@ namespace RightScale.netClient
         public string cpu_speed { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
+
+        
+        #region InstanceType.index methods
+
+        public static List<InstanceType> index()
+        {
+            return index(null, null);
+        }
+
+        public static List<InstanceType> index(List<KeyValuePair<string, string>> filter)
+        {
+            return index(filter, null);
+        }
+
+        public static List<InstanceType> index(string view)
+        {
+            return index(null, view);
+        }
+
+        public static List<InstanceType> index(List<KeyValuePair<string, string>> filter, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            List<string> validFilters = new List<string>() { "cpu_architecture", "description", "name", "resource_uid" };
+            Utility.CheckFilterInput("filter", validFilters, filter);
+
+            //TODO: implement InstanceType.index
+            throw new NotImplementedException();
+        }
+        #endregion
+		
     }
 }

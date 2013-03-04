@@ -36,6 +36,5 @@ namespace RightScale.netClient.Test.Core
             bool result = testTask.Result;
             Assert.IsTrue(result, "RSAPI Failed to authenticate with default, configuration based constructor");
         }
-
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    class AlertSpecificParams
+    public class AlertSpecificParams
     {
         public string voters_tag_predicate { get; set; }
         public string decision_threshold { get; set; }

@@ -15,6 +15,7 @@ namespace RightScale.netClient.Core
     public class APIClient
     {
         public string oauthRefreshToken { get; set; }
+        public string oauthBearerToken { get; set; }
         public string userName { get; set; }
         public string password { get; set; }
         public string accountId { get; set; }
@@ -109,6 +110,28 @@ namespace RightScale.netClient.Core
         #region Authentication Methods
 
         /// <summary>
+        /// Public method takes in oauth bearer token and authenticates the object if a bearer token is passed in.  Ths process assumes that the bearer token is currently valid.
+        /// </summary>
+        /// <param name="bearerToken">RightScale API Bearer Token</param>
+        /// <returns>true if authenticated, false if not</returns>
+        public bool SetOauthBearerToken(string bearerToken)
+        {
+            this.isAuthenticating = true;
+
+            this.oauthBearerToken = bearerToken;
+            if (this.webClient.DefaultRequestHeaders.Contains("Authorization"))
+            {
+                this.webClient.DefaultRequestHeaders.Remove("Authorization");
+            }
+            this.webClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.oauthBearerToken);
+            
+            this.isAuthenticated = true;
+            this.isAuthenticating = false;
+
+            return this.isAuthenticated;
+        }
+
+        /// <summary>
         /// Default and base authentication call which pulls authentication data from the app.config or web.config for the specified keys.  OAuth2 token is prioritized in front of username/password/accountid if specified.
         /// </summary>
         /// <returns></returns>
@@ -156,8 +179,6 @@ namespace RightScale.netClient.Core
                 postData.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
                 postData.Add(new KeyValuePair<string, string>("refresh_token", oAuthRefreshToken));
                 HttpContent postContent = new FormUrlEncodedContent(postData);
-                HttpResponseHeaders respHeaders;
-                
 
                 HttpResponseMessage response = await webClient.PostAsync(@"https://my.rightscale.com/api/oauth2", postContent);
                 response.EnsureSuccessStatusCode();
@@ -168,6 +189,7 @@ namespace RightScale.netClient.Core
                 if (result["access_token"] != null)
                 {
                     webClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", result["access_token"].ToString()));
+                    this.oauthBearerToken = result["access_token"].ToString();
                     this.isAuthenticated = true;
                 }
                 this.isAuthenticating = false;

@@ -6,29 +6,29 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    class InstanceCustomLodgement
+    class IdentityProvider
     {
         //TODO: need to write this class
 
         
-        #region InstanceCustomLodgement.index methods
+        #region IdentityProvider.index methods
 
-        public static List<InstanceCustomLodgement> index()
+        public static List<IdentityProvider> index()
         {
             return index(null, null);
         }
 
-        public static List<InstanceCustomLodgement> index(List<KeyValuePair<string, string>> filter)
+        public static List<IdentityProvider> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<InstanceCustomLodgement> index(string view)
+        public static List<IdentityProvider> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<InstanceCustomLodgement> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<IdentityProvider> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -40,15 +40,13 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "timeframe" };
+            List<string> validFilters = new List<string>() { "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement InstanceCustomLodgement.index
+            //TODO: implement IdentityProvider.index
             throw new NotImplementedException();
         }
         #endregion
 		
     }
-
-
 }

@@ -6,34 +6,34 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class Deployment
+    public class AccountGroup
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
-        public string server_tag_scope { get; set; }
-        public List<Input> inputs { get; set; }
+        public string created_at { get; set; }
+        public string updated_at { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
 
         
-        #region Deployment.index methods
+        #region AccountGroup.index methods
 
-        public static List<Deployment> index()
+        public static List<AccountGroup> index()
         {
             return index(null, null);
         }
 
-        public static List<Deployment> index(List<KeyValuePair<string, string>> filter)
+        public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<Deployment> index(string view)
+        public static List<AccountGroup> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<Deployment> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -41,14 +41,15 @@ namespace RightScale.netClient
             }
             else
             {
-                List<string> validViews = new List<string>() { "default", "inputs", "inputs_2_0" };
+                List<string> validViews = new List<string>() { "default" };
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "description", "name", "server_tag_scope" };
+            //TODO: validate potential inputs with engineering
+            List<string> validFilters = new List<string>() { "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement Deployment.index
+            //TODO: implement AccountGroup.index
             throw new NotImplementedException();
         }
         #endregion
