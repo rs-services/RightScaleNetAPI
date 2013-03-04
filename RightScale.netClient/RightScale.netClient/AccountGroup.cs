@@ -74,6 +74,8 @@ namespace RightScale.netClient
             return show(accountGroupID, null);
         }
 
+        #region AccountGroup.show methods
+
         public static AccountGroup show(string accountGroupID, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
@@ -92,5 +94,7 @@ namespace RightScale.netClient
 
             return deserialize(jsonString);
         }
+
+        #endregion
     }
 }

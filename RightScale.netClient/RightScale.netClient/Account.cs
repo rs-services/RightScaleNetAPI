@@ -13,6 +13,25 @@ namespace RightScale.netClient
         public string updated_at { get; set; }
         public List<Link> links { get; set; }
 
+        public Account()
+            : base()
+        {
+
+        }
+
+        public Account(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        public Account(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+
+        }
+
+        #region Account.show methods
+
         public static Account show(string accountID)
         {
             Utility.CheckStringIsNumeric(accountID);
@@ -23,5 +42,7 @@ namespace RightScale.netClient
 
             return deserialize(jsonString);
         }
+
+        #endregion
     }
 }
