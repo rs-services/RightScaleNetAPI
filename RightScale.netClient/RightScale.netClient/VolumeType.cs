@@ -6,36 +6,42 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class SecurityGroup
+    public class VolumeType
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
+        public string created_at { get; set; }
+        public string size { get; set; }
+        public string updated_at { get; set; }
         public List<Link> links { get; set; }
+        public string description { get; set; }
 
-        /* TODO:
-         * There's a discrepancy between how SG's are returned from other objects and the full version of the object itself
-         * we need to figure out how to handle the 'tiny' response that's returned in some cases
-         */
+        public static VolumeType show(string cloudID, string volumeTypeID)
+        {
+            //TODO: implement VolumeType.show 
+            throw new NotImplementedException();
+        }
 
-        #region object.index methods
 
-        public static List<object> index()
+        #region VolumeType.index methods
+
+        public static List<VolumeType> index()
         {
             return index(null, null);
         }
 
-        public static List<object> index(List<KeyValuePair<string, string>> filter)
+        public static List<VolumeType> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<object> index(string view)
+        public static List<VolumeType> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<object> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<VolumeType> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -43,16 +49,17 @@ namespace RightScale.netClient
             }
             else
             {
-                List<string> validViews = new List<string>() { "default", "tiny" };
+                List<string> validViews = new List<string>() { "default" };
                 Utility.CheckStringInput("view", validViews, view);
             }
 
             List<string> validFilters = new List<string>() { "name", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement object.index
+            //TODO: implement VolumeType.index
             throw new NotImplementedException();
         }
         #endregion
+		
     }
 }

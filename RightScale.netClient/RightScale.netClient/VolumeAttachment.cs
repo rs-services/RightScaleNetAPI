@@ -6,36 +6,36 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class SecurityGroup
+    public class VolumeAttachment
     {
-        public string name { get; set; }
+        public string device { get; set; }
         public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
+        public string created_at { get; set; }
+        public string updated_at { get; set; }
+        public string device_id { get; set; }
         public List<Link> links { get; set; }
+        public string state { get; set; }
 
-        /* TODO:
-         * There's a discrepancy between how SG's are returned from other objects and the full version of the object itself
-         * we need to figure out how to handle the 'tiny' response that's returned in some cases
-         */
 
-        #region object.index methods
+        #region VolumeAttachment.index methods
 
-        public static List<object> index()
+        public static List<VolumeAttachment> index()
         {
             return index(null, null);
         }
 
-        public static List<object> index(List<KeyValuePair<string, string>> filter)
+        public static List<VolumeAttachment> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<object> index(string view)
+        public static List<VolumeAttachment> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<object> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<VolumeAttachment> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -43,16 +43,17 @@ namespace RightScale.netClient
             }
             else
             {
-                List<string> validViews = new List<string>() { "default", "tiny" };
+                List<string> validViews = new List<string>() { "default" };
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "name", "resource_uid" };
+            List<string> validFilters = new List<string>() { "instance_href", "resource_uid", "volume_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement object.index
+            //TODO: implement VolumeAttachment.index
             throw new NotImplementedException();
         }
         #endregion
+		
     }
 }

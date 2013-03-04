@@ -6,25 +6,29 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class MultiCloudImageSetting
+    public class Permission
     {
         public List<Action> actions { get; set; }
+        public string created_at { get; set; }
+        public string role_title { get; set; }
         public List<Link> links { get; set; }
 
         
-        #region MultiCloudImageSetting.index methods
+        #region Permission.index methods
 
-        public static List<MultiCloudImageSetting> index()
+        public static List<Permission> index()
         {
             return index(null);
         }
 
-        public static List<MultiCloudImageSetting> index(List<KeyValuePair<string, string>> filter)
+        public static List<Permission> index(List<KeyValuePair<string, string>> filter)
         {
-            List<string> validFilters = new List<string>() { "cloud_href", "multi_cloud_image_href" };
+            return index(filter);
+     
+            List<string> validFilters = new List<string>() { "user_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement MultiCloudImageSetting.index
+            //TODO: implement Permission.index
             throw new NotImplementedException();
         }
         #endregion

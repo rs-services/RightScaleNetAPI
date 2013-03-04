@@ -43,6 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="Objects\CurrentInstance.cs" />
+    <Compile Include="Objects\NextInstance.cs" />
+    <Compile Include="Objects\Bounds.cs" />
+    <Compile Include="Objects\ElasticityParams.cs" />
+    <Compile Include="Objects\AlertSpecificParams.cs" />
     <Compile Include="CloudAccount.cs" />
     <Compile Include="DataCenter.cs" />
     <Compile Include="Deployment.cs" />
@@ -65,13 +70,38 @@
     <Compile Include="Cloud.cs" />
     <Compile Include="Core\APIClient.cs" />
     <Compile Include="Objects\Link.cs" />
+    <Compile Include="Objects\Pacing.cs" />
+    <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publication.cs" />
+    <Compile Include="PublicationLineage.cs" />
+    <Compile Include="RecurringVolumeAttachment.cs" />
+    <Compile Include="Objects\ScheduleEntry.cs" />
     <Compile Include="SecurityGroup.cs" />
-    <Compile Include="SimpleJson.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="ServerArray.cs" />
+    <Compile Include="Objects\SimpleJson.cs" />
+    <Compile Include="ServerTemplate.cs" />
+    <Compile Include="ServerTemplateMultiCloudImage.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="SshKey.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Objects\Utility.cs" />
+    <Compile Include="Volume.cs" />
+    <Compile Include="VolumeAttachment.cs" />
     <Compile Include="VolumeSnapshot.cs" />
+    <Compile Include="VolumeType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\RightScaleObjectBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SecurityGroupRule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

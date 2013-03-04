@@ -13,5 +13,24 @@ namespace RightScale.netClient
         public int revision { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
+
+
+        #region MultiCloudImage.index methods
+
+        public static List<MultiCloudImage> index()
+        {
+            return index(null);
+        }
+
+        public static List<MultiCloudImage> index(List<KeyValuePair<string, string>> filter)
+        {
+            List<string> validFilters = new List<string>() { "name", "description", "revision" };
+            Utility.CheckFilterInput("filter", validFilters, filter);
+
+            //TODO: implement MultiCloudImage.index
+            throw new NotImplementedException();
+        }
+        #endregion
+		
     }
 }

@@ -6,38 +6,39 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    //volume_snapshot
-    public class VolumeSnapshot
+    public class RecurringVolumeAttachment
     {
         public string name { get; set; }
+        public string device { get; set; }
         public List<Action> actions { get; set; }
-        public string resource_uid { get; set; }
         public string created_at { get; set; }
         public string size { get; set; }
         public string updated_at { get; set; }
+        public string storage_type { get; set; }
+        public string device_id { get; set; }
         public List<Link> links { get; set; }
-        public string description { get; set; }
-        public string state { get; set; }
+        public string runnable_type { get; set; }
+        public string status { get; set; }
 
         
-        #region VolumeSnapshot.index methods
+        #region RecurringVolumeAttachment.index methods
 
-        public static List<VolumeSnapshot> index()
+        public static List<RecurringVolumeAttachment> index()
         {
             return index(null, null);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter)
+        public static List<RecurringVolumeAttachment> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<VolumeSnapshot> index(string view)
+        public static List<RecurringVolumeAttachment> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<RecurringVolumeAttachment> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -49,10 +50,10 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "description", "name", "parent_volume_href", "resource_uid" };
+            List<string> validFilters = new List<string>() { "runnable_href", "storage_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement VolumeSnapshot.index
+            //TODO: implement RecurringVolumeAttachment.index
             throw new NotImplementedException();
         }
         #endregion

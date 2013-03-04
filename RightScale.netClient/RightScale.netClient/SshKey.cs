@@ -6,38 +6,31 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    //volume_snapshot
-    public class VolumeSnapshot
+    public class SshKey
     {
-        public string name { get; set; }
-        public List<Action> actions { get; set; }
+        public List<object> actions { get; set; }
         public string resource_uid { get; set; }
-        public string created_at { get; set; }
-        public string size { get; set; }
-        public string updated_at { get; set; }
         public List<Link> links { get; set; }
-        public string description { get; set; }
-        public string state { get; set; }
 
         
-        #region VolumeSnapshot.index methods
+        #region SshKey.index methods
 
-        public static List<VolumeSnapshot> index()
+        public static List<SshKey> index()
         {
             return index(null, null);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter)
+        public static List<SshKey> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<VolumeSnapshot> index(string view)
+        public static List<SshKey> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<SshKey> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -49,10 +42,10 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "description", "name", "parent_volume_href", "resource_uid" };
+            List<string> validFilters = new List<string>() { "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement VolumeSnapshot.index
+            //TODO: implement SshKey.index
             throw new NotImplementedException();
         }
         #endregion

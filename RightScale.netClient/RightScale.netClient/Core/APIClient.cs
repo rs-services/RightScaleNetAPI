@@ -14,6 +14,10 @@ namespace RightScale.netClient.Core
 {
     public class APIClient
     {
+        public string oauthRefreshToken { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
+        public string accountId { get; set; }
 
         private static APIClient instance;
         private bool isAuthenticated;
@@ -110,16 +114,24 @@ namespace RightScale.netClient.Core
         /// <returns></returns>
         public async Task<bool> Authenticate()
         {
-            if (ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"] != null)
+            if (string.IsNullOrWhiteSpace(this.oauthRefreshToken) && ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"] != null)
             {
-                return await Authenticate(ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"].ToString());
+                this.oauthRefreshToken = ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"].ToString();
             }
-            else if (ConfigurationManager.AppSettings["RightScaleAPIUserName"]!= null && ConfigurationManager.AppSettings["RightScaleAPIPassword"] != null && ConfigurationManager.AppSettings["RightScaleAPIAccountId"] != null)
+            else if (string.IsNullOrWhiteSpace(this.userName) && string.IsNullOrWhiteSpace(this.password) && string.IsNullOrWhiteSpace(this.accountId) && ConfigurationManager.AppSettings["RightScaleAPIUserName"] != null && ConfigurationManager.AppSettings["RightScaleAPIPassword"] != null && ConfigurationManager.AppSettings["RightScaleAPIAccountId"] != null)
             {
                 string apiUserName = ConfigurationManager.AppSettings["RightScaleAPIUserName"].ToString();
                 string apiPassword = ConfigurationManager.AppSettings["RightScaleAPIPassword"].ToString();
                 string apiAccountId = ConfigurationManager.AppSettings["RightScaleAPIAccountId"].ToString();
-                return await Authenticate(apiUserName, apiPassword, apiAccountId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.oauthRefreshToken))
+            {
+                return await Authenticate(this.oauthRefreshToken);
+            }
+            else if (!string.IsNullOrWhiteSpace(this.userName) && !string.IsNullOrWhiteSpace(this.password) && !string.IsNullOrWhiteSpace(this.accountId))
+            {
+                return await Authenticate(this.userName, this.password, this.accountId);
             }
             else
             {
@@ -127,6 +139,11 @@ namespace RightScale.netClient.Core
             }
         }
 
+        /// <summary>
+        /// Authentication method for http client that uses oAuth2 process for authenticating to RightScale API
+        /// </summary>
+        /// <param name="oAuthRefreshToken">OAuth2 Token taken from RightScale Dashboard</param>
+        /// <returns>true if successfully authenticated, false if not</returns>
         public async Task<bool> Authenticate(string oAuthRefreshToken)
         {
             bool retVal = false;
@@ -162,6 +179,13 @@ namespace RightScale.netClient.Core
             return retVal;
         }
 
+        /// <summary>
+        /// Legacy authentication method using username, password and accountID for authenticating to RightScale API
+        /// </summary>
+        /// <param name="userName">RightScale login user name</param>
+        /// <param name="password">RightScale login password</param>
+        /// <param name="accountID">RightScale Account ID to be programmatically accessed</param>
+        /// <returns>True if authenticated successfully, false if not</returns>
         public async Task<bool> Authenticate(string userName, string password, string accountID)
         {
             bool retVal = false;

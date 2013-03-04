@@ -6,38 +6,37 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    //volume_snapshot
-    public class VolumeSnapshot
+    public class Server
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
-        public string resource_uid { get; set; }
         public string created_at { get; set; }
-        public string size { get; set; }
+        public NextInstance next_instance { get; set; }
         public string updated_at { get; set; }
+        public CurrentInstance current_instance { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
 
         
-        #region VolumeSnapshot.index methods
+        #region Server.index methods
 
-        public static List<VolumeSnapshot> index()
+        public static List<Server> index()
         {
             return index(null, null);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter)
+        public static List<Server> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
-        public static List<VolumeSnapshot> index(string view)
+        public static List<Server> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<Server> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -45,14 +44,14 @@ namespace RightScale.netClient
             }
             else
             {
-                List<string> validViews = new List<string>() { "default" };
+                List<string> validViews = new List<string>() { "default", "instance_detail" };
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "description", "name", "parent_volume_href", "resource_uid" };
+            List<string> validFilters = new List<string>() { "cloud_href", "deployment_href", "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement VolumeSnapshot.index
+            //TODO: implement Server.index
             throw new NotImplementedException();
         }
         #endregion
