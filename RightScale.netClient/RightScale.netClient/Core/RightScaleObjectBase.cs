@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RightScale.netClient.Core
 {
-    public abstract class RightScaleObjectBase
+    public class RightScaleObjectBase<T>
     {
         public RightScaleObjectBase(string userName, string password, string accountNo)
         {
@@ -23,6 +24,11 @@ namespace RightScale.netClient.Core
         public RightScaleObjectBase()
         {
 
+        }
+
+        public static T deserialize(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<T>(jsonString);
         }
     }
 }

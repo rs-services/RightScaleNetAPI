@@ -30,7 +30,7 @@ namespace RightScale.netClient.Core
         HttpClientHandler clientHandler;
         HttpMessageHandler messageHandler;
 
-        private const string apiBaseAddress = @"https://my.rightscale.com/api";
+        private const string apiBaseAddress = @"https://my.rightscale.com/";
 
         private APIClient()
         {
@@ -57,8 +57,22 @@ namespace RightScale.netClient.Core
 
         #region API Call Wrappers
 
-        public void Get()
+        public string Get(string apiHref)
         {
+            return Get(apiHref, string.Empty);
+        }
+
+        public string Get(string apiHref, string queryStringValue)
+        {
+            if (CheckAuthenticationStatus())
+            {
+                string requestUrl = apiBaseAddress.Trim('/') + apiHref + "?" + queryStringValue;
+                return webClient.GetAsync(requestUrl).Result.Content.ReadAsStringAsync().Result;
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("RightScale API calls could not be authenticated");
+            }
             throw new NotImplementedException();
         }
 

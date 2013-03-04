@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class AccountGroup
+    public class AccountGroup : Core.RightScaleObjectBase<AccountGroup>
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
@@ -15,6 +15,21 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
 
+
+        public AccountGroup()
+            : base()
+        {
+        }
+
+        public AccountGroup(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        public AccountGroup(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
         
         #region AccountGroup.index methods
 
@@ -53,6 +68,29 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
         #endregion
-		
+
+        public static AccountGroup show(string accountGroupID)
+        {
+            return show(accountGroupID, null);
+        }
+
+        public static AccountGroup show(string accountGroupID, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            List<string> validViews = new List<string>() { "default" };
+            Utility.CheckStringInput("view", validViews, view);
+
+            Utility.CheckStringIsNumeric(accountGroupID);
+
+            string getURL = string.Format("/api/account_groups/{0}", accountGroupID);
+            string queryString = string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
+
+            return deserialize(jsonString);
+        }
     }
 }
