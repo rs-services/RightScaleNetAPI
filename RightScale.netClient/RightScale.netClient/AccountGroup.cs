@@ -65,16 +65,29 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
 
             //TODO: implement AccountGroup.index
-            throw new NotImplementedException();
+            string getUrl = "/api/account_groups";
+            string queryString = string.Empty;
+
+            if (filter != null && filter.Count > 0)
+            {
+                queryString += Core.APIClient.BuildFilterString(filter) + "&";
+            }
+
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
         }
         #endregion
+
+
+        #region AccountGroup.show methods
 
         public static AccountGroup show(string accountGroupID)
         {
             return show(accountGroupID, null);
         }
-
-        #region AccountGroup.show methods
 
         public static AccountGroup show(string accountGroupID, string view)
         {

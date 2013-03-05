@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RightScale.netClient;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace RightScale.netClient.Test
 {
@@ -27,6 +28,13 @@ namespace RightScale.netClient.Test
         {
             AccountGroup ag = AccountGroup.show(accountGroupID);
             Assert.IsNotNull(ag, "Account Group is null--bad call to API");
+        }
+
+        [TestMethod]
+        public void indexTestFull()
+        {
+            List<AccountGroup> acctGroupList = AccountGroup.index();
+            Assert.IsNotNull(acctGroupList);
         }
     }
 }

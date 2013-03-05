@@ -30,5 +30,10 @@ namespace RightScale.netClient.Core
         {
             return JsonConvert.DeserializeObject<T>(jsonString);
         }
+
+        public static List<T> deserializeList(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<List<T>>(jsonString);
+        }
     }
 }

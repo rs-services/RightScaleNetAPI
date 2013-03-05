@@ -26,6 +26,7 @@ namespace RightScale.netClient
             //TODO: implement CloudAccount.index
             throw new NotImplementedException();
         }
+
         #endregion
 		
     }

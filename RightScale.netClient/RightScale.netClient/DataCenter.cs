@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class DataCenter
+    public class DataCenter : Core.RightScaleObjectBase<DataCenter>
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
@@ -14,7 +14,23 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
 
-        
+
+        #region DataCenter.show() methods
+
+        public static DataCenter show(string cloudID, string dataCenterID)
+        {
+            Utility.CheckStringIsNumeric(cloudID);
+            Utility.CheckStringIsNumeric(dataCenterID);
+
+            string getURL = string.Format("/api/clouds/{0}/datacenters/{1}", cloudID, dataCenterID);
+
+            string jsonString = Core.APIClient.Instance.Get(getURL);
+
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
         #region DataCenter.index methods
 
         public static List<DataCenter> index()
