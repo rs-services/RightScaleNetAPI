@@ -101,11 +101,9 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            //TODO: validate potential inputs with engineering
             List<string> validFilters = new List<string>() { "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement AccountGroup.index
             string getUrl = "/api/account_groups";
             string queryString = string.Empty;
 

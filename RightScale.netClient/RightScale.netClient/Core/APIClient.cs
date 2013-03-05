@@ -152,6 +152,28 @@ namespace RightScale.netClient.Core
             return null;
         }
 
+        public bool Post(string apiHref, List<KeyValuePair<string, string>> postData)
+        {
+            if (CheckAuthenticationStatus())
+            {
+                string content = string.Empty;
+                try
+                {
+                    HttpContent postContent = new FormUrlEncodedContent(postData);
+                    string postUrl = apiBaseAddress.Trim('/') + apiHref;
+                    HttpResponseMessage response = webClient.PostAsync(postUrl, postContent).Result;
+                    content = response.Content.ReadAsStringAsync().Result;
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
+                catch (HttpRequestException hre)
+                {
+                    Exception ex = new Exception("RSAPI Exception: content" + Environment.NewLine + content, hre);
+                }
+            }
+            return false;
+        }
+
         public bool Delete(string apiHref)
         {
             return Delete(apiHref, string.Empty);

@@ -46,5 +46,33 @@ namespace RightScale.netClient.Test
             string auditEntryID = AuditEntry.create(string.Format("/api/server_arrays/{0}", serverArrayID), "this is a summary, fool!", "here are the deets...");
             Assert.IsNotNull(auditEntryID);
         }
+
+        [TestMethod]
+        public void createAndUpdateTest()
+        {
+            string auditEntryID = AuditEntry.create(string.Format("/api/server_arrays/{0}", serverArrayID), "this is a summary");
+            Assert.IsNotNull(auditEntryID);
+            AuditEntry ae1 = AuditEntry.show(auditEntryID);
+            Assert.IsNotNull(ae1);
+            bool updateResult = AuditEntry.update(auditEntryID, "this is a new summary");
+            Assert.IsTrue(updateResult);
+            AuditEntry ae2 = AuditEntry.show(auditEntryID);
+            Assert.IsNotNull(ae2);
+            Assert.AreNotEqual(ae1.summary, ae2.summary);
+        }
+
+        [TestMethod]
+        public void createAndAppendTest()
+        {
+            string auditEntryID = AuditEntry.create(string.Format("/api/server_arrays/{0}", serverArrayID), "this is a summary", "here are some details");
+            Assert.IsNotNull(auditEntryID);
+            string detailResults1 = AuditEntry.detail(auditEntryID);
+            Assert.IsNotNull(detailResults1);
+            bool appendResult = AuditEntry.append(auditEntryID, "this is a more audit detail", "1");
+            Assert.IsTrue(appendResult);
+            string detailResults2 = AuditEntry.detail(auditEntryID);
+            Assert.IsNotNull(detailResults2);
+            Assert.AreNotEqual(detailResults1, detailResults2); 
+        }
     }
 }

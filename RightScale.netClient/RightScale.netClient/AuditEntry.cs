@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    //audit_entry
+    /// <summary>
+    /// An Audit Entry can be used to track various activities of a resource.
+    /// </summary>
     public class AuditEntry : Core.RightScaleObjectBase<AuditEntry>
     {
         public List<Action> actions { get; set; }
@@ -15,6 +17,8 @@ namespace RightScale.netClient
         public string summary { get; set; }
         public int detail_size { get; set; }
         public string user_email { get; set; }
+
+        #region AuditEntry.ctor() 
 
         /// <summary>
         /// Default Constructor for AuditEntry
@@ -45,6 +49,8 @@ namespace RightScale.netClient
         {
 
         }
+        
+        #endregion
 
         #region AuditEntry.show() method
 
@@ -264,7 +270,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool append(string auditID, string detail)
         {
-            return false;
+            return append(auditID, detail, "1");
         }
 
         /// <summary>
@@ -274,9 +280,29 @@ namespace RightScale.netClient
         /// <param name="detail">The details to be appended to the audit entry record.</param>
         /// <param name="offset">The offset where the new details should be appended to in the audit entry's existing details section.</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool append(string auditid, string detail, string offset)
+        public static bool append(string auditID, string detail, string offset)
         {
-            return false;
+            string postHref = string.Format("/api/audit_entries/{0}/append", auditID);
+            Utility.CheckStringIsNumeric(offset);
+            List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
+            postParameters.Add(new KeyValuePair<string, string>("detail", detail));
+            postParameters.Add(new KeyValuePair<string, string>("offset", offset));
+            return Core.APIClient.Instance.Post(postHref, postParameters);
+        }
+
+        #endregion
+
+        #region AuditEntry.detail methods
+
+        /// <summary>
+        /// shows the details of a given AuditEntry. Note that the media type of the response is simply text.
+        /// </summary>
+        /// <param name="auditID">Audit ID of the entry to retrieve detail for</param>
+        /// <returns>details of AuditEntry defined by ID passed in</returns>
+        public static string detail(string auditID)
+        {
+            string getHref = string.Format("/api/audit_entries/{0}/detail", auditID);
+            return Core.APIClient.Instance.Get(getHref);
         }
 
         #endregion
