@@ -11,6 +11,15 @@ namespace RightScale.netClient
     {
         public static string argumentExceptionFormat = "Input '{0}' is not valid, it must be one of the following: '{1}' and was set to '{2}'";
 
+        public static bool CheckStringHasValue(string requiredString)
+        {
+            if (string.IsNullOrWhiteSpace(requiredString))
+            {
+                throw new ArgumentNullException("String input does not have a value and is required");
+            }
+            return true;
+        }
+
         public static bool CheckStringIsNumeric(string numericString)
         {
             foreach (char c in numericString)

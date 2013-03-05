@@ -9,52 +9,109 @@ namespace RightScale.netClient.Test
     public class AlertSpecTest
     {
         string serverID;
-        string serverAlertSpecID;
         string serverTemplateID;
-        string serverTemplateAlertSpecID;
         string serverArrayID;
-        string serverArrayAlertSpecID;
-
         public AlertSpecTest()
         {
             serverID = ConfigurationManager.AppSettings["AlertSpecTest_serverID"].ToString();
-            serverAlertSpecID = ConfigurationManager.AppSettings["AlertSpecTest_serverAlertSpecID"].ToString();
             serverTemplateID = ConfigurationManager.AppSettings["AlertSpecTest_serverTemplateID"].ToString();
-            serverTemplateAlertSpecID = ConfigurationManager.AppSettings["AlertSpecTest_serverTemplateAlertSpecID"].ToString();
             serverArrayID = ConfigurationManager.AppSettings["AlertSpecTest_serverArrayID"].ToString();
-            serverArrayAlertSpecID = ConfigurationManager.AppSettings["AlertSpecTest_serverArrayAlertSpecID"].ToString();
         }
 
         [TestMethod]
-        public void showServerAlertSpec()
+        public void createReadUpdateDeleteAlertSpec_forServerTemplate()
         {
-            AlertSpec alertSpec = AlertSpec.show_server(serverID, serverAlertSpecID);
-            Assert.IsNotNull(alertSpec, "Server-based alert spec is null");
+            string alertSpecID = AlertSpec.create(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", "/api/server_templates/" + this.serverTemplateID, "5", "value", "vote tag", "grow");
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy(alertSpecID);
+            Assert.IsTrue(retVal);
         }
 
         [TestMethod]
-        public void showServerTemplateAlertSpec()
+        public void createReadUpdateDeleteAlertSpec_forServerArray()
         {
-            AlertSpec alertSpec = AlertSpec.show_serverTemplate(serverTemplateID, serverTemplateAlertSpecID);
-            Assert.IsNotNull(alertSpec, "ServerTemplate-based alert spec is null");
+            string alertSpecID = AlertSpec.create(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", "/api/server_arrays/" + this.serverArrayID, "5", "value", "vote tag", "grow");
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy(alertSpecID);
+            Assert.IsTrue(retVal);
         }
 
         [TestMethod]
-        public void showServerArrayAlertSpec()
+        public void createReadUpdateDeleteAlertSpec_forServer()
         {
-            AlertSpec alertSpec = AlertSpec.show_serverArray(serverArrayID, serverArrayAlertSpecID);
-            Assert.IsNotNull(alertSpec, "ServerArray-based alert spec is null");
+            string alertSpecID = AlertSpec.create(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", "/api/servers/" + this.serverID, "5", "value", "vote tag", "grow");
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show(alertSpecID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy(alertSpecID);
+            Assert.IsTrue(retVal);
         }
 
         [TestMethod]
-        public void showAlertSpec()
+        public void createReadUpdateDeleteAlertSpecServer()
         {
-            AlertSpec alertSpec_serverArray = AlertSpec.show(serverArrayAlertSpecID);
-            Assert.IsNotNull(alertSpec_serverArray, "Default AlertSpec for ServerArray is null");
-            AlertSpec alertSpec_serverTemplate = AlertSpec.show(serverTemplateAlertSpecID);
-            Assert.IsNotNull(alertSpec_serverTemplate, "Default AlertSpec for ServerTemplate is null");
-            AlertSpec alertSpec_server = AlertSpec.show(serverAlertSpecID);
-            Assert.IsNotNull(alertSpec_server, "Default AlertSpec for Server is null");
+            string alertSpecID = AlertSpec.create_server(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", string.Empty, "5", "value", "vote tag", "grow", serverID);
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show_server(alertSpecID, serverID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update_server("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID, serverID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show_serverTemplate(alertSpecID, serverID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy_server(alertSpecID, serverID);
+            Assert.IsTrue(retVal);
+        }
+
+        [TestMethod]
+        public void createReadUpdateDeleteAlertSpecServerTemplate()
+        {
+            string alertSpecID = AlertSpec.create_serverTemplate(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", string.Empty, "5", "value", "vote tag", "grow", serverTemplateID);
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show_serverTemplate(alertSpecID, serverTemplateID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update_serverTemplate("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID, serverTemplateID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show_serverTemplate(alertSpecID, serverTemplateID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy_serverTemplate(alertSpecID, serverTemplateID);
+            Assert.IsTrue(retVal);
+        }
+
+        [TestMethod]
+        public void createReadUpdateDeleteAlertSpecServerArray()
+        {
+            string alertSpecID = AlertSpec.create_serverArray(">", "this is a description", "5", string.Empty, "cpu-0/cpu-idle", "alert spec name", string.Empty, "5", "value", "vote tag", "grow", serverArrayID);
+            Assert.IsNotNull(alertSpecID);
+            AlertSpec testAlertSpec = AlertSpec.show_serverArray(alertSpecID, serverArrayID);
+            Assert.IsNotNull(testAlertSpec);
+            bool updated = AlertSpec.update_serverArray("", "this is a new description", "", "", "", "", "", "", "", "", "", alertSpecID, serverArrayID);
+            Assert.IsTrue(updated);
+            AlertSpec testUpdatedAlertSpec = AlertSpec.show_serverTemplate(alertSpecID, serverArrayID);
+            Assert.IsNotNull(testUpdatedAlertSpec);
+            Assert.AreNotEqual<string>(testAlertSpec.description, testUpdatedAlertSpec.description);
+            bool retVal = AlertSpec.destroy_serverArray(alertSpecID, serverTemplateID);
+            Assert.IsTrue(retVal);
         }
     }
 }

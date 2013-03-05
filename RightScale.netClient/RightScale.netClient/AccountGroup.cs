@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// An Account Group specifies which RightScale accounts will have access to import a shared RightScale component (e.g. ServerTemplate, RightScript, etc.) from the MultiCloud Marketplace.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeAccountGroup.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceAccountGroups.html
+    /// </summary>
     public class AccountGroup : Core.RightScaleObjectBase<AccountGroup>
     {
         public string name { get; set; }
@@ -15,39 +20,75 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
 
+        #region AccountGroup.ctor()
 
+        /// <summary>
+        /// Default constructor for AccountGroup object
+        /// </summary>
         public AccountGroup()
             : base()
         {
         }
 
+        /// <summary>
+        /// Constructor for AccountGroup object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
         public AccountGroup(string oAuthRefreshToken)
             : base(oAuthRefreshToken)
         {
         }
 
+        /// <summary>
+        /// Cosntructor for AccountGroup object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
         public AccountGroup(string userName, string password, string accountNo)
             : base(userName, password, accountNo)
         {
         }
-        
+
+        #endregion
+
         #region AccountGroup.index methods
 
+        /// <summary>
+        /// Lists the AccountGroups owned by this Account.
+        /// </summary>
+        /// <returns>List of AccountGroups</returns>
         public static List<AccountGroup> index()
         {
             return index(null, null);
         }
 
+        /// <summary>
+        /// Lists the AccountGroups owned by this Account.
+        /// </summary>
+        /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
+        /// <returns>Filtered list of AccountGroups</returns>
         public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists the AccountGroups owned by this Account.
+        /// </summary>
+        /// <param name="view">Defines specific view to limit the AccountGroups returned from RightScale API</param>
+        /// <returns>Filtered list of AccountGroups based on view input</returns>
         public static List<AccountGroup> index(string view)
         {
             return index(null, view);
         }
 
+        /// <summary>
+        /// Lists the AccountGroups owned by this Account.
+        /// </summary>
+        /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
+        /// <param name="view">Defines specific view to limit the AccountGroups returned from RightScale API</param>
+        /// <returns>Filtered list of AccuntGroups based on filter and view input</returns>
         public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
@@ -81,14 +122,24 @@ namespace RightScale.netClient
         }
         #endregion
 
-
         #region AccountGroup.show methods
 
+        /// <summary>
+        /// Show information about a single AccountGroup
+        /// </summary>
+        /// <param name="accountGroupID">ID of the AccountGroup to retrieve</param>
+        /// <returns></returns>
         public static AccountGroup show(string accountGroupID)
         {
             return show(accountGroupID, null);
         }
 
+        /// <summary>
+        /// Show information about a single AccountGroup
+        /// </summary>
+        /// <param name="accountGroupID">ID of the AccountGroup to retrieve</param>
+        /// <param name="view">Specific view of AccountGroup to filter result set</param>
+        /// <returns>instance of AccountGroup based on inputs</returns>
         public static AccountGroup show(string accountGroupID, string view)
         {
             if (string.IsNullOrWhiteSpace(view))

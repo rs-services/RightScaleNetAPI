@@ -71,7 +71,13 @@ namespace RightScale.netClient.Core
         {
             if (CheckAuthenticationStatus())
             {
-                string requestUrl = apiBaseAddress.Trim('/') + apiHref + "?" + queryStringValue;
+                string requestUrl = apiBaseAddress.Trim('/') + apiHref;
+
+                if(!string.IsNullOrWhiteSpace(queryStringValue))
+                {
+                    requestUrl += "?" + queryStringValue;
+                }
+                
                 return webClient.GetAsync(requestUrl).Result.Content.ReadAsStringAsync().Result;
             }
             else
@@ -81,19 +87,91 @@ namespace RightScale.netClient.Core
             throw new NotImplementedException();
         }
 
-        public void Put()
+        public bool Put(string putHref, List<KeyValuePair<string, string>> putData)
         {
+            if (CheckAuthenticationStatus())
+            {
+                string putUrl = apiBaseAddress.Trim('/') + putHref;
+                if (putData.Count > 0)
+                {
+                    HttpContent putContent = new FormUrlEncodedContent(putData);
+                    HttpResponseMessage response = webClient.PutAsync(putUrl, putContent).Result;
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
+                else
+                {
+                    throw new ArgumentException("Cannot PUT to RightScale API without including values in putData collection");
+                }
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("RightScale API calls could not be authenticated");
+            }
             throw new NotImplementedException();
         }
 
-        public void Post()
+        private string getQueryString(List<KeyValuePair<string, string>> dataForQs)
         {
-            throw new NotImplementedException();
+            string retVal = string.Empty;
+
+            foreach (KeyValuePair<string, string> kvp in dataForQs)
+            {
+                retVal += kvp.Key + "=" + kvp.Value + "&";
+            }
+            retVal = retVal.TrimEnd('&');
+            return retVal;
         }
 
-        public void Delete()
+        /// <summary>
+        /// Centralized method to handle post calls to RightScale API
+        /// </summary>
+        /// <param name="apiHref">api stub for posting to RightScale API</param>
+        /// <param name="parameterSet">List<KeyValuePair<string, string>> of parameters to be posted to RightScale API</param>
+        /// <returns>JSON string result to be parsed</returns>
+        public List<string> Create(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
         {
-            throw new NotImplementedException();
+            if (CheckAuthenticationStatus())
+            {
+                string content = string.Empty;
+                try
+                {
+                    HttpContent postContent = new FormUrlEncodedContent(parameterSet);
+                    string requestUrl = apiBaseAddress.Trim('/') + apiHref;
+                    HttpResponseMessage response = webClient.PostAsync(requestUrl, postContent).Result;
+                    content = response.Content.ReadAsStringAsync().Result;
+                    response.EnsureSuccessStatusCode();
+                    return response.Headers.GetValues(returnHeaderName).ToList<string>();
+                }
+                catch (HttpRequestException hre)
+                {
+                    Exception ex = new Exception("RSAPI Exception: content" + Environment.NewLine + content, hre);
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
+        public bool Delete(string apiHref)
+        {
+            return Delete(apiHref, string.Empty);
+        }
+
+        public bool Delete(string apiHref, string queryStringValue)
+        {
+            if (CheckAuthenticationStatus())
+            {
+                string requestUrl = apiBaseAddress.Trim('/') + apiHref;
+
+                if(!string.IsNullOrWhiteSpace(queryStringValue))
+                {
+                    requestUrl += "?" + queryStringValue;
+                }
+                
+                webClient.DeleteAsync(requestUrl);
+                return true;
+            }
+            return false;
         }
 
         #endregion
