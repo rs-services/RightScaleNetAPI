@@ -28,7 +28,14 @@ namespace RightScale.netClient.Core
 
         public static T deserialize(string jsonString)
         {
-            return JsonConvert.DeserializeObject<T>(jsonString);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(jsonString);
+            }
+            catch (JsonReaderException jre)
+            {
+                throw new Exception(jsonString, jre);
+            }
         }
 
         public static List<T> deserializeList(string jsonString)
