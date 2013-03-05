@@ -127,7 +127,7 @@ namespace RightScale.netClient.Core
         /// Centralized method to handle post calls to RightScale API
         /// </summary>
         /// <param name="apiHref">api stub for posting to RightScale API</param>
-        /// <param name="parameterSet">List<KeyValuePair<string, string>> of parameters to be posted to RightScale API</param>
+        /// <param name="parameterSet">List< of KeyValuePair(string, string) of parameters to be posted to RightScale API</param>
         /// <returns>JSON string result to be parsed</returns>
         public List<string> Create(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
         {
@@ -172,48 +172,6 @@ namespace RightScale.netClient.Core
                 return true;
             }
             return false;
-        }
-
-        #endregion
-
-        #region Request formatting helpers
-
-        /// <summary>
-        /// Static method takes a collection of name/value pairs and creates a properly formatted string representing a set of filters for a given RightScale API call
-        /// </summary>
-        /// <param name="filterSet">list of key value pairs to be built into a filter string when passing filters to the RightScale API</param>
-        /// <returns>properly formatted string for filter collection</returns>
-        public static string BuildFilterString(List<KeyValuePair<string, string>> filterSet)
-        {
-            string retVal = string.Empty;
-
-            foreach (KeyValuePair<string, string> kvp in filterSet)
-            {
-                retVal += string.Format(@"filter[]=""{0}=={1}""&", kvp.Key, kvp.Value);
-            }
-            
-            retVal = retVal.TrimEnd('&');
-
-            return retVal;
-        }
-
-        /// <summary>
-        /// Static method takes a collection of name/value pairs and creates a properly formatted string representing a set of inputs for a server or deployment within the RightScale system
-        /// </summary>
-        /// <param name="inputSet">list of key value pairs to be built into an input string when passing inputs to the RightScale API</param>
-        /// <returns>properly formatted string for input collection</returns>
-        public static string BuildInputString(List<KeyValuePair<string, string>> inputSet)
-        {
-            string retVal = string.Empty;
-
-            foreach (KeyValuePair<string, string> kvp in inputSet)
-            {
-                retVal += string.Format("inputs[][name]={0}&inputs[][value]={1}&", kvp.Key, kvp.Value);
-            }
-
-            retVal = retVal.TrimEnd('&');
-
-            return retVal;
         }
 
         #endregion

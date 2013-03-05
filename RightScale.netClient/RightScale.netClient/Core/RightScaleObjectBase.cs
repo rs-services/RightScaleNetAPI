@@ -33,7 +33,14 @@ namespace RightScale.netClient.Core
 
         public static List<T> deserializeList(string jsonString)
         {
-            return JsonConvert.DeserializeObject<List<T>>(jsonString);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<T>>(jsonString);
+            }
+            catch (JsonReaderException jre)
+            {
+                throw new Exception(jsonString, jre);
+            }
         }
     }
 }

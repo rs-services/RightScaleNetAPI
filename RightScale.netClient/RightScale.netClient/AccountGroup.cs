@@ -111,7 +111,7 @@ namespace RightScale.netClient
 
             if (filter != null && filter.Count > 0)
             {
-                queryString += Core.APIClient.BuildFilterString(filter) + "&";
+                queryString += Utility.BuildFilterString(filter) + "&";
             }
 
             queryString += string.Format("view={0}", view);

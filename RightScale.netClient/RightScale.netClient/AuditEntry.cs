@@ -16,24 +16,43 @@ namespace RightScale.netClient
         public int detail_size { get; set; }
         public string user_email { get; set; }
 
-
+        /// <summary>
+        /// Default Constructor for AuditEntry
+        /// </summary>
         public AuditEntry()
             : base()
         {
 
         }
 
+        /// <summary>
+        /// Constructor for AuditEntry object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
         public AuditEntry(string oAuthRefreshToken)
             : base(oAuthRefreshToken)
         {
         }
 
+        /// <summary>
+        /// Cosntructor for AuditEntry object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
         public AuditEntry(string userName, string password, string accountNo)
             : base(userName, password, accountNo)
         {
 
         }
 
+        #region AuditEntry.show() method
+
+        /// <summary>
+        /// Lists the attributes of a given audit entry.
+        /// </summary>
+        /// <param name="auditEntryID">ID of the AuditEntry to show</param>
+        /// <returns>Populated instance of AuditEntry object</returns>
         public static AuditEntry show(string auditEntryID)
         {
             //TODO: currently not working as expected
@@ -47,30 +66,74 @@ namespace RightScale.netClient
             return deserialize(jsonString);
         }
 
+        #endregion
+
         #region AuditEntry.index methods
 
+        /// <summary>
+        /// Lists AuditEntries of the account. Due to the potentially large number of audit entries, a start and end date must be provided during an index call to limit the search. 
+        /// </summary>
+        /// <param name="start_date">The start date for retrieving audit entries</param>
+        /// <returns>Collection of AuditEntry objects from the start_time defined</returns>
         public static List<AuditEntry> index(DateTime start_date)
         {
             return index(null, null, "25", start_date, DateTime.Now);
         }
 
+        /// <summary>
+        /// Lists AuditEntries of the account. Due to the potentially large number of audit entries, a start and end date must be provided during an index call to limit the search. 
+        /// Using the available filters, one can select or group which audit entries to retrieve.
+        /// </summary>
+        /// <param name="start_date">The start date for retrieving audit entries</param>
+        /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
+        /// <returns>Collection of AuditEntry objects from the start_time to the end_date defined</returns>
         public static List<AuditEntry> index(DateTime start_date, DateTime end_date)
         {
             return index(null, null, "25", start_date, end_date);
         }
 
+        /// <summary>
+        /// Lists AuditEntries of the account. Due to the potentially large number of audit entries, a start and end date must be provided during an index call to limit the search. The format of the dates must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000. A maximum of 1000 records will be returned by each index call.
+        /// Using the available filters, one can select or group which audit entries to retrieve.
+        /// </summary>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <param name="limit">Limit the audit entries to this number. The limit should >= 1 and <= 1000</param>       
+        /// <param name="start_date">The start date for retrieving audit entries</param>
+        /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
+        /// <returns>Collection of AuditEntry objects from the start_time defined with a limit and view as specified</returns>
         public static List<AuditEntry> index(string view, string limit, DateTime start_date, DateTime end_date)
         {
             return index(null, view, limit, start_date, end_date);
         }
 
+        /// <summary>
+        /// Lists AuditEntries of the account. Due to the potentially large number of audit entries, a start and end date must be provided during an index call to limit the search. The format of the dates must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000. A maximum of 1000 records will be returned by each index call.
+        /// Using the available filters, one can select or group which audit entries to retrieve.
+        /// </summary>
+        /// <param name="filter">Filter parameters for index query</param>
+        /// <param name="limit">Limit the audit entries to this number. The limit should >= 1 and <= 1000</param>
+        /// <param name="start_date">The start date for retrieving audit entries</param>
+        /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
+        /// <returns>Collection of AuditEntry objects from the start_time defined with a limit and filter as specified</returns>
         public static List<AuditEntry> index(List<KeyValuePair<string, string>> filter, string limit, DateTime start_date, DateTime end_date)
         {
             return index(filter, null, limit, start_date, end_date);
         }
 
+        /// <summary>
+        /// Lists AuditEntries of the account. Due to the potentially large number of audit entries, a start and end date must be provided during an index call to limit the search. The format of the dates must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000. A maximum of 1000 records will be returned by each index call.
+        /// Using the available filters, one can select or group which audit entries to retrieve.
+        /// </summary>
+        /// <param name="filter">Filter parameters for index query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <param name="limit">Limit the audit entries to this number. The limit should >= 1 and <= 1000</param>
+        /// <param name="start_date">The start date for retrieving audit entries</param>
+        /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
+        /// <returns>Collection of AuditEntry objects from the start_time defined with a limit, filter and view as specified</returns>
         public static List<AuditEntry> index(List<KeyValuePair<string, string>> filter, string view, string limit, DateTime start_date, DateTime end_date)
         {
+            string getHref = "/api/audit_entries";
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -101,13 +164,121 @@ namespace RightScale.netClient
                 throw new ArgumentException("Input 'limit' was non-numeric: {" + limit + "}");
             }
 
-            string startDateString = start_date.ToString("yyyy/MM/dd HH:mm:ss %K");
-            string endDateString = end_date.ToString("yyyy/MM/dd HH:mm:ss %K");
+            if (end_date.Subtract(start_date).Days > 93)
+            {
+                throw new ArgumentException(string.Format("The difference between the start date [{0}] and the end date [{1}] must not be greater than 93 days", start_date, end_date));
+            }
 
-            //TODO: implement AuditEntry.index
-            throw new NotImplementedException();
+            string timeOffset = DateTime.Now.ToString("%K").Replace(":", "");
+
+            string startDateString = start_date.ToString("yyyy/MM/dd HH:mm:ss ") + timeOffset;
+            string endDateString = end_date.ToString("yyyy/MM/dd HH:mm:ss ") + timeOffset;
+
+            List<KeyValuePair<string, string>> getParams = new List<KeyValuePair<string, string>>();
+            getParams.Add(new KeyValuePair<string, string>("end_date", endDateString));
+            getParams.Add(new KeyValuePair<string, string>("limit", limit));
+            getParams.Add(new KeyValuePair<string, string>("start_date", startDateString));
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                getParams.Add(new KeyValuePair<string, string>("view", view));
+            }
+
+            string queryString = Utility.BuildGetQueryString(getParams);
+
+            if (filter != null && filter.Count > 0)
+            {
+                queryString += Utility.BuildFilterString(filter);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getHref + "?" + queryString);
+
+            return deserializeList(jsonString);
+
         }
         #endregion
-		
+
+        #region AuditEntry.create methods
+
+        /// <summary>
+        /// Creates a new AuditEntry with the given parameters.
+        /// </summary>
+        /// <param name="auditee_href">The href of the resource that this audit entry should be associated with (e.g. an instance's href)</param>
+        /// <param name="audit_summary">The summary of the audit entry to be created, maximum length is 255 characters.</param>
+        /// <returns>ID of AuditEntry that was created</returns>
+        public static string create(string auditee_href, string audit_summary)
+        {
+            return create(auditee_href, audit_summary, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a new AuditEntry with the given parameters.
+        /// </summary>
+        /// <param name="auditee_href">The href of the resource that this audit entry should be associated with (e.g. an instance's href)</param>
+        /// <param name="audit_summary">The summary of the audit entry to be created, maximum length is 255 characters.</param>
+        /// <param name="detail">The initial details of the audit entry to be created.</param>
+        /// <returns>ID of AuditEntry that was created</returns>
+        public static string create(string auditee_href, string audit_summary, string detail)
+        {
+            string putHref = "/api/audit_entries";
+
+            List<KeyValuePair<string, string>> putParameters = new List<KeyValuePair<string, string>>();
+            putParameters.Add(new KeyValuePair<string, string>("audit_entry[auditee_href]", auditee_href));
+            if (!string.IsNullOrWhiteSpace(detail))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("audit_entry[detail]", detail));
+            }
+            putParameters.Add(new KeyValuePair<string, string>("audit_entry[summary]", audit_summary));
+
+            List<string> retVal = Core.APIClient.Instance.Create(putHref, putParameters, "location");
+            return retVal.Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+        #region AuditEntry.update methods
+
+        /// <summary>
+        /// Updates the summary of a given AuditEntry.
+        /// </summary>
+        /// <param name="auditID">ID of the audit entry to be edited</param>
+        /// <param name="summary">The updated summary for the audit entry, maximum length is 255 characters.</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool update(string auditID, string summary)
+        {
+            string putURL = string.Format("/api/audit_entries/{0}", auditID);
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+            putParams.Add(new KeyValuePair<string, string>("audit_entry[summary]", summary));
+
+            return Core.APIClient.Instance.Put(putURL, putParams);
+        }
+
+        #endregion
+
+        #region AuditEntry.append methods
+
+        /// <summary>
+        /// Appends more details to a given AuditEntry. Each audit entry detail is stored as one chunk, the offset determines the location of that chunk within the overall audit entry details section. For example, if you create an AuditEntry and append "DEF" at offset 10, and later append "ABC" at offset 9, the overall audit entry details will be "ABCDEF". Use the \n character to separate details by new lines.
+        /// </summary>
+        /// <param name="auditID">ID of the audit entry to be appended</param>
+        /// <param name="detail">The details to be appended to the audit entry record.</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool append(string auditID, string detail)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Appends more details to a given AuditEntry. Each audit entry detail is stored as one chunk, the offset determines the location of that chunk within the overall audit entry details section. For example, if you create an AuditEntry and append "DEF" at offset 10, and later append "ABC" at offset 9, the overall audit entry details will be "ABCDEF". Use the \n character to separate details by new lines.
+        /// </summary>
+        /// <param name="auditid">ID of the audit entry to be appended</param>
+        /// <param name="detail">The details to be appended to the audit entry record.</param>
+        /// <param name="offset">The offset where the new details should be appended to in the audit entry's existing details section.</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool append(string auditid, string detail, string offset)
+        {
+            return false;
+        }
+
+        #endregion
     }
 }
