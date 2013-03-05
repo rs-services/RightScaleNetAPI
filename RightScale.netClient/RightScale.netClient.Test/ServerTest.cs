@@ -9,10 +9,12 @@ namespace RightScale.netClient.Test
     public class ServerTest
     {
         private string deploymentID;
+        private string serverID;
 
         public ServerTest()
         {
             deploymentID = ConfigurationManager.AppSettings["ServerTest_deploymentID"].ToString();
+            serverID = ConfigurationManager.AppSettings["ServerTest_serverID"].ToString();
         }
 
         [TestMethod]
@@ -29,6 +31,18 @@ namespace RightScale.netClient.Test
             List<Server> serverIndexDeploymentTest = Server.index_deployment(deploymentID);
             Assert.IsNotNull(serverIndexDeploymentTest);
             Assert.IsTrue(serverIndexDeploymentTest.Count > 0);
+        }
+
+        public void serverShowTest()
+        {
+            Server serverobj = Server.show(serverID);
+            Assert.IsNotNull(serverobj);
+        }
+
+        public void serverDeploymentShowTest()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
         }
     }
 }

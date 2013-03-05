@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Servers represent the notion of a server/machine from the RightScale's perspective. A Server, does not always have a corresponding VM running or provisioned in a cloud. Some clouds use the word "servers" to refer to created VM's. These allocated VM's are not called Servers in the RightScale API, they are called Instances.
+    /// A Server always has a next_instance association, which will define the configuration to apply to a new instance when the server is launched or started (starting servers is not yet supported through this API). Once a Server is launched/started a currentinstance relationship will exist. Accessing the currentinstance of a server results in immediate runtime modification of this running server. Changes to the next_instance association prepares the configuration for the next instance launch/start (therefore they have no effect until such operation is performed).
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServer.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServers.html
+    /// </summary>
     public class Server:Core.RightScaleObjectBase<Server>
     {
         public string name { get; set; }
@@ -17,7 +23,6 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
-
 
         #region Server.ctor()
         /// <summary>
@@ -236,6 +241,22 @@ namespace RightScale.netClient
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region Server.create methods
+
+        public static string create_deployment(string deploymentID, string cloudID, string serverTemplateID, string serverName)
+        {
+            string postHref = string.Format("/api/deployments/{0}/servers");
+            throw new NotImplementedException();
+        }
+
+        public static string create(string cloudID, string serverTemplateID, string serverName)
+        {
+            string postHref = "/api/servers";
+            throw new NotImplementedException
         }
 
         #endregion
