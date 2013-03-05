@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class User
+    public class User:Core.RightScaleObjectBase<User>
     {
         public string company { get; set; }
         public List<Action> actions { get; set; }
@@ -17,6 +17,38 @@ namespace RightScale.netClient
         public string phone { get; set; }
         public string first_name { get; set; }
         public string email { get; set; }
+
+        #region User.ctor
+        /// <summary>
+        /// Default Constructor for User
+        /// </summary>
+        public User()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for User object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public User(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for User object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public User(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
 
 
         #region User.index methods

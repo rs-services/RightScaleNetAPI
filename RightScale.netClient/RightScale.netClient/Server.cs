@@ -18,7 +18,40 @@ namespace RightScale.netClient
         public string description { get; set; }
         public string state { get; set; }
 
-        
+
+        #region Server.ctor()
+        /// <summary>
+        /// Default Constructor for Server
+        /// </summary>
+        public Server()
+            : base()
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor for Server object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public Server(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for Server object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public Server(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+
+        }
+
+        #endregion
+
         #region Server.index methods
 
         /// <summary>
@@ -142,7 +175,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverID">ID of the server to be retrieved</param>
         /// <param name="deploymentID">Deployment ID of the server to be retrieved</param>
-        /// <returns></returns>
+        /// <returns>Populated Server object</returns>
         public static Server show_deployment(string serverID, string deploymentID)
         {
             return show_deployment(serverID, deploymentID, "default");
@@ -154,7 +187,7 @@ namespace RightScale.netClient
         /// <param name="serverid">ID of the server to be retrieved</param>
         /// <param name="deploymentID">Deployment ID of the server to be retrieved</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
-        /// <returns></returns>
+        /// <returns>Populated Server object</returns>
         public static Server show_deployment(string serverid, string deploymentID, string view)
         {
             string getHref = string.Format("/api/deployments/{0}/servers/{1}", deploymentID, serverid);
@@ -165,7 +198,7 @@ namespace RightScale.netClient
         /// Shows the information of a single server.
         /// </summary>
         /// <param name="serverID">ID of the server to be retrieved</param>
-        /// <returns></returns>
+        /// <returns>Populated Server object</returns>
         public static Server show(string serverID)
         {
             return show(serverID, "default");
@@ -176,7 +209,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverid">ID of the server to be retrieved</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
-        /// <returns></returns>
+        /// <returns>Populated Server object</returns>
         public static Server show(string serverid, string view)
         {
             string getHref = string.Format("/api/servers/{0}", serverid);
@@ -184,11 +217,11 @@ namespace RightScale.netClient
         }
 
         /// <summary>
-        /// 
+        /// Internal implementation of show for both deployment and non-deployment calls.  
         /// </summary>
         /// <param name="getHref"></param>
         /// <param name="view"></param>
-        /// <returns></returns>
+        /// <returns>Server object with data</returns>
         private static Server showGet(string getHref, string view)
         {
             List<string> validViews = new List<string>() { "default", "instance_detail" };

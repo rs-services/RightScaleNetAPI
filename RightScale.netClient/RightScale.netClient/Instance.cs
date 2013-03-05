@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class Instance
+    public class Instance : Core.RightScaleObjectBase<Instance>
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
@@ -29,6 +29,39 @@ namespace RightScale.netClient
         public List<SecurityGroup> security_groups { get; set; }
         public List<string> public_dns_names { get; set; }
 
+
+
+        #region Instance.ctor
+        /// <summary>
+        /// Default Constructor for Instance
+        /// </summary>
+        public Instance()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for Instance object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public Instance(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for Instance object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public Instance(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
         
         #region Instance.index methods
 

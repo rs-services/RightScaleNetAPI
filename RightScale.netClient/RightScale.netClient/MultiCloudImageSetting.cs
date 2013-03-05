@@ -6,12 +6,43 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class MultiCloudImageSetting
+    public class MultiCloudImageSetting:Core.RightScaleObjectBase<MultiCloudImageSetting>
     {
         public List<Action> actions { get; set; }
         public List<Link> links { get; set; }
 
-        
+
+
+        #region MultiCloudImageSetting.ctor
+        /// <summary>
+        /// Default Constructor for MultiCloudImageSetting
+        /// </summary>
+        public MultiCloudImageSetting()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for MultiCloudImageSetting object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public MultiCloudImageSetting(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for MultiCloudImageSetting object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public MultiCloudImageSetting(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
         #region MultiCloudImageSetting.index methods
 
         public static List<MultiCloudImageSetting> index()

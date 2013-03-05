@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class Deployment
+    public class Deployment : Core.RightScaleObjectBase<Deployment>
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
@@ -15,6 +15,39 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
 
+
+
+        #region Deployment.ctor
+        /// <summary>
+        /// Default Constructor for Deployment
+        /// </summary>
+        public Deployment()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for Deployment object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public Deployment(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for Deployment object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public Deployment(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
         
         #region Deployment.index methods
 

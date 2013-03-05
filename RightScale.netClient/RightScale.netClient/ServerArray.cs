@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    class ServerArray
+    public class ServerArray : Core.RightScaleObjectBase<ServerArray>
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
@@ -17,6 +17,38 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
+
+        #region ServerArray.ctor
+        /// <summary>
+        /// Default Constructor for ServerArray
+        /// </summary>
+        public ServerArray()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for ServerArray object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public ServerArray(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for ServerArray object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public ServerArray(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
 
         
         #region ServerArray.index methods

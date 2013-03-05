@@ -14,6 +14,37 @@ namespace RightScale.netClient
         public List<Link> links { get; set; }
         public string description { get; set; }
 
+        #region DataCenter.ctor
+        /// <summary>
+        /// Default Constructor for DataCenter
+        /// </summary>
+        public DataCenter()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for DataCenter object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public DataCenter(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for DataCenter object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public DataCenter(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
 
         #region DataCenter.show() methods
 

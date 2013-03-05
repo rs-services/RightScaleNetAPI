@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class IPAddress
+    public class IPAddress:Core.RightScaleObjectBase<IPAddress>
     {
         public string address { get; set; }
         public string name { get; set; }
@@ -14,7 +14,39 @@ namespace RightScale.netClient
         public string updated_at { get; set; }
         public List<Link> links { get; set; }
 
-        
+
+
+        #region IPAddress.ctor
+        /// <summary>
+        /// Default Constructor for IPAddress
+        /// </summary>
+        public IPAddress()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Constructor for IPAddress object that takes in an oAuth Refresh token for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
+        public IPAddress(string oAuthRefreshToken)
+            : base(oAuthRefreshToken)
+        {
+        }
+
+        /// <summary>
+        /// Cosntructor for IPAddress object that takes username, password and accountno for RSAPI Authentication purposes
+        /// </summary>
+        /// <param name="userName">RightScale user name</param>
+        /// <param name="password">RightScale user password</param>
+        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
+        public IPAddress(string userName, string password, string accountNo)
+            : base(userName, password, accountNo)
+        {
+        }
+
+        #endregion
+		
         #region IPAddress.index methods
 
         public static List<IPAddress> index()
