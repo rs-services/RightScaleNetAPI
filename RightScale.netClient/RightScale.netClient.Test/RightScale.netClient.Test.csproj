@@ -60,6 +60,7 @@
     <Compile Include="BackupTest.cs" />
     <Compile Include="CloudTest.cs" />
     <Compile Include="ServerTest.cs" />
+    <Compile Include="InstanceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">
@@ -68,7 +69,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

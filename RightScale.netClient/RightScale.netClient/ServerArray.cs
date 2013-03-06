@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A server array represents a logical group of instances and allows to resize(grow/shrink) that group based on certain elasticity parameters.
+    /// A server array just like a server always has a next_instance association, which will define the configuration to apply when a new instance is launched. But unlike a server which has a "currentinstance" relationship, the server array has a "currentinstances" relationship that gives the information about all the running instances in the array. Changes to the next_instance association prepares the configuration for the next instance that is to be launched in the array and will therefore not affect any of the currently running instances.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerArray.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServerArrays.html
+    /// </summary>
     public class ServerArray : Core.RightScaleObjectBase<ServerArray>
     {
         public string name { get; set; }

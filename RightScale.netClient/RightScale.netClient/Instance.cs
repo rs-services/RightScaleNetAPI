@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Instances represent an entity that is runnable in the cloud.
+    /// An instance of type "next" is a container of information that expresses how to configure a future instance when we decide to launch or start it. A "next" instance generally only exists in the RightScale realm, and usually doesn't have any corresponding representation existing in the cloud. However, if an instance is not of type "next", it will generally represent an existing running (or provisioned) virtual machine existing in the cloud.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstance.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstance.html
+    /// </summary>
     public class Instance : Core.RightScaleObjectBase<Instance>
     {
         public string name { get; set; }
@@ -28,9 +34,7 @@ namespace RightScale.netClient
         public string state { get; set; }
         public List<SecurityGroup> security_groups { get; set; }
         public List<string> public_dns_names { get; set; }
-
-
-
+        
         #region Instance.ctor
         /// <summary>
         /// Default Constructor for Instance
@@ -65,22 +69,105 @@ namespace RightScale.netClient
         
         #region Instance.index methods
 
-        public static List<Instance> index()
+        /// <summary>
+        /// Lists instances of a given ServerArray.
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to query</param>
+        /// <returns>collection of Instances within the given ServerArray</returns>
+        public static List<Instance> index_serverArray(string serverArrayID)
         {
-            return index(null, null);
+            return index_serverArray(serverArrayID, null, null);
         }
 
-        public static List<Instance> index(List<KeyValuePair<string, string>> filter)
+        /// <summary>
+        /// Lists instances of a given cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud to query for instances</param>
+        /// <returns>collection of Instances within the given Cloud</returns>
+        public static List<Instance> index(string cloudID)
         {
-            return index(filter, null);
+            return index(cloudID, null, null);
         }
 
-        public static List<Instance> index(string view)
+        /// <summary>
+        /// List instances of a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to query</param>
+        /// <param name="filter">filters results of query to RightScale API</param>
+        /// <returns>collection of Instances within the given ServerArray</returns>
+        public static List<Instance> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter)
         {
-            return index(null, view);
+            return index_serverArray(serverArrayID, filter, null);
         }
 
-        public static List<Instance> index(List<KeyValuePair<string, string>> filter, string view)
+        /// <summary>
+        /// Lists instances of a given cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud to query for instances</param>
+        /// <param name="filter">filters results of query to RightScale API</param>
+        /// <returns>collection of Instances within the given Cloud</returns>
+        public static List<Instance> index(string cloudID, List<KeyValuePair<string, string>> filter)
+        {
+            return index(cloudID, filter, null);
+        }
+
+
+        /// <summary>
+        /// List instances of a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>collection of Instances within the given ServerArray</returns>
+        public static List<Instance> index_serverArray(string serverArrayID, string view)
+        {
+            return index_serverArray(serverArrayID, null, view);
+        }
+
+        /// <summary>
+        /// Lists instances of a given cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud to query for instances</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>collection of Instances within the given Cloud</returns>
+        public static List<Instance> index(string cloudID, string view)
+        {
+            return index(cloudID, null, view);
+        }
+
+        /// <summary>
+        /// Lists instances of a given ServerArray.
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to query</param>
+        /// <param name="filter">filters results of query to RightScale API</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns></returns>
+        public static List<Instance> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/server_arrays/{0}/current_instances", serverArrayID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// Lists instances of a given cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud to query for instances</param>
+        /// <param name="filter">filters results of query to RightScale API</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>collection of Instances within the given Cloud</returns>
+        public static List<Instance> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/clouds/{0}/instances", cloudID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// private static method encapsulates logic for all Instance.index() calls
+        /// </summary>
+        /// <param name="getHref">API Href to use when accessing RSAPI</param>
+        /// <param name="filter">filters results of query to RightScale API</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns></returns>
+        private static List<Instance> indexGet(string getHref, List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -95,8 +182,18 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "datacenter_href", "deployment_href", "name", "os_platform", "parent_href", "private_dns_name", "private_ip_address", "public_dns_name", "public_ip_address", "resource_uid", "server_template_href", "state" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement Instance.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+            if (filter != null && filter.Count > 0)
+            {
+                foreach (KeyValuePair<string, string> kvp in filter)
+                {
+                    queryString += string.Format("{0}={1}&", kvp.Key, kvp.Value);
+                }
+            }
+            
+            queryString += string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		
