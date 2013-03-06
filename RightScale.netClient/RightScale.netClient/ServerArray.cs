@@ -11,7 +11,7 @@ namespace RightScale.netClient
         public string name { get; set; }
         public List<Action> actions { get; set; }
         public ElasticityParams elasticity_params { get; set; }
-        public NextInstance next_instance { get; set; }
+        public Instance next_instance { get; set; }
         public string array_type { get; set; }
         public int instances_count { get; set; }
         public List<Link> links { get; set; }
