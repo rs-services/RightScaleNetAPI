@@ -17,9 +17,9 @@ namespace RightScale.netClient
         public string name { get; set; }
         public List<Action> actions { get; set; }
         public string created_at { get; set; }
-        public NextInstance next_instance { get; set; }
+        public Instance next_instance { get; set; }
         public string updated_at { get; set; }
-        public CurrentInstance current_instance { get; set; }
+        public Instance current_instance { get; set; }
         public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
@@ -371,8 +371,7 @@ namespace RightScale.netClient
             {
                 throw new ArgumentException("Errors were found when parsing inputs for Server.create() : " + Environment.NewLine + errorString);
             }
-
-
+            
             //populate return value
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
 
@@ -577,6 +576,14 @@ namespace RightScale.netClient
         {
             return Core.APIClient.Instance.Delete(deleteHref);
         }
+
+        #endregion
+
+        #region Server.launch() methods
+
+        #endregion
+
+        #region Server.terminate() methods
 
         #endregion
     }

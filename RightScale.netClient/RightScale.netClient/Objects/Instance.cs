@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class NextInstance
+    public class Instance
     {
         public string name { get; set; }
         public List<Action> actions { get; set; }
