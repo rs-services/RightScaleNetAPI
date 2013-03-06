@@ -23,12 +23,9 @@ namespace RightScale.netClient.Core
         private static APIClient instance;
         private bool isAuthenticated;
         private bool isAuthenticating;
-        private object authLock;
-        WebHeaderCollection headerCollection;
         HttpClient webClient;
         CookieContainer cookieContainer;
         HttpClientHandler clientHandler;
-        HttpMessageHandler messageHandler;
 
         private const string apiBaseAddress = @"https://my.rightscale.com/";
 
