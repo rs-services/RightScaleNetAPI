@@ -34,6 +34,9 @@ namespace RightScale.netClient.Core
             InitWebClient();
         }
 
+        /// <summary>
+        /// internal method to init web client
+        /// </summary>
         public void InitWebClient()
         {
             this.isAuthenticated = false;
@@ -45,6 +48,9 @@ namespace RightScale.netClient.Core
             this.webClient.DefaultRequestHeaders.Add("X_API_Version", "1.5");
         }
 
+        /// <summary>
+        /// Public instance for singleton access
+        /// </summary>
         public static APIClient Instance
         {
             get
@@ -59,6 +65,11 @@ namespace RightScale.netClient.Core
 
         #region API Call Wrappers
 
+        /// <summary>
+        /// Public GET process to hit RightScale API
+        /// </summary>
+        /// <param name="apiHref">Rightscale API Href</param>
+        /// <returns>string content from RSAPI</returns>
         public string Get(string apiHref)
         {
             return Get(apiHref, string.Empty);
