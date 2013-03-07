@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Datacenters represent isolated facilities within a cloud. The level and type of isolation is cloud dependent. While Datacenters in large public clouds might correspond to different physical buildings, with different power, internet links...etc., Datacenters within the context of a private cloud might simply correspond to having different network providers.
+    /// Spreading servers across distinct Datacenters helps minimize outtages.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeDatacenter.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceDatacenters.html
+    /// </summary>
     public class DataCenter : Core.RightScaleObjectBase<DataCenter>
     {
         public string name { get; set; }
@@ -42,7 +49,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
 
         #region DataCenter.show() methods
 
@@ -62,23 +68,60 @@ namespace RightScale.netClient
 
         #region DataCenter.index methods
 
-        public static List<DataCenter> index()
+        /// <summary>
+        /// Lists all Datacenters for a particular cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
+        /// <returns>Collection of DataCenter objects</returns>
+        public static List<DataCenter> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
         }
 
-        public static List<DataCenter> index(List<KeyValuePair<string, string>> filter)
+        /// <summary>
+        /// Lists all Datacenters for a particular cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
+        /// <param name="filter">Filter set to limit return data</param>
+        /// <returns>Collection of DataCenter objects</returns>
+        public static List<DataCenter> index(string cloudID, List<KeyValuePair<string, string>> filter)
         {
-            return index(filter, null);
+            return index(cloudID, filter, null);
         }
 
-        public static List<DataCenter> index(string view)
+        /// <summary>
+        /// Lists all Datacenters for a particular cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
+        /// <param name="filter">Filter set to limit return data</param>
+        /// <returns>Collection of DataCenter objects</returns>
+        public static List<DataCenter> index(string cloudID, Hashtable filter)
         {
-            return index(null, view);
+            return index(cloudID, Utility.convertToKVP(filter), null);
         }
 
-        public static List<DataCenter> index(List<KeyValuePair<string, string>> filter, string view)
+        /// <summary>
+        /// Lists all Datacenters for a particular cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>Collection of DataCenter objects</returns>
+        public static List<DataCenter> index(string cloudID, string view)
         {
+            return index(cloudID, null, view);
+        }
+
+        /// <summary>
+        /// Lists all Datacenters for a particular cloud.
+        /// </summary>
+        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
+        /// <param name="filter">Filter set to limit return data</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>Collection of DataCenter objects</returns>
+        public static List<DataCenter> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/clouds/{0}/datacenters", cloudID);
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -92,8 +135,21 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "name", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement DataCenter.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+
+            if (filter != null && filter.Count > 0)
+            {
+                foreach(KeyValuePair<string, string> kvp in filter)
+                {
+                    queryString += string.Format("{0}={1}&", kvp.Key, kvp.Value);
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		
