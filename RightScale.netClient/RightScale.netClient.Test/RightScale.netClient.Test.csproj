@@ -65,6 +65,7 @@
     <Compile Include="DeploymentTest.cs" />
     <Compile Include="IdentityProviderTest.cs" />
     <Compile Include="DataCenterTest.cs" />
+    <Compile Include="IPAddressTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">

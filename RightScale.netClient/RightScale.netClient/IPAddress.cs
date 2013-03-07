@@ -59,7 +59,7 @@ namespace RightScale.netClient
         /// <returns>Collection of IPAddress objects</returns>
         public static List<IPAddress> index(string cloudID)
         {
-            return index(null);
+            return index(cloudID, new List<KeyValuePair<string, string>>());
         }
 
         /// <summary>

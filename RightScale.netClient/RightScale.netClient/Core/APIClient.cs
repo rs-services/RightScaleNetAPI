@@ -90,7 +90,7 @@ namespace RightScale.netClient.Core
             }
             else
             {
-                throw new UnauthorizedAccessException("RightScale API calls could not be authenticated");
+                throw new RightScaleAPIException("RSAPI Authentication Error", apiHref, "Call to RightScale API could not be authenticated");
             }
             throw new NotImplementedException();
         }
@@ -109,12 +109,12 @@ namespace RightScale.netClient.Core
                 }
                 else
                 {
-                    throw new ArgumentException("Cannot PUT to RightScale API without including values in putData collection");
+                    throw new RightScaleAPIException("RSAPI Put Error", putHref, "Cannot PUT to RightScale API without including values in putData collection", null, putData);
                 }
             }
             else
             {
-                throw new UnauthorizedAccessException("RightScale API calls could not be authenticated");
+                throw new RightScaleAPIException("RSAPI Authentication Error", putHref, "Call to RightScale API could not be authenticated", null, putData);
             }
             throw new NotImplementedException();
         }
@@ -157,8 +157,7 @@ namespace RightScale.netClient.Core
                 }
                 catch (HttpRequestException hre)
                 {
-                    Exception ex = new Exception("RSAPI Exception: content" + Environment.NewLine + content, hre);
-                    throw ex;
+                    throw new RightScaleAPIException(apiHref, content, "Exception from API Gateway, see error data", hre, parameterSet);
                 }
             }
             return null;
@@ -180,7 +179,7 @@ namespace RightScale.netClient.Core
                 }
                 catch (HttpRequestException hre)
                 {
-                    Exception ex = new Exception("RSAPI Exception: content" + Environment.NewLine + content, hre);
+                    throw new RightScaleAPIException("Exception from API Gateway, see error data", apiHref, content, hre, postData);
                 }
             }
             return false;
@@ -266,7 +265,7 @@ namespace RightScale.netClient.Core
             }
             else
             {
-                throw new NotSupportedException("API Credentials were not found in the application configuration file.  The default/no parameter authentication method can only be used if authentication credentials are set within the aplications app.config or web.config.");
+                throw new RightScaleAPIException("API Credentials were not found in the application configuration file.  The default/no parameter authentication method can only be used if authentication credentials are set within the aplications app.config or web.config.");
             }
         }
 

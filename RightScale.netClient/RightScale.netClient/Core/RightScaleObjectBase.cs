@@ -53,7 +53,7 @@ namespace RightScale.netClient.Core
             }
             catch (JsonReaderException jre)
             {
-                throw new Exception(jsonString, jre);
+                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
             }
         }
 
@@ -65,7 +65,7 @@ namespace RightScale.netClient.Core
             }
             catch (JsonReaderException jre)
             {
-                throw new Exception(jsonString, jre);
+                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
             }
         }
     }

@@ -79,6 +79,7 @@
     <Compile Include="PublicationLineage.cs" />
     <Compile Include="RecurringVolumeAttachment.cs" />
     <Compile Include="Objects\ScheduleEntry.cs" />
+    <Compile Include="RightScaleAPIException.cs" />
     <Compile Include="SecurityGroup.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ServerArray.cs" />
