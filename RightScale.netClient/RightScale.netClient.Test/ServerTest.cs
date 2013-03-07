@@ -24,6 +24,8 @@ namespace RightScale.netClient.Test
             multiCloudImageID = ConfigurationManager.AppSettings["ServerTest_multiCloudImageID"].ToString();
             instanceTypeID = ConfigurationManager.AppSettings["ServerTest_instanceTypeID"].ToString();
         }
+        
+        #region Server.index tests
 
         [TestMethod]
         public void serverIndexTest()
@@ -40,6 +42,26 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(serverIndexDeploymentTest);
             Assert.IsTrue(serverIndexDeploymentTest.Count > 0);
         }
+
+        #endregion
+        
+        #region Server.show tests
+
+        [TestMethod]
+        public void serverShowTest()
+        {
+            Server serverobj = Server.show(serverID);
+            Assert.IsNotNull(serverobj);
+        }
+
+        [TestMethod]
+        public void serverDeploymentShowTest()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+        }
+
+        #endregion
 
         [TestMethod]
         public void serverCloneDestroyTest()
@@ -103,20 +125,6 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(destroyRetVal);
         }
 
-
-        [TestMethod]
-        public void serverShowTest()
-        {
-            Server serverobj = Server.show(serverID);
-            Assert.IsNotNull(serverobj);
-        }
-        
-        [TestMethod]
-        public void serverDeploymentShowTest()
-        {
-            Server serverobj = Server.show_deployment(serverID, deploymentID);
-            Assert.IsNotNull(serverobj);
-        }
 
         [TestMethod]
         public void serverCreateComplicatedDestroySimpleTest()

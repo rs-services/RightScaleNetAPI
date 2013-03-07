@@ -19,6 +19,8 @@ namespace RightScale.netClient.Test
             serverArrayID = ConfigurationManager.AppSettings["InstanceTest_serverArrayID"].ToString();
         }
 
+        #region Instance.index tests
+
         [TestMethod]
         public void indexSimpleTest()
         {
@@ -43,5 +45,8 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(instanceList);
             Assert.IsTrue(instanceList.Count > 0);
         }
+
+        #endregion
+
     }
 }

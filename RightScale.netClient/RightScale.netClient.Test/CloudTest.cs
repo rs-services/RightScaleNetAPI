@@ -18,26 +18,22 @@ namespace RightScale.netClient.Test
             openstackCloudID = ConfigurationManager.AppSettings["CloudTest_openstackCloudID"].ToString();
         }
 
-        //TODO: AWS not enabled in API 1.5 yet
-        //[TestMethod]
-        //public void AWSCloudTest()
-        //{
-        //    Cloud awsCloud = Cloud.show(awsCloudID);
-        //    Assert.IsNotNull(awsCloud);
-        //}
+        #region Cloud.show tests
 
         [TestMethod]
-        public void AzureCloudTest()
+        public void AzureCloudShowTest()
         {
             Cloud azureCloud = Cloud.show(azureCloudID);
             Assert.IsNotNull(azureCloud);
         }
 
         [TestMethod]
-        public void OpenStackCloudTest()
+        public void OpenStackCloudShowTest()
         {
             Cloud openstackCloud = Cloud.show(openstackCloudID);
             Assert.IsNotNull(openstackCloud);
         }
+
+        #endregion
     }
 }

@@ -138,12 +138,102 @@ namespace RightScale.netClient
         #region AlertSpec.index methods
 
         /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to query for AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerArray</returns>
+        public static List<AlertSpec> index_serverArray(string serverArrayID)
+        {
+            return index_serverArray(serverArrayID, null, null);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to query for AlertSpecs</param>
+        /// <param name="filter">Filters for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerArray</returns>
+        public static List<AlertSpec> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter)
+        {
+            return index_serverArray(serverArrayID, filter, null);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to query for AlertSpecs</param>
+        /// <param name="view">View name for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerArray</returns>
+        public static List<AlertSpec> index_serverArray(string serverArrayID, string view)
+        {
+            return index_serverArray(serverArrayID, null, view);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to query for AlertSpecs</param>
+        /// <param name="filter">Filters for querying AlertSpecs</param>
+        /// <param name="view">View name for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerArray</returns>
+        public static List<AlertSpec> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/server_arrays/{0}/alert_specs", serverArrayID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ServerTemplate ID to query for AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID)
+        {
+            return index_serverTemplate(serverTemplateID, null, null);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ServerTemplate ID to query for AlertSpecs</param>
+        /// <param name="filter">Filters for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<KeyValuePair<string, string>> filter)
+        {
+            return index_serverTemplate(serverTemplateID, filter, null);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ServerTemplate ID to query for AlertSpecs</param>
+        /// <param name="view">View name for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, string view)
+        {
+            return index_serverTemplate(serverTemplateID, null, view);
+        }
+
+        /// <summary>
+        /// Gets a collection of AlertSpecs for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ServerTemplate ID to query for AlertSpecs</param>
+        /// <param name="filter">Filters for querying AlertSpecs</param>
+        /// <param name="view">View name for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/server_templates/{0}/alert_specs", serverTemplateID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
         /// Gets a collection of AlertSpecs
         /// </summary>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index()
+        public static List<AlertSpec> index(string serverID)
         {
-            return index(null, null);
+            return index(serverID, null, null);
         }
 
         /// <summary>
@@ -151,9 +241,9 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index(List<KeyValuePair<string, string>> filter)
+        public static List<AlertSpec> index(string serverID, List<KeyValuePair<string, string>> filter)
         {
-            return index(filter, null);
+            return index(serverID, filter, null);
         }
 
         /// <summary>
@@ -161,7 +251,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="view">view name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index(string view)
+        public static List<AlertSpec> index(string serverID, string view)
         {
             return index(null, view);
         }
@@ -172,7 +262,20 @@ namespace RightScale.netClient
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <param name="view">View name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<AlertSpec> index(string serverID, List<KeyValuePair<string, string>> filter, string view)
+        {
+            string getHref = string.Format("/api/servers/{0}/alert_specs", serverID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// Private implementation to centrally manage all calls to index AlertSpecs
+        /// </summary>
+        /// <param name="getHref">RightScale API Href fragment for indexing AlertSpecs</param>
+        /// <param name="filter">Filters for querying AlertSpecs</param>
+        /// <param name="view">View name for querying AlertSpecs</param>
+        /// <returns>collection of AlertSpecs</returns>
+        private static List<AlertSpec> indexGet(string getHref, List<KeyValuePair<string, string>> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -187,9 +290,16 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "description", "escalation_name", "name", "subject_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement AlertSpec.index
-            throw new NotImplementedException();
+            string queryString = Utility.BuildFilterString(filter);
+            if (!string.IsNullOrEmpty(view))
+            {
+                queryString += string.Format("&view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
+
         #endregion
 
         #region AlertSpec.destroy methods

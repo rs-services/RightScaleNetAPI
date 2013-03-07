@@ -19,6 +19,8 @@ namespace RightScale.netClient.Test
             serverArrayID = ConfigurationManager.AppSettings["AuditEntryTest_serverArrayID"].ToString();
         }
 
+        #region AuditEntry.show tests
+
         [TestMethod]
         public void showTest()
         {
@@ -26,12 +28,20 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(ae, "Audit Entry is null - object did not get returned properly");
         }
 
+        #endregion
+
+        #region AuditEntry.index tests
+
         [TestMethod]
         public void indexSimpleTest()
         {
             List<AuditEntry> auditEntries = AuditEntry.index(DateTime.Now.AddDays(-10));
             Assert.IsNotNull(auditEntries);
         }
+
+        #endregion
+
+        #region AuditEntry.create tests
 
         [TestMethod]
         public void createTest()
@@ -72,7 +82,9 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(appendResult);
             string detailResults2 = AuditEntry.detail(auditEntryID);
             Assert.IsNotNull(detailResults2);
-            Assert.AreNotEqual(detailResults1, detailResults2); 
+            Assert.AreNotEqual(detailResults1, detailResults2);
         }
+
+        #endregion
     }
 }

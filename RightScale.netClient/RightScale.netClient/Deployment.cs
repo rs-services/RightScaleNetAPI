@@ -49,23 +49,49 @@ namespace RightScale.netClient
         
         #region Deployment.index methods
 
+        /// <summary>
+        /// Lists deployments of the account.
+        /// Using the available filters, one can select or group which deployments to retrieve. The 'inputs20' view is for retrieving inputs in 2.0 serialization 
+        /// </summary>
+        /// <returns>collection of Deployment objects</returns>
         public static List<Deployment> index()
         {
             return index(null, null);
         }
 
+        /// <summary>
+        /// Lists deployments of the account.
+        /// Using the available filters, one can select or group which deployments to retrieve. The 'inputs20' view is for retrieving inputs in 2.0 serialization 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns>collection of Deployment objects</returns>
         public static List<Deployment> index(List<KeyValuePair<string, string>> filter)
         {
             return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists deployments of the account.
+        /// Using the available filters, one can select or group which deployments to retrieve. The 'inputs20' view is for retrieving inputs in 2.0 serialization 
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns>collection of Deployment objects</returns>
         public static List<Deployment> index(string view)
         {
             return index(null, view);
         }
 
+        /// <summary>
+        /// Lists deployments of the account.
+        /// Using the available filters, one can select or group which deployments to retrieve. The 'inputs20' view is for retrieving inputs in 2.0 serialization 
+        /// </summary>
+        /// <param name="filter">list of KeyValuePair(string,string) to use as filters to query for deployments</param>
+        /// <param name="view">name of the view to be returned</param>
+        /// <returns>collection of Deployment objects</returns>
         public static List<Deployment> index(List<KeyValuePair<string, string>> filter, string view)
         {
+            string getHref = "/api/deployments";
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -79,8 +105,12 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "description", "name", "server_tag_scope" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement Deployment.index
-            throw new NotImplementedException();
+            string queryStringValue = string.Empty;
+            queryStringValue += string.Format("view={0}&", view);
+            queryStringValue += Utility.BuildFilterString(filter);
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryStringValue);
+            return deserializeList(jsonString);
         }
         #endregion
 		

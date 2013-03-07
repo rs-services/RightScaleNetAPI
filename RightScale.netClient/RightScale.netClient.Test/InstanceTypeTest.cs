@@ -15,11 +15,15 @@ namespace RightScale.netClient.Test
             cloudID = ConfigurationManager.AppSettings["InstanceTypeTest_cloudID"].ToString();
         }
 
+        #region InstanceType.index tests
+
         [TestMethod]
         public void InstanceTypeIndexTest()
         {
             List<InstanceType> resultSet = InstanceType.index(cloudID);
             Assert.IsNotNull(resultSet);
         }
+
+        #endregion
     }
 }

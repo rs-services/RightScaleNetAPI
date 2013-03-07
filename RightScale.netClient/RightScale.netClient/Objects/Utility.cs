@@ -103,10 +103,12 @@ namespace RightScale.netClient
         public static string BuildFilterString(List<KeyValuePair<string, string>> filterSet)
         {
             string retVal = string.Empty;
-
-            foreach (KeyValuePair<string, string> kvp in filterSet)
+            if (filterSet != null)
             {
-                retVal += string.Format(@"filter[]=""{0}=={1}""&", kvp.Key, kvp.Value);
+                foreach (KeyValuePair<string, string> kvp in filterSet)
+                {
+                    retVal += string.Format(@"filter[]={0}=={1}&", kvp.Key, kvp.Value);
+                }
             }
 
             retVal = retVal.TrimEnd('&');

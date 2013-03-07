@@ -15,11 +15,15 @@ namespace RightScale.netClient.Test
             accountID = ConfigurationManager.AppSettings["AccountTest_accountID"].ToString();
         }
 
+        #region Account.show tests
+
         [TestMethod]
         public void showTest()
         {
             Account acct = Account.show(accountID);
             Assert.IsNotNull(acct, "Account came back as null - issue with API call");
         }
+
+        #endregion
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="ServerTest.cs" />
     <Compile Include="InstanceTest.cs" />
     <Compile Include="InstanceTypeTest.cs" />
+    <Compile Include="DeploymentTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">

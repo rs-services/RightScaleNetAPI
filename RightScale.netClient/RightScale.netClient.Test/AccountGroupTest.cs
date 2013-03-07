@@ -16,6 +16,8 @@ namespace RightScale.netClient.Test
             accountGroupID = ConfigurationManager.AppSettings["AccountGroup_AccountGroupID"].ToString();
         }
 
+        #region AccountGroup.show tests
+
         [TestMethod]
         public void showTestFull()
         {
@@ -30,11 +32,17 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(ag, "Account Group is null--bad call to API");
         }
 
+        #endregion
+
+        #region AccountGroup.index tests
+
         [TestMethod]
         public void indexTestFull()
         {
             List<AccountGroup> acctGroupList = AccountGroup.index();
             Assert.IsNotNull(acctGroupList);
         }
+
+        #endregion
     }
 }

@@ -14,11 +14,5 @@ namespace RightScale.netClient.Test
             backupID = ConfigurationManager.AppSettings["BackupTest_backupID"].ToString();
         }
 
-        //[TestMethod]
-        //public void showTest()
-        //{
-        //   Backup backupTest = Backup.show(backupID);
-        //    Assert.IsNotNull(backupTest);
-        //}
     }
 }

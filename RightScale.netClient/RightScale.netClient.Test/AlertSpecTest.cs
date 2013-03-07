@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RightScale.netClient;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace RightScale.netClient.Test
 {
@@ -17,6 +18,99 @@ namespace RightScale.netClient.Test
             serverTemplateID = ConfigurationManager.AppSettings["AlertSpecTest_serverTemplateID"].ToString();
             serverArrayID = ConfigurationManager.AppSettings["AlertSpecTest_serverArrayID"].ToString();
         }
+
+        #region AlertSpec.index tests
+        [TestMethod]
+        public void alertSpecServerIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index(serverID);
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerViewIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index(serverID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerFilterIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index(serverID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
+            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<AlertSpec> filteredAlertSpecList = AlertSpec.index(serverID, filterSet, "default");
+            Assert.IsNotNull(filteredAlertSpecList);
+            Assert.IsTrue(filteredAlertSpecList.Count > 0);
+            Assert.IsTrue(filteredAlertSpecList.Count <= alertSpecList.Count);
+        }
+
+        [TestMethod]
+        public void alertSpecServerTemplateIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverTemplate(serverTemplateID);
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerTemplateViewIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverTemplate(serverTemplateID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerTemplateFilterIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverTemplate(serverTemplateID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
+            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<AlertSpec> filteredAlertSpecList = AlertSpec.index_serverTemplate(serverTemplateID, filterSet, "default");
+            Assert.IsNotNull(filteredAlertSpecList);
+            Assert.IsTrue(filteredAlertSpecList.Count > 0);
+            Assert.IsTrue(filteredAlertSpecList.Count <= alertSpecList.Count);
+        }
+
+        [TestMethod]
+        public void aletSpecServerArrayIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverArray(serverArrayID);
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerArrayViewIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverArray(serverArrayID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+        }
+
+        [TestMethod]
+        public void alertSpecServerArrayFilterIndex()
+        {
+            List<AlertSpec> alertSpecList = AlertSpec.index_serverArray(serverArrayID, "default");
+            Assert.IsNotNull(alertSpecList);
+            Assert.IsTrue(alertSpecList.Count > 0);
+            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
+            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<AlertSpec> filteredAlertSpecList = AlertSpec.index_serverArray(serverArrayID, filterSet, "default");
+            Assert.IsNotNull(filteredAlertSpecList);
+            Assert.IsTrue(filteredAlertSpecList.Count > 0);
+            Assert.IsTrue(filteredAlertSpecList.Count <= alertSpecList.Count);
+        }
+
+        #endregion
 
         [TestMethod]
         public void createReadUpdateDeleteAlertSpec_forServerTemplate()
