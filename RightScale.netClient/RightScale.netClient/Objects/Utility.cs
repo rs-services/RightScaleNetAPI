@@ -32,11 +32,11 @@ namespace RightScale.netClient
             return true;
         }
 
-        public static bool CheckStringInput(string inputName, List<string> validViews, string actualName)
+        public static bool CheckStringInput(string inputName, List<string> validViews, string actualValue)
         {
             bool retVal = false;
 
-            if (!validViews.Contains(actualName.ToLower()))
+            if (!validViews.Contains(actualValue.ToLower()))
             {
                 string validValueString = string.Empty;
 
@@ -45,7 +45,7 @@ namespace RightScale.netClient
                     validValueString += "'" + s + "', ";
                 }
                 validValueString = validValueString.Trim().TrimEnd(',');
-                throw new ArgumentException(string.Format(argumentExceptionFormat, inputName, validValueString, actualName));
+                throw new ArgumentException(string.Format(argumentExceptionFormat, inputName, validValueString, actualValue));
             }
             else
             {

@@ -8,6 +8,13 @@ namespace RightScale.netClient.Test
     [TestClass]
     public class DeploymentTest
     {
+        string deploymentID;
+
+        public DeploymentTest()
+        {
+            deploymentID = ConfigurationManager.AppSettings["DeploymentTest_deploymentID"].ToString();
+        }
+
         #region Deployment.index tests
 
         [TestMethod]
@@ -79,6 +86,25 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(filterList.Count == viewFilterList.Count);
         }
         
+        #endregion
+
+        #region Deployment.show tests
+
+        [TestMethod]
+        public void showDeploymentSimple()
+        {
+            Deployment testDeployment = Deployment.show(deploymentID);
+            Assert.IsNotNull(testDeployment);
+        }
+
+        [TestMethod]
+        public void showDeploymentView()
+        {
+            Deployment testDeployment = Deployment.show(deploymentID, "inputs");
+            Assert.IsNotNull(testDeployment);
+            Assert.IsTrue(testDeployment.inputs.Count > 0);
+        }
+
         #endregion
     }
 }

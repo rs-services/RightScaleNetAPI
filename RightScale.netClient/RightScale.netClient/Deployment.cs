@@ -113,6 +113,40 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region Deployment.show
+
+        /// <summary>
+        /// Lists the attributes of a given deployment
+        /// </summary>
+        /// <param name="deploymentID">ID of the deployment to show</param>
+        /// <returns>Deployment specified by ID</returns>
+        public static Deployment show(string deploymentID)
+        {
+            return show(deploymentID, "default");
+        }
+
+        /// <summary>
+        /// Lists the attributes of a given deployment
+        /// </summary>
+        /// <param name="deploymentID">ID of the deployment to show</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Deployment specified by ID</returns>
+        public static Deployment show(string deploymentID, string view)
+        {
+            string getHref = string.Format("/api/deployments/{0}", deploymentID);
+            string queryString = string.Empty;
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                List<string> validViews = new List<string>() { "default", "inputs", "inputs_2_0" };
+                Utility.CheckStringInput("view", validViews, view);
+                queryString += string.Format("view={0}", view);
+            }
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+
+        }
+
+        #endregion
     }
 }
