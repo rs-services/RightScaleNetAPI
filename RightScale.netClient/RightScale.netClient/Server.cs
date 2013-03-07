@@ -611,10 +611,37 @@ namespace RightScale.netClient
 
         #region Server.launch() methods
 
+        /// <summary>
+        /// Launches the "next" instance of this server. This function is equivalent to invoking the launch action on the URL of this servers next_instance. See Instances#launch for details
+        /// </summary>
+        /// <param name="serverID">ID of server whose next instance will be launched</param>
+        /// <returns>True if success, false if not</returns>
+        public static bool launch(string serverID)
+        {
+            return launch(serverID, new List<KeyValuePair<string, string>>());
+        }
+
+        /// <summary>
+        /// Launches the "next" instance of this server. This function is equivalent to invoking the launch action on the URL of this servers next_instance. See Instances#launch for details
+        /// </summary>
+        /// <param name="serverID">ID of the server whose next instance will be launched</param>
+        /// <param name="inputs">collection of inputs to be passed into the launch process</param>
+        /// <returns>True if success, false if not</returns>
+        public static bool launch(string serverID, List<KeyValuePair<string, string>> inputs)
+        {
+            string postHref = string.Format("/api/servers/{0}/launch", serverID);
+            return Core.APIClient.Instance.Post(postHref, inputs);
+        }
+
         #endregion
 
         #region Server.terminate() methods
 
+        /// <summary>
+        /// Terminates the current instance of this server. This function is equivalent to invoking the terminate action on the URL of this servers current_instance.
+        /// </summary>
+        /// <param name="serverID">ID of the server whose current_instance will be terminated</param>
+        /// <returns>true if success, false if not</returns>
         public static bool terminate(string serverID)
         {
             string postHref = string.Format("/api/servers/{0}/terminate", serverID);

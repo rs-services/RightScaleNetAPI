@@ -128,5 +128,12 @@ namespace RightScale.netClient.Test
             bool delRetVal = Server.destroy(newServerID);
             Assert.IsTrue(delRetVal);
         }
+
+        [TestMethod]
+        public void serverCreateUpdateDestroySimpleTest()
+        {
+            string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "this is another test server name");
+            Assert.IsNotNull(newServerID);
+        }
     }
 }
