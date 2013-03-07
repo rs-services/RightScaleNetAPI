@@ -61,6 +61,7 @@
     <Compile Include="CloudTest.cs" />
     <Compile Include="ServerTest.cs" />
     <Compile Include="InstanceTest.cs" />
+    <Compile Include="InstanceTypeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">

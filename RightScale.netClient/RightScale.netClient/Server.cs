@@ -295,7 +295,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string create_deployment(string deploymentID, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
         {
-            return create(deploymentID, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized);
+            return create(cloudID, deploymentID, serverTemplateID, name, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, sshKeyID, userData, optimized);
         }
 
         /// <summary>
@@ -333,10 +333,10 @@ namespace RightScale.netClient
         /// <param name="name">The name of the server</param>
         /// <param name="optimized">A flag indicating whether instances of this Server should support optimized Volumes</param>
         /// <returns>ID of the newly created server</returns>
-        public static string create(string deploymentID, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
+        public static string create(string cloudid, string deploymentID, string serverTemplateID, string serverName, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
         {
             string postHref = "/api/servers";
-            List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized);
+            List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, serverName, optimized);
             return createPost(postHref, parameters);
         }
 
@@ -347,10 +347,10 @@ namespace RightScale.netClient
         /// <param name="serverTemplateID">ID of the SErverTemplate</param>
         /// <param name="serverName">The name of the server</param>
         /// <returns>ID of the newly created server</returns>
-        public static string create(string cloudID, string serverTemplateID, string serverName)
+        public static string create(string cloudID, string deploymentID, string serverTemplateID, string serverName)
         {
             string postHref = "/api/servers";
-            List<KeyValuePair<string, string>> parameters = createGetParameterSet(null, null, cloudID, null, null, null, null, null, null, null, null, serverTemplateID, null, null, serverName, false);
+            List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, null, cloudID, null, null, null, null, null, null, null, null, serverTemplateID, null, null, serverName, false);
             return createPost(postHref, parameters);
         }
 
@@ -392,6 +392,10 @@ namespace RightScale.netClient
             {
                 errorString += "ServerTemplateID is a required input" + Environment.NewLine;
             }
+            if (string.IsNullOrWhiteSpace(deploymentid))
+            {
+                errorString += "DeploymentID is a required input" + Environment.NewLine;
+            }
 
             if(!string.IsNullOrWhiteSpace(errorString))
             {
@@ -431,7 +435,7 @@ namespace RightScale.netClient
             }
             if(!string.IsNullOrWhiteSpace(instanceTypeID))
             {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][instance_type_href]", Utility.instanceTypeHref(cloudID, instanceTypeID)));
+                retVal.Add(new KeyValuePair<string, string>("server[instance][instance_type_href]", Utility.instanceTypeHref(cloudID, instanceTypeID)));
             }
             if(!string.IsNullOrWhiteSpace(kernelImageID))
             {

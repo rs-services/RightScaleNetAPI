@@ -54,23 +54,25 @@ namespace RightScale.netClient
         
         #region InstanceType.index methods
 
-        public static List<InstanceType> index()
+        public static List<InstanceType> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
         }
 
-        public static List<InstanceType> index(List<KeyValuePair<string, string>> filter)
+        public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter)
         {
-            return index(filter, null);
+            return index(cloudID, filter, null);
         }
 
-        public static List<InstanceType> index(string view)
+        public static List<InstanceType> index(string cloudID, string view)
         {
-            return index(null, view);
+            return index(cloudID, null, view);
         }
 
-        public static List<InstanceType> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
         {
+            string getHref = string.Format("/api/clouds/{0}/instance_types", cloudID);
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -84,8 +86,14 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "cpu_architecture", "description", "name", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement InstanceType.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+            if (filter != null && filter.Count > 0)
+            {
+                queryString += Utility.BuildGetQueryString(filter) + "&";
+            }
+            queryString += string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		

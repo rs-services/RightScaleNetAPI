@@ -195,7 +195,7 @@ namespace RightScale.netClient
         /// <returns>Formatted instance_type_href</returns>
         public static string instanceTypeHref(string cloudID, string objectID)
         {
-            return string.Format("api/clouds/{0}/instance_types/{1}", cloudID, objectID);
+            return string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, objectID);
         }
 
         /// <summary>

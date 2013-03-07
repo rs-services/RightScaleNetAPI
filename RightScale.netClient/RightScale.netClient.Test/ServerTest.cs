@@ -12,6 +12,8 @@ namespace RightScale.netClient.Test
         private string serverID;
         private string cloudID;
         private string serverTemplateID;
+        private string multiCloudImageID;
+        private string instanceTypeID;
 
         public ServerTest()
         {
@@ -19,6 +21,8 @@ namespace RightScale.netClient.Test
             serverID = ConfigurationManager.AppSettings["ServerTest_serverID"].ToString();
             cloudID = ConfigurationManager.AppSettings["ServerTest_cloudID"].ToString();
             serverTemplateID = ConfigurationManager.AppSettings["ServerTest_serverTemplateID"].ToString();
+            multiCloudImageID = ConfigurationManager.AppSettings["ServerTest_multiCloudImageID"].ToString();
+            instanceTypeID = ConfigurationManager.AppSettings["ServerTest_instanceTypeID"].ToString();
         }
 
         [TestMethod]
@@ -64,13 +68,41 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void serverCreateDeploymentDestroySimpleTest()
+        public void serverCreateDeploymentDestroyDeploymentSimpleTest()
         {
             string newServerID = Server.create_deployment(deploymentID, cloudID, serverTemplateID, "this is a server name");
             Assert.IsNotNull(newServerID);
             bool destroyRetVal = Server.destroy_deployment(newServerID, deploymentID);
             Assert.IsTrue(destroyRetVal);
         }
+
+        [TestMethod]
+        public void serverCreateDeploymentDestroySimpleTest()
+        {
+            string newServerID = Server.create_deployment(deploymentID, cloudID, serverTemplateID, "this is a server name");
+            Assert.IsNotNull(newServerID);
+            bool destroyRetVal = Server.destroy(newServerID);
+            Assert.IsTrue(destroyRetVal);
+        }
+
+        [TestMethod]
+        public void serverCreateDestroySimpleTest()
+        {
+            string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "this is another test server name");
+            Assert.IsNotNull(newServerID);
+            bool destroyRetVal = Server.destroy(newServerID);
+            Assert.IsTrue(destroyRetVal);
+        }
+
+        [TestMethod]
+        public void serverCreateDestroyDeploymentSimpleTest()
+        {
+            string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "this is another test server name");
+            Assert.IsNotNull(newServerID);
+            bool destroyRetVal = Server.destroy_deployment(newServerID, deploymentID);
+            Assert.IsTrue(destroyRetVal);
+        }
+
 
         [TestMethod]
         public void serverShowTest()
@@ -84,6 +116,17 @@ namespace RightScale.netClient.Test
         {
             Server serverobj = Server.show_deployment(serverID, deploymentID);
             Assert.IsNotNull(serverobj);
+        }
+
+        [TestMethod]
+        public void serverCreateComplicatedDestroySimpleTest()
+        {
+            List<KeyValuePair<string, string>> inputs = new List<KeyValuePair<string, string>>();
+            inputs.Add(new KeyValuePair<string, string>("ADMIN_PASSWORD", "text:thisisapassword!@#$%^"));
+            string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "complicated Server Instance", "this is a description...", cloudID, null, null, inputs, instanceTypeID, null, multiCloudImageID, null, null, null, null, false);
+            Assert.IsNotNull(newServerID);
+            bool delRetVal = Server.destroy(newServerID);
+            Assert.IsTrue(delRetVal);
         }
     }
 }
