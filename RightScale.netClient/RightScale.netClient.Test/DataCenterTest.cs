@@ -9,6 +9,7 @@ namespace RightScale.netClient.Test
     public class DataCenterTest
     {
         string cloudID;
+        string datacenterID;
 
         public DataCenterTest()
         {
