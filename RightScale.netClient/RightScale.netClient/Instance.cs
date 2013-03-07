@@ -147,8 +147,43 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-        
+
+        #region Instance.show
+
+        /// <summary>
+        /// Shows attributes of a single instance.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance can be found</param>
+        /// <param name="instanceID">ID of the instance being queried</param>
+        /// <returns>Instance object as specified</returns>
+        public Instance show(string cloudID, string instanceID)
+        {
+            return show(cloudID, instanceID, "full");
+        }
+
+        /// <summary>
+        /// Shows attributes of a single instance.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance can be found</param>
+        /// <param name="instanceID">ID of the instance being queried</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance object as specified</returns>
+        public Instance show(string cloudID, string instanceID, string view)
+        {
+            string getHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+            string queryString = string.Empty;
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                List<string> validViews = new List<string>() { "default", "extended", "full", "full_inputs_2_0" };
+                Utility.CheckStringInput("view", validViews, view);
+                queryString += string.Format("view={0}&", view);
+            }
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
         #region Instance.index methods
 
         /// <summary>
@@ -277,6 +312,66 @@ namespace RightScale.netClient
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
         }
+        #endregion
+
+        #region Instance.update
+
+        #endregion
+
+        #region Instance.launch
+
+        #endregion
+
+        #region Instance.multi_run_executable
+
+        #endregion
+
+        #region Instance.multi_terminate
+
+        #endregion
+
+        #region Instance.run_executable
+
+        #endregion
+
+        #region Instance.set_custom_lodgement
+
+        #endregion
+
+        #region Instance.start
+
+        /// <summary>
+        /// Starts an instance that has been stopped, resuming it to its previously saved volume state.
+        /// After an instance is started, the reference to your instance will have a different id.
+        /// The new id can be found by performing an index query with the appropriate filters on the Instances resource, performing a show action on the Server resource for Server Instances, or performing a current_instances action on the ServerArray resource for ServerArray Instances.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is located</param>
+        /// <param name="instanceID">ID of the instance to be stopped</param>
+        /// <returns>True if success, false if failure</returns>
+        public static bool start(string cloudID, string instanceID)
+        {
+            string postUrl = string.Format("/api/clouds/{0}/instances/{1}/start", cloudID, instanceID);
+            return Core.APIClient.Instance.Post(postUrl);
+        }
+
+        #endregion
+
+        #region Instance.stop
+
+        /// <summary>
+        /// Stores the instance's current volume state to resume later using the 'start' action.
+        /// After an instance is stopped, the reference to your instance will have a different id.  
+        /// The new id can be found by performing an index query with the appropriate filters on the Instances resource, performing a show action on the Server resource for Server Instances, or performing a current_instances action on the ServerArray resource for ServerArray Instances.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is located</param>
+        /// <param name="instanceID">ID of the instance to be stopped</param>
+        /// <returns>True if success, false if failure</returns>
+        public static bool stop(string cloudID, string instanceID)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/stop", cloudID, instanceID);
+            return Core.APIClient.Instance.Post(postHref);
+        }
+
         #endregion
 
         #region Instance.terminate
