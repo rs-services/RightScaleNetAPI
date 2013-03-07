@@ -35,94 +35,84 @@ namespace RightScale.netClient
 
         #region Get link ID public instance methods
 
-        /// <summary>
-        /// Get instance id from links collection
-        /// </summary>
-        /// <returns>Instance ID</returns>
-        public string getInstanceID()
+        public string InstanceID
         {
-            return getLinkIDValue("self");
+            get
+            {
+                return getLinkIDValue("self");
+            }
+        }
+        
+        public string CloudID
+        {
+            get
+            {
+                return getLinkIDValue("cloud");
+            }
         }
 
-        /// <summary>
-        /// Get Cloud ID from links collection
-        /// </summary>
-        /// <returns>Cloud ID</returns>
-        public string getCloudID()
+        public string ServerTemplateID
         {
-            return getLinkIDValue("cloud");
+            get
+            {
+                return getLinkIDValue("server_template");
+            }
         }
 
-        /// <summary>
-        /// Get ServerTemplate ID from links collection
-        /// </summary>
-        /// <returns></returns>
-        public string getServerTemplateID()
+        public string MultiCloudImageID
         {
-            return getLinkIDValue("server_template");
+            get
+            {
+                return getLinkIDValue("multi_cloud_image");
+            }
         }
 
-        /// <summary>
-        /// Get MultiCloudImage ID from links collection
-        /// </summary>
-        /// <returns>MultiCloudImage ID</returns>
-        public string getMultiCloudImageID()
+        public string ImageID
         {
-            return getLinkIDValue("multi_cloud_image");
+            get
+            {
+                return getLinkIDValue("image");
+            }
         }
 
-        /// <summary>
-        /// Get Image ID from links collection
-        /// </summary>
-        /// <returns>Image ID</returns>
-        private string getImageID()
+        public string RamdiskImageID
         {
-            return getLinkIDValue("image");
+            get
+            {
+                return getLinkIDValue("ramdisk_image");
+            }
         }
 
-        /// <summary>
-        /// Get RamDisk Image ID from links Collection
-        /// </summary>
-        /// <returns>RamDisk Image ID</returns>
-        private string getRamDiskImageID()
+        public string KernelImageID
         {
-            return getLinkIDValue("ramdisk_image");
+            get
+            {
+                return getLinkIDValue("kernel_image");
+            }
         }
 
-        /// <summary>
-        /// Get Kernel Image ID from links collection
-        /// </summary>
-        /// <returns>Kernel Image ID</returns>
-        private string getKernelImageID()
+        public string InstanceTypeID
         {
-            return getLinkIDValue("kernel_image");
+            get
+            {
+                return getLinkIDValue("instance_type");
+            }
         }
 
-        /// <summary>
-        /// Get InstanceType ID from links collection
-        /// </summary>
-        /// <returns>InstanceType ID</returns>
-        private string getInstanceTypeID()
+        public string SshKeyID
         {
-            return getLinkIDValue("instance_type");
+            get
+            {
+                return getLinkIDValue("ssh_key");
+            }
         }
 
-        /// <summary>
-        /// Get Ssh Key ID from links collection
-        /// </summary>
-        /// <returns>SshKey ID</returns>
-        private string getSshKeyID()
+        public string DataCenterID
         {
-            return getLinkIDValue("ssh_key");
-        }
-
-        /// <summary>
-        /// Get Datacenter ID from links collection
-        /// </summary>
-        /// <returns>Datacenter ID</returns>
-        private string getDatacenterID()
-        {
-            return getLinkIDValue("datacenter");
+            get
+            {
+                return getLinkIDValue("datacenter");
+            }
         }
 
         #endregion
