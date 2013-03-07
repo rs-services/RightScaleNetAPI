@@ -89,7 +89,7 @@ namespace RightScale.netClient
         /// <returns>Filtered list of AccountGroups based on view input</returns>
         public static List<AccountGroup> index(string view)
         {
-            return index(new List<KeyValuePair<string, string>(), view);
+            return index(new List<KeyValuePair<string, string>>(), view);
         }
 
         /// <summary>
