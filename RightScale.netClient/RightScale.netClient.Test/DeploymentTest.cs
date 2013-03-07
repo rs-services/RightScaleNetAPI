@@ -106,5 +106,85 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region Deployment.create tests
+
+        [TestMethod]
+        public void deploymentCreateDestroy()
+        {
+            string newDeploymentID = Deployment.create("simple name for a deployment");
+            Assert.IsNotNull(newDeploymentID);
+            bool isDestroyed = Deployment.destroy(newDeploymentID);
+            Assert.IsTrue(isDestroyed);
+        }
+
+        [TestMethod]
+        public void deploymentCreateFullDestroy()
+        {
+            string newDeploymentID = Deployment.create("this is a deployment name", "this is a description", "deployment");
+            Assert.IsNotNull(newDeploymentID);
+            bool isDestroyed = Deployment.destroy(newDeploymentID);
+            Assert.IsTrue(isDestroyed);
+        }
+        #endregion
+
+        #region Deployment.update tests
+
+        [TestMethod]
+        public void deploymentCreateUpdateDestroy()
+        {
+            string newDeploymentID = Deployment.create("simple name for a deployment");
+            Assert.IsNotNull(newDeploymentID);
+            Deployment initialObject = Deployment.show(newDeploymentID);
+            Assert.IsNotNull(initialObject);
+
+            bool isUpdated = Deployment.update(newDeploymentID, "this is a new name", "this is a new desription", null);
+            Assert.IsTrue(isUpdated);
+            Deployment updatedObject = Deployment.show(newDeploymentID);
+            Assert.IsNotNull(updatedObject);
+
+            Assert.AreNotEqual(updatedObject.name, initialObject.name);
+            Assert.AreNotEqual(updatedObject.description, initialObject.description);
+
+            bool isDestroyed = Deployment.destroy(newDeploymentID);
+            Assert.IsTrue(isDestroyed);
+        }
+
+        #endregion
+
+        #region Deployment.clone tests
+
+        [TestMethod]
+        public void deploymentCloneDestroyTest()
+        {
+            string newDeploymentID = Deployment.clone(deploymentID);
+            Assert.IsNotNull(newDeploymentID);
+            bool isDestroyed = Deployment.destroy(newDeploymentID);
+            Assert.IsTrue(isDestroyed);
+        }
+
+        #endregion
+
+        #region Deployment.servers tests
+
+        [TestMethod]
+        public void deploymentServersStatic()
+        {
+            List<Server> listOfDeploymentServers = Deployment.servers(deploymentID);
+            Assert.IsNotNull(listOfDeploymentServers);
+            Assert.IsTrue(listOfDeploymentServers.Count > 0);
+        }
+
+        [TestMethod]
+        public void deploymentServersInstance()
+        {
+            Deployment deploymentInstance = Deployment.show(deploymentID);
+            Assert.IsNotNull(deploymentInstance);
+            List<Server> serverList = deploymentInstance.getServers();
+            Assert.IsNotNull(serverList);
+            Assert.IsTrue(serverList.Count > 0);
+        }
+
+        #endregion
     }
 }

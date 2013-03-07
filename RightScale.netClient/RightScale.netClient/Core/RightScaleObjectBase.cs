@@ -20,12 +20,12 @@ namespace RightScale.netClient.Core
         /// <returns>ID at the back end of the href for the given link</returns>
         protected string getLinkIDValue(string linkName)
         {
-            var idToReturn = from link in links where link.rel == linkName select link.href.Split('/').Last<string>();
+            var idToReturn = from link in links where link.rel == linkName select link.href;
             if (idToReturn.Count<string>() != 1)
             {
                 return null;
             }
-            return idToReturn.ToString();
+            return idToReturn.Last<string>().Split('/').Last<string>();
         }
 
         public RightScaleObjectBase(string userName, string password, string accountNo)

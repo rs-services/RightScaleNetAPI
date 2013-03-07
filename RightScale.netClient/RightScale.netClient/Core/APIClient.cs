@@ -133,6 +133,10 @@ namespace RightScale.netClient.Core
                 string content = string.Empty;
                 try
                 {
+                    if (parameterSet == null)
+                    {
+                        parameterSet = new List<KeyValuePair<string, string>>();
+                    }
                     HttpContent postContent = new FormUrlEncodedContent(parameterSet);
                     string requestUrl = apiBaseAddress.Trim('/') + apiHref;
                     HttpResponseMessage response = webClient.PostAsync(requestUrl, postContent).Result;
