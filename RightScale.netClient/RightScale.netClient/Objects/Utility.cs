@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace RightScale.netClient
 {
@@ -252,6 +253,23 @@ namespace RightScale.netClient
         public static string ramdiskImageHref(string cloudID, string objectID)
         {
             return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+        }
+
+        /// <summary>
+        /// Method converts hashtable to list of keyvaluepairs for use in RSAPI calls
+        /// </summary>
+        /// <param name="htToConvert">Hashtable to convert</param>
+        /// <returns>list of keyvaluepair(string,string) corresponding to the hashtable input</returns>
+        public static List<KeyValuePair<string, string>> convertToKVP(Hashtable htToConvert)
+        {
+            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+
+            foreach (string key in htToConvert.Keys)
+            {
+                retVal.Add(new KeyValuePair<string, string>(key, htToConvert[key].ToString()));
+            }
+
+            return retVal;
         }
         #endregion
     }
