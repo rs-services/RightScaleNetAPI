@@ -15,12 +15,10 @@ namespace RightScale.netClient
     public class ServerArray : Core.RightScaleObjectBase<ServerArray>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public ElasticityParams elasticity_params { get; set; }
         public Instance next_instance { get; set; }
         public string array_type { get; set; }
         public int instances_count { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
 

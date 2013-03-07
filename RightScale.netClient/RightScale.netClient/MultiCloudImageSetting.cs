@@ -8,10 +8,6 @@ namespace RightScale.netClient
 {
     public class MultiCloudImageSetting:Core.RightScaleObjectBase<MultiCloudImageSetting>
     {
-        public List<Action> actions { get; set; }
-        public List<Link> links { get; set; }
-
-
 
         #region MultiCloudImageSetting.ctor
         /// <summary>

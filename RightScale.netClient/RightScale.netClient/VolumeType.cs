@@ -9,12 +9,10 @@ namespace RightScale.netClient
     public class VolumeType :Core.RightScaleObjectBase<VolumeType>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
         public string created_at { get; set; }
         public string size { get; set; }
         public string updated_at { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
 
         #region VolumeType.ctor

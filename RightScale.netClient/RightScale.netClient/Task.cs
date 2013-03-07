@@ -8,8 +8,6 @@ namespace RightScale.netClient
 {
     public class Task:Core.RightScaleObjectBase<Task>
     {
-        public List<Action> actions { get; set; }
-        public List<Link> links { get; set; }
         public string detail { get; set; }
         public string summary { get; set; }
 

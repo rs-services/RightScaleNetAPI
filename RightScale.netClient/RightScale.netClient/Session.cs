@@ -8,8 +8,6 @@ namespace RightScale.netClient
 {
     public class Session:Core.RightScaleObjectBase<Session>
     {
-        public List<Action> actions { get; set; }
-        public List<Link> links { get; set; }
         public string message { get; set; }
 
         #region Session.ctor

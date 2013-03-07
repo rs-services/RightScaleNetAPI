@@ -8,9 +8,7 @@ namespace RightScale.netClient
 {
     public class SshKey:Core.RightScaleObjectBase<SshKey>
     {
-        public List<object> actions { get; set; }
         public string resource_uid { get; set; }
-        public List<Link> links { get; set; }
 
         #region SshKey.ctor
         /// <summary>

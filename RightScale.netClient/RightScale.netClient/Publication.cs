@@ -10,13 +10,11 @@ namespace RightScale.netClient
     {
         public string name { get; set; }
         public string commit_message { get; set; }
-        public List<Action> actions { get; set; }
         public int created_at { get; set; }
         public string content_type { get; set; }
         public int updated_at { get; set; }
         public string publisher { get; set; }
         public int revision { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
         public string revision_notes { get; set; }
 

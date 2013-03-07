@@ -9,6 +9,25 @@ namespace RightScale.netClient.Core
 {
     public class RightScaleObjectBase<T>
     {
+
+        public List<Action> actions { get; set; }
+        public List<Link> links { get; set; }
+
+        /// <summary>
+        /// Centralized method to pull ID's from link values within the links collection of this object
+        /// </summary>
+        /// <param name="linkName">name of the link to be queried</param>
+        /// <returns>ID at the back end of the href for the given link</returns>
+        protected string getLinkIDValue(string linkName)
+        {
+            var idToReturn = from link in links where link.rel == linkName select link.href.Split('/').Last<string>();
+            if (idToReturn.Count<string>() != 1)
+            {
+                return null;
+            }
+            return idToReturn.ToString();
+        }
+
         public RightScaleObjectBase(string userName, string password, string accountNo)
         {
             APIClient.Instance.userName = userName;

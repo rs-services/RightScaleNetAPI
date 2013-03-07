@@ -8,11 +8,9 @@ namespace RightScale.netClient
 {
     public class ServerTemplateMultiCloudImage:Core.RightScaleObjectBase<ServerTemplateMultiCloudImage>
     {
-        public List<Action> actions { get; set; }
         public string created_at { get; set; }
         public bool is_default { get; set; }
         public string updated_at { get; set; }
-        public List<Link> links { get; set; }
 
         #region ServerTemplateMultiCloudImage.ctor
         /// <summary>

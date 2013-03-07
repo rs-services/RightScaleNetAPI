@@ -9,9 +9,7 @@ namespace RightScale.netClient
     public class DataCenter : Core.RightScaleObjectBase<DataCenter>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
 
         #region DataCenter.ctor

@@ -8,10 +8,8 @@ namespace RightScale.netClient
 {
     public class SecurityGroupRule : Core.RightScaleObjectBase<SecurityGroupRule>
     {
-        public List<object> actions { get; set; }
         public string cidr_ips { get; set; }
         public string protocol { get; set; }
-        public List<Link> links { get; set; }
         public string end_port { get; set; }
         public string start_port { get; set; }
 

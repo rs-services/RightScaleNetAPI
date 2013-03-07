@@ -15,14 +15,40 @@ namespace RightScale.netClient
     public class Server:Core.RightScaleObjectBase<Server>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public string created_at { get; set; }
         public Instance next_instance { get; set; }
         public string updated_at { get; set; }
         public Instance current_instance { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
         public string state { get; set; }
+
+        #region Get link ID public instance methods
+
+        public string ServerID
+        {
+            get
+            {
+                return getLinkIDValue("self");
+            }
+        }
+
+        public string NextInstanceID
+        {
+            get
+            {
+                return getLinkIDValue("next_intance");
+            }
+        }
+
+        public string DeploymentID
+        {
+            get
+            {
+                return getLinkIDValue("deployment");
+            }
+        }
+
+        #endregion
 
         #region Server.ctor()
         /// <summary>
@@ -585,6 +611,12 @@ namespace RightScale.netClient
 
         #region Server.terminate() methods
 
+        public static bool terminate(string serverID)
+        {
+            string postHref = string.Format("/api/servers/{0}/terminate", serverID);
+            return Core.APIClient.Instance.Post(postHref);
+        }
+        
         #endregion
     }
 }

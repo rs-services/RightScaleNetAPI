@@ -171,6 +171,11 @@ namespace RightScale.netClient.Core
             return false;
         }
 
+        public bool Post(string apiHref)
+        {
+            return Post(apiHref, new List<KeyValuePair<string, string>>());
+        }
+
         public bool Delete(string apiHref)
         {
             return Delete(apiHref, string.Empty);

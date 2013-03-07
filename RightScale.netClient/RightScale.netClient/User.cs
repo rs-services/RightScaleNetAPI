@@ -9,10 +9,8 @@ namespace RightScale.netClient
     public class User:Core.RightScaleObjectBase<User>
     {
         public string company { get; set; }
-        public List<Action> actions { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
-        public List<Link> links { get; set; }
         public string last_name { get; set; }
         public string phone { get; set; }
         public string first_name { get; set; }

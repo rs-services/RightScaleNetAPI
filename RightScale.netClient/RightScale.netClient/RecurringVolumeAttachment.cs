@@ -10,13 +10,11 @@ namespace RightScale.netClient
     {
         public string name { get; set; }
         public string device { get; set; }
-        public List<Action> actions { get; set; }
         public string created_at { get; set; }
         public string size { get; set; }
         public string updated_at { get; set; }
         public string storage_type { get; set; }
         public string device_id { get; set; }
-        public List<Link> links { get; set; }
         public string runnable_type { get; set; }
         public string status { get; set; }
 

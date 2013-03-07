@@ -33,12 +33,14 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(serverIndexDeploymentTest.Count > 0);
         }
 
+        [TestMethod]
         public void serverShowTest()
         {
             Server serverobj = Server.show(serverID);
             Assert.IsNotNull(serverobj);
         }
-
+        
+        [TestMethod]
         public void serverDeploymentShowTest()
         {
             Server serverobj = Server.show_deployment(serverID, deploymentID);

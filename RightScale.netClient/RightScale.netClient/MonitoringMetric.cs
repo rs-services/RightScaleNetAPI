@@ -8,13 +8,9 @@ namespace RightScale.netClient
 {
     public class MonitoringMetric:Core.RightScaleObjectBase<MonitoringMetric>
     {
-        public List<Action> actions { get; set; }
         public string plugin { get; set; }
         public string graph_href { get; set; }
         public string view { get; set; }
-        public List<Link> links { get; set; }
-
-
 
         #region MonitoringMetric.ctor
         /// <summary>

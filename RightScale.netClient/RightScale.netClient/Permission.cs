@@ -8,10 +8,8 @@ namespace RightScale.netClient
 {
     public class Permission:Core.RightScaleObjectBase<Permission>
     {
-        public List<Action> actions { get; set; }
         public string created_at { get; set; }
         public string role_title { get; set; }
-        public List<Link> links { get; set; }
 
 
         #region Permission.ctor

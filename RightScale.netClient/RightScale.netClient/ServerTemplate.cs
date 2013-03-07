@@ -9,10 +9,8 @@ namespace RightScale.netClient
     public class ServerTemplate:Core.RightScaleObjectBase<ServerTemplate>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public List<Input> inputs { get; set; }
         public int revision { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
 
         #region ServerTemplate.ctor

@@ -15,7 +15,6 @@ namespace RightScale.netClient
     public class Instance : Core.RightScaleObjectBase<Instance>
     {
         public string name { get; set; }
-        public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
         public string created_at { get; set; }
         public List<Input> inputs { get; set; }
@@ -26,7 +25,6 @@ namespace RightScale.netClient
         public List<string> public_ip_addresses { get; set; }
         public string monitoring_server { get; set; }
         public string terminated_at { get; set; }
-        public List<Link> links { get; set; }
         public string description { get; set; }
         public string pricing_type { get; set; }
         public List<string> private_ip_addresses { get; set; }
@@ -34,7 +32,101 @@ namespace RightScale.netClient
         public string state { get; set; }
         public List<SecurityGroup> security_groups { get; set; }
         public List<string> public_dns_names { get; set; }
-        
+
+        #region Get link ID public instance methods
+
+        /// <summary>
+        /// Get instance id from links collection
+        /// </summary>
+        /// <returns>Instance ID</returns>
+        public string getInstanceID()
+        {
+            return getLinkIDValue("self");
+        }
+
+        /// <summary>
+        /// Get Cloud ID from links collection
+        /// </summary>
+        /// <returns>Cloud ID</returns>
+        public string getCloudID()
+        {
+            return getLinkIDValue("cloud");
+        }
+
+        /// <summary>
+        /// Get ServerTemplate ID from links collection
+        /// </summary>
+        /// <returns></returns>
+        public string getServerTemplateID()
+        {
+            return getLinkIDValue("server_template");
+        }
+
+        /// <summary>
+        /// Get MultiCloudImage ID from links collection
+        /// </summary>
+        /// <returns>MultiCloudImage ID</returns>
+        public string getMultiCloudImageID()
+        {
+            return getLinkIDValue("multi_cloud_image");
+        }
+
+        /// <summary>
+        /// Get Image ID from links collection
+        /// </summary>
+        /// <returns>Image ID</returns>
+        private string getImageID()
+        {
+            return getLinkIDValue("image");
+        }
+
+        /// <summary>
+        /// Get RamDisk Image ID from links Collection
+        /// </summary>
+        /// <returns>RamDisk Image ID</returns>
+        private string getRamDiskImageID()
+        {
+            return getLinkIDValue("ramdisk_image");
+        }
+
+        /// <summary>
+        /// Get Kernel Image ID from links collection
+        /// </summary>
+        /// <returns>Kernel Image ID</returns>
+        private string getKernelImageID()
+        {
+            return getLinkIDValue("kernel_image");
+        }
+
+        /// <summary>
+        /// Get InstanceType ID from links collection
+        /// </summary>
+        /// <returns>InstanceType ID</returns>
+        private string getInstanceTypeID()
+        {
+            return getLinkIDValue("instance_type");
+        }
+
+        /// <summary>
+        /// Get Ssh Key ID from links collection
+        /// </summary>
+        /// <returns>SshKey ID</returns>
+        private string getSshKeyID()
+        {
+            return getLinkIDValue("ssh_key");
+        }
+
+        /// <summary>
+        /// Get Datacenter ID from links collection
+        /// </summary>
+        /// <returns>Datacenter ID</returns>
+        private string getDatacenterID()
+        {
+            return getLinkIDValue("datacenter");
+        }
+
+        #endregion
+
         #region Instance.ctor
         /// <summary>
         /// Default Constructor for Instance

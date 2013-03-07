@@ -9,12 +9,10 @@ namespace RightScale.netClient
     public class VolumeAttachment:Core.RightScaleObjectBase<VolumeAttachment>
     {
         public string device { get; set; }
-        public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
         public string device_id { get; set; }
-        public List<Link> links { get; set; }
         public string state { get; set; }
 
         #region VolumeAttachment.ctor
