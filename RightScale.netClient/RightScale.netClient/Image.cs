@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace RightScale.netClient
 {
-    public class Image:Core.RightScaleObjectBase<Image>
+    public class Image : Core.RightScaleObjectBase<Image>
     {
         public string name { get; set; }
+        public List<Action> actions { get; set; }
         public string resource_uid { get; set; }
         public string cpu_architecture { get; set; }
         public string image_type { get; set; }
         public string virtualization_type { get; set; }
         public string os_platform { get; set; }
+        public List<Link> links { get; set; }
         public string description { get; set; }
         public string visibility { get; set; }
 
-
+        //Image base URL
+        static string getUrl = "/api/multi_cloud_images";
 
         #region Image.ctor
         /// <summary>
@@ -49,26 +53,68 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
+
         #region Image.index methods
 
+        /// <summary>
+        /// Lists the Images owned by this Account.
+        /// </summary>
+        /// <returns>List of Images</returns>
         public static List<Image> index()
         {
-            return index(null, null);
+
+            string view = "default";
+            string queryString = string.Empty;
+
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+
+            return deserializeList(jsonString);
+
         }
 
-        public static List<Image> index(List<KeyValuePair<string, string>> filter)
+        /// <summary>
+        /// Lists the Images owned by this Account.
+        /// </summary>
+        /// <param name="filter">Set of filters to modify query to return Images from RightScale API</param>
+        /// <returns>Filtered list of Images</returns>
+        public static List<Image> index(Hashtable filter)
         {
-            return index(filter, null);
+
+            string view = "default";
+            string queryString = string.Empty;
+
+          
+            List<KeyValuePair<string, string>> kvpFilter = new List<KeyValuePair<string, string>>();
+            kvpFilter = Utility.convertToKVP(filter);
+
+            List<string> validFilters = new List<string>() { "cpu_architecture", "description", "image_type", "name", "os_platform", "resource_uid", "visibility" };
+
+            Utility.CheckFilterInput("filter", validFilters, kvpFilter);
+            string qryFilter = Utility.BuildFilterString(kvpFilter);
+
+            queryString += string.Format("view={0};{1}", view, qryFilter);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
+
+            //return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists the Images owned by this Account.
+        /// </summary>
+        /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
+        /// <returns>Filtered list of Images based on view input</returns>
         public static List<Image> index(string view)
         {
-            return index(null, view);
-        }
+            string getUrl = "/api/multi_cloud_images";
+            string queryString = string.Empty;
 
-        public static List<Image> index(List<KeyValuePair<string, string>> filter, string view)
-        {
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -79,13 +125,61 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "cpu_architecture", "description", "image_type", "name", "os_platform", "resource_uid", "visibility" };
-            Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement Image.index
-            throw new NotImplementedException();
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+
+            return deserializeList(jsonString);
+
+        }
+
+        /// <summary>
+        /// Lists the Images owned by this Account.
+        /// </summary>
+        /// <param name="filter">Set of filters to modify query to return Images from RightScale API</param>
+        /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
+        /// <returns>Filtered list of Images based on filter and view input</returns>
+        public static List<Image> index(Hashtable filter, string view)
+        {
+            
+            string getUrl = "/api/multi_cloud_images";
+            string queryString = string.Empty;
+
+                           
+           if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+        
+           List<KeyValuePair<string, string>> kvpFilter = new List<KeyValuePair<string, string>>();
+           kvpFilter = Utility.convertToKVP(filter);
+
+            List<string> validFilters = new List<string>() { "cpu_architecture", "description", "image_type", "name", "os_platform", "resource_uid", "visibility" };
+            Utility.CheckFilterInput("filter", validFilters, kvpFilter);
+
+
+            if (kvpFilter != null && kvpFilter.Count > 0)
+            {
+                queryString += Utility.BuildFilterString(kvpFilter) + "&";
+            }
+
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
+
+
         }
         #endregion
-		
+
     }
 }
