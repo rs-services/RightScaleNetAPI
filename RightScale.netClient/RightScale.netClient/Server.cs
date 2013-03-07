@@ -308,7 +308,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string create_deployment(string deploymentID, string cloudID, string serverTemplateID, string serverName)
         {
-            string postHref = string.Format("/api/deployments/{0}/servers");
+            string postHref = string.Format("/api/deployments/{0}/servers", deploymentID);
             List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, null, cloudID, null, null, null, null, null, null, null, null, serverTemplateID, null, null, serverName, false);
             return createPost(postHref, parameters);
         }
@@ -562,7 +562,7 @@ namespace RightScale.netClient
         public static string clone(string serverID)
         {
             string postHref = string.Format("/api/servers/{0}/clone", serverID);
-            List<string> createResults =  Core.APIClient.Instance.Create(postHref, null, "location");
+            List<string> createResults =  Core.APIClient.Instance.Create(postHref, new List<KeyValuePair<string, string>>(), "location");
             return createResults.Last<string>().Split('/').Last<string>();
         }
 

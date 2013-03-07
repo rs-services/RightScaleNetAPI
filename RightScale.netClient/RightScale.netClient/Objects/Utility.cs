@@ -152,7 +152,7 @@ namespace RightScale.netClient
         /// <returns>formatted server_template_href</returns>
         public static string serverTemplateHref(string objectID)
         {
-            return string.Format("/api/server_template{0}", objectID);
+            return string.Format("/api/server_templates/{0}", objectID);
         }
 
         /// <summary>

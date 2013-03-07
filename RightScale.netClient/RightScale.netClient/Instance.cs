@@ -288,6 +288,23 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region Instance.terminate
+
+        /// <summary>
+        /// Terminates a running instance.
+        /// Note that this action can succeed only if the instance is running. One cannot terminate instances of type "next".
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Instance is running</param>
+        /// <param name="instanceID">Instance ID to be terminated</param>
+        /// <returns></returns>
+        public bool terminate(string cloudID, string instanceID)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/terminate", cloudID, instanceID);
+            return Core.APIClient.Instance.Post(postHref);
+        }
+
+        #endregion
+
     }
 }
