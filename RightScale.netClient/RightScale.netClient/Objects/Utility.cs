@@ -90,7 +90,7 @@ namespace RightScale.netClient
             string retVal = string.Empty;
             foreach (KeyValuePair<string, string> kvp in qsData)
             {
-                retVal += kvp.Key + "=" + kvp.Value + "&";
+                retVal += string.Format("filter[]={0}=={1}&", kvp.Key, kvp.Value);
             }
             retVal = retVal.TrimEnd('&');
             return retVal;
