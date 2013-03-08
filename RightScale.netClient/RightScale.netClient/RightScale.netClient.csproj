@@ -83,7 +83,6 @@
     <Compile Include="SecurityGroup.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ServerArray.cs" />
-    <Compile Include="Objects\SimpleJson.cs" />
     <Compile Include="ServerTemplate.cs" />
     <Compile Include="ServerTemplateMultiCloudImage.cs" />
     <Compile Include="Session.cs" />

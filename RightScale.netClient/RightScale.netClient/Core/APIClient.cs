@@ -9,6 +9,8 @@ using System.Net;
 using System.IO;
 using System.Configuration;
 using System.Diagnostics;
+using System.Dynamic;
+using Newtonsoft.Json;
 
 namespace RightScale.netClient.Core
 {
@@ -368,7 +370,7 @@ namespace RightScale.netClient.Core
                 response.EnsureSuccessStatusCode();
                 string content = await response.Content.ReadAsStringAsync();
 
-                dynamic result = SimpleJson.DeserializeObject(content);
+                dynamic result = JsonConvert.DeserializeObject<dynamic>(content);
 
                 if (result["access_token"] != null)
                 {

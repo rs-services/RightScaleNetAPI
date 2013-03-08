@@ -89,7 +89,6 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
         #endregion
-		
-		
+	
     }
 }
