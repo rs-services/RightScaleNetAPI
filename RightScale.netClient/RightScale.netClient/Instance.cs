@@ -744,27 +744,16 @@ namespace RightScale.netClient
             string postHref = string.Format("/api/clouds/{0}/instances/{1}/run_executable", cloudID, instanceID);
 
             List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
-            if (!string.IsNullOrWhiteSpace(recipeName))
-            {
-                postParameters.Add(new KeyValuePair<string, string>("recipe_name", recipeName));
-            }
-            if (!string.IsNullOrWhiteSpace(rightScriptID))
-            {
-                postParameters.Add(new KeyValuePair<string, string>("right_script_href", Utility.rightScriptHref(rightScriptID)));
-            }
+
             if (inputs != null && inputs.Count > 0)
             {
                 postParameters.AddRange(Utility.FormatInputCollection(inputs));
             }
 
-            if (ignoreLock)
-            {
-                postParameters.Add(new KeyValuePair<string, string>("ignore_lock", "true"));
-            }
-            else
-            {
-                postParameters.Add(new KeyValuePair<string, string>("ignore_lock", "false"));
-            }
+            Utility.addParameter(recipeName, "recipe_name", postParameters);
+            Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParameters);
+            Utility.addParameter(ignoreLock.ToString().ToLower(), "ignore_lock", postParameters);
+
             return Core.APIClient.Instance.Post(postHref, postParameters);
         }
 
