@@ -9,7 +9,6 @@ namespace RightScale.netClient.Core
 {
     public class RightScaleObjectBase<T>
     {
-
         public List<Action> actions { get; set; }
         public List<Link> links { get; set; }
 
@@ -45,7 +44,41 @@ namespace RightScale.netClient.Core
 
         }
 
-        public static T deserialize(string jsonString)
+        #region Json deserialization helpers
+
+        protected static T deserialize(string jsonString)
+        {
+            return objectDeserialize(jsonString);
+        }
+
+        protected static List<T> deserializeList(string jsonString)
+        {
+            return listDeserialize(jsonString);
+        }
+
+        public static T populateObjectFromJson(string jsonString)
+        {
+            return objectDeserialize(jsonString);
+        }
+
+        public static List<T> populateObjectListFromJson(string jsonString)
+        {
+            return listDeserialize(jsonString);
+        }
+
+        private static List<T> listDeserialize(string jsonString)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<T>>(jsonString);
+            }
+            catch (JsonReaderException jre)
+            {
+                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
+            }
+        }
+
+        private static T objectDeserialize(string jsonString)
         {
             try
             {
@@ -57,16 +90,6 @@ namespace RightScale.netClient.Core
             }
         }
 
-        public static List<T> deserializeList(string jsonString)
-        {
-            try
-            {
-                return JsonConvert.DeserializeObject<List<T>>(jsonString);
-            }
-            catch (JsonReaderException jre)
-            {
-                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
-            }
-        }
+        #endregion
     }
 }

@@ -139,6 +139,16 @@ namespace RightScale.netClient
         #region RightScale API href builders
 
         /// <summary>
+        /// Helper method returns properly formatted account_href
+        /// </summary>
+        /// <param name="objectID">AccountID</param>
+        /// <returns>formatted account_href</returns>
+        public static string accountHref(string objectID)
+        {
+            return string.Format("/api/accounts/{0}", objectID);
+        }
+
+        /// <summary>
         /// Helper method returns properly formatted cloud_href
         /// </summary>
         /// <param name="objectID">CloudID</param>
