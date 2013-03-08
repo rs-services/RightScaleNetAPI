@@ -26,11 +26,22 @@ namespace RightScale.netClient.Core
         public List<Link> links { get; set; }
 
         /// <summary>
+        /// ID of the object <typeparamref name="T"/>
+        /// </summary>
+        public string ID
+        {
+            get
+            {
+                return getLinkIDValue("self");
+            }
+        }
+
+        /// <summary>
         /// Centralized method to pull ID's from link values within the links collection of this object
         /// </summary>
         /// <param name="linkName">name of the link to be queried</param>
         /// <returns>ID at the back end of the href for the given link</returns>
-        protected string getLinkIDValue(string linkName)
+        internal string getLinkIDValue(string linkName)
         {
             var idToReturn = from link in links where link.rel == linkName select link.href;
             if (idToReturn.Count<string>() != 1)

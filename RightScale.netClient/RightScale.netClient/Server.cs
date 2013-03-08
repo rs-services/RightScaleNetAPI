@@ -24,14 +24,9 @@ namespace RightScale.netClient
 
         #region Get link ID public instance methods
 
-        public string ServerID
-        {
-            get
-            {
-                return getLinkIDValue("self");
-            }
-        }
-
+        /// <summary>
+        /// Instance ID of the next instance
+        /// </summary>
         public string NextInstanceID
         {
             get
@@ -40,6 +35,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Deployment ID of the deployment this server belongs to
+        /// </summary>
         public string DeploymentID
         {
             get
