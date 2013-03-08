@@ -22,7 +22,7 @@ As of now, there is only one set of external resources (also available on nuget)
 
 While the RightScale.netClient.Core.ApiClient.Instance object has authentication methods for both OAuth and standard auth, it will also pull in your configuration information via an app.config or web.onfig depending on your project type (even works in my unit test project!).  If you opt for using your OAuth refresh key (available via the RightScale dashboard), you'll simply need to add the following key into your appSettings collection:
 
-<add key="RightScaleAPIRefreshToken" value="ea7..................................e3e"/>
+    <add key="RightScaleAPIRefreshToken" value="ea7..................................e3e"/>
 
 If you opt to use your username/password/accountID, you'll need to add 3 keys into your .config file:
 
