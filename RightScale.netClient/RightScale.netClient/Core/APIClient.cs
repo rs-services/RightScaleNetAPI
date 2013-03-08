@@ -12,26 +12,82 @@ using System.Diagnostics;
 
 namespace RightScale.netClient.Core
 {
+    /// <summary>
+    /// Singleton instance API Client manages HTTP connections, authentication caching and all REST calls to the RightScale API
+    /// </summary>
     public class APIClient
     {
+        /// <summary>
+        /// RightScale OAuth Refresh token from RightScale dashboard
+        /// </summary>
         public string oauthRefreshToken { get; set; }
+        
+        /// <summary>
+        /// RightScale OAuth Bearer Token retrieved when authenticating with oauthRefreshToken
+        /// </summary>
         public string oauthBearerToken { get; set; }
+
+        /// <summary>
+        /// Rightscale email used for authenticating to the RightScale API with username, password and accountid
+        /// </summary>
         public string userName { get; set; }
+
+        /// <summary>
+        /// Corresponding password used for authenticating to the RightScale API with username, password and accountid
+        /// </summary>
         public string password { get; set; }
+
+        /// <summary>
+        /// AccountID used for authenticating to the RightScale API with username, password and accountid
+        /// </summary>
         public string accountId { get; set; }
 
+        /// <summary>
+        /// Singleton instance implementation of APIClient
+        /// </summary>
         private static APIClient instance;
+
+        /// <summary>
+        /// boolean indicating if the instance of this object is currently authenticating
+        /// </summary>
         private bool isAuthenticated;
+
+        /// <summary>
+        /// boolean indicating whether or not this instance has authenticated to the RightScale API gateway
+        /// </summary>
         private bool isAuthenticating;
+        
+        /// <summary>
+        /// System.Net.HttpClient object used for executing all HTTP calls to RightScale API
+        /// </summary>
         HttpClient webClient;
+
+        /// <summary>
+        /// CookieContainer to be added to webClient object for ease of accessibility to determine authentication status in username/password/accountid authenticated users
+        /// </summary>
         CookieContainer cookieContainer;
+        
+        /// <summary>
+        /// ClientHandler manages persisting headers from request to request and is used to hold default API header as well as oAuth authentication headers
+        /// </summary>
         HttpClientHandler clientHandler;
 
-        private const string apiBaseAddress = @"https://my.rightscale.com/";
+        private string apiBaseAddress;
 
+        /// <summary>
+        /// Base constructor initialies http client objects and initializes base url for RightScale API
+        /// </summary>
         private APIClient()
         {
             InitWebClient();
+            if (ConfigurationManager.AppSettings["RightScaleAPI_BaseAddress"] != null)
+            {
+                apiBaseAddress = ConfigurationManager.AppSettings["RightScaleAPI_baseAddress"].ToString();
+            }
+            else
+            {
+                apiBaseAddress = @"https://my.rightscale.com/";
+            }
         }
 
         /// <summary>
@@ -69,12 +125,18 @@ namespace RightScale.netClient.Core
         /// </summary>
         /// <param name="apiHref">Rightscale API Href</param>
         /// <returns>string content from RSAPI</returns>
-        public string Get(string apiHref)
+        internal string Get(string apiHref)
         {
             return Get(apiHref, string.Empty);
         }
 
-        public string Get(string apiHref, string queryStringValue)
+        /// <summary>
+        /// GET process to hit RightScale API
+        /// </summary>
+        /// <param name="apiHref">Rightscale API Href</param>
+        /// <param name="queryStringValue">query string to append to HTTP GET request</param>
+        /// <returns>string content from RSAPI</returns>
+        internal string Get(string apiHref, string queryStringValue)
         {
             if (CheckAuthenticationStatus())
             {
@@ -94,7 +156,13 @@ namespace RightScale.netClient.Core
             throw new NotImplementedException();
         }
 
-        public bool Put(string putHref, List<KeyValuePair<string, string>> putData)
+        /// <summary>
+        /// PUT wrapper to make calls via HTTP to the RightScale API
+        /// </summary>
+        /// <param name="putHref">RightScale API Href</param>
+        /// <param name="putData">list of keyvaluepairs to serialize and PUT to the RS API</param>
+        /// <returns>True if successful, false if not</returns>
+        internal bool Put(string putHref, List<KeyValuePair<string, string>> putData)
         {
             if (CheckAuthenticationStatus())
             {
@@ -117,26 +185,14 @@ namespace RightScale.netClient.Core
             }
             throw new NotImplementedException();
         }
-
-        private string getQueryString(List<KeyValuePair<string, string>> dataForQs)
-        {
-            string retVal = string.Empty;
-
-            foreach (KeyValuePair<string, string> kvp in dataForQs)
-            {
-                retVal += kvp.Key + "=" + kvp.Value + "&";
-            }
-            retVal = retVal.TrimEnd('&');
-            return retVal;
-        }
-
+        
         /// <summary>
         /// Centralized method to handle post calls to RightScale API
         /// </summary>
         /// <param name="apiHref">api stub for posting to RightScale API</param>
         /// <param name="parameterSet">List< of KeyValuePair(string, string) of parameters to be posted to RightScale API</param>
         /// <returns>JSON string result to be parsed</returns>
-        public List<string> Create(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
+        internal List<string> Create(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
         {
             if (CheckAuthenticationStatus())
             {
@@ -162,7 +218,13 @@ namespace RightScale.netClient.Core
             return null;
         }
 
-        public bool Post(string apiHref, List<KeyValuePair<string, string>> postData)
+        /// <summary>
+        /// API method to perform a POST request to the RightScale API 
+        /// </summary>
+        /// <param name="apiHref">API Href fragment corresponding to the API root</param>
+        /// <param name="postData">list of keyvaluepair objects to serialize and post to API</param>
+        /// <returns>returns true if successful, false if not</returns>
+        internal bool Post(string apiHref, List<KeyValuePair<string, string>> postData)
         {
             if (CheckAuthenticationStatus())
             {
@@ -184,17 +246,33 @@ namespace RightScale.netClient.Core
             return false;
         }
 
-        public bool Post(string apiHref)
+        /// <summary>
+        /// API method to perform a POST request to the RightScale API 
+        /// </summary>
+        /// <param name="apiHref">API Href fragment corresponding to the API root</param>
+        /// <returns>returns true if successful, false if not</returns>
+        internal bool Post(string apiHref)
         {
             return Post(apiHref, new List<KeyValuePair<string, string>>());
         }
 
+        /// <summary>
+        /// API Method to Delete a record within the RightScale system
+        /// </summary>
+        /// <param name="apiHref">API Href fragment corresponding to the API root</param>
+        /// <returns>true if deleted, false if not</returns>
         public bool Delete(string apiHref)
         {
             return Delete(apiHref, string.Empty);
         }
 
-        public bool Delete(string apiHref, string queryStringValue)
+        /// <summary>
+        /// API Method to Delete a record within the RightScale system
+        /// </summary>
+        /// <param name="apiHref">API Href fragment corresponding to the API root</param>
+        /// <param name="queryStringValue">query string to append to HTTP GET request</param>
+        /// <returns>true if deleted, false if not</returns>
+        internal bool Delete(string apiHref, string queryStringValue)
         {
             if (CheckAuthenticationStatus())
             {
@@ -220,7 +298,7 @@ namespace RightScale.netClient.Core
         /// </summary>
         /// <param name="bearerToken">RightScale API Bearer Token</param>
         /// <returns>true if authenticated, false if not</returns>
-        public bool SetOauthBearerToken(string bearerToken)
+        internal bool SetOauthBearerToken(string bearerToken)
         {
             this.isAuthenticating = true;
 
