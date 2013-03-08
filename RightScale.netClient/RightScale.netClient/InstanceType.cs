@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// An InstanceType represents a basic hardware configuration for an Instance.
+    /// Combining all possible configurations of hardware into a smaller, well-known set of options makes instances easier to manage, and allows better allocation efficiency into physical hosts
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstanceType.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceInstanceTypes.html
+    /// </summary>
     public class InstanceType:Core.RightScaleObjectBase<InstanceType>
     {
         public string name { get; set; }
@@ -17,9 +23,7 @@ namespace RightScale.netClient
         public string cpu_count { get; set; }
         public string cpu_speed { get; set; }
         public string description { get; set; }
-
-
-
+        
         #region InstanceType.ctor
         /// <summary>
         /// Default Constructor for InstanceType
@@ -51,24 +55,47 @@ namespace RightScale.netClient
 
         #endregion
 		
-        
         #region InstanceType.index methods
 
+        /// <summary>
+        /// Lists instance types.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to enumerate instance types for</param>
+        /// <returns>Collection of InstanceTypes</returns>
         public static List<InstanceType> index(string cloudID)
         {
             return index(cloudID, null, null);
         }
 
+        /// <summary>
+        /// Lists instance types.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to enumerate instance types for</param>
+        /// <param name="filter">Collection of filters for limiting the return set</param>
+        /// <returns>Collection of InstanceTypes</returns>
         public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter)
         {
             return index(cloudID, filter, null);
         }
 
+        /// <summary>
+        /// Lists instance types.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to enumerate instance types for</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Collection of InstanceTypes</returns>
         public static List<InstanceType> index(string cloudID, string view)
         {
             return index(cloudID, null, view);
         }
 
+        /// <summary>
+        /// Lists instance types.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to enumerate instance types for</param>
+        /// <param name="filter">Collection of filters for limiting the return set</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Collection of InstanceTypes</returns>
         public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/instance_types", cloudID);
@@ -96,6 +123,44 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region InstanceType.show methods
+
+        /// <summary>
+        /// Displays information about a single Instance type.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the InstanceType can be found</param>
+        /// <param name="instanceTypeID">ID of the specific InstanceType to be returned</param>
+        /// <returns>Specific instance of InstanceType</returns>
+        public InstanceType show(string cloudID, string instanceTypeID)
+        {
+            return show(cloudID, instanceTypeID, null);
+        }
+
+        /// <summary>
+        /// Displays information about a single Instance type.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the InstanceType can be found</param>
+        /// <param name="instanceTypeID">ID of the specific InstanceType to be returned</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Specific instance of InstanceType</returns>
+        public InstanceType show(string cloudID, string instanceTypeID, string view)
+        {
+            string getHref = string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, instanceTypeID);
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+                queryString += string.Format("view={0}", view);
+            }   
+            
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
     }
 }

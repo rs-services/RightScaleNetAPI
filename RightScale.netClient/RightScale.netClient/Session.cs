@@ -8,6 +8,8 @@ namespace RightScale.netClient
 {
     /// <summary>
     /// Session is the first resource that API users interact with, it has links to root resources.
+    /// Resources Reference: http://reference.rightscale.com/api1.5/resources/ResourceSessions.html
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeSession.html
     /// </summary>
     public class Session:Core.RightScaleObjectBase<Session>
     {
