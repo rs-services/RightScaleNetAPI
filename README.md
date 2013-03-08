@@ -30,3 +30,19 @@ If you opt to use your username/password/accountID, you'll need to add 3 keys in
  '''<add key="RightScaleAPIPassword" value="thisisyourpassword"/>
  '''<add key="RightScaleAPIAccountId" value="######"/>
  
+ ===
+ Long-term goals
+ ===
+ 
+ Long term there are a ton of cool ideas we've been kicking around, but we're happy to take some more input and add to it:
+ 
+   * building out either strong PowerShell examples of how to consume this library or a PowerShell wrapper to make it more PS friendly
+   * hooking this into TFS (actually another pet project of mine that can be found here) and using it to manage continuous deployment/automated deployment
+   * writing Windows Workflow Foundation processes around this object model for longer-running, automated deployments that are on the more complicated side of things
+   * LINQ-ifying it so that it's fully LINQ compatible (though, with the Lists all over the place, it's pretty close).
+   
+ Let us know know we're doing, if you're interested in contributing or have a cool idea for us to throw on the roadmap!
+ 
+ Thanks,
+ 
+ Patrick and the RightScale Windows Professional Services Team
