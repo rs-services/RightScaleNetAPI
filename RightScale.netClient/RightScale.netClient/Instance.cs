@@ -499,6 +499,15 @@ namespace RightScale.netClient
 
         #region Instance.update
 
+        public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData)
+        {
+            string putHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+
+            List<KeyValuePair<string, string>> putParameters = new List<KeyValuePair<string, string>>();
+
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Instance.multi_run_executable

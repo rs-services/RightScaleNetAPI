@@ -73,5 +73,80 @@ namespace RightScale.netClient
 	        }
             return string.Format(toStringFormat, this.Key, opSign, this.Value);
         }
+
+        /// <summary>
+        /// Static method returns a colection of Filter Objects from a filter string
+        /// </summary>
+        /// <param name="filterString">query string formatted filter (key==/<>value) or (filter[]=key==/<>value) for a list of filters</param>
+        /// <returns>List of Filter objects</returns>
+        public static List<Filter> parseFilterList(string filterString)
+        {
+            List<Filter> retVal = new List<Filter>();
+            foreach (string s in filterString.Split('&'))
+            {
+                Filter newFilter = parseFilterString(s);
+                if(newFilter != null)
+                {
+                    retVal.Add(newFilter);
+                }
+                else
+                {
+                    throw new ArgumentException("Filter '" + s + "' failed to parse for an unknown reason");
+                }
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// Static method returns a single intance of a Filter object from the given filter string
+        /// </summary>
+        /// <param name="filterString">query string formatted filter for a single filter</param>
+        /// <returns>Single instance of Filter object populated from filterString</returns>
+        public static Filter parseFilter(string filterString)
+        {
+            return parseFilterString(filterString);
+        }
+
+        /// <summary>
+        /// Private method handles the internals of parsing a string into an instance of a Filter object
+        /// </summary>
+        /// <param name="filterString">string representing a single filter</param>
+        /// <returns>Populated instance of a Filter object</returns>
+        private static Filter parseFilterString(string filterString)
+        {
+            Filter retVal = null;
+            string workingString = filterString.Replace("filter[]=", "");
+            if (workingString.Contains("=="))
+            {
+                workingString = workingString.Replace("==", "Þ");
+                string[] filterTestSplit = workingString.Split('Þ');
+                if (filterTestSplit.Length == 2)
+                {
+                    retVal = new Filter(filterTestSplit[0], FilterOperator.Equal, filterTestSplit[1]);
+                }
+                else if (filterTestSplit.Length > 2)
+                {
+                    throw new ArgumentException("Cannot parse filter '" + filterString + "'. There are too many == symbols");
+                }
+            }
+            else if (workingString.Contains("<>"))
+            {
+                workingString = workingString.Replace("<>", "Þ");
+                string[] filterTestSplit = workingString.Split('Þ');
+                if (filterTestSplit.Length == 2)
+                {
+                    retVal = new Filter(filterTestSplit[0], FilterOperator.NotEqual, filterTestSplit[1]);
+                }
+                else if (filterTestSplit.Length > 2)
+                {
+                    throw new ArgumentException("Cannot parse filter'" + filterString + "'. There are too many <> symbols");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("filter " + filterString + " does not contain == or <> which are the only two valid comparison operators for filters");
+            }
+            return retVal;
+        }
     }
 }
