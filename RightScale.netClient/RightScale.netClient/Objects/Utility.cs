@@ -8,10 +8,21 @@ using System.Collections;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Utility class provides a place to throw a bunch of useful repetitive tasks 
+    /// </summary>
     public static class Utility
     {
+        /// <summary>
+        /// Exception message format template for string.format calls
+        /// </summary>
         private static string argumentExceptionFormat = "Input '{0}' is not valid, it must be one of the following: '{1}' and was set to '{2}'";
 
+        /// <summary>
+        /// Method checks to ensure that the string passed in has a value
+        /// </summary>
+        /// <param name="requiredString">string to check</param>
+        /// <returns>True if string has value, throws ArgumentNullException if it doesn't</returns>
         public static bool CheckStringHasValue(string requiredString)
         {
             if (string.IsNullOrWhiteSpace(requiredString))
@@ -21,6 +32,11 @@ namespace RightScale.netClient
             return true;
         }
 
+        /// <summary>
+        /// Method checks to ensure that the contents of the string are numeric
+        /// </summary>
+        /// <param name="numericString">String to check to make sure it only contains numbers</param>
+        /// <returns>true if string is numeric, throws ArgumentOutOfRangeException if it doesn't</returns>
         public static bool CheckStringIsNumeric(string numericString)
         {
             foreach (char c in numericString)
@@ -33,6 +49,13 @@ namespace RightScale.netClient
             return true;
         }
 
+        /// <summary>
+        /// Method checks a string to ensure it's one of a specified set of values
+        /// </summary>
+        /// <param name="inputName">name of the input to be identified when throwing errors</param>
+        /// <param name="validViews">list of strings representing valid values</param>
+        /// <param name="actualValue">string to test - must be one of those specified in <paramref name="validValues"/></param>
+        /// <returns>True if <paramref name="actualValue"/> is contained within <paramref name="validViews"/>, throws ArgumentException if not</returns>
         public static bool CheckStringInput(string inputName, List<string> validViews, string actualValue)
         {
             bool retVal = false;
@@ -55,6 +78,13 @@ namespace RightScale.netClient
             return retVal;
         }
 
+        /// <summary>
+        /// Method checks to make sure that the filters defined are contained within the collection of valid filters defined
+        /// </summary>
+        /// <param name="inputName">friendly input name used to identify input when throwing exceptions</param>
+        /// <param name="validFilters">List of strings identifying all valid filter names</param>
+        /// <param name="actualFilters">collection of filters to test</param>
+        /// <returns>True if all filters are valid, throws ARgumentException if not</returns>
         public static bool CheckFilterInput(string inputName, List<string> validFilters, List<KeyValuePair<string, string>> actualFilters)
         {
             bool retVal = false;
@@ -85,6 +115,11 @@ namespace RightScale.netClient
             return retVal;
         }
 
+        /// <summary>
+        /// Helper method builds a query string from a list of keyvaluepair(string,string) object
+        /// </summary>
+        /// <param name="qsData">list of keyvaluepairs to turn into a query string</param>
+        /// <returns>string in URL query string format</returns>
         public static string BuildGetQueryString(List<KeyValuePair<string, string>> qsData)
         {
             string retVal = string.Empty;
