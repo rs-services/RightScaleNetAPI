@@ -44,7 +44,6 @@ namespace RightScale.netClient.Core
             this.cookieContainer = new CookieContainer();
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
             this.webClient = new HttpClient(this.clientHandler);
-            //this.webClient.BaseAddress = new Uri(apiBaseAddress);
             this.webClient.DefaultRequestHeaders.Add("X_API_Version", "1.5");
         }
 

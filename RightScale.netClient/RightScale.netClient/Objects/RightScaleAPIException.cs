@@ -26,6 +26,8 @@ namespace RightScale.netClient
         /// </summary>
         public string ErrorData;
 
+        #region RightScaleAPIException.ctor 
+
         /// <summary>
         /// Creates a new instance of a RightScale API Exception
         /// </summary>
@@ -85,5 +87,7 @@ namespace RightScale.netClient
             this.ErrorData = errorData;
             this.parameterSet = paramSet;
         }
+
+        #endregion
     }
 }

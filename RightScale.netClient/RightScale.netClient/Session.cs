@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Session:Core.RightScaleObjectBase<Session>
     {
         public string message { get; set; }
@@ -117,7 +120,11 @@ namespace RightScale.netClient
         #endregion
 
         #region Session.index_instance_session
-
+        
+        /// <summary>
+        /// Shows the full attributes of the instance (that has the token used to log-in). This call can be used by an instance to get it's own details
+        /// </summary>
+        /// <returns>Returns an Instance object for the current server instance accessed via create_instance_session</returns>
         public static Instance index_instance_session()
         {
             string getHref = "/api/session/instance";
