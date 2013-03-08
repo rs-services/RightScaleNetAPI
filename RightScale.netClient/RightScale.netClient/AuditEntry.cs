@@ -16,7 +16,22 @@ namespace RightScale.netClient
         public int detail_size { get; set; }
         public string user_email { get; set; }
 
-        #region AuditEntry.ctor() 
+        #region ID Properties
+
+        /// <summary>
+        /// ID of the resource that this Audit Entry relates to.
+        /// </summary>
+        public string AuditeeID
+        {
+            get
+            {
+                return getLinkIDValue("auditee");
+            }
+        }
+
+        #endregion
+
+        #region AuditEntry.ctor()
 
         /// <summary>
         /// Default Constructor for AuditEntry

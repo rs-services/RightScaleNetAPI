@@ -26,6 +26,21 @@ namespace RightScale.netClient
 
         private const string alertSpecFormat = "alert_spec[{0}]";
 
+        #region ID Properties
+
+        /// <summary>
+        /// ID of associated subject. The subject can be a ServerTemplate, Server, or Server Array.
+        /// </summary>
+        public string SubjectID
+        {
+            get
+            {
+                return getLinkIDValue("subject");
+            }
+        }
+
+        #endregion
+
         #region AlertSpec.ctor()
 
         /// <summary>

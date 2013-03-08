@@ -19,6 +19,21 @@ namespace RightScale.netClient
         public string updated_at { get; set; }
         public string description { get; set; }
 
+        #region ID Properties
+
+        /// <summary>
+        /// AccountID for this instance of AccountGroup
+        /// </summary>
+        public string AccountID
+        {
+            get
+            {
+                return getLinkIDValue("account");
+            }
+        }
+
+        #endregion
+
         #region AccountGroup.ctor()
 
         /// <summary>

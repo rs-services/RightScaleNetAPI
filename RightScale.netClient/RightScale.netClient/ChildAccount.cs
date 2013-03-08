@@ -12,6 +12,32 @@ namespace RightScale.netClient
         public string created_at { get; set; }
         public string updated_at { get; set; }
 
+        #region ID Properties
+
+        /// <summary>
+        /// ID of associated account
+        /// </summary>
+        public string AccountID
+        {
+            get
+            {
+                return getLinkIDValue("account");
+            }
+        }
+
+        /// <summary>
+        /// ID of associated cluster
+        /// </summary>
+        public string ClusterID
+        {
+            get
+            {
+                return getLinkIDValue("cluster");
+            }
+        }
+
+        #endregion
+
         #region ChildAccount.ctor
         /// <summary>
         /// Default Constructor for ChildAccount
