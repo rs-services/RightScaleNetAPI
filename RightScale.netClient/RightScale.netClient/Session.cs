@@ -94,7 +94,7 @@ namespace RightScale.netClient
         public static List<Account> accounts(string email, string password)
         {
             string getHref = "/api/session";
-            string queryString = string.Format("email={0}&password={1}");
+            string queryString = string.Format("email={0}&password={1}", email, password);
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return Account.populateObjectListFromJson(jsonString);

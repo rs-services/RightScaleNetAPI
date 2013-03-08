@@ -349,6 +349,20 @@ namespace RightScale.netClient
 
             return retVal;
         }
+
+        /// <summary>
+        /// Helper method performs null/empty check on inputParameter and adds to parameterSet
+        /// </summary>
+        /// <param name="inputParameter"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterSet"></param>
+        internal static void addParameter(string inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
+        {
+            if (!string.IsNullOrWhiteSpace(inputParameter) && parameterSet != null)
+            {
+                parameterSet.Add(new KeyValuePair<string, string>(parameterName, inputParameter));
+            }
+        }
         #endregion
     }
 }

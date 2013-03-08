@@ -369,7 +369,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/launch");
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/launch", cloudid, instanceid);
             return launchPost(postHref, inputs);
         }
 
@@ -499,13 +499,83 @@ namespace RightScale.netClient
 
         #region Instance.update
 
+        /// <summary>
+        /// Updates attributes of a single instance.
+        /// </summary>
+        /// <param name="cloudID"></param>
+        /// <param name="instanceID"></param>
+        /// <param name="name"></param>
+        /// <param name="instanceTypeID"></param>
+        /// <param name="serverTemplateID"></param>
+        /// <param name="multiCloudImageID"></param>
+        /// <param name="securityGroupIDs"></param>
+        /// <param name="dataCenterID"></param>
+        /// <param name="imageID"></param>
+        /// <param name="kernelImageID"></param>
+        /// <param name="ramdiskImageID"></param>
+        /// <param name="sshKeyID"></param>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData)
         {
             string putHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
 
             List<KeyValuePair<string, string>> putParameters = new List<KeyValuePair<string, string>>();
 
-            throw new NotImplementedException();
+            if (securityGroupIDs != null && securityGroupIDs.Count<string>() > 0)
+            {
+                foreach (string securityGroupID in securityGroupIDs)
+                {
+                    putParameters.Add(new KeyValuePair<string, string>("server[instance][security_group_hrefs][]", Utility.securityGroupHref(cloudID, securityGroupID)));
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[name]", name));
+            }
+
+            if (!string.IsNullOrWhiteSpace(instanceTypeID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[instance_type_href]", Utility.instanceTypeHref(cloudID, instanceTypeID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(serverTemplateID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[server_tempalte_href]", Utility.serverTemplateHref(serverTemplateID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dataCenterID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[data_center_href]", Utility.datacenterHref(cloudID, dataCenterID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(imageID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[image_href]", Utility.imageHref(cloudID, imageID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(kernelImageID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[kernel_image_href]", Utility.kernelImageHref(cloudID, kernelImageID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ramdiskImageID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[ramdisk_image_href'", Utility.ramdiskImageHref(cloudID, ramdiskImageID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(sshKeyID))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[ssh_key_href]", Utility.sshKeyHref(cloudID, sshKeyID)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(userData))
+            {
+                putParameters.Add(new KeyValuePair<string, string>("instance[user_data]", userData));
+            }
+
+            return Core.APIClient.Instance.Put(putHref, putParameters);
         }
 
         #endregion

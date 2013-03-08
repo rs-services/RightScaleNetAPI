@@ -711,50 +711,18 @@ namespace RightScale.netClient
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
 
-            if (!string.IsNullOrWhiteSpace(condition))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "condition"), condition));
-            }
-            if (!string.IsNullOrWhiteSpace(description))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "description"), description));
-            }
-            if (!string.IsNullOrWhiteSpace(duration))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "duration"), duration));
-            }
-            if (!string.IsNullOrWhiteSpace(escalation_name))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "escalation_name"), escalation_name));
-            }
-            if (!string.IsNullOrWhiteSpace(file))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "file"), file));
-            }
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "name"), name));
-            }
-            if (!string.IsNullOrWhiteSpace(subject_href))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "subject_href"), subject_href));
-            }
-            if (!string.IsNullOrWhiteSpace(threshold))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "threshold"), threshold));
-            }
-            if (!string.IsNullOrWhiteSpace(variable))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "variable"), variable));
-            }
-            if (!string.IsNullOrWhiteSpace(vote_tag))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "vote_tag"), vote_tag));
-            }
-            if (!string.IsNullOrWhiteSpace(vote_type))
-            {
-                retVal.Add(new KeyValuePair<string, string>(string.Format(alertSpecFormat, "vote_type"), vote_type));
-            }
+            Utility.addParameter(condition, "alert_spec[condition]", retVal);
+            Utility.addParameter(description, "alert_spec[description]", retVal);
+            Utility.addParameter(duration, "alert_spec[duration]", retVal);
+            Utility.addParameter(escalation_name, "alert_spec[escalation_name]", retVal);
+            Utility.addParameter(file, "alert_spec[file]", retVal);
+            Utility.addParameter(name, "alert_spec[name]", retVal);
+            Utility.addParameter(subject_href, "alert_spec[subject_href]", retVal);
+            Utility.addParameter(threshold, "alert_spec[threshold]", retVal);
+            Utility.addParameter(variable, "alert_spec[variable]", retVal);
+            Utility.addParameter(vote_tag, "alert_spec[vote_tag]", retVal);
+            Utility.addParameter(vote_type, "alert_spec[vote_type]", retVal);
+
             return retVal;
         }
         #endregion

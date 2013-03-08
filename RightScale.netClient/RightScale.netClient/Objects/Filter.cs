@@ -69,7 +69,7 @@ namespace RightScale.netClient
                     opSign = "<>";
                  break;
                 default:
-                    throw new NotSupportedException();
+                 return string.Empty;
 	        }
             return string.Format(toStringFormat, this.Key, opSign, this.Value);
         }
@@ -118,33 +118,50 @@ namespace RightScale.netClient
             string workingString = filterString.Replace("filter[]=", "");
             if (workingString.Contains("=="))
             {
-                workingString = workingString.Replace("==", "Þ");
-                string[] filterTestSplit = workingString.Split('Þ');
-                if (filterTestSplit.Length == 2)
-                {
-                    retVal = new Filter(filterTestSplit[0], FilterOperator.Equal, filterTestSplit[1]);
-                }
-                else if (filterTestSplit.Length > 2)
-                {
-                    throw new ArgumentException("Cannot parse filter '" + filterString + "'. There are too many == symbols");
-                }
+                retVal = parseFilterFromString(workingString, FilterOperator.Equal);
             }
             else if (workingString.Contains("<>"))
             {
-                workingString = workingString.Replace("<>", "Þ");
-                string[] filterTestSplit = workingString.Split('Þ');
-                if (filterTestSplit.Length == 2)
-                {
-                    retVal = new Filter(filterTestSplit[0], FilterOperator.NotEqual, filterTestSplit[1]);
-                }
-                else if (filterTestSplit.Length > 2)
-                {
-                    throw new ArgumentException("Cannot parse filter'" + filterString + "'. There are too many <> symbols");
-                }
+                retVal = parseFilterFromString(workingString, FilterOperator.NotEqual);
             }
             else
             {
                 throw new ArgumentException("filter " + filterString + " does not contain == or <> which are the only two valid comparison operators for filters");
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// Private method handles parsing filter from string based on inputs
+        /// </summary>
+        /// <param name="filterString">full filter string</param>
+        /// <param name="workingString">working string pared down from filter string</param>
+        /// <param name="opVal">operator value - equals or not equals</param>
+        /// <returns></returns>
+        private static Filter parseFilterFromString(string workingString, FilterOperator filterOp)
+        {
+            Filter retVal = null;
+            string opVal = string.Empty;
+            switch (filterOp)
+            {
+                case FilterOperator.Equal:
+                    opVal = "==";
+                    break;
+                case FilterOperator.NotEqual:
+                    opVal = "<>";
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            workingString = workingString.Replace(opVal, "Þ");
+            string[] filterTestSplit = workingString.Split('Þ');
+            if (filterTestSplit.Length == 2)
+            {
+                retVal = new Filter(filterTestSplit[0], FilterOperator.NotEqual, filterTestSplit[1]);
+            }
+            else if (filterTestSplit.Length > 2)
+            {
+                throw new ArgumentException("Cannot parse filter'" + workingString + "'. There are too many " + opVal + " symbols");
             }
             return retVal;
         }

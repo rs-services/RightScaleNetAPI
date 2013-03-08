@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace RightScale.netClient
 {
     /// <summary>
     /// Excption specific to RightScale API errors
     /// </summary>
-    class RightScaleAPIException : Exception 
+    [Serializable]
+    class RightScaleAPIException : Exception
     {
         /// <summary>
         /// href endpoint reference of failed API call
