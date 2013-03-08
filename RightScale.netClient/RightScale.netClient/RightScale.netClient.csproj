@@ -73,13 +73,13 @@
     <Compile Include="Core\APIClient.cs" />
     <Compile Include="Objects\Link.cs" />
     <Compile Include="Objects\Pacing.cs" />
+    <Compile Include="Objects\RightScaleAPIException.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publication.cs" />
     <Compile Include="PublicationLineage.cs" />
     <Compile Include="RecurringVolumeAttachment.cs" />
     <Compile Include="Objects\ScheduleEntry.cs" />
-    <Compile Include="RightScaleAPIException.cs" />
     <Compile Include="SecurityGroup.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ServerArray.cs" />
