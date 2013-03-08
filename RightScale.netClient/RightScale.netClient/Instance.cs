@@ -530,51 +530,16 @@ namespace RightScale.netClient
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[name]", name));
-            }
-
-            if (!string.IsNullOrWhiteSpace(instanceTypeID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[instance_type_href]", Utility.instanceTypeHref(cloudID, instanceTypeID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(serverTemplateID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[server_tempalte_href]", Utility.serverTemplateHref(serverTemplateID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(dataCenterID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[data_center_href]", Utility.datacenterHref(cloudID, dataCenterID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(imageID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[image_href]", Utility.imageHref(cloudID, imageID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(kernelImageID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[kernel_image_href]", Utility.kernelImageHref(cloudID, kernelImageID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(ramdiskImageID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[ramdisk_image_href'", Utility.ramdiskImageHref(cloudID, ramdiskImageID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(sshKeyID))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[ssh_key_href]", Utility.sshKeyHref(cloudID, sshKeyID)));
-            }
-
-            if (!string.IsNullOrWhiteSpace(userData))
-            {
-                putParameters.Add(new KeyValuePair<string, string>("instance[user_data]", userData));
-            }
-
+            Utility.addParameter(name, "instance[name]", putParameters);
+            Utility.addParameter(Utility.instanceTypeHref(cloudID, instanceTypeID), "instance[instance_type_href]", putParameters);
+            Utility.addParameter(Utility.serverTemplateHref(serverTemplateID), "instance[server_template_href]", putParameters);
+            Utility.addParameter(Utility.datacenterHref(cloudID, dataCenterID), "instance[data_center_href]", putParameters);
+            Utility.addParameter(Utility.imageHref(cloudID, imageID), "instnace[image_href]", putParameters);
+            Utility.addParameter(Utility.kernelImageHref(cloudID, kernelImageID), "instance[kernel_image_href]", putParameters);
+            Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskImageID), "instance[ramdisk_image_href]", putParameters);
+            Utility.addParameter(Utility.sshKeyHref(cloudID, sshKeyID), "instance[ssh_key_href]", putParameters);
+            Utility.addParameter(userData, "instance[user_data]", putParameters);
+            
             return Core.APIClient.Instance.Put(putHref, putParameters);
         }
 

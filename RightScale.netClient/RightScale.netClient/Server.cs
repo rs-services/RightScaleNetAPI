@@ -403,78 +403,29 @@ namespace RightScale.netClient
             //populate return value
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
 
-            if (!string.IsNullOrWhiteSpace(deploymentid))
-            {
-                retVal.Add(new KeyValuePair<string, string>("server[deployment_href]", Utility.deploymentHref(deploymentid)));
-            }
-            if (!string.IsNullOrWhiteSpace(description))
-            {
-                retVal.Add(new KeyValuePair<string, string>("server[description]", description));
-            }
-            if(!string.IsNullOrWhiteSpace(cloudID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][cloud_href]", Utility.cloudHref(cloudID)));
-            }
-            if(!string.IsNullOrWhiteSpace(datacenterID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][datacenter_href]", Utility.datacenterHref(cloudID, datacenterID)));
-            }
-            if(!string.IsNullOrWhiteSpace(imageID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][image_href]", Utility.imageHref(cloudID, imageID)));
-            }
-            if(inputs != null && inputs.Count > 0)
-            {
-                foreach(KeyValuePair<string, string> kvp in inputs)
-                {
-                    retVal.Add(new KeyValuePair<string, string>("server[instance][inputs][][name]", kvp.Key));
-                    retVal.Add(new KeyValuePair<string, string>("server[instance][inputs][][value]", kvp.Value));
-                }
-            }
-            if(!string.IsNullOrWhiteSpace(instanceTypeID))
-            {
-                retVal.Add(new KeyValuePair<string, string>("server[instance][instance_type_href]", Utility.instanceTypeHref(cloudID, instanceTypeID)));
-            }
-            if(!string.IsNullOrWhiteSpace(kernelImageID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][kernel_image_href]", Utility.kernelImageHref(cloudID, kernelImageID)));
-            }
-            if(!string.IsNullOrWhiteSpace(multiCloudImageID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][multi_cloud_image_href]", Utility.multiCloudImageHref(multiCloudImageID)));
-            }
-            if(!string.IsNullOrWhiteSpace(ramdiskImageID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][ramdisk_image_href]", Utility.ramdiskImageHref(cloudID, ramdiskImageID)));
-            }
+            retVal.AddRange(Utility.FormatInputCollection(inputs));
+            Utility.addParameter(Utility.deploymentHref(deploymentid), "server[deployment_href]", retVal);
+            Utility.addParameter(description, "server[description]", retVal);
+            Utility.addParameter(Utility.cloudHref(cloudID), "server[instance][cloud_href]", retVal);
+            Utility.addParameter(Utility.imageHref(cloudID, imageID), "server[instance][image_href]", retVal);
+            Utility.addParameter(Utility.instanceTypeHref(cloudID, instanceTypeID), "server[instance][instance_type_href]", retVal);
+            Utility.addParameter(Utility.kernelImageHref(cloudID, kernelImageID), "server[instance][kernel_image_href]", retVal);
+            Utility.addParameter(Utility.multiCloudImageHref(multiCloudImageID), "server[instance][multi_cloud_image_href]", retVal);
+            Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskImageID), "server[instance][ramdisk_image_href]", retVal);
+            Utility.addParameter(Utility.serverTemplateHref(serverTemplateID), "server[instance][server_template_href]", retVal);
+            Utility.addParameter(Utility.sshKeyHref(cloudID, sshKeyID), "server[instance][ssh_key_href]", retVal);
+            Utility.addParameter(name, "server[name]", retVal);
+            Utility.addParameter(optimized.ToString().ToLower(), "server[optimized]", retVal);
+
             if(securityGroupIDs != null && securityGroupIDs.Count > 0)
             {
                 foreach(string s in securityGroupIDs)
                 {
-                    retVal.Add(new KeyValuePair<string,string>("server[instance][security_group_hrefs]", Utility.securityGroupHref(cloudID, s)));
+                    Utility.addParameter(s, "server[instance][security_group_hrefs][]", retVal);
                 }
             }
-            if(!string.IsNullOrWhiteSpace(serverTemplateID))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[instance][server_template_href]", Utility.serverTemplateHref(serverTemplateID)));
-            }
-            if(!string.IsNullOrWhiteSpace(sshKeyID))
-            {
-                retVal.Add(new KeyValuePair<string, string>("server[instance][ssh_key_href]", Utility.sshKeyHref(cloudID, sshKeyID)));
-            }
-            if(!string.IsNullOrWhiteSpace(name))
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[name]", name));
-            }
-            if(optimized)
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[optimized]", "false"));
-            }
-            else
-            {
-                retVal.Add(new KeyValuePair<string,string>("server[optimized]", "true"));
-            }
-                return retVal;
+            
+            return retVal;
         }
 
         /// <summary>
@@ -533,22 +484,11 @@ namespace RightScale.netClient
         private static bool updatePut(string putHref, string description, string name, bool optimized)
         {
             List<KeyValuePair<string, string>> paramSet = new List<KeyValuePair<string,string>>();
-            if(!string.IsNullOrWhiteSpace(description))
-            {
-                paramSet.Add(new KeyValuePair<string, string>("server[description]", description));
-            }
-            if(!string.IsNullOrWhiteSpace(name))
-            {
-                paramSet.Add(new KeyValuePair<string,string>("server[name]", name));
-            }
-            if(optimized)
-            {
-                paramSet.Add(new KeyValuePair<string,string>("server[optimized]", "true"));
-            }
-            else
-            {
-                paramSet.Add(new KeyValuePair<string,string>("server[optimized]", "false"));
-            }
+            
+            Utility.addParameter(description, "server[description]", paramSet);
+            Utility.addParameter(name, "server[name]", paramSet);
+            Utility.addParameter(optimized.ToString().ToLower(), "server[optimized]", paramSet);
+
             return Core.APIClient.Instance.Put(putHref, paramSet);
         }
 
