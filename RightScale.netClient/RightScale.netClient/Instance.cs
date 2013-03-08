@@ -212,7 +212,7 @@ namespace RightScale.netClient
         /// <param name="serverArrayID">ID of ServerArray to query</param>
         /// <param name="filter">filters results of query to RightScale API</param>
         /// <returns>collection of Instances within the given ServerArray</returns>
-        public static List<Instance> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter)
+        public static List<Instance> index_serverArray(string serverArrayID, List<Filter> filter)
         {
             return index_serverArray(serverArrayID, filter, null);
         }
@@ -223,7 +223,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of Cloud to query for instances</param>
         /// <param name="filter">filters results of query to RightScale API</param>
         /// <returns>collection of Instances within the given Cloud</returns>
-        public static List<Instance> index(string cloudID, List<KeyValuePair<string, string>> filter)
+        public static List<Instance> index(string cloudID, List<Filter> filter)
         {
             return index(cloudID, filter, null);
         }
@@ -258,7 +258,7 @@ namespace RightScale.netClient
         /// <param name="filter">filters results of query to RightScale API</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns></returns>
-        public static List<Instance> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<Instance> index_serverArray(string serverArrayID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/server_arrays/{0}/current_instances", serverArrayID);
             return indexGet(getHref, filter, view);
@@ -271,7 +271,7 @@ namespace RightScale.netClient
         /// <param name="filter">filters results of query to RightScale API</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>collection of Instances within the given Cloud</returns>
-        public static List<Instance> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<Instance> index(string cloudID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/instances", cloudID);
             return indexGet(getHref, filter, view);
@@ -284,7 +284,7 @@ namespace RightScale.netClient
         /// <param name="filter">filters results of query to RightScale API</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns></returns>
-        private static List<Instance> indexGet(string getHref, List<KeyValuePair<string, string>> filter, string view)
+        private static List<Instance> indexGet(string getHref, List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -300,15 +300,13 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
 
             string queryString = string.Empty;
-            if (filter != null && filter.Count > 0)
+
+            queryString += Utility.BuildFilterString(filter);
+            if (!string.IsNullOrWhiteSpace(view))
             {
-                foreach (KeyValuePair<string, string> kvp in filter)
-                {
-                    queryString += string.Format("{0}={1}&", kvp.Key, kvp.Value);
-                }
+                queryString += string.Format("view={0}", view);
             }
-            
-            queryString += string.Format("view={0}", view);
+
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
         }

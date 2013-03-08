@@ -59,27 +59,16 @@ namespace RightScale.netClient
         /// <returns>Collection of IPAddress objects</returns>
         public static List<IPAddress> index(string cloudID)
         {
-            return index(cloudID, new List<KeyValuePair<string, string>>());
+            return index(cloudID, new List<Filter>());
         }
-
+        
         /// <summary>
         /// An IpAddress provides an abstraction for IPv4 addresses bindable to Instance resources running in a Cloud.
         /// </summary>
         /// <param name="cloudID">ID of the Cloud where IP addresses are to be retrieved from</param>
         /// <param name="filter">Set of filters for querying IP Addresses</param>
         /// <returns>Collection of IPAddress objects</returns>
-        public static List<IPAddress> index(string cloudID, Hashtable filter)
-        {
-            return index(cloudID, Utility.convertToKVP(filter));
-        }
-
-        /// <summary>
-        /// An IpAddress provides an abstraction for IPv4 addresses bindable to Instance resources running in a Cloud.
-        /// </summary>
-        /// <param name="cloudID">ID of the Cloud where IP addresses are to be retrieved from</param>
-        /// <param name="filter">Set of filters for querying IP Addresses</param>
-        /// <returns>Collection of IPAddress objects</returns>
-        public static List<IPAddress> index(string cloudID, List<KeyValuePair<string, string>> filter)
+        public static List<IPAddress> index(string cloudID, List<Filter> filter)
         {
             string getHref = string.Format("/get/clouds/{0}/ip_addresses", cloudID);
 

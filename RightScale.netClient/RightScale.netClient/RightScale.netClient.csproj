@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountGroup.cs" />
+    <Compile Include="Objects\Filter.cs" />
     <Compile Include="Objects\Bounds.cs" />
     <Compile Include="Objects\ElasticityParams.cs" />
     <Compile Include="Objects\AlertSpecificParams.cs" />

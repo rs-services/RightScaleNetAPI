@@ -99,7 +99,7 @@ namespace RightScale.netClient
         /// <param name="deploymentID">ID of the deployment to index Server objects in</param>
         /// <param name="filter"></param>
         /// <returns>Collection of Server objects</returns>
-        public static List<Server> index_deployment(string deploymentID, List<KeyValuePair<string, string>> filter)
+        public static List<Server> index_deployment(string deploymentID, List<Filter> filter)
         {
             return index_deployment(deploymentID, filter, null);
         }
@@ -122,7 +122,7 @@ namespace RightScale.netClient
         /// <param name="filter"></param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>Collection of Server objects</returns>
-        public static List<Server> index_deployment(string deploymentID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<Server> index_deployment(string deploymentID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/deployments/{0}/servers", deploymentID);
             return indexGet(filter, view, getHref);
@@ -142,7 +142,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>Collection of Server objects</returns>
-        public static List<Server> index(List<KeyValuePair<string, string>> filter)
+        public static List<Server> index(List<Filter> filter)
         {
             return index(filter, null);
         }
@@ -163,7 +163,7 @@ namespace RightScale.netClient
         /// <param name="filter"></param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>Collection of Server objects</returns>
-        public static List<Server> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<Server> index(List<Filter> filter, string view)
         {
             string getHref = "/api/servers";
             return indexGet(filter, view, getHref);
@@ -176,7 +176,7 @@ namespace RightScale.netClient
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <param name="getHref">API href for GET to be performed on</param>
         /// <returns>Collection of Server objects</returns>
-        private static List<Server> indexGet(List<KeyValuePair<string, string>> filter, string view, string getHref)
+        private static List<Server> indexGet(List<Filter> filter, string view, string getHref)
         {
 
             if (string.IsNullOrWhiteSpace(view))

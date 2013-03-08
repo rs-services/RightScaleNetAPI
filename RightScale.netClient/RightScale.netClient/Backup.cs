@@ -71,7 +71,7 @@ namespace RightScale.netClient
             return index(null, null);
         }
 
-        public static List<Backup> index(List<KeyValuePair<string, string>> filter)
+        public static List<Backup> index(List<Filter> filter)
         {
             return index(filter, null);
         }
@@ -81,7 +81,7 @@ namespace RightScale.netClient
             return index(null, view);
         }
 
-        public static List<Backup> index(List<KeyValuePair<string, string>> filter, string lineage)
+        public static List<Backup> index(List<Filter> filter, string lineage)
         {
             if(string.IsNullOrWhiteSpace(lineage))
             {

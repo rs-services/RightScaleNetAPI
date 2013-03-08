@@ -46,7 +46,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<MultiCloudImageSetting> index(List<KeyValuePair<string, string>> filter)
+        public static List<MultiCloudImageSetting> index(List<Filter> filter)
         {
             List<string> validFilters = new List<string>() { "cloud_href", "multi_cloud_image_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);

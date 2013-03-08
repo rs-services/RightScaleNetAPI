@@ -59,25 +59,15 @@ namespace RightScale.netClient
         /// <returns>List of AccountGroups</returns>
         public static List<AccountGroup> index()
         {
-            return index(new List<KeyValuePair<string, string>>(), string.Empty);
+            return index(new List<Filter>(), string.Empty);
         }
-
-        /// <summary>
-        /// Lists the AccountGroups owned by this acount
-        /// </summary>
-        /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
-        /// <returns>Filtered list of AccountGroups</returns>
-        public static List<AccountGroup> index(Hashtable filter)
-        {
-            return index(Utility.convertToKVP(filter));
-        }
-
+        
         /// <summary>
         /// Lists the AccountGroups owned by this Account.
         /// </summary>
         /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
         /// <returns>Filtered list of AccountGroups</returns>
-        public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter)
+        public static List<AccountGroup> index(List<Filter> filter)
         {
             return index(filter, null);
         }
@@ -89,7 +79,7 @@ namespace RightScale.netClient
         /// <returns>Filtered list of AccountGroups based on view input</returns>
         public static List<AccountGroup> index(string view)
         {
-            return index(new List<KeyValuePair<string, string>>(), view);
+            return index(new List<Filter>(), view);
         }
 
         /// <summary>
@@ -98,18 +88,7 @@ namespace RightScale.netClient
         /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
         /// <param name="view">Defines specific view to limit the AccountGroups returned from RightScale API</param>
         /// <returns>Filtered list of AccuntGroups based on filter and view input</returns>
-        public static List<AccountGroup> index(Hashtable filter, string view)
-        {
-            return index(Utility.convertToKVP(filter), view);
-        }
-        
-        /// <summary>
-        /// Lists the AccountGroups owned by this Account.
-        /// </summary>
-        /// <param name="filter">Set of filters to modify query to return AccountGroups from RightScale API</param>
-        /// <param name="view">Defines specific view to limit the AccountGroups returned from RightScale API</param>
-        /// <returns>Filtered list of AccuntGroups based on filter and view input</returns>
-        public static List<AccountGroup> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<AccountGroup> index(List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -129,7 +108,7 @@ namespace RightScale.netClient
 
             if (filter != null && filter.Count > 0)
             {
-                queryString += Utility.BuildFilterString(filter) + "&";
+                queryString += Utility.BuildFilterString(filter);
             }
 
             queryString += string.Format("view={0}", view);

@@ -85,7 +85,7 @@ namespace RightScale.netClient
         /// <param name="validFilters">List of strings identifying all valid filter names</param>
         /// <param name="actualFilters">collection of filters to test</param>
         /// <returns>True if all filters are valid, throws ARgumentException if not</returns>
-        public static bool CheckFilterInput(string inputName, List<string> validFilters, List<KeyValuePair<string, string>> actualFilters)
+        public static bool CheckFilterInput(string inputName, List<string> validFilters, List<Filter> actualFilters)
         {
             bool retVal = false;
 
@@ -125,9 +125,8 @@ namespace RightScale.netClient
             string retVal = string.Empty;
             foreach (KeyValuePair<string, string> kvp in qsData)
             {
-                retVal += string.Format("filter[]={0}=={1}&", kvp.Key, kvp.Value);
+                retVal += string.Format("{0}={1}&", kvp.Key, kvp.Value);
             }
-            retVal = retVal.TrimEnd('&');
             return retVal;
         }
 
@@ -136,19 +135,16 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filterSet">list of key value pairs to be built into a filter string when passing filters to the RightScale API</param>
         /// <returns>properly formatted string for filter collection</returns>
-        public static string BuildFilterString(List<KeyValuePair<string, string>> filterSet)
+        public static string BuildFilterString(List<Filter> filterSet)
         {
             string retVal = string.Empty;
             if (filterSet != null)
             {
-                foreach (KeyValuePair<string, string> kvp in filterSet)
+                foreach (Filter f in filterSet)
                 {
-                    retVal += string.Format(@"filter[]={0}=={1}&", kvp.Key, kvp.Value);
+                    retVal += f.ToString() + "&";
                 }
             }
-
-            retVal = retVal.TrimEnd('&');
-
             return retVal;
         }
 

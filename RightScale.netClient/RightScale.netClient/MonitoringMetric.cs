@@ -50,12 +50,12 @@ namespace RightScale.netClient
             return index(null, null, null, null, null);
         }
 
-        public static List<MonitoringMetric> index(List<KeyValuePair<string, string>> filter)
+        public static List<MonitoringMetric> index(List<Filter> filter)
         {
             return index(filter, null, null, null, null);
         }
 
-        public static List<MonitoringMetric> index(List<KeyValuePair<string, string>> filter, string period, string size, string title, string tz)
+        public static List<MonitoringMetric> index(List<Filter> filter, string period, string size, string title, string tz)
         {
             if (string.IsNullOrWhiteSpace(period))
             {

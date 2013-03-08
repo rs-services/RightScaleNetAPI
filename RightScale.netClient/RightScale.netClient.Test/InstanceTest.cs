@@ -39,8 +39,8 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void indexDeploymentTest()
         {
-            List<KeyValuePair<string, string>> filters = new List<KeyValuePair<string, string>>();
-            filters.Add(new KeyValuePair<string, string>("deployment_href", Utility.deploymentHref(deploymentID)));
+            List<Filter> filters = new List<Filter>();
+            filters.Add(new Filter("deployment_href", FilterOperator.Equal, Utility.deploymentHref(deploymentID)));
             List<Instance> instanceList = Instance.index(cloudID, filters);
             Assert.IsNotNull(instanceList);
             Assert.IsTrue(instanceList.Count > 0);

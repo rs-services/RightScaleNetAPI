@@ -57,7 +57,7 @@ namespace RightScale.netClient
             return index(null, null);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter)
+        public static List<VolumeSnapshot> index(List<Filter> filter)
         {
             return index(filter, null);
         }
@@ -67,7 +67,7 @@ namespace RightScale.netClient
             return index(null, view);
         }
 
-        public static List<VolumeSnapshot> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<VolumeSnapshot> index(List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {

@@ -51,7 +51,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<CloudAccount> index(List<KeyValuePair<string, string>> filter)
+        public static List<CloudAccount> index(List<Filter> filter)
         {
             List<string> validFilters = new List<string>() { "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);

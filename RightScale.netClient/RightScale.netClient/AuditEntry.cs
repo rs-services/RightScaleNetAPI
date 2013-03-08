@@ -119,7 +119,7 @@ namespace RightScale.netClient
         /// <param name="start_date">The start date for retrieving audit entries</param>
         /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
         /// <returns>Collection of AuditEntry objects from the start_time defined with a limit and filter as specified</returns>
-        public static List<AuditEntry> index(List<KeyValuePair<string, string>> filter, string limit, DateTime start_date, DateTime end_date)
+        public static List<AuditEntry> index(List<Filter> filter, string limit, DateTime start_date, DateTime end_date)
         {
             return index(filter, null, limit, start_date, end_date);
         }
@@ -134,7 +134,7 @@ namespace RightScale.netClient
         /// <param name="start_date">The start date for retrieving audit entries</param>
         /// <param name="end_date">The end date for retrieving audit entries (the format must be the same as start date). The time period between start and end date must be less than 3 months (93 days).</param>
         /// <returns>Collection of AuditEntry objects from the start_time defined with a limit, filter and view as specified</returns>
-        public static List<AuditEntry> index(List<KeyValuePair<string, string>> filter, string view, string limit, DateTime start_date, DateTime end_date)
+        public static List<AuditEntry> index(List<Filter> filter, string view, string limit, DateTime start_date, DateTime end_date)
         {
             string getHref = "/api/audit_entries";
 
@@ -194,7 +194,7 @@ namespace RightScale.netClient
                 queryString += Utility.BuildFilterString(filter);
             }
 
-            string jsonString = Core.APIClient.Instance.Get(getHref + "?" + queryString);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
 
             return deserializeList(jsonString);
 

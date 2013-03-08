@@ -153,7 +153,7 @@ namespace RightScale.netClient
         /// <param name="serverArrayID">ID of the ServerArray to query for AlertSpecs</param>
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs for the given ServerArray</returns>
-        public static List<AlertSpec> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter)
+        public static List<AlertSpec> index_serverArray(string serverArrayID, List<Filter> filter)
         {
             return index_serverArray(serverArrayID, filter, null);
         }
@@ -176,7 +176,7 @@ namespace RightScale.netClient
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <param name="view">View name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs for the given ServerArray</returns>
-        public static List<AlertSpec> index_serverArray(string serverArrayID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<AlertSpec> index_serverArray(string serverArrayID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/server_arrays/{0}/alert_specs", serverArrayID);
             return indexGet(getHref, filter, view);
@@ -198,7 +198,7 @@ namespace RightScale.netClient
         /// <param name="serverTemplateID">ServerTemplate ID to query for AlertSpecs</param>
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
-        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<KeyValuePair<string, string>> filter)
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<Filter> filter)
         {
             return index_serverTemplate(serverTemplateID, filter, null);
         }
@@ -221,7 +221,7 @@ namespace RightScale.netClient
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <param name="view">View name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs for the given ServerTemplate</returns>
-        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<AlertSpec> index_serverTemplate(string serverTemplateID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/server_templates/{0}/alert_specs", serverTemplateID);
             return indexGet(getHref, filter, view);
@@ -241,7 +241,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index(string serverID, List<KeyValuePair<string, string>> filter)
+        public static List<AlertSpec> index(string serverID, List<Filter> filter)
         {
             return index(serverID, filter, null);
         }
@@ -262,7 +262,7 @@ namespace RightScale.netClient
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <param name="view">View name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        public static List<AlertSpec> index(string serverID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<AlertSpec> index(string serverID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/servers/{0}/alert_specs", serverID);
             return indexGet(getHref, filter, view);
@@ -275,7 +275,7 @@ namespace RightScale.netClient
         /// <param name="filter">Filters for querying AlertSpecs</param>
         /// <param name="view">View name for querying AlertSpecs</param>
         /// <returns>collection of AlertSpecs</returns>
-        private static List<AlertSpec> indexGet(string getHref, List<KeyValuePair<string, string>> filter, string view)
+        private static List<AlertSpec> indexGet(string getHref, List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -293,7 +293,7 @@ namespace RightScale.netClient
             string queryString = Utility.BuildFilterString(filter);
             if (!string.IsNullOrEmpty(view))
             {
-                queryString += string.Format("&view={0}", view);
+                queryString += string.Format("view={0}", view);
             }
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);

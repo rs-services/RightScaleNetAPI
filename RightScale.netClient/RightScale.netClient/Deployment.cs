@@ -82,7 +82,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>collection of Deployment objects</returns>
-        public static List<Deployment> index(List<KeyValuePair<string, string>> filter)
+        public static List<Deployment> index(List<Filter> filter)
         {
             return index(filter, null);
         }
@@ -105,7 +105,7 @@ namespace RightScale.netClient
         /// <param name="filter">list of KeyValuePair(string,string) to use as filters to query for deployments</param>
         /// <param name="view">name of the view to be returned</param>
         /// <returns>collection of Deployment objects</returns>
-        public static List<Deployment> index(List<KeyValuePair<string, string>> filter, string view)
+        public static List<Deployment> index(List<Filter> filter, string view)
         {
             string getHref = "/api/deployments";
 

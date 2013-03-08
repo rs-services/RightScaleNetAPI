@@ -56,7 +56,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<User> index(List<KeyValuePair<string, string>> filter)
+        public static List<User> index(List<Filter> filter)
         {
             List<string> validFilters = new List<string>() { "email", "first_name", "last_name" };
             Utility.CheckFilterInput("filter", validFilters, filter);

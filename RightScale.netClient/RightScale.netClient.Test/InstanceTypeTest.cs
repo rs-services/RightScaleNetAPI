@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Configuration;
+using RightScale.netClient;
 
 namespace RightScale.netClient.Test
 {
@@ -38,8 +39,8 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void InstanceTypeIndexFilteredTest()
         {
-            List<KeyValuePair<string, string>> filters = new List<KeyValuePair<string, string>>();
-            filters.Add(new KeyValuePair<string, string>("name", "extra"));
+            List<Filter> filters = new List<Filter>();
+            filters.Add(new Filter("name", FilterOperator.Equal, "extra"));
             List<InstanceType> filteredResultSet = InstanceType.index(cloudID, filters);
             Assert.IsNotNull(filteredResultSet);
             Assert.IsTrue(filteredResultSet.Count > 0);
@@ -54,9 +55,9 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void InstanceTypeIndexFullTest()
         {
-            
-            List<KeyValuePair<string, string>> filters = new List<KeyValuePair<string, string>>();
-            filters.Add(new KeyValuePair<string, string>("name", "extra"));
+
+            List<Filter> filters = new List<Filter>();
+            filters.Add(new Filter("name", FilterOperator.Equal, "extra"));
             List<InstanceType> filteredResultSet = InstanceType.index(cloudID, filters, "default");
             Assert.IsNotNull(filteredResultSet);
             Assert.IsTrue(filteredResultSet.Count > 0);

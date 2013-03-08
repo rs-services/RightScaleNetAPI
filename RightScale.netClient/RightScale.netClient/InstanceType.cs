@@ -73,7 +73,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud to enumerate instance types for</param>
         /// <param name="filter">Collection of filters for limiting the return set</param>
         /// <returns>Collection of InstanceTypes</returns>
-        public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter)
+        public static List<InstanceType> index(string cloudID, List<Filter> filter)
         {
             return index(cloudID, filter, null);
         }
@@ -96,7 +96,7 @@ namespace RightScale.netClient
         /// <param name="filter">Collection of filters for limiting the return set</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>Collection of InstanceTypes</returns>
-        public static List<InstanceType> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<InstanceType> index(string cloudID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/instance_types", cloudID);
 
@@ -116,7 +116,7 @@ namespace RightScale.netClient
             string queryString = string.Empty;
             if (filter != null && filter.Count > 0)
             {
-                queryString += Utility.BuildGetQueryString(filter) + "&";
+                queryString += Utility.BuildFilterString(filter);
             }
             queryString += string.Format("view={0}", view);
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);

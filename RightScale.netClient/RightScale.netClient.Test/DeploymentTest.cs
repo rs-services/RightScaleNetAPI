@@ -42,8 +42,8 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void indexFilterTest()
         {
-            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
-            filterSet.Add(new KeyValuePair<string, string>("name", "API"));
+            List<Filter> filterSet = new List<Filter>();
+            filterSet.Add(new Filter("name", FilterOperator.Equal, "API"));
             List<Deployment> listOfDeployments = Deployment.index();
             Assert.IsNotNull(listOfDeployments);
             Assert.IsTrue(listOfDeployments.Count > 0);
@@ -54,10 +54,10 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void indesFullTest()
+        public void indexFullTest()
         {
-            List<KeyValuePair<string, string>> filter = new List<KeyValuePair<string, string>>();
-            filter.Add(new KeyValuePair<string, string>("name", "API"));
+            List<Filter> filter = new List<Filter>();
+            filter.Add(new Filter("name", FilterOperator.Equal, "API"));
             List<Deployment> simpleList = Deployment.index();
             Assert.IsNotNull(simpleList);
             Assert.IsTrue(simpleList.Count > 0);

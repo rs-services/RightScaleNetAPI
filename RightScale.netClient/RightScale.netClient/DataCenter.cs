@@ -84,22 +84,10 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
         /// <param name="filter">Filter set to limit return data</param>
         /// <returns>Collection of DataCenter objects</returns>
-        public static List<DataCenter> index(string cloudID, List<KeyValuePair<string, string>> filter)
+        public static List<DataCenter> index(string cloudID, List<Filter> filter)
         {
             return index(cloudID, filter, null);
         }
-
-        /// <summary>
-        /// Lists all Datacenters for a particular cloud.
-        /// </summary>
-        /// <param name="cloudID">ID of cloud to enumerate DataCenters for</param>
-        /// <param name="filter">Filter set to limit return data</param>
-        /// <returns>Collection of DataCenter objects</returns>
-        public static List<DataCenter> index(string cloudID, Hashtable filter)
-        {
-            return index(cloudID, Utility.convertToKVP(filter), null);
-        }
-
         /// <summary>
         /// Lists all Datacenters for a particular cloud.
         /// </summary>
@@ -118,7 +106,7 @@ namespace RightScale.netClient
         /// <param name="filter">Filter set to limit return data</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
         /// <returns>Collection of DataCenter objects</returns>
-        public static List<DataCenter> index(string cloudID, List<KeyValuePair<string, string>> filter, string view)
+        public static List<DataCenter> index(string cloudID, List<Filter> filter, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/datacenters", cloudID);
 
@@ -136,18 +124,13 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
 
             string queryString = string.Empty;
-
-            if (filter != null && filter.Count > 0)
-            {
-                foreach(KeyValuePair<string, string> kvp in filter)
-                {
-                    queryString += string.Format("{0}={1}&", kvp.Key, kvp.Value);
-                }
-            }
+            queryString += Utility.BuildFilterString(filter);
+            
             if (!string.IsNullOrWhiteSpace(view))
             {
-                queryString += string.Format("view={0}", view);
+                queryString += string.Format("&view={0}", view);
             }
+
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
         }

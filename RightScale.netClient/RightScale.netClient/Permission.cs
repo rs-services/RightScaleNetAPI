@@ -51,7 +51,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<Permission> index(List<KeyValuePair<string, string>> filter)
+        public static List<Permission> index(List<Filter> filter)
         {     
             List<string> validFilters = new List<string>() { "user_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);

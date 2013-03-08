@@ -66,7 +66,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<Cloud> index(List<KeyValuePair<string, string>> filter)
+        public static List<Cloud> index(List<Filter> filter)
         {
 
             List<string> validFilters = new List<string>() { "cloud_type", "description", "name" };

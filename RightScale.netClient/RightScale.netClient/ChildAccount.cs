@@ -51,7 +51,7 @@ namespace RightScale.netClient
             return index(null);
         }
 
-        public static List<ChildAccount> index(List<KeyValuePair<string, string>> filter)
+        public static List<ChildAccount> index(List<Filter> filter)
         {
 
             List<string> validFilters = new List<string>() { "name" };

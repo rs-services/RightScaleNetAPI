@@ -47,8 +47,8 @@ namespace RightScale.netClient.Test
 
             //TODO: I'm not entirely sure why this is currently failing... 
             //Assert.IsTrue(alertSpecList.Count > 0);
-            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
-            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<Filter> filterSet = new List<Filter>();
+            filterSet.Add(new Filter("name", FilterOperator.Equal, "cpu"));
             List<AlertSpec> filteredAlertSpecList = AlertSpec.index(serverID, filterSet, "default");
             Assert.IsNotNull(filteredAlertSpecList);
 
@@ -79,8 +79,8 @@ namespace RightScale.netClient.Test
             List<AlertSpec> alertSpecList = AlertSpec.index_serverTemplate(serverTemplateID, "default");
             Assert.IsNotNull(alertSpecList);
             Assert.IsTrue(alertSpecList.Count > 0);
-            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
-            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<Filter> filterSet = new List<Filter>();
+            filterSet.Add(new Filter("name", FilterOperator.Equal, "cpu"));
             List<AlertSpec> filteredAlertSpecList = AlertSpec.index_serverTemplate(serverTemplateID, filterSet, "default");
             Assert.IsNotNull(filteredAlertSpecList);
             Assert.IsTrue(filteredAlertSpecList.Count > 0);
@@ -109,8 +109,8 @@ namespace RightScale.netClient.Test
             List<AlertSpec> alertSpecList = AlertSpec.index_serverArray(serverArrayID, "default");
             Assert.IsNotNull(alertSpecList);
             Assert.IsTrue(alertSpecList.Count > 0);
-            List<KeyValuePair<string, string>> filterSet = new List<KeyValuePair<string, string>>();
-            filterSet.Add(new KeyValuePair<string, string>("name", "cpu"));
+            List<Filter> filterSet = new List<Filter>();
+            filterSet.Add(new Filter("name", FilterOperator.Equal, "cpu"));
             List<AlertSpec> filteredAlertSpecList = AlertSpec.index_serverArray(serverArrayID, filterSet, "default");
             Assert.IsNotNull(filteredAlertSpecList);
             Assert.IsTrue(filteredAlertSpecList.Count > 0);
