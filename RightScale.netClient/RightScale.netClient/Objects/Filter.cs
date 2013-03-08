@@ -40,6 +40,8 @@ namespace RightScale.netClient
         /// </summary>
         private const string toStringFormat = "filter[]={0}{1}{2}";
 
+        private const string toFilterOnlyStringFormat = "{0}{1}{2}";
+
         /// <summary>
         /// Creates a new instance of a filter
         /// </summary>
@@ -53,25 +55,35 @@ namespace RightScale.netClient
             this.Operator = filterType;
         }
 
+        public string ToFilterOnlyString()
+        {
+            return string.Format(toFilterOnlyStringFormat, this.Key, getOpSign(), this.Value);
+        }
+
+        private string getOpSign()
+        {
+            string retVal = string.Empty;
+            switch (this.Operator)
+            {
+                case FilterOperator.Equal:
+                    retVal = "==";
+                    break;
+                case FilterOperator.NotEqual:
+                    retVal = "<>";
+                    break;
+                default:
+                    break;
+            }
+            return retVal;
+        }
+
         /// <summary>
         /// Override of ToString method to generate properly formatted string representation of filtre
         /// </summary>
         /// <returns>RightScale API formatted filter string</returns>
         public override string ToString()
         {
-            string opSign;
-            switch (Operator)
-	        {
-		        case FilterOperator.Equal:
-                    opSign = "==";
-                 break;
-                case FilterOperator.NotEqual:
-                    opSign = "<>";
-                 break;
-                default:
-                 return string.Empty;
-	        }
-            return string.Format(toStringFormat, this.Key, opSign, this.Value);
+            return string.Format(toStringFormat, this.Key, getOpSign(), this.Value);
         }
 
         /// <summary>

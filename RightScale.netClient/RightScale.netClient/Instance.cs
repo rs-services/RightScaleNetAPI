@@ -498,24 +498,24 @@ namespace RightScale.netClient
         #endregion
 
         #region Instance.update
-
+        
         /// <summary>
         /// Updates attributes of a single instance.
         /// </summary>
-        /// <param name="cloudID"></param>
-        /// <param name="instanceID"></param>
-        /// <param name="name"></param>
-        /// <param name="instanceTypeID"></param>
-        /// <param name="serverTemplateID"></param>
-        /// <param name="multiCloudImageID"></param>
-        /// <param name="securityGroupIDs"></param>
-        /// <param name="dataCenterID"></param>
-        /// <param name="imageID"></param>
-        /// <param name="kernelImageID"></param>
-        /// <param name="ramdiskImageID"></param>
-        /// <param name="sshKeyID"></param>
-        /// <param name="userData"></param>
-        /// <returns></returns>
+        /// <param name="cloudID">ID of the cloud where the instance to be updated resides</param>
+        /// <param name="instanceID">ID of the instance to be updated</param>
+        /// <param name="name">Updated name for Instance</param>
+        /// <param name="instanceTypeID">Updated InstanceTypeID for Instance</param>
+        /// <param name="serverTemplateID">Updated ServerTemplateID for Instance</param>
+        /// <param name="multiCloudImageID">Updated MultiCloudImageID for Instance</param>
+        /// <param name="securityGroupIDs">Updated SecutiryGroupID array for Instance</param>
+        /// <param name="dataCenterID">Updated DataCenterID for Instance</param>
+        /// <param name="imageID">Updated ImageID for Instance</param>
+        /// <param name="kernelImageID">Updated KernelImageID for Instance</param>
+        /// <param name="ramdiskImageID">Updated RamdiskImageID for Instance</param>
+        /// <param name="sshKeyID">Updated SshKeyID for Instance</param>
+        /// <param name="userData">Updated UserData for Instance</param>
+        /// <returns>True if successful, false if not</returns>
         public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData)
         {
             string putHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
@@ -550,6 +550,35 @@ namespace RightScale.netClient
         #endregion
 
         #region Instance.multi_terminate
+
+        /// <summary>
+        /// Terminates running instances. Either a filter or the parameter 'terminate_all' must be provided.
+        /// </summary>
+        /// <param name="serverArrayID">ID of a ServerArray to terminate instances in</param>
+        /// <param name="terminateAll">Boolean indicating that all instances should be terminated</param>
+        /// <param name="filters">Set of filters to limit the number of instances terminated</param>
+        /// <returns>true if process is queued successfully, false if not</returns>
+        public bool multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
+        {
+            if (!terminateAll && (filters == null || filters.Count == 0))
+            {
+                throw new RightScaleAPIException("Cannot issue command to multi_terminate instances without either specifying that you wish to terminate all or you specify a filter");
+            }
+
+            List<string> validFilters = new List<string>() { "datacenter_href", "deployment_href", "name", "os_platform", "parent_href", "private_dns_name", "private_ip_address", "publis_dns_name", "public_ip_address", "resource_uid", "server_template_href", "state" };
+            Utility.CheckFilterInput("filters", validFilters, filters);
+
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(terminateAll.ToString().ToLower(), "terminate_all", postParams);
+
+            foreach (Filter f in filters)
+            {
+                Utility.addParameter(f.ToFilterOnlyString(), "filter[]", postParams);
+            }
+
+            string postHref = string.Format("/api/server_arrays/{0}/multi_terminate");
+            return Core.APIClient.Instance.Post(postHref, postParams);
+        }
 
         #endregion
 

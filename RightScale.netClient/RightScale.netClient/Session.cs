@@ -74,9 +74,11 @@ namespace RightScale.netClient
         {
             string postHref = "/api/session";
             List<KeyValuePair<string, string>> parameterSet = new List<KeyValuePair<string, string>>();
-            parameterSet.Add(new KeyValuePair<string, string>("account_href", Utility.accountHref(accountID)));
-            parameterSet.Add(new KeyValuePair<string, string>("email", email));
-            parameterSet.Add(new KeyValuePair<string, string>("password", password));
+            
+            Utility.addParameter(email, "email", parameterSet);
+            Utility.addParameter(password, "password", parameterSet);
+            Utility.addParameter(Utility.accountHref(accountID), "account_href", parameterSet);
+
             Core.APIClient.Instance.Post(postHref, parameterSet);
         }
 
@@ -114,8 +116,8 @@ namespace RightScale.netClient
         {
             string postHref = "/api/session/instance";
             List<KeyValuePair<string, string>> parameterSet = new List<KeyValuePair<string, string>>();
-            parameterSet.Add(new KeyValuePair<string, string>("account_href", Utility.accountHref(accountID)));
-            parameterSet.Add(new KeyValuePair<string, string>("instance_token", instanceToken));
+            Utility.addParameter(Utility.accountHref(accountID), "account_href", parameterSet);
+            Utility.addParameter(instanceToken, "instance_token", parameterSet);
             Core.APIClient.Instance.Post(postHref, parameterSet);
         }
 

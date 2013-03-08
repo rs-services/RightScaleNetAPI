@@ -363,6 +363,24 @@ namespace RightScale.netClient
                 parameterSet.Add(new KeyValuePair<string, string>(parameterName, inputParameter));
             }
         }
+
+        /// <summary>
+        /// Private method to translate filter lists to convert to a parameter set 
+        /// </summary>
+        /// <param name="filterList">list of filters to push to a parameter set</param>
+        /// <returns>list of keyvaluepairs for parameter inputs</returns>
+        internal static List<KeyValuePair<string, string>> FilterListToParameterSet(List<Filter> filterList)
+        {
+            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+            if (filterList != null && filterList.Count > 0)
+            {
+                foreach (Filter f in filterList)
+                {
+                    Utility.addParameter(f.ToString(), "filter[]", retVal);
+                }
+            }
+            return retVal;
+        }
         #endregion
     }
 }
