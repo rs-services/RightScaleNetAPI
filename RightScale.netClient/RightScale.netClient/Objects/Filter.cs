@@ -70,7 +70,6 @@ namespace RightScale.netClient
                  break;
                 default:
                     throw new NotSupportedException();
-                 break;
 	        }
             return string.Format(toStringFormat, this.Key, opSign, this.Value);
         }

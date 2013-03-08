@@ -41,7 +41,7 @@ namespace RightScale.netClient.Core
         /// </summary>
         /// <param name="linkName">name of the link to be queried</param>
         /// <returns>ID at the back end of the href for the given link</returns>
-        internal string getLinkIDValue(string linkName)
+        internal string getLinkIDValue (string linkName)
         {
             var idToReturn = from link in links where link.rel == linkName select link.href;
             if (idToReturn.Count<string>() != 1)
