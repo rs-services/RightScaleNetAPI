@@ -9,10 +9,12 @@ namespace RightScale.netClient.Test
     public class InstanceTypeTest
     {
         string cloudID;
+        string instanceTypeID;
 
         public InstanceTypeTest()
         {
             cloudID = ConfigurationManager.AppSettings["InstanceTypeTest_cloudID"].ToString();
+            instanceTypeID = ConfigurationManager.AppSettings["InstanceTypeTest_instanceID"].ToString();
         }
 
         #region InstanceType.index tests
@@ -64,6 +66,24 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(resultSet.Count > 0);
 
             Assert.IsTrue(filteredResultSet.Count <= resultSet.Count);
+        }
+
+        #endregion
+
+        #region InstaneType.show tests
+
+        [TestMethod]
+        public void InstanceTypeShowTest()
+        {
+            InstanceType testIT = InstanceType.show(cloudID, instanceTypeID);
+            Assert.IsNotNull(testIT);
+        }
+
+        [TestMethod]
+        public void InstanceTypeShowDefaultTest()
+        {
+            InstanceType testIT = InstanceType.show(cloudID, instanceTypeID, "default");
+            Assert.IsNotNull(testIT);
         }
 
         #endregion

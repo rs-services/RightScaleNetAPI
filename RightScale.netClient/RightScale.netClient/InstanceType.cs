@@ -132,7 +132,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the InstanceType can be found</param>
         /// <param name="instanceTypeID">ID of the specific InstanceType to be returned</param>
         /// <returns>Specific instance of InstanceType</returns>
-        public InstanceType show(string cloudID, string instanceTypeID)
+        public static InstanceType show(string cloudID, string instanceTypeID)
         {
             return show(cloudID, instanceTypeID, null);
         }
@@ -144,7 +144,7 @@ namespace RightScale.netClient
         /// <param name="instanceTypeID">ID of the specific InstanceType to be returned</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>Specific instance of InstanceType</returns>
-        public InstanceType show(string cloudID, string instanceTypeID, string view)
+        public static InstanceType show(string cloudID, string instanceTypeID, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, instanceTypeID);
             string queryString = string.Empty;
