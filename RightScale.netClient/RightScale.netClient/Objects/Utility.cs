@@ -167,6 +167,33 @@ namespace RightScale.netClient
             return retVal;
         }
 
+        /// <summary>
+        /// Helper method reformats inputs from simple key/value collection to proper API formatting.  Also prepends text: in front of all inputs if it or another standard prefix is not in place
+        /// </summary>
+        /// <param name="inputSet">Raw key/value set of inputs</param>
+        /// <returns>API formatted input collection</returns>
+        public static List<KeyValuePair<string, string>> FormatInputCollection(List<KeyValuePair<string, string>> inputSet)
+        {
+            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+            if (inputSet != null && inputSet.Count > 0)
+            {
+                foreach (KeyValuePair<string, string> kvp in inputSet)
+                {
+                    retVal.Add(new KeyValuePair<string, string>("inputs[][name]", kvp.Key));
+                    if (kvp.Value.StartsWith("text:") || kvp.Value.StartsWith("cred:") || kvp.Value.StartsWith("env:") || kvp.Value.StartsWith("key:"))
+                    {
+                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", kvp.Value));
+                    }
+                    else
+                    {
+                        //assume iput is a text input if not otherwise specified
+                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", string.Format("text:{0}", kvp.Value)));
+                    }
+                }
+            }
+            return retVal;
+        }
+
         #region RightScale API href builders
 
         /// <summary>
@@ -283,6 +310,16 @@ namespace RightScale.netClient
         public static string deploymentHref(string objectID)
         {
             return string.Format("/api/deployments/{0}", objectID);
+        }
+
+        /// <summary>
+        /// Helper method returns properly formatted right_script_href
+        /// </summary>
+        /// <param name="objectID">RightScript ID</param>
+        /// <returns>Formatted right_script_href</returns>
+        public static string rightScriptHref(string objectID)
+        {
+            return string.Format("/api/right_scripts/{0}", objectID);
         }
 
         /// <summary>

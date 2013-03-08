@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using System.Threading.Tasks;
 
 namespace RightScale.netClient
@@ -34,15 +35,10 @@ namespace RightScale.netClient
         public List<string> public_dns_names { get; set; }
 
         #region Get link ID public instance methods
-
-        public string InstanceID
-        {
-            get
-            {
-                return getLinkIDValue("self");
-            }
-        }
         
+        /// <summary>
+        /// ID of the cloud that this Instance is running in
+        /// </summary>
         public string CloudID
         {
             get
@@ -51,6 +47,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// ID of the ServerTemplate that this instance was launched from
+        /// </summary>
         public string ServerTemplateID
         {
             get
@@ -59,6 +58,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// ID of the MultiCloudImage that this instance was launched from
+        /// </summary>
         public string MultiCloudImageID
         {
             get
@@ -67,6 +69,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Specific Image ID used to launch this instance
+        /// </summary>
         public string ImageID
         {
             get
@@ -75,6 +80,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Ramdisk Image ID for this instance
+        /// </summary>
         public string RamdiskImageID
         {
             get
@@ -83,6 +91,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Kernel Image ID for this instance
+        /// </summary>
         public string KernelImageID
         {
             get
@@ -91,6 +102,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// InstanceType ID for this instance
+        /// </summary>
         public string InstanceTypeID
         {
             get
@@ -99,6 +113,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// SshKey ID for this instance
+        /// </summary>
         public string SshKeyID
         {
             get
@@ -107,6 +124,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Datacenter ID for this instance
+        /// </summary>
         public string DataCenterID
         {
             get
@@ -312,11 +332,172 @@ namespace RightScale.netClient
         }
         #endregion
 
-        #region Instance.update
+        #region Instance.launch
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="cloudid">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceid">ID of the instance to be launched</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch(string cloudid, string instanceid)
+        {
+            return launch(cloudid, instanceid, new List<KeyValuePair<string, string>>());
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="cloudid">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceid">ID of the instance to be launched</param>
+        /// <param name="inputs">Hashtable for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch(string cloudid, string instanceid, Hashtable inputs)
+        {
+            return launch(cloudid, instanceid, Utility.convertToKVP(inputs));
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="cloudid">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceid">ID of the instance to be launched</param>
+        /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/launch");
+            return launchPost(postHref, inputs);
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_server(string serverid)
+        {
+            return launch_server(serverid, new List<KeyValuePair<string, string>>());
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
+        /// <param name="inputs">Hashtable for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_server(string serverid, Hashtable inputs)
+        {
+            return launch_server(serverid, Utility.convertToKVP(inputs));
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
+        /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_server(string serverid, List<KeyValuePair<string, string>> inputs)
+        {
+            string postHref = string.Format("/api/servers/{0}/launch", serverid);
+            return launchPost(postHref, inputs);
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_serverArray(string serverArrayID)
+        {
+            return launch_serverArray(serverArrayID, new List<KeyValuePair<string, string>>());
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
+        /// <param name="inputs">Hashtable for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_serverArray(string serverArrayID, Hashtable inputs)
+        {
+            return launch_serverArray(serverArrayID, Utility.convertToKVP(inputs));
+        }
+
+        /// <summary>
+        /// Launches an instance using the parameters that this instance has been configured with.
+        /// Note that this action can only be performed in "next" instances, and not on instances that are already running.
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
+        /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool launch_serverArray(string serverArrayID, List<KeyValuePair<string, string>> inputs)
+        {
+            string postHref = string.Format("/api/server_arrays/{0}/launch", serverArrayID);
+            return launchPost(postHref, inputs);
+        }
+
+        /// <summary>
+        /// Centralized caller to RightScale API for all launch commands on instances
+        /// </summary>
+        /// <param name="postHref">API Href fragment for REST POST call</param>
+        /// <param name="inputs">list of keyvalepairs to be used as inputs for this given instance</param>
+        /// <returns>True if successful, false if not</returns>
+        private static bool launchPost(string postHref, List<KeyValuePair<string, string>> inputs)
+        {
+            return Core.APIClient.Instance.Post(postHref, inputs);
+        }
 
         #endregion
 
-        #region Instance.launch
+        #region Instance.reboot
+
+        /// <summary>
+        /// Reboot a running instance.
+        /// Note that this action can only succeed if the instance is running. One cannot reboot instances of type "next".
+        /// </summary>
+        /// <param name="serverID">ID of the server whose current instance is to be</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool reboot_server(string serverID)
+        {
+            string postHref = string.Format("/api/servers/{0}/reboot", serverID);
+            return rebootPost(postHref);
+        }
+
+        /// <summary>
+        /// Reboot a running instance.
+        /// Note that this action can only succeed if the instance is running. One cannot reboot instances of type "next".
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance can be found</param>
+        /// <param name="instanceID">ID of the Instance to be rebooted</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool reboot(string cloudID, string instanceID)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+            return rebootPost(postHref);
+        }
+
+        /// <summary>
+        /// Private method centralizes calls to reboot process
+        /// </summary>
+        /// <param name="postHref">RightScale API url fragment for this action</param>
+        /// <returns>true if successful, false if not</returns>
+        private static bool rebootPost(string postHref)
+        {
+            return Core.APIClient.Instance.Post(postHref);
+        }
+
+        #endregion
+
+        #region Instance.update
 
         #endregion
 
@@ -329,6 +510,219 @@ namespace RightScale.netClient
         #endregion
 
         #region Instance.run_executable
+
+        /// <summary>
+        /// Runs a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_recipe(string cloudID, string instanceID, string recipeName)
+        {
+            return run_executable(cloudID, instanceID, recipeName, null, new List<KeyValuePair<string, string>>(), false);
+        }
+
+        /// <summary>
+        /// Runs a recipe in the running instance.  All inputs are inherited from the server and its current settings.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="inputs">Hashtable of inputs for script or recipe</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs)
+        {
+            return run_executable(cloudID, instanceID, recipeName, null, inputs, false);
+        }
+
+        /// <summary>
+        /// Runs a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs)
+        {
+            return run_executable(cloudID, instanceID, recipeName, null, inputs, false);
+        }
+
+        /// <summary>
+        /// Runs a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="inputs">Hashtable of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs, bool ignoreLock)
+        {
+            return run_executable(cloudID, instanceID, recipeName, null, inputs, ignoreLock);
+        }
+
+        /// <summary>
+        /// Runs a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        {
+            return run_executable(cloudID, instanceID, recipeName, null, inputs, ignoreLock);
+        }
+
+        /// <summary>
+        /// Runs a script in the running instance.  All inputs are inherited from the server and its current settings.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_rightScript(string cloudID, string instanceID, string rightScriptID)
+        {
+            return run_executable(cloudID, instanceID, null, rightScriptID, new List<KeyValuePair<string, string>>(), false);
+        }
+
+        /// <summary>
+        /// Runs a script in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs)
+        {
+            return run_executable(cloudID, instanceID, null, rightScriptID, inputs, false);
+        }
+
+        /// <summary>
+        /// Runs a script in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">Hashtable of inputs for script or recipe</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs)
+        {
+            return run_executable(cloudID, instanceID, null, rightScriptID, inputs, false);
+        }
+
+        /// <summary>
+        /// Runs a script in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        {
+            return run_executable(cloudID, instanceID, null, rightScriptID, inputs, ignoreLock);
+        }
+
+        /// <summary>
+        /// Runs a script in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">Hashtable of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs, bool ignoreLock)
+        {
+            return run_executable(cloudID, instanceID, null, rightScriptID, inputs, ignoreLock);
+        }
+
+        /// <summary>
+        /// Runs a script or a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        {
+            return run_executablePost(cloudID, instanceID, recipeName, rightScriptID, inputs, ignoreLock);
+        }
+
+        /// <summary>
+        /// Runs a script or a recipe in the running instance.
+        /// This is an asynchronous function, which returns immediately after queuing the executable for execution. Status of the execution can be tracked at the URL returned in the "Location" header. Note that this can only be performed on running instances
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">Hashtable of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        public bool run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, Hashtable inputs, bool ignoreLock)
+        {
+            return run_executablePost(cloudID, instanceID, recipeName, rightScriptID, Utility.convertToKVP(inputs), ignoreLock);
+        }
+
+        /// <summary>
+        /// Centralized method to handle all run_executable based POST calls
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the instance is configured be launched</param>
+        /// <param name="instanceID">ID of the instance to be launched</param>
+        /// <param name="recipeName">Name of Recipe to execute</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <param name="inputs">collection of inputs for script or recipe</param>
+        /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
+        /// <returns>True if queued, false if not</returns>
+        private static bool run_executablePost(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/run_executable", cloudID, instanceID);
+
+            List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
+            if (!string.IsNullOrWhiteSpace(recipeName))
+            {
+                postParameters.Add(new KeyValuePair<string, string>("recipe_name", recipeName));
+            }
+            if (!string.IsNullOrWhiteSpace(rightScriptID))
+            {
+                postParameters.Add(new KeyValuePair<string, string>("right_script_href", Utility.rightScriptHref(rightScriptID)));
+            }
+            if (inputs != null && inputs.Count > 0)
+            {
+                postParameters.AddRange(Utility.FormatInputCollection(inputs));
+            }
+
+            if (ignoreLock)
+            {
+                postParameters.Add(new KeyValuePair<string, string>("ignore_lock", "true"));
+            }
+            else
+            {
+                postParameters.Add(new KeyValuePair<string, string>("ignore_lock", "false"));
+            }
+            return Core.APIClient.Instance.Post(postHref, postParameters);
+        }
 
         #endregion
 
