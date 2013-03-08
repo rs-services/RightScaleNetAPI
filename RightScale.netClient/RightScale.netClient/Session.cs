@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RightScale.netClient
 {
     /// <summary>
-    /// 
+    /// Session is the first resource that API users interact with, it has links to root resources.
     /// </summary>
     public class Session:Core.RightScaleObjectBase<Session>
     {
