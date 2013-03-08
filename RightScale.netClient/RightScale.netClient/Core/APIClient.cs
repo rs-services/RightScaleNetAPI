@@ -17,7 +17,7 @@ namespace RightScale.netClient.Core
     /// <summary>
     /// Singleton instance API Client manages HTTP connections, authentication caching and all REST calls to the RightScale API
     /// </summary>
-    public class APIClient : IDisposable
+    public sealed class APIClient : IDisposable
     {
         /// <summary>
         /// RightScale OAuth Refresh token from RightScale dashboard
@@ -441,8 +441,16 @@ namespace RightScale.netClient.Core
 
         public void Dispose()
         {
-            this.clientHandler.Dispose();
-            this.webClient.Dispose();
+            if (this.webClient != null)
+            {
+                this.webClient.Dispose();
+                this.webClient = null;
+            }
+            if (this.clientHandler != null)
+            {
+                this.clientHandler.Dispose();
+                this.clientHandler = null;
+            }
         }
 
         #endregion
