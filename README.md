@@ -26,9 +26,9 @@ While the RightScale.netClient.Core.ApiClient.Instance object has authentication
 
 If you opt to use your username/password/accountID, you'll need to add 3 keys into your .config file:
 
-	`<add key="RightScaleAPIUserName" value="user@email.com"/>`
-	`<add key="RightScaleAPIPassword" value="thisisyourpassword"/>`
-	`<add key="RightScaleAPIAccountId" value="######"/>`
+	<add key="RightScaleAPIUserName" value="user@email.com"/>
+	<add key="RightScaleAPIPassword" value="thisisyourpassword"/>
+	<add key="RightScaleAPIAccountId" value="######"/>
  
 -----
  Long-term goals
