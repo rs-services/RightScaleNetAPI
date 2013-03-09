@@ -551,6 +551,15 @@ namespace RightScale.netClient
 
         #region Instance.multi_terminate
 
+        public bool multi_terminate(string cloudID, bool terminateAll, List<Filter> filters)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/multi_terminate", cloudID);
+            if (!terminateAll && (filters == null || filters.Count == 0))
+            {
+                throw new RightScaleAPIException("Cannot issue command to multi_terminate instances without either specifying that you wish to terminate all or you specify a filter");
+            }
+        }
+
         /// <summary>
         /// Terminates running instances. Either a filter or the parameter 'terminate_all' must be provided.
         /// </summary>
@@ -560,6 +569,8 @@ namespace RightScale.netClient
         /// <returns>true if process is queued successfully, false if not</returns>
         public bool multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
         {
+            string postHref = string.Format("/api/server_arrays/{0}/multi_terminate");
+
             if (!terminateAll && (filters == null || filters.Count == 0))
             {
                 throw new RightScaleAPIException("Cannot issue command to multi_terminate instances without either specifying that you wish to terminate all or you specify a filter");
@@ -576,7 +587,6 @@ namespace RightScale.netClient
                 Utility.addParameter(f.ToFilterOnlyString(), "filter[]", postParams);
             }
 
-            string postHref = string.Format("/api/server_arrays/{0}/multi_terminate");
             return Core.APIClient.Instance.Post(postHref, postParams);
         }
 
