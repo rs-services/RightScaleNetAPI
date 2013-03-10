@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// RightScale User object
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeUser.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceUsers.html
+    /// </summary>
     public class User:Core.RightScaleObjectBase<User>
     {
         public string company { get; set; }
@@ -46,8 +51,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
 
         #region User.index methods
 

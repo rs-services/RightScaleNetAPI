@@ -11,10 +11,42 @@ namespace RightScale.netClient
     /// </summary>
     public class AuditEntry : Core.RightScaleObjectBase<AuditEntry>
     {
+        #region AuditEntry Properties
+
+        /// <summary>
+        /// Timestamp representing whenthe AuditEntry was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Summary of this audit entry
+        /// </summary>
         public string summary { get; set; }
+
+        /// <summary>
+        /// Size/length of the AuditEntry's detail
+        /// </summary>
         public int detail_size { get; set; }
+
+        /// <summary>
+        /// User's email responsible for this audit entry
+        /// </summary>
         public string user_email { get; set; }
+
+        /// <summary>
+        /// Detailed message for audit entry
+        /// </summary>
+        public string audit_detail
+        {
+            get
+            {
+                string returnVal = AuditEntry.detail(this.ID);
+                this.detail_size = returnVal.Length;
+                return returnVal;
+            }
+        }
+
+        #endregion
 
         #region ID Properties
 

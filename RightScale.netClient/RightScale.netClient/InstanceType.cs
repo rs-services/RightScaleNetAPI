@@ -14,16 +14,55 @@ namespace RightScale.netClient
     /// </summary>
     public class InstanceType:Core.RightScaleObjectBase<InstanceType>
     {
+        #region InstanceType Properties
+
+        /// <summary>
+        /// Friendly name of this instance type
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// RightScale UID for this InstanceType
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// CPU Architecture associated with this InstanceType
+        /// </summary>
         public string cpu_architecture { get; set; }
+
+        /// <summary>
+        /// Data on local disks for this InstanceType
+        /// </summary>
         public string local_disks { get; set; }
+
+        /// <summary>
+        /// Amount of memory associated with this InstanceType
+        /// </summary>
         public string memory { get; set; }
+
+        /// <summary>
+        /// Size of the local disk for this InstanceType
+        /// </summary>
         public string local_disk_size { get; set; }
+
+        /// <summary>
+        /// Count of CPUs for this InstanceType
+        /// </summary>
         public string cpu_count { get; set; }
+
+        /// <summary>
+        /// Speed of CPUs for this InstanceType
+        /// </summary>
         public string cpu_speed { get; set; }
+
+        /// <summary>
+        /// Description for this instanceType
+        /// </summary>
         public string description { get; set; }
         
+        #endregion
+
         #region InstanceType.ctor
         /// <summary>
         /// Default Constructor for InstanceType

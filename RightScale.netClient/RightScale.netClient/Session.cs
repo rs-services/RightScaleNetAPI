@@ -13,7 +13,14 @@ namespace RightScale.netClient
     /// </summary>
     public class Session:Core.RightScaleObjectBase<Session>
     {
+        #region Session Properties
+
+        /// <summary>
+        /// Message related to this Session object
+        /// </summary>
         public string message { get; set; }
+
+        #endregion
 
         #region Session.ctor
         /// <summary>

@@ -6,12 +6,36 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// erverTemplates allow you to pre-configure servers by starting from a base image and adding scripts that run during the boot, operational, and shutdown phases. A ServerTemplate is a description of how a new instance will be configured when it is provisioned by your cloud provider.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerTemplate.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServerTemplates.html
+    /// </summary>
     public class ServerTemplate:Core.RightScaleObjectBase<ServerTemplate>
     {
+        #region ServerTemplate properties
+
+        /// <summary>
+        /// Name of this ServerTemplate
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Collection of inputs for this ServerTemplate
+        /// </summary>
         public List<Input> inputs { get; set; }
+
+        /// <summary>
+        /// Revision ID for this instance of a ServerTempalte
+        /// </summary>
         public int revision { get; set; }
+
+        /// <summary>
+        /// Description of this SeverTemplate
+        /// </summary>
         public string description { get; set; }
+
+        #endregion
 
         #region ServerTemplate.ctor
         /// <summary>

@@ -40,6 +40,9 @@ namespace RightScale.netClient
         /// </summary>
         private const string toStringFormat = "filter[]={0}{1}{2}";
 
+        /// <summary>
+        /// string.format tempalte for outputting ony the key/value pair portion of this object
+        /// </summary>
         private const string toFilterOnlyStringFormat = "{0}{1}{2}";
 
         /// <summary>
@@ -55,11 +58,19 @@ namespace RightScale.netClient
             this.Operator = filterType;
         }
 
+        /// <summary>
+        /// Method gets filter only portion of a filter object for reformatting within a parameter set for POST and PUT calls
+        /// </summary>
+        /// <returns>string only containing key=value for filter</returns>
         public string ToFilterOnlyString()
         {
             return string.Format(toFilterOnlyStringFormat, this.Key, getOpSign(), this.Value);
         }
 
+        /// <summary>
+        /// Private method gets string representation of the current Operator value
+        /// </summary>
+        /// <returns>string representation of this.Operator</returns>
         private string getOpSign()
         {
             string retVal = string.Empty;

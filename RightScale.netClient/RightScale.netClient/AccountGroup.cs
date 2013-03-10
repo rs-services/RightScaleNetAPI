@@ -14,10 +14,29 @@ namespace RightScale.netClient
     /// </summary>
     public class AccountGroup : Core.RightScaleObjectBase<AccountGroup>
     {
+        #region AccountGroup properties
+
+        /// <summary>
+        /// Name of this AccountGroup
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this AccountGroup was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this AccountGroup was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Description for this AccountGroup
+        /// </summary>
         public string description { get; set; }
+
+        #endregion
 
         #region ID Properties
 

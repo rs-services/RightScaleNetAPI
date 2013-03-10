@@ -15,27 +15,102 @@ namespace RightScale.netClient
     /// </summary>
     public class Instance : Core.RightScaleObjectBase<Instance>
     {
+        #region Instance properties
+
+        /// <summary>
+        /// Friendly name of this instance
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Rightscale UID for this instance
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this instance was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Collection of inputs for this instance
+        /// </summary>
         public List<Input> inputs { get; set; }
+
+        /// <summary>
+        /// collection of private DNS names for this instance
+        /// </summary>
         public List<string> private_dns_names { get; set; }
+
+        /// <summary>
+        /// Monitoring ID for this instance
+        /// </summary>
         public string monitoring_id { get; set; }
+
+        /// <summary>
+        /// OS platform for this instance
+        /// </summary>
         public string os_platform { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this instance was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Collection of public IP addresses assigned to this instance
+        /// </summary>
         public List<string> public_ip_addresses { get; set; }
+
+        /// <summary>
+        /// Monitoring server for this instance
+        /// </summary>
         public string monitoring_server { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this server was terminated
+        /// </summary>
         public string terminated_at { get; set; }
+
+        /// <summary>
+        /// Detailed description for this instance
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Pricing model/type for this instance
+        /// </summary>
         public string pricing_type { get; set; }
+
+        /// <summary>
+        /// Collection of private ip addresses assigned to this instance
+        /// </summary>
         public List<string> private_ip_addresses { get; set; }
+
+        /// <summary>
+        /// User Data specified when this instance was launched
+        /// </summary>
         public string user_data { get; set; }
+
+        /// <summary>
+        /// Current state of this instance
+        /// </summary>
         public string state { get; set; }
+
+        /// <summary>
+        /// Collection of security groups for this instance
+        /// </summary>
         public List<SecurityGroup> security_groups { get; set; }
+
+        /// <summary>
+        /// Collection of public dns names for this instance
+        /// </summary>
         public List<string> public_dns_names { get; set; }
+        
+        #endregion
 
         #region Get link ID public instance methods
-        
+
         /// <summary>
         /// ID of the cloud that this Instance is running in
         /// </summary>

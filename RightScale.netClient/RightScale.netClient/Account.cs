@@ -13,9 +13,24 @@ namespace RightScale.netClient
     /// </summary>
     public class Account : Core.RightScaleObjectBase<Account>
     {
+        #region Account Properties
+
+        /// <summary>
+        /// Name of this account
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this account was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this account was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        #endregion
         
         #region ID Properties
 

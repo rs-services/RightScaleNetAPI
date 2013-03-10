@@ -13,17 +13,63 @@ namespace RightScale.netClient
     /// </summary>
     public class AlertSpec : Core.RightScaleObjectBase<AlertSpec>
     {
+        #region AlertSpec Properties
+
+        /// <summary>
+        /// Name of this AlertSpec
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Duration in minutes
+        /// </summary>
         public int duration { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this AlertSpec was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Threshold before the alert escalates
+        /// </summary>
         public string threshold { get; set; }
+
+        /// <summary>
+        /// Timestamp representing when this AlertSpec was updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Condition to use for a comparison to the threshold
+        /// </summary>
         public string condition { get; set; }
+
+        /// <summary>
+        /// Description of the AlertSpec
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// File used for the alert specification
+        /// </summary>
         public string file { get; set; }
+
+        /// <summary>
+        /// Variable used for the alert specification
+        /// </summary>
         public string variable { get; set; }
+
+        /// <summary>
+        /// Name of the escalation process
+        /// </summary>
         public string escalation_name { get; set; }
 
+        #endregion
+
+        /// <summary>
+        /// Alertspec string format template
+        /// </summary>
         private const string alertSpecFormat = "alert_spec[{0}]";
 
         #region ID Properties

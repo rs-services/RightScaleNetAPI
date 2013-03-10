@@ -6,12 +6,62 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Deployments represent logical groupings of related assets such as servers, server arrays, default configuration settings...etc.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeDeployment.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceDeployments.html
+    /// </summary>
     public class Deployment : Core.RightScaleObjectBase<Deployment>
     {
+        #region Deployment Properties
+
+        /// <summary>
+        /// Name of this deployment
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Scope for tags within this deployment
+        /// </summary>
         public string server_tag_scope { get; set; }
+
+        /// <summary>
+        /// Collection of inputs for this deployment
+        /// </summary>
         public List<Input> inputs { get; set; }
+
+        /// <summary>
+        /// Description of for this deployment
+        /// </summary>
         public string description { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Collection of ServerArrays associated with this Deployment
+        /// This method will make a call to the API to return the list from the server_arrays link
+        /// </summary>
+        public List<ServerArray> ServerArrays
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_arrays"));
+                return ServerArray.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Collection of servers associated with this Deployment
+        /// This method will make a call to the API to return the list from the servers link
+        /// </summary>
+        public List<Server> Servers
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("servers"));
+                return Server.deserializeList(jsonString);
+            }
+        }
 
         public string DeploymentID
         {

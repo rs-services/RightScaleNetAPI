@@ -6,10 +6,27 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Tasks represent processes that happen (or have happened) asynchronously within the context of an Instance.
+    /// An example of a type of task is an operational script that runs in an instance.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeTask.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceTasks.html
+    /// </summary>
     public class Task:Core.RightScaleObjectBase<Task>
     {
+        #region Task Properties
+
+        /// <summary>
+        /// Detail info for this Task
+        /// </summary>
         public string detail { get; set; }
+
+        /// <summary>
+        /// Summary info for this Task
+        /// </summary>
         public string summary { get; set; }
+
+        #endregion
 
         #region Task.ctor
         /// <summary>

@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    //action
+    /// <summary>
+    /// Actions are the processes that are allowable for a given object at a given point in time
+    /// </summary>
     public class Action
     {
+        /// <summary>
+        /// Name of the action 
+        /// </summary>
         public string rel { get; set; }
     }
 }

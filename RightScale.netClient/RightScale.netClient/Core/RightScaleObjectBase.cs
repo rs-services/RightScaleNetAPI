@@ -43,12 +43,23 @@ namespace RightScale.netClient.Core
         /// <returns>ID at the back end of the href for the given link</returns>
         internal string getLinkIDValue (string linkName)
         {
-            var idToReturn = from link in links where link.rel == linkName select link.href;
-            if (idToReturn.Count<string>() != 1)
+            var idToReturn = getLinkValue(linkName);
+            return idToReturn.Split('/').Last<string>();
+        }
+
+        /// <summary>
+        /// Centralized method to get specific link reference
+        /// </summary>
+        /// <param name="linkName">name of the link to retrieve</param>
+        /// <returns>href value for link</returns>
+        internal string getLinkValue(string linkName)
+        {
+            var linkToReturn = from link in links where link.rel == linkName select link.href;
+            if(linkToReturn.Count<string>() != 0 )
             {
                 return null;
             }
-            return idToReturn.Last<string>().Split('/').Last<string>();
+            return linkToReturn.Last<string>();
         }
 
         #region RightScaleObjectBase.ctor

@@ -14,13 +14,44 @@ namespace RightScale.netClient
     /// </summary>
     public class ServerArray : Core.RightScaleObjectBase<ServerArray>
     {
+        #region ServerArray properties
+
+        /// <summary>
+        /// Name of this server array
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Elasticity parameters for this server array
+        /// </summary>
         public ElasticityParams elasticity_params { get; set; }
+
+        /// <summary>
+        /// Instance object defining the next instance within this ServerArray
+        /// </summary>
         public Instance next_instance { get; set; }
+
+        /// <summary>
+        /// Type of this server array
+        /// </summary>
         public string array_type { get; set; }
+
+        /// <summary>
+        /// Count of interfaces for this ServerArray
+        /// </summary>
         public int instances_count { get; set; }
+
+        /// <summary>
+        /// Description of this ServerArray
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Current state of this ServerArray
+        /// </summary>
         public string state { get; set; }
+
+        #endregion
 
         #region ServerArray.ctor
         /// <summary>
@@ -52,9 +83,7 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
-        
+		        
         #region ServerArray.index methods
 
         public static List<ServerArray> index()

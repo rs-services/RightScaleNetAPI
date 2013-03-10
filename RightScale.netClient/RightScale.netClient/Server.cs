@@ -14,13 +14,44 @@ namespace RightScale.netClient
     /// </summary>
     public class Server:Core.RightScaleObjectBase<Server>
     {
+        #region Server Properties
+
+        /// <summary>
+        /// Friendly server name
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Timestamp associated with this Server indicating when it was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Instance object representing the next instance for this Server
+        /// </summary>
         public Instance next_instance { get; set; }
+
+        /// <summary>
+        /// Timestamp associated with this Server indicating when it was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Instance object representing the current instance for this server
+        /// </summary>
         public Instance current_instance { get; set; }
+
+        /// <summary>
+        /// Description of this Server
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Current state of this servver
+        /// </summary>
         public string state { get; set; }
+
+        #endregion
 
         #region Get link ID public instance methods
 
