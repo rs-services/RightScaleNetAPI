@@ -551,13 +551,17 @@ namespace RightScale.netClient
 
         #region Instance.multi_terminate
 
+        /// <summary>
+        /// Terminates running instances. Either a filter or the parameter 'terminate_all' must be provided.
+        /// </summary>
+        /// <param name="serverArrayID">ID of a ServerArray to terminate instances in</param>
+        /// <param name="terminateAll">Boolean indicating that all instances should be terminated</param>
+        /// <param name="filters">Set of filters to limit the number of instances terminated</param>
+        /// <returns>true if process is queued successfully, false if not</returns>
         public bool multi_terminate(string cloudID, bool terminateAll, List<Filter> filters)
         {
             string postHref = string.Format("/api/clouds/{0}/instances/multi_terminate", cloudID);
-            if (!terminateAll && (filters == null || filters.Count == 0))
-            {
-                throw new RightScaleAPIException("Cannot issue command to multi_terminate instances without either specifying that you wish to terminate all or you specify a filter");
-            }
+            return multi_terminatePost(terminateAll, filters, postHref);
         }
 
         /// <summary>
@@ -570,6 +574,18 @@ namespace RightScale.netClient
         public bool multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
         {
             string postHref = string.Format("/api/server_arrays/{0}/multi_terminate");
+            return multi_terminatePost(terminateAll, filters, postHref);
+        }
+
+        /// <summary>
+        /// Centralized method to handle all multi_terminate calls
+        /// </summary>
+        /// <param name="terminateAll">boolean indicating that all instances should be terminated</param>
+        /// <param name="filters">Set of filters to limit the number of instances terminated</param>
+        /// <param name="postHref">API Href fragment for posting to RS API</param>
+        /// <returns>true if process queued successfully, false if not</returns>
+        private static bool multi_terminatePost(bool terminateAll, List<Filter> filters, string postHref)
+        {
 
             if (!terminateAll && (filters == null || filters.Count == 0))
             {
