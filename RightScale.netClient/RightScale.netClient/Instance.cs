@@ -871,6 +871,35 @@ namespace RightScale.netClient
 
         #region Instance.set_custom_lodgement
 
+        /// <summary>
+        /// This method is deprecated. Please use InstanceCustomLodgement.
+        /// </summary>
+        /// <param name="quantity">At least one name/value pair must be specified. Currently, a maximum of 2 name/value pairs is supported.</param>
+        /// <param name="timeFrame">The timeframe (either a month or a single day) for which the quantity value is valid (currently for the PDT timezone only).</param>
+        /// <returns>True if successfully submitted to RSAPI, false if not</returns>
+        public bool set_custom_lodgement(string cloudID, string instanceID, List<KeyValuePair<string, string>> quantity, string timeFrame)
+        {
+            string postHref = string.Format("/api/clouds/{0}/instances/{1}/set_custom_lodgement", cloudID, instanceID);
+            if (quantity.Count > 2 || quantity.Count < 1)
+            {
+                throw new RightScaleAPIException("Currently, a maximum of 2 name/value pairs is supported.  " + quantity.Count.ToString() + " were specified.");
+            }
+
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+
+            foreach (KeyValuePair<string, string> kvp in quantity)
+            {
+                Utility.CheckStringRegex("quantity[][name]", @"^(\w|\/|\ )+$", kvp.Key);
+                Utility.CheckStringRegex("quantity[][value]", @"^-?\d+$", kvp.Value);
+                Utility.addParameter(kvp.Key, "quantity[][name]", postParams);
+                Utility.addParameter(kvp.Value, "quantity[][value]", postParams);
+            }
+
+            Utility.CheckStringRegex("timeframe", @"^\d{4}\/\d{2}(\/\d{2})?$", timeFrame);
+            Utility.addParameter(timeFrame, "timeframe", postParams);
+            return Core.APIClient.Instance.Post(postHref, postParams);
+        }
+
         #endregion
 
         #region Instance.start

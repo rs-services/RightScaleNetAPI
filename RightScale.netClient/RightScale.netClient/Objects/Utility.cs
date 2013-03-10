@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Collections;
@@ -75,6 +76,31 @@ namespace RightScale.netClient
             {
                 retVal = true;
             }
+            return retVal;
+        }
+
+        /// <summary>
+        /// Method checks a string against a regular expression to match it conforms to API Standards
+        /// </summary>
+        /// <param name="inputName">name of the input to be identified when throwing errors</param>
+        /// <param name="regularExpression">regular expression to match string against</param>
+        /// <param name="actualValue">string to test - must match the regularExpression specified</param>
+        /// <returns>True if actualValue matches regularExpression pattern, throws ArgumentException if not</returns>
+        public static bool CheckStringRegex(string inputName, string regularExpression, string actualValue)
+        {
+            bool retVal = false;
+
+            Regex r = new Regex(regularExpression);
+            Match m = r.Match(actualValue);
+            if (m.Success)
+            {
+                retVal = true;
+            }
+            else
+            {
+                throw new ArgumentException("String input  " + inputName + " does not match regular expression validator: " + regularExpression);
+            }
+
             return retVal;
         }
 
