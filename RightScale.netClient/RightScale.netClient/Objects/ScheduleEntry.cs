@@ -11,6 +11,8 @@ namespace RightScale.netClient
     /// </summary>
     public class ScheduleEntry : Bounds
     {
+        #region ScheduleEntry Properties
+
         /// <summary>
         /// Time for which this set of bounds is valid
         /// </summary>
@@ -20,5 +22,7 @@ namespace RightScale.netClient
         /// Day for which this set of bounds is valid
         /// </summary>
         public string day { get; set; }
+
+        #endregion
     }
 }

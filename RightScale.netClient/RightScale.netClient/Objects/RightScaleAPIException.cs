@@ -13,6 +13,8 @@ namespace RightScale.netClient
     [Serializable]
     class RightScaleAPIException : Exception
     {
+        #region RightScaleAPIException Properties
+
         /// <summary>
         /// href endpoint reference of failed API call
         /// </summary>
@@ -28,7 +30,9 @@ namespace RightScale.netClient
         /// </summary>
         public string ErrorData;
 
-        #region RightScaleAPIException.ctor 
+        #endregion
+
+        #region RightScaleAPIException.ctor
 
         /// <summary>
         /// Creates a new instance of a RightScale API Exception

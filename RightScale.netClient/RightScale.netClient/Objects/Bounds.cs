@@ -11,6 +11,8 @@ namespace RightScale.netClient
     /// </summary>
     public class Bounds
     {
+        #region Bounds Properties
+
         /// <summary>
         /// Maximum number of servers within this instance of a Bounds object
         /// </summary>
@@ -20,5 +22,7 @@ namespace RightScale.netClient
         /// Minimum number of servers within this instance of a Bounds object
         /// </summary>
         public string min_count { get; set; }
+
+        #endregion
     }
 }

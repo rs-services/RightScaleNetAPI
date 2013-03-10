@@ -20,6 +20,8 @@ namespace RightScale.netClient
     /// </summary>
     public class Filter
     {
+        #region Filter Properties
+
         /// <summary>
         /// Key to search on - determines which RightScale field is being filtered on
         /// </summary>
@@ -35,6 +37,8 @@ namespace RightScale.netClient
         /// </summary>
         public FilterOperator Operator { get; set; }
 
+        #endregion
+
         /// <summary>
         /// string.format template for oututting filter string
         /// </summary>
@@ -44,6 +48,8 @@ namespace RightScale.netClient
         /// string.format tempalte for outputting ony the key/value pair portion of this object
         /// </summary>
         private const string toFilterOnlyStringFormat = "{0}{1}{2}";
+
+        #region Filter.ctor()
 
         /// <summary>
         /// Creates a new instance of a filter
@@ -57,6 +63,8 @@ namespace RightScale.netClient
             this.Value = value;
             this.Operator = filterType;
         }
+
+        #endregion
 
         /// <summary>
         /// Method gets filter only portion of a filter object for reformatting within a parameter set for POST and PUT calls
@@ -96,6 +104,8 @@ namespace RightScale.netClient
         {
             return string.Format(toStringFormat, this.Key, getOpSign(), this.Value);
         }
+
+        #region Filter Static Parsing Methods
 
         /// <summary>
         /// Static method returns a colection of Filter Objects from a filter string
@@ -188,5 +198,7 @@ namespace RightScale.netClient
             }
             return retVal;
         }
+
+        #endregion
     }
 }

@@ -11,6 +11,8 @@ namespace RightScale.netClient
     /// </summary>
     public class AlertSpecificParams
     {
+        #region AlertSpecificParams Properties
+
         /// <summary>
         /// Tag predicate for vote tags
         /// </summary>
@@ -20,5 +22,7 @@ namespace RightScale.netClient
         /// Decision threshold for AlertSpec
         /// </summary>
         public string decision_threshold { get; set; }
+
+        #endregion
     }
 }

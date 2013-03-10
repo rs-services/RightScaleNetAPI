@@ -11,9 +11,13 @@ namespace RightScale.netClient
     /// </summary>
     public class Action
     {
+        #region Action Properties
+
         /// <summary>
         /// Name of the action 
         /// </summary>
         public string rel { get; set; }
+
+        #endregion
     }
 }
