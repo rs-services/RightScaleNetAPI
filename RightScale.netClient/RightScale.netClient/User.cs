@@ -13,13 +13,44 @@ namespace RightScale.netClient
     /// </summary>
     public class User:Core.RightScaleObjectBase<User>
     {
+        #region User Properties
+
+        /// <summary>
+        /// Company name of specified user
+        /// </summary>
         public string company { get; set; }
+
+        /// <summary>
+        /// Timestamp indicating when user was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Timestamp indicating when user was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Last name of the user specified
+        /// </summary>
         public string last_name { get; set; }
+
+        /// <summary>
+        /// Phone number of the user specified
+        /// </summary>
         public string phone { get; set; }
+
+        /// <summary>
+        /// First name fo the user specified
+        /// </summary>
         public string first_name { get; set; }
+
+        /// <summary>
+        /// Email of the user specified
+        /// </summary>
         public string email { get; set; }
+
+        #endregion
 
         #region User.ctor
         /// <summary>
