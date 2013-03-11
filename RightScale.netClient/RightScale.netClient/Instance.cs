@@ -251,7 +251,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the instance can be found</param>
         /// <param name="instanceID">ID of the instance being queried</param>
         /// <returns>Instance object as specified</returns>
-        public Instance show(string cloudID, string instanceID)
+        public static Instance show(string cloudID, string instanceID)
         {
             return show(cloudID, instanceID, "full");
         }
@@ -263,7 +263,7 @@ namespace RightScale.netClient
         /// <param name="instanceID">ID of the instance being queried</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>Instance object as specified</returns>
-        public Instance show(string cloudID, string instanceID, string view)
+        public static Instance show(string cloudID, string instanceID, string view)
         {
             string getHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
             string queryString = string.Empty;

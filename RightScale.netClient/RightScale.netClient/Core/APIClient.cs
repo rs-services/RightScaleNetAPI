@@ -89,6 +89,8 @@ namespace RightScale.netClient.Core
 
         #endregion
 
+        #region APIClient Singleton implementation and helpers
+
         /// <summary>
         /// Base constructor initialies http client objects and initializes base url for RightScale API
         /// </summary>
@@ -132,6 +134,8 @@ namespace RightScale.netClient.Core
                 return instance;
             }
         }
+
+        #endregion
 
         #region API Call Wrappers
 
@@ -330,11 +334,6 @@ namespace RightScale.netClient.Core
             return this.isAuthenticated;
         }
 
-        public async Task<bool> AuthenticateInstance()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Default and base authentication call which pulls authentication data from the app.config or web.config for the specified keys.  OAuth2 token is prioritized in front of username/password/accountid if specified.
         /// </summary>
@@ -457,6 +456,11 @@ namespace RightScale.netClient.Core
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Dispose handles dispose of custom objects before disposing of the remainder of the objcet
+        /// </summary>
         public void Dispose()
         {
             if (this.webClient != null)
@@ -469,8 +473,7 @@ namespace RightScale.netClient.Core
                 this.clientHandler.Dispose();
                 this.clientHandler = null;
             }
+            this.Dispose();
         }
-
-        #endregion
     }
 }

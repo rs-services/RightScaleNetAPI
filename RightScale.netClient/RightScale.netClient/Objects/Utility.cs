@@ -228,7 +228,14 @@ namespace RightScale.netClient
         /// <returns>formatted account_href</returns>
         public static string accountHref(string objectID)
         {
-            return string.Format("/api/accounts/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/accounts/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -238,7 +245,14 @@ namespace RightScale.netClient
         /// <returns>formatted cloud_href</returns>
         public static string cloudHref(string objectID)
         {
-            return string.Format("/api/clouds/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -248,7 +262,14 @@ namespace RightScale.netClient
         /// <returns>formatted server_template_href</returns>
         public static string serverTemplateHref(string objectID)
         {
-            return string.Format("/api/server_templates/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/server_templates/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -259,7 +280,14 @@ namespace RightScale.netClient
         /// <returns>formatted security_group_href</returns>
         public static string securityGroupHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/security_groups/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/security_groups/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -269,7 +297,14 @@ namespace RightScale.netClient
         /// <returns>Formateed muti_cloud_image_href</returns>
         public static string multiCloudImageHref(string objectID)
         {
-            return string.Format("/api/multi_cloud_images/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/multi_cloud_images/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -280,7 +315,14 @@ namespace RightScale.netClient
         /// <returns>Formatted kernel_image_href</returns>
         public static string kernelImageHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -291,7 +333,14 @@ namespace RightScale.netClient
         /// <returns>Formatted instance_type_href</returns>
         public static string instanceTypeHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -302,7 +351,14 @@ namespace RightScale.netClient
         /// <returns>Formatted ssh_key_href</returns>
         public static string sshKeyHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/ssh_keys/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/ssh_keys/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -313,7 +369,14 @@ namespace RightScale.netClient
         /// <returns>Formatted image_href</returns>
         public static string imageHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -324,7 +387,14 @@ namespace RightScale.netClient
         /// <returns>Formatted datacenter_href</returns>
         public static string datacenterHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/datacenters{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/datacenters{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -334,7 +404,14 @@ namespace RightScale.netClient
         /// <returns>Formatted deployment_href</returns>
         public static string deploymentHref(string objectID)
         {
-            return string.Format("/api/deployments/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/deployments/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -344,7 +421,14 @@ namespace RightScale.netClient
         /// <returns>Formatted right_script_href</returns>
         public static string rightScriptHref(string objectID)
         {
-            return string.Format("/api/right_scripts/{0}", objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/right_scripts/{0}", objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -355,7 +439,14 @@ namespace RightScale.netClient
         /// <returns>Formatted ramdisk_image_href</returns>
         public static string ramdiskImageHref(string cloudID, string objectID)
         {
-            return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>

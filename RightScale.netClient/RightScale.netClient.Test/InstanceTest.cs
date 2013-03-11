@@ -58,8 +58,90 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(instanceList);
             Assert.IsTrue(instanceList.Count > 0);            
         }
+        
+        [TestMethod]
+        public void indexViewExtendedTest()
+        {
+            indexViewTest("extended");
+        }
+
+        [TestMethod]
+        public void indexViewFullTest()
+        {
+            indexViewTest("full");
+        }
+
+        [TestMethod]
+        public void indexViewInputs20Test()
+        {
+            indexViewTest("full_inputs_2_0");
+        }
+
+        private void indexViewTest(string viewName)
+        {
+            List<Instance> instanceList = Instance.index(cloudID, viewName);
+            Assert.IsNotNull(instanceList);
+        }
 
         #endregion
 
+        #region Instance.show tests
+
+        [TestMethod]
+        public void showSimple()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID);
+            Assert.IsNotNull(testInstance);
+            Assert.AreEqual(instanceList[0].name, testInstance.name);
+            Assert.AreEqual(instanceList[0].os_platform, testInstance.os_platform);
+            Assert.AreEqual(instanceList[0].pricing_type, testInstance.pricing_type);
+        }
+
+        [TestMethod]
+        public void showExtended()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "extended");
+            Assert.IsNotNull(testInstance);
+            Assert.AreEqual(instanceList[0].name, testInstance.name);
+            Assert.AreEqual(instanceList[0].os_platform, testInstance.os_platform);
+            Assert.AreEqual(instanceList[0].pricing_type, testInstance.pricing_type);
+        }
+
+        [TestMethod]
+        public void showFull()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Assert.AreEqual(instanceList[0].name, testInstance.name);
+            Assert.AreEqual(instanceList[0].os_platform, testInstance.os_platform);
+            Assert.AreEqual(instanceList[0].pricing_type, testInstance.pricing_type);
+        }
+
+        [TestMethod]
+        public void showFullInputs20()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full_inputs_2_0");
+            Assert.IsNotNull(testInstance);
+            Assert.AreEqual(instanceList[0].name, testInstance.name);
+            Assert.AreEqual(instanceList[0].os_platform, testInstance.os_platform);
+            Assert.AreEqual(instanceList[0].pricing_type, testInstance.pricing_type);
+        }
+        #endregion
     }
 }

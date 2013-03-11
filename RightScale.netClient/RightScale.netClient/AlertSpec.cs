@@ -314,7 +314,7 @@ namespace RightScale.netClient
         /// <returns>collection of AlertSpecs</returns>
         public static List<AlertSpec> index(string serverID, string view)
         {
-            return index(null, view);
+            return index(serverID, new List<Filter>(), view);
         }
 
         /// <summary>
