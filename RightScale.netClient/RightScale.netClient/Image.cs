@@ -95,7 +95,7 @@ namespace RightScale.netClient
         /// <returns>Filtered list of Images based on filter and view input</returns>
         public static List<Image> index(string filterList, string view)
         {
-           List<Filter> filter = Filter.parseFilterList(view);
+           List<Filter> filter = Filter.parseFilterList(filterList);
 
            return index(filter,view);
         }

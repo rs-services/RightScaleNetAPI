@@ -72,7 +72,7 @@ namespace RightScale.netClient
 
         public static List<ServerTemplate> index()
         {
-            return index(null, null);
+            return index(new List<Filter>(), null);
         }
 
         public static List<ServerTemplate> index(List<Filter> filter)
@@ -82,11 +82,21 @@ namespace RightScale.netClient
 
         public static List<ServerTemplate> index(string view)
         {
-            return index(null, view);
+            return index(new List<Filter>(), view);
+        }
+
+        public static List<ServerTemplate> index(string filterlist, string view)
+        {
+            List<Filter> filter = Filter.parseFilterList(view);
+
+            return index(filter, view);
         }
 
         public static List<ServerTemplate> index(List<Filter> filter, string view)
         {
+            string getUrl = "/api/server_templates";
+            string queryString = string.Empty;
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -100,8 +110,9 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "description", "multi_cloud_image_href", "name", "revision" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement ServerTemplate.index
-            throw new NotImplementedException();
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
         }
         #endregion
 		
