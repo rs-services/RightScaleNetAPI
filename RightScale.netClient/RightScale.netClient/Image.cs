@@ -118,9 +118,9 @@ namespace RightScale.netClient
         /// This method is intended for use within PowerShell.
         /// Lists the Images owned by this Account.
         /// </summary>
-        /// <param name="filterList"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
+        /// <param name="filterList">Set of filters to modify query to return Images from RightScale API</param>
+        /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
+        /// <returns>Filtered list of Images based on filter and view input</returns>
         public static List<Image> index(string filterList, string view)
         {
             throw new NotImplementedException();
