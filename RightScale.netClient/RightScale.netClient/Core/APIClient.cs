@@ -23,6 +23,11 @@ namespace RightScale.netClient.Core
         /// RightScale OAuth Refresh token from RightScale dashboard
         /// </summary>
         public string oauthRefreshToken { get; set; }
+
+        /// <summary>
+        /// Instance token for authenticating an instance only
+        /// </summary>
+        public string instanceToken { get; set; }
         
         /// <summary>
         /// RightScale OAuth Bearer Token retrieved when authenticating with oauthRefreshToken
@@ -315,6 +320,11 @@ namespace RightScale.netClient.Core
             this.isAuthenticating = false;
 
             return this.isAuthenticated;
+        }
+
+        public async Task<bool> AuthenticateInstance()
+        {
+
         }
 
         /// <summary>

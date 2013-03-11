@@ -67,8 +67,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
         
         #region ServerTemplate.index methods
 
