@@ -61,15 +61,7 @@ namespace RightScale.netClient
         public static List<Image> index()
         {
 
-            string view = "default";
-            string queryString = string.Empty;
-
-            queryString += string.Format("view={0}", view);
-
-            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
-
-
-            return deserializeList(jsonString);
+            return index(new List<Filter>(), null);
 
         }
 
@@ -90,27 +82,7 @@ namespace RightScale.netClient
         /// <returns>Filtered list of Images based on view input</returns>
         public static List<Image> index(string view)
         {
-            string getUrl = "/api/multi_cloud_images";
-            string queryString = string.Empty;
-
-
-            if (string.IsNullOrWhiteSpace(view))
-            {
-                view = "default";
-            }
-            else
-            {
-                List<string> validViews = new List<string>() { "default" };
-                Utility.CheckStringInput("view", validViews, view);
-            }
-
-
-            queryString += string.Format("view={0}", view);
-
-            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
-
-
-            return deserializeList(jsonString);
+            return index(new List<Filter>(), view);
 
         }
 
@@ -123,7 +95,9 @@ namespace RightScale.netClient
         /// <returns>Filtered list of Images based on filter and view input</returns>
         public static List<Image> index(string filterList, string view)
         {
-            throw new NotImplementedException();
+           List<Filter> filter = Filter.parseFilterList(view);
+
+           return index(filter,view);
         }
 
         /// <summary>
