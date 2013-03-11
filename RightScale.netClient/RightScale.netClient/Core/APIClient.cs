@@ -19,6 +19,9 @@ namespace RightScale.netClient.Core
     /// </summary>
     public sealed class APIClient : IDisposable
     {
+
+        #region APIClient Properties 
+
         /// <summary>
         /// RightScale OAuth Refresh token from RightScale dashboard
         /// </summary>
@@ -79,7 +82,12 @@ namespace RightScale.netClient.Core
         /// </summary>
         HttpClientHandler clientHandler;
 
+        /// <summary>
+        /// private member to hold the api base address
+        /// </summary>
         private string apiBaseAddress;
+
+        #endregion
 
         /// <summary>
         /// Base constructor initialies http client objects and initializes base url for RightScale API
@@ -324,7 +332,7 @@ namespace RightScale.netClient.Core
 
         public async Task<bool> AuthenticateInstance()
         {
-
+            throw new NotImplementedException();
         }
 
         /// <summary>

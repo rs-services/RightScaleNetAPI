@@ -405,6 +405,7 @@ namespace RightScale.netClient
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
         }
+
         #endregion
 
         #region Instance.launch
@@ -416,7 +417,7 @@ namespace RightScale.netClient
         /// <param name="cloudid">ID of the cloud where the instance is configured be launched</param>
         /// <param name="instanceid">ID of the instance to be launched</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch(string cloudid, string instanceid)
+        public static string launch(string cloudid, string instanceid)
         {
             return launch(cloudid, instanceid, new List<KeyValuePair<string, string>>());
         }
@@ -429,7 +430,7 @@ namespace RightScale.netClient
         /// <param name="instanceid">ID of the instance to be launched</param>
         /// <param name="inputs">Hashtable for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch(string cloudid, string instanceid, Hashtable inputs)
+        public static string launch(string cloudid, string instanceid, Hashtable inputs)
         {
             return launch(cloudid, instanceid, Utility.convertToKVP(inputs));
         }
@@ -442,7 +443,7 @@ namespace RightScale.netClient
         /// <param name="instanceid">ID of the instance to be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
+        public static string launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
         {
             string postHref = string.Format("/api/clouds/{0}/instances/{1}/launch", cloudid, instanceid);
             return launchPost(postHref, inputs);
@@ -454,7 +455,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_server(string serverid)
+        public static string launch_server(string serverid)
         {
             return launch_server(serverid, new List<KeyValuePair<string, string>>());
         }
@@ -466,7 +467,7 @@ namespace RightScale.netClient
         /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
         /// <param name="inputs">Hashtable for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_server(string serverid, Hashtable inputs)
+        public static string launch_server(string serverid, Hashtable inputs)
         {
             return launch_server(serverid, Utility.convertToKVP(inputs));
         }
@@ -478,7 +479,7 @@ namespace RightScale.netClient
         /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_server(string serverid, List<KeyValuePair<string, string>> inputs)
+        public static string launch_server(string serverid, List<KeyValuePair<string, string>> inputs)
         {
             string postHref = string.Format("/api/servers/{0}/launch", serverid);
             return launchPost(postHref, inputs);
@@ -490,7 +491,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_serverArray(string serverArrayID)
+        public static string launch_serverArray(string serverArrayID)
         {
             return launch_serverArray(serverArrayID, new List<KeyValuePair<string, string>>());
         }
@@ -502,7 +503,7 @@ namespace RightScale.netClient
         /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
         /// <param name="inputs">Hashtable for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_serverArray(string serverArrayID, Hashtable inputs)
+        public static string launch_serverArray(string serverArrayID, Hashtable inputs)
         {
             return launch_serverArray(serverArrayID, Utility.convertToKVP(inputs));
         }
@@ -514,7 +515,7 @@ namespace RightScale.netClient
         /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static bool launch_serverArray(string serverArrayID, List<KeyValuePair<string, string>> inputs)
+        public static string launch_serverArray(string serverArrayID, List<KeyValuePair<string, string>> inputs)
         {
             string postHref = string.Format("/api/server_arrays/{0}/launch", serverArrayID);
             return launchPost(postHref, inputs);
@@ -526,9 +527,10 @@ namespace RightScale.netClient
         /// <param name="postHref">API Href fragment for REST POST call</param>
         /// <param name="inputs">list of keyvalepairs to be used as inputs for this given instance</param>
         /// <returns>True if successful, false if not</returns>
-        private static bool launchPost(string postHref, List<KeyValuePair<string, string>> inputs)
+        private static string launchPost(string postHref, List<KeyValuePair<string, string>> inputs)
         {
-            return Core.APIClient.Instance.Post(postHref, inputs);
+            List<string> collectionArray =  Core.APIClient.Instance.Create(postHref, inputs, "location");
+            return collectionArray.Last<string>().Split('/').Last<string>();
         }
 
         #endregion

@@ -115,6 +115,18 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// This method is intended for use within PowerShell.
+        /// Lists the Images owned by this Account.
+        /// </summary>
+        /// <param name="filterList"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        public static List<Image> index(string filterList, string view)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Lists the Images owned by this Account.
         /// </summary>
         /// <param name="filterList">Set of filters to modify query to return Images from RightScale API</param>
@@ -122,11 +134,9 @@ namespace RightScale.netClient
         /// <returns>Filtered list of Images based on filter and view input</returns>
         public static List<Image> index(List<Filter> filterList, string view)
         {
-            
             string getUrl = "/api/multi_cloud_images";
             string queryString = string.Empty;
-
-                           
+  
            if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -153,8 +163,6 @@ namespace RightScale.netClient
             string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
 
             return deserializeList(jsonString);
-
-
         }
         #endregion
 

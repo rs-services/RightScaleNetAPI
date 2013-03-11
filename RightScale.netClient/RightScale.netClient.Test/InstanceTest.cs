@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Web;
 
 namespace RightScale.netClient.Test
 {
@@ -11,12 +12,14 @@ namespace RightScale.netClient.Test
         private string deploymentID;
         private string cloudID;
         private string serverArrayID;
+        private string filterListString;
 
         public InstanceTest()
         {
             deploymentID = ConfigurationManager.AppSettings["InstanceTest_deploymentID"].ToString();
             cloudID = ConfigurationManager.AppSettings["InstanceTest_cloudID"].ToString();
             serverArrayID = ConfigurationManager.AppSettings["InstanceTest_serverArrayID"].ToString();
+            filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InstanceTest_filterListString"].ToString());
         }
 
         #region Instance.index tests
@@ -44,6 +47,16 @@ namespace RightScale.netClient.Test
             List<Instance> instanceList = Instance.index(cloudID, filters);
             Assert.IsNotNull(instanceList);
             Assert.IsTrue(instanceList.Count > 0);
+        }
+
+        [TestMethod]
+        public void indexFilteredTest()
+        {
+            List<Filter> indexFilter = Filter.parseFilterList(filterListString);
+            Assert.IsNotNull(indexFilter);
+            List<Instance> instanceList = Instance.index(cloudID, indexFilter);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);            
         }
 
         #endregion
