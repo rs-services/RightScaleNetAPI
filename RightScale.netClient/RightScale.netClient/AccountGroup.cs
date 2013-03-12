@@ -41,13 +41,14 @@ namespace RightScale.netClient
         #region ID Properties
 
         /// <summary>
-        /// AccountID for this instance of AccountGroup
+        /// Account for this instance of AccountGroup
         /// </summary>
-        public string AccountID
+        public Account Account
         {
             get
             {
-                return getLinkIDValue("account");
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("account"));
+                return Account.deserialize(jsonString);
             }
         }
 

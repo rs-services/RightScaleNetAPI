@@ -35,16 +35,17 @@ namespace RightScale.netClient
         #region ID Properties
 
         /// <summary>
-        /// Owner ID for this instance of Account
+        /// Owner of this account
         /// </summary>
-        public string OwnerID
+        public Account Owner
         {
             get
             {
-                return getLinkIDValue("owner");
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("owner"));
+                return Account.deserialize(jsonString);
             }
         }
-
+        
         /// <summary>
         /// Cluster ID for this instance of Account
         /// </summary>

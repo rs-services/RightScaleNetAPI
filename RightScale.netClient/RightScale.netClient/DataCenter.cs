@@ -15,8 +15,19 @@ namespace RightScale.netClient
     /// </summary>
     public class DataCenter : Core.RightScaleObjectBase<DataCenter>
     {
+        /// <summary>
+        /// Name of this DataCenter
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// RightScale Resource UID associated with this DataCenter
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// Description of this DataCenter
+        /// </summary>
         public string description { get; set; }
 
         #region DataCenter.ctor
@@ -46,6 +57,22 @@ namespace RightScale.netClient
         public DataCenter(string userName, string password, string accountNo)
             : base(userName, password, accountNo)
         {
+        }
+
+        #endregion
+
+        #region DataCenter relationships
+
+        /// <summary>
+        /// Cloud associated with this DataCenter
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
         }
 
         #endregion

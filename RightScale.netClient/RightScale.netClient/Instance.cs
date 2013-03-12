@@ -111,102 +111,12 @@ namespace RightScale.netClient
 
         #region Get link ID public instance methods
 
-        /// <summary>
-        /// ID of the cloud that this Instance is running in
-        /// </summary>
-        public string CloudID
+        public DataCenter datacenter
         {
             get
             {
-                return getLinkIDValue("cloud");
-            }
-        }
-
-        /// <summary>
-        /// ID of the ServerTemplate that this instance was launched from
-        /// </summary>
-        public string ServerTemplateID
-        {
-            get
-            {
-                return getLinkIDValue("server_template");
-            }
-        }
-
-        /// <summary>
-        /// ID of the MultiCloudImage that this instance was launched from
-        /// </summary>
-        public string MultiCloudImageID
-        {
-            get
-            {
-                return getLinkIDValue("multi_cloud_image");
-            }
-        }
-
-        /// <summary>
-        /// Specific Image ID used to launch this instance
-        /// </summary>
-        public string ImageID
-        {
-            get
-            {
-                return getLinkIDValue("image");
-            }
-        }
-
-        /// <summary>
-        /// Ramdisk Image ID for this instance
-        /// </summary>
-        public string RamdiskImageID
-        {
-            get
-            {
-                return getLinkIDValue("ramdisk_image");
-            }
-        }
-
-        /// <summary>
-        /// Kernel Image ID for this instance
-        /// </summary>
-        public string KernelImageID
-        {
-            get
-            {
-                return getLinkIDValue("kernel_image");
-            }
-        }
-
-        /// <summary>
-        /// InstanceType ID for this instance
-        /// </summary>
-        public string InstanceTypeID
-        {
-            get
-            {
-                return getLinkIDValue("instance_type");
-            }
-        }
-
-        /// <summary>
-        /// SshKey ID for this instance
-        /// </summary>
-        public string SshKeyID
-        {
-            get
-            {
-                return getLinkIDValue("ssh_key");
-            }
-        }
-
-        /// <summary>
-        /// Datacenter ID for this instance
-        /// </summary>
-        public string DataCenterID
-        {
-            get
-            {
-                return getLinkIDValue("datacenter");
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("datacenter"));
+                return DataCenter.deserialize(jsonString);
             }
         }
 
@@ -653,7 +563,7 @@ namespace RightScale.netClient
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
         public List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/multi_run_executable", CloudID);
+            string postHref = string.Format("/api/clouds/{0}/instances/multi_run_executable", cloudID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
         }
 
@@ -749,7 +659,7 @@ namespace RightScale.netClient
         /// <param name="instanceID">ID of the instance to be launched</param>
         /// <param name="recipeName">Name of Recipe to execute</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_recipe(string cloudID, string instanceID, string recipeName)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName)
         {
             return run_executable(cloudID, instanceID, recipeName, null, new List<KeyValuePair<string, string>>(), false);
         }
@@ -763,7 +673,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">Name of Recipe to execute</param>
         /// <param name="inputs">Hashtable of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, false);
         }
@@ -777,7 +687,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">Name of Recipe to execute</param>
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, false);
         }
@@ -792,7 +702,7 @@ namespace RightScale.netClient
         /// <param name="inputs">Hashtable of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs, bool ignoreLock)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, Hashtable inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, ignoreLock);
         }
@@ -807,7 +717,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, ignoreLock);
         }
@@ -820,7 +730,7 @@ namespace RightScale.netClient
         /// <param name="instanceID">ID of the instance to be launched</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_rightScript(string cloudID, string instanceID, string rightScriptID)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, new List<KeyValuePair<string, string>>(), false);
         }
@@ -834,7 +744,7 @@ namespace RightScale.netClient
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, false);
         }
@@ -848,7 +758,7 @@ namespace RightScale.netClient
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <param name="inputs">Hashtable of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, false);
         }
@@ -863,7 +773,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, ignoreLock);
         }
@@ -878,7 +788,7 @@ namespace RightScale.netClient
         /// <param name="inputs">Hashtable of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs, bool ignoreLock)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, Hashtable inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, ignoreLock);
         }
@@ -894,7 +804,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
         {
             return run_executablePost(cloudID, instanceID, recipeName, rightScriptID, inputs, ignoreLock);
         }
@@ -910,7 +820,7 @@ namespace RightScale.netClient
         /// <param name="inputs">Hashtable of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, Hashtable inputs, bool ignoreLock)
+        public static Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, Hashtable inputs, bool ignoreLock)
         {
             return run_executablePost(cloudID, instanceID, recipeName, rightScriptID, Utility.convertToKVP(inputs), ignoreLock);
         }

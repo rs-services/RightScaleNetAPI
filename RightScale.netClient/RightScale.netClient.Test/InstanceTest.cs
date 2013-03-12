@@ -143,5 +143,7 @@ namespace RightScale.netClient.Test
             Assert.AreEqual(instanceList[0].pricing_type, testInstance.pricing_type);
         }
         #endregion
+
+
     }
 }

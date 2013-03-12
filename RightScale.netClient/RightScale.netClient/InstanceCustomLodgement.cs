@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// An InstanceCustomLodgement represents a way to create custom reports about a specific instance with a user defined quantity. Replaces the legacy Instances#setcustomlodgement interface
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstanceCustomLodgement.html
+    /// Resources Reference: http://reference.rightscale.com/api1.5/resources/ResourceInstanceCustomLodgements.html
+    /// </summary>
     public class InstanceCustomLodgement : Core.RightScaleObjectBase<InstanceCustomLodgement>
     {
         //TODO: need to write this class
-
-
-
+        
         #region InstanceCustomLodgement.ctor
         /// <summary>
         /// Default Constructor for InstanceCustomLodgement
@@ -42,8 +45,72 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-        
+
+        #region InstanceCustomLodgement Relationships
+
+        /// <summary>
+        /// ServerTemplate associated with this InstanceCustomLodgement
+        /// </summary>
+        public ServerTemplate serverTemplate
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_template"));
+                return ServerTemplate.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Account associated with this InstanceCustomLodgement
+        /// </summary>
+        public Account account
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("account"));
+                return Account.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Instance associated with this InstanceCustomLodgement
+        /// </summary>
+        public Instance instance
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance"));
+                return Instance.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Deployment associated with this InstanceCustomLodgement
+        /// </summary>
+        public Deployment deployment
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("deployment"));
+                return Deployment.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Cloud associated with this InstanceCustomLodgement
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
+
         #region InstanceCustomLodgement.index methods
 
         public static List<InstanceCustomLodgement> index()

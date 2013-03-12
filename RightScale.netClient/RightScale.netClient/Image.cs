@@ -18,6 +18,22 @@ namespace RightScale.netClient
         public string description { get; set; }
         public string visibility { get; set; }
 
+        #region Image Relationships
+
+        /// <summary>
+        /// Cloud associated with this Image
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
         //Image base URL
         static string getUrl = "/api/multi_cloud_images";
 

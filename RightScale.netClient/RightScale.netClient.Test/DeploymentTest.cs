@@ -170,7 +170,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void deploymentServersStatic()
         {
-            List<Server> listOfDeploymentServers = Deployment.servers(deploymentID);
+            List<Server> listOfDeploymentServers = Deployment.getServers(deploymentID);
             Assert.IsNotNull(listOfDeploymentServers);
             Assert.IsTrue(listOfDeploymentServers.Count > 0);
         }
@@ -180,7 +180,7 @@ namespace RightScale.netClient.Test
         {
             Deployment deploymentInstance = Deployment.show(deploymentID);
             Assert.IsNotNull(deploymentInstance);
-            List<Server> serverList = deploymentInstance.getServers();
+            List<Server> serverList = Deployment.getServers(deploymentID);
             Assert.IsNotNull(serverList);
             Assert.IsTrue(serverList.Count > 0);
         }

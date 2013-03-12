@@ -63,6 +63,22 @@ namespace RightScale.netClient
         
         #endregion
 
+        #region InstanceType Relationships
+
+        /// <summary>
+        /// Cloud associated with this InstanceType
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
         #region InstanceType.ctor
         /// <summary>
         /// Default Constructor for InstanceType

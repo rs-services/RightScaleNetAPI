@@ -6,9 +6,21 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Inputs help extract dynamic information, usually specified at runtime, from repeatable configuration operations that can be codified. Inputs are variables defined in and used by RightScripts/Recipes. The two main attributes of an input are 'name' and 'value'. The 'name' identifies the input and the 'value', although a string encodes what type it is. It could be a text encoded as 'text:myvalue' or a credential encoded as 'cred:MY_CRED' or a key etc. Please see support.rightscale.com for more info on input hierarchies and their different types.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInput.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceInputs.html
+    /// </summary>
     public class Input :Core.RightScaleObjectBase<Input>
     {
+        /// <summary>
+        /// Name of this input
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Value of this input
+        /// </summary>
         public string value { get; set; }
 
 

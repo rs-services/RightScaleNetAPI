@@ -37,11 +37,13 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region Deployment Relationhsips
+
         /// <summary>
         /// Collection of ServerArrays associated with this Deployment
         /// This method will make a call to the API to return the list from the server_arrays link
         /// </summary>
-        public List<ServerArray> ServerArrays
+        public List<ServerArray> serverArrays
         {
             get
             {
@@ -54,7 +56,7 @@ namespace RightScale.netClient
         /// Collection of servers associated with this Deployment
         /// This method will make a call to the API to return the list from the servers link
         /// </summary>
-        public List<Server> Servers
+        public List<Server> servers
         {
             get
             {
@@ -63,15 +65,8 @@ namespace RightScale.netClient
             }
         }
 
-        public string DeploymentID
-        {
-            get
-            {
-                return getLinkIDValue("self");
-            }
-        }
-
-
+        #endregion
+        
         #region Deployment.ctor
         /// <summary>
         /// Default Constructor for Deployment
@@ -102,15 +97,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-
-        /// <summary>
-        /// Method gets the list of servers that belong to this specific deployment
-        /// </summary>
-        /// <returns>collection of servers that belong to this deployment</returns>
-        public List<Server> getServers()
-        {
-            return Server.index_deployment(this.DeploymentID);
-        }
 
         #region RSAPI Static Implementation
 
@@ -337,7 +323,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="deploymentID">ID of deployment to retrieve servers for</param>
         /// <returns>List of server objects belonging to the specified Deployment</returns>
-        public static List<Server> servers(string deploymentID)
+        public static List<Server> getServers(string deploymentID)
         {
             return Server.index_deployment(deploymentID);
         }

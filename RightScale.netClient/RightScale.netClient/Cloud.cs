@@ -59,6 +59,154 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region Cloud Relationships
+
+        /// <summary>
+        /// list of datacenters associated with this cloud
+        /// </summary>
+        public List<DataCenter> datacenters
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("datacenters"));
+                return DataCenter.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// list of volume snapshots associated with this cloud
+        /// </summary>
+        public List<VolumeSnapshot> volumeSnapshots
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_snapshots"));
+                return VolumeSnapshot.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of instances associated with this cloud
+        /// </summary>
+        public List<Instance> instances
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instances"));
+                return Instance.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of Voulume Types associated with this cloud
+        /// </summary>
+        public List<VolumeType> volumeTypes
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_types"));
+                return VolumeType.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of SSH keys associated with this cloud
+        /// </summary>
+        public List<SshKey> sshKeys
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ssh_keys"));
+                return SshKey.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of recurring volume attachments associated with this cloud
+        /// </summary>
+        public List<RecurringVolumeAttachment> recurringVolumeAttachments
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("recurring_volume_attachments"));
+                return RecurringVolumeAttachment.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of Volume Attachments associated with this cloud
+        /// </summary>
+        public List<VolumeAttachment> volumeAttachments
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_attachments"));
+                return VolumeAttachment.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// list of Volumes associated with this cloud
+        /// </summary>
+        public List<Volume> volumes
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volumes"));
+                return Volume.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of IP Address Bindings associated with this cloud
+        /// </summary>
+        public List<IPAddressBinding> ipAddressBindings
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ip_address_bindings"));
+                return IPAddressBinding.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of images associated with this cloud
+        /// </summary>
+        public List<Image> images
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("images"));
+                return Image.deserializeList(jsonString);
+            }
+        }
+        
+        /// <summary>
+        /// List of instance types associated with this cloud
+        /// </summary>
+        public List<InstanceType> instanceTypes
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance_types"));
+                return InstanceType.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of IP Addressess associated with this cloud
+        /// </summary>
+        public List<IPAddress> ipAddresses
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ip_addresses"));
+                return IPAddress.deserializeList(jsonString);
+            }
+        }
+
+        #endregion
+
         #region Cloud.index methods
 
         public static List<Cloud> index()
