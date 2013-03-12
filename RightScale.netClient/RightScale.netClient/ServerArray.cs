@@ -101,8 +101,11 @@ namespace RightScale.netClient
             return index(null, view);
         }
 
-        public static List<ServerArray> index(List<Filter> filter, string view)
+        public static List<ServerArray> index(List<Filter> filterlist, string view)
         {
+            string getUrl = "/api/server_arrays";
+            string queryString = string.Empty;
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -113,11 +116,23 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            List<string> validFilters = new List<string>() { "cloud_href", "deployment_href", "name" };
-            Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement ServerArray.index
-            throw new NotImplementedException();
+            List<string> validFilters = new List<string>() { "cloud_href", "deployment_href", "name" };
+            Utility.CheckFilterInput("filter", validFilters, filterlist);
+
+            if (filterlist != null && filterlist.Count > 0)
+            {
+                queryString += Utility.BuildFilterString(filterlist) + "&";
+            }
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
+
         }
         #endregion
 		

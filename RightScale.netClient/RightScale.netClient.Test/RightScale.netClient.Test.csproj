@@ -70,6 +70,7 @@
     <Compile Include="IPAddressTest.cs" />
     <Compile Include="ImageTest.cs" />
     <Compile Include="ServerTemplateTest.cs" />
+    <Compile Include="ServerArrayTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">
