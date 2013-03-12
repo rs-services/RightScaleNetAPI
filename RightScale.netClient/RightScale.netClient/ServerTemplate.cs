@@ -115,6 +115,61 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
+
+        #region Image.show methods
+
+        /// <summary>
+        /// Shows the information of a single image.
+        /// </summary>
+        /// <param name="serverid">ID of the image to be retrieved</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>Populated Image object</returns>
+        public static ServerTemplate show(string servertemplateid, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string getHref = string.Format("/api/server_templates/{0}", servertemplateid);
+            return showGet(getHref, view);
+        }
+
+        /// <summary>
+        /// Internal implementation of show for both deployment and non-deployment calls.  
+        /// </summary>
+        /// <param name="getHref"></param>
+        /// <param name="view"></param>
+        /// <returns>ServerTemplate object with data</returns>
+        private static ServerTemplate showGet(string getHref, string view)
+        {
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+
+            List<string> validViews = new List<string>() { "default", "inputs", "inputs_2_0" };
+            Utility.CheckStringInput("view", validViews, view);
+
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+
+        #endregion
 		
     }
 }

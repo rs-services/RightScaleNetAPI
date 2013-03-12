@@ -10,11 +10,13 @@ namespace RightScale.netClient.Test
     public class ServerTemplateTest
     {
         private string filterListString;
+        private string servertemplateid;
 
         public ServerTemplateTest()
         {
            
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ServerTemplateTest_filterListString"].ToString());
+            servertemplateid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ServerTemplateTest_servertemplateid"].ToString());
         }
 
         #region Instance.index tests
@@ -27,7 +29,16 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(servertemplateList);
             Assert.IsTrue(servertemplateList.Count > 0);
         }
+        #endregion
 
+        #region ServerTemplate.show tests
+
+        [TestMethod]
+        public void ServerTemplateShow()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+        }
 
         #endregion
 
