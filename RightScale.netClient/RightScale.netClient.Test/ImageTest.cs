@@ -20,8 +20,7 @@ namespace RightScale.netClient.Test
 
         [TestMethod]
         public void ImageIndexSimple()
-        {
-
+       {
             List<Image> imageList = Image.index();
             Assert.IsNotNull(imageList);
             Assert.IsTrue(imageList.Count > 0);

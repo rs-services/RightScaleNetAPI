@@ -132,6 +132,10 @@ namespace RightScale.netClient
             }
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            if (jsonString.ToLower().Contains("unsupported resource"))
+            {
+                throw new RightScaleAPIException("RightScale API Unsupported Exception", getHref + queryString, jsonString);
+            }
             return deserializeList(jsonString);
         }
         #endregion

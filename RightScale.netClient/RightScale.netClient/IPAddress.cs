@@ -70,7 +70,7 @@ namespace RightScale.netClient
         /// <returns>Collection of IPAddress objects</returns>
         public static List<IPAddress> index(string cloudID, List<Filter> filter)
         {
-            string getHref = string.Format("/get/clouds/{0}/ip_addresses", cloudID);
+            string getHref = string.Format("/api/clouds/{0}/ip_addresses", cloudID);
 
             List<string> validFilters = new List<string>() { "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);

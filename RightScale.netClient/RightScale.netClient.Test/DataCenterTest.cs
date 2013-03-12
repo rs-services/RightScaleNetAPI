@@ -20,9 +20,23 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void datacenterIndex()
         {
-            List<DataCenter> dcList = DataCenter.index(cloudID);
-            Assert.IsNotNull(dcList);
-            Assert.IsTrue(dcList.Count > 0);
+            try
+            {
+                List<DataCenter> dcList = DataCenter.index(cloudID);
+                Assert.IsNotNull(dcList);
+                Assert.IsTrue(dcList.Count > 0);
+            }
+            catch (RightScaleAPIException rsae)
+            {
+                if (rsae.ErrorData.ToLower().StartsWith("unsupportedresource"))
+                {
+                    Assert.Inconclusive("Cloud tested does not support data centers");
+                }
+                else
+                {
+                    Assert.Fail(rsae.Message + Environment.NewLine + rsae.ErrorData);
+                }
+            }
         }
     }
 }

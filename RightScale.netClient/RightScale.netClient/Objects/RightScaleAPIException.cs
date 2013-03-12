@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// Excption specific to RightScale API errors
     /// </summary>
     [Serializable]
-    class RightScaleAPIException : Exception
+    public class RightScaleAPIException : Exception
     {
         #region RightScaleAPIException Properties
 
