@@ -174,7 +174,7 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            string getHref = string.Format("/api/multi_cloud_images/images/{0}", imageid);
+            string getHref = string.Format("/api/multi_cloud_images/{0}", imageid);
             return showGet(getHref, view);
         }
 
