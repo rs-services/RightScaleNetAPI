@@ -135,6 +135,55 @@ namespace RightScale.netClient
 
         }
         #endregion
+
+        #region ServerArray.show methods
+
+        /// <summary>
+        /// Shows the information of a single image.
+        /// </summary>
+        /// <param name="serverid">ID of the image to be retrieved</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>Populated ServerArray object</returns>
+        public static ServerArray show(string serverarrayid, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "instance_detail" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string getHref = string.Format("/api/server_arrays/{0}", serverarrayid);
+            return showGet(getHref, view);
+        }
+
+        /// <summary>
+        /// Internal implementation of show for both deployment and non-deployment calls.  
+        /// </summary>
+        /// <param name="getHref"></param>
+        /// <param name="view"></param>
+        /// <returns>Image object with data</returns>
+        private static ServerArray showGet(string getHref, string view)
+        {
+            List<string> validViews = new List<string>() { "default" };
+            Utility.CheckStringInput("view", validViews, view);
+
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+
+        #endregion
 		
     }
 }

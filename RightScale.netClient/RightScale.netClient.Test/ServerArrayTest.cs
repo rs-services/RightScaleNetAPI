@@ -40,5 +40,17 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(serverarrayList);
         }
         #endregion
+
+        #region ServerArray.show tests
+        [TestMethod]
+        public void ServerArrayShow()
+        {
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+        }
+
+
+
+        #endregion
     }
 }
