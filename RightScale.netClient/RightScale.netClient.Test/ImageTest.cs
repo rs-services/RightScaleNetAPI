@@ -11,13 +11,16 @@ namespace RightScale.netClient.Test
     {
 
         private string filterListString;
+        private string imageid;
 
         public ImageTest()
         {
            
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_filterListString"].ToString());
+            imageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_imageid"].ToString());
         }
 
+        #region Image.index tests
         [TestMethod]
         public void ImageIndexSimple()
        {
@@ -28,10 +31,23 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void ImageIndexFilteredString(string filter)
+        public void ImageIndexFilteredString()
         {
             List<Image> imageList = Image.index(filterListString);
             Assert.IsNotNull(imageList);
         }
+        #endregion
+
+        #region Image.show tests
+
+        [TestMethod]
+        public void ImageShow()
+        {
+            Image image = Image.show(imageid,null);
+            Assert.IsNotNull(image);
+        }
+
+        #endregion
+
     }
 }
