@@ -190,7 +190,7 @@ namespace RightScale.netClient
             string[] filterTestSplit = workingString.Split('Þ');
             if (filterTestSplit.Length == 2)
             {
-                retVal = new Filter(filterTestSplit[0], FilterOperator.NotEqual, filterTestSplit[1]);
+                retVal = new Filter(filterTestSplit[0], filterOp, filterTestSplit[1]);
             }
             else if (filterTestSplit.Length > 2)
             {

@@ -72,10 +72,10 @@ namespace RightScale.netClient
         /// Lists the Images owned by this Account.
         /// </summary>
         /// <returns>List of Images</returns>
-        public static List<Image> index()
+        public static List<Image> index(string cloudID)
         {
 
-            return index(new List<Filter>(), null);
+            return index(cloudID, new List<Filter>(), null);
 
         }
 
@@ -84,9 +84,9 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filterList">Set of filters to modify query to return Images from RightScale API</param>
         /// <returns>Filtered list of Images</returns>
-        public static List<Image> index(List<Filter> filterList)
+        public static List<Image> index(string cloudID, List<Filter> filterList)
         {
-            return index(filterList, string.Empty);
+            return index(cloudID, filterList, string.Empty);
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
         /// <returns>Filtered list of Images based on view input</returns>
-        public static List<Image> index(string view)
+        public static List<Image> index(string cloudID, string view)
         {
-            return index(new List<Filter>(), view);
+            return index(cloudID, new List<Filter>(), view);
 
         }
 
@@ -107,11 +107,11 @@ namespace RightScale.netClient
         /// <param name="filterList">Set of filters to modify query to return Images from RightScale API</param>
         /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
         /// <returns>Filtered list of Images based on filter and view input</returns>
-        public static List<Image> index(string filterList, string view)
+        public static List<Image> index(string cloudID, string filterList, string view)
         {
            List<Filter> filter = Filter.parseFilterList(filterList);
 
-           return index(filter,view);
+           return index(cloudID, filter, view);
         }
 
         /// <summary>
@@ -120,11 +120,14 @@ namespace RightScale.netClient
         /// <param name="filterList">Set of filters to modify query to return Images from RightScale API</param>
         /// <param name="view">Defines specific view to limit the Images returned from RightScale API</param>
         /// <returns>Filtered list of Images based on filter and view input</returns>
-        public static List<Image> index(List<Filter> filterList, string view)
+        public static List<Image> index(string cloudID, List<Filter> filterList, string view)
         {
-            string getUrl = "/api/multi_cloud_images";
+
+            string getUrl = string.Format("/api/clouds/{0}/images", cloudID);
             string queryString = string.Empty;
-  
+
+            
+
            if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -162,7 +165,7 @@ namespace RightScale.netClient
         /// <param name="serverid">ID of the image to be retrieved</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
         /// <returns>Populated Image object</returns>
-        public static Image show(string imageid, string view)
+        public static Image show(string cloudID, string imageID, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -174,7 +177,7 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            string getHref = string.Format("/api/multi_cloud_images/{0}", imageid);
+            string getHref = string.Format("/api/clouds/{0}/images/{1}", cloudID, imageID);
             return showGet(getHref, view);
         }
 

@@ -10,12 +10,14 @@ namespace RightScale.netClient.Test
     public class ImageTest
     {
 
+        private string cloudID;
         private string filterListString;
         private string imageid;
 
         public ImageTest()
         {
-           
+
+            cloudID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_cloudid"].ToString());
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_filterListString"].ToString());
             imageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_imageid"].ToString());
         }
@@ -24,7 +26,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void ImageIndexSimple()
        {
-            List<Image> imageList = Image.index();
+            List<Image> imageList = Image.index(cloudID);
             Assert.IsNotNull(imageList);
             Assert.IsTrue(imageList.Count > 0);
 
@@ -33,7 +35,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void ImageIndexFilteredString()
         {
-            List<Image> imageList = Image.index(filterListString);
+            List<Image> imageList = Image.index(cloudID,filterListString,"default");
             Assert.IsNotNull(imageList);
         }
         #endregion
@@ -43,7 +45,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void ImageShow()
         {
-            Image image = Image.show(imageid,null);
+            Image image = Image.show(cloudID, imageid, null);
             Assert.IsNotNull(image);
         }
 
