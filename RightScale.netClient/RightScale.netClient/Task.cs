@@ -86,9 +86,30 @@ namespace RightScale.netClient
         /// <returns>Populated Task object</returns>
         public static Task GetTask(string taskHref)
         {
+            
             //TODO: need to implement process of build task
             return null;
         }
-		
+
+        public static List<Task> GetTasks(string cloudID, string instanceID, string view)
+        {
+            string getUrl = string.Format("/api/clouds/{0}/instances/{1}/live/tasks",cloudID,instanceID);
+            string queryString = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "extended" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
+        }
     }
 }
