@@ -211,7 +211,7 @@ namespace RightScale.netClient.Core
         /// <param name="apiHref">api stub for posting to RightScale API</param>
         /// <param name="parameterSet">List< of KeyValuePair(string, string) of parameters to be posted to RightScale API</param>
         /// <returns>JSON string result to be parsed</returns>
-        internal List<string> Create(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
+        internal List<string> Post(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
         {
             if (CheckAuthenticationStatus())
             {
@@ -227,7 +227,10 @@ namespace RightScale.netClient.Core
                     HttpResponseMessage response = webClient.PostAsync(requestUrl, postContent).Result;
                     content = response.Content.ReadAsStringAsync().Result;
                     response.EnsureSuccessStatusCode();
-                    return response.Headers.GetValues(returnHeaderName).ToList<string>();
+                    if (!string.IsNullOrWhiteSpace(returnHeaderName))
+                    {
+                        return response.Headers.GetValues(returnHeaderName).ToList<string>();
+                    }
                 }
                 catch (HttpRequestException hre)
                 {
@@ -245,24 +248,14 @@ namespace RightScale.netClient.Core
         /// <returns>returns true if successful, false if not</returns>
         internal bool Post(string apiHref, List<KeyValuePair<string, string>> postData)
         {
-            if (CheckAuthenticationStatus())
+            if (Post(apiHref, postData, string.Empty) == null)
             {
-                string content = string.Empty;
-                try
-                {
-                    HttpContent postContent = new FormUrlEncodedContent(postData);
-                    string postUrl = apiBaseAddress.Trim('/') + apiHref;
-                    HttpResponseMessage response = webClient.PostAsync(postUrl, postContent).Result;
-                    content = response.Content.ReadAsStringAsync().Result;
-                    response.EnsureSuccessStatusCode();
-                    return true;
-                }
-                catch (HttpRequestException hre)
-                {
-                    throw new RightScaleAPIException("Exception from API Gateway, see error data", apiHref, content, hre, postData);
-                }
+                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

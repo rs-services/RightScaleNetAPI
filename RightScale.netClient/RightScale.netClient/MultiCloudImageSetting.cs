@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A MultiCloudImageSetting defines which settings should be used when a server is launched in a cloud.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeMultiCloudImageSetting.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceMultiCloudImageSettings.html
+    /// </summary>
     public class MultiCloudImageSetting:Core.RightScaleObjectBase<MultiCloudImageSetting>
     {
 
@@ -39,6 +44,59 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region MultiCloudImageSetting Relationships
+
+        /// <summary>
+        /// MultiCloudImage associated with this MultiCloudImageSetting
+        /// </summary>
+        public MultiCloudImage multiCloudImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("multi_cloud_image"));
+                return MultiCloudImage.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// InstanceType associated with this MultiCloudImageSetting
+        /// </summary>
+        public InstanceType instanceType
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance_type"));
+                return InstanceType.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Image associated with this MultiCloudImageSetting
+        /// </summary>
+        public Image image
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("image"));
+                return Image.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Cloud associated with this MultiCloudImageSetting
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
         #region MultiCloudImageSetting.index methods
 
         public static List<MultiCloudImageSetting> index()

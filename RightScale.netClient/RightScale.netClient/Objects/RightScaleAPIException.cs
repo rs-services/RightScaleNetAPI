@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace RightScale.netClient
 {
@@ -23,7 +24,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Collection of parameters specific to the current API call
         /// </summary>
-        public List<KeyValuePair<string, string>> parameterSet;
+        public List<KeyValuePair<string,string>> parameterSet;
 
         /// <summary>
         /// Error data that's returned via the RightScale API
@@ -95,5 +96,43 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region ISerializable Implementation
+
+        /// <summary>
+        /// Protected constructor to manage reserialization of object
+        /// </summary>
+        /// <param name="info">The SerializationInfo that holds the serialized object data about the exception being thrown.</param>
+        /// <param name="context">The StreamingContext that contains contextual information about the source or destination.</param>
+        protected RightScaleAPIException(SerializationInfo info, StreamingContext context):base(info, context)
+        {
+            if (info == null)
+            {
+                throw new ArgumentNullException("Protected RightScaleAPIException constructor has null Info parameter");
+            }
+            else
+            {
+                this.APIHref = info.GetString("apiHref");
+                this.ErrorData = info.GetString("errorData");
+                this.parameterSet = SerializationExtensions.Deserialize<List<KeyValuePair<string, string>>>(info.GetString("parameterSet"));
+                
+            }
+        }
+
+        /// <summary>
+        /// Custom GetObjectData serialization method
+        /// </summary>
+        /// <param name="info">The SerializationInfo that holds the serialized object data about the exception being thrown.</param>
+        /// <param name="context">The StreamingContext that contains contextual information about the source or destination.</param>
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter=true)]
+        protected new virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("apiHref", this.APIHref);
+            info.AddValue("errorData", this.ErrorData);
+            info.AddValue("parameterSet", SerializationExtensions.Serialize<List<KeyValuePair<string, string>>>(this.parameterSet));
+            base.GetObjectData(info, context);
+        }
+
+        #endregion 
     }
 }

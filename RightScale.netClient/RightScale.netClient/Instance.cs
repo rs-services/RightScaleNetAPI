@@ -109,14 +109,149 @@ namespace RightScale.netClient
         
         #endregion
 
-        #region Get link ID public instance methods
+        #region Instance Relationships
 
+        /// <summary>
+        /// Datacenter for this instance
+        /// </summary>
         public DataCenter datacenter
         {
             get
             {
                 string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("datacenter"));
                 return DataCenter.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// MultiCloudImage for this instance
+        /// </summary>
+        public MultiCloudImage multiCloudImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("multi_cloud_image"));
+                return MultiCloudImage.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// ServerTemplate for this Instance
+        /// </summary>
+        public ServerTemplate serverTemplate
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_template"));
+                return ServerTemplate.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// RamdiskImage for this Instance
+        /// </summary>
+        public Image ramdiskImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ramdisk_image"));
+                return Image.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of VolumeAttachments for this Instance
+        /// </summary>
+        public List<VolumeAttachment> volumeAttachments
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_attachments"));
+                return VolumeAttachment.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// InstanceType for this instance
+        /// </summary>
+        public InstanceType instanceType
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance_type"));
+                return InstanceType.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of MonitoringMetrics for this instance
+        /// </summary>
+        public List<MonitoringMetric> monitoringMetrics
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("monitoring_metric"));
+                return MonitoringMetric.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Kernel Image for this instance
+        /// </summary>
+        public Image kernelImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("kernel_image"));
+                return Image.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// SSH Key for this instance
+        /// </summary>
+        public SshKey sshKey
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ssh_key"));
+                return SshKey.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Image for this instance
+        /// </summary>
+        public Image image
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("image"));
+                return Image.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Deployment for this instance
+        /// </summary>
+        public Deployment deployment
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("deployment"));
+                return Deployment.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Cloud for this instance
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
             }
         }
 
@@ -439,7 +574,7 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         private static string launchPost(string postHref, List<KeyValuePair<string, string>> inputs)
         {
-            List<string> collectionArray =  Core.APIClient.Instance.Create(postHref, inputs, "location");
+            List<string> collectionArray =  Core.APIClient.Instance.Post(postHref, inputs, "location");
             return collectionArray.Last<string>().Split('/').Last<string>();
         }
 
@@ -583,7 +718,7 @@ namespace RightScale.netClient
             Utility.addParameter(ignore_lock.ToString().ToLower(), "ignore_lock", postParams);
             Utility.addParameter(recipeName, "recipe_name", postParams);
             Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParams);
-            List<string> retVals = Core.APIClient.Instance.Create(postHref, postParams, "location");
+            List<string> retVals = Core.APIClient.Instance.Post(postHref, postParams, "location");
             return Task.GetTaskList(retVals);
         }
 
@@ -643,7 +778,7 @@ namespace RightScale.netClient
                 Utility.addParameter(f.ToFilterOnlyString(), "filter[]", postParams);
             }
 
-            List<string> taskHrefs = Core.APIClient.Instance.Create(postHref, postParams, "location");
+            List<string> taskHrefs = Core.APIClient.Instance.Post(postHref, postParams, "location");
             return Task.GetTaskList(taskHrefs);
         }
 
@@ -850,7 +985,7 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParameters);
             Utility.addParameter(ignoreLock.ToString().ToLower(), "ignore_lock", postParameters);
 
-            List<string> taskList = Core.APIClient.Instance.Create(postHref, postParameters, "location");
+            List<string> taskList = Core.APIClient.Instance.Post(postHref, postParameters, "location");
             return Task.GetTask(taskList.Last<string>());
         }
 

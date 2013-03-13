@@ -41,6 +41,33 @@ namespace RightScale.netClient
         }
 		
 		#endregion
-		
+
+        #region IPAddressBinding Relationships
+
+        /// <summary>
+        /// Instance for this IPAddressBinding
+        /// </summary>
+        public Instance instance
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance"));
+                return Instance.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// IPAddress for this IPAddressBinding
+        /// </summary>
+        public IPAddress ipAddress
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ip_address"));
+                return IPAddress.deserialize(jsonString);
+            }
+        }
+
+        #endregion
     }
 }

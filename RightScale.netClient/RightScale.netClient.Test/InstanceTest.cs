@@ -25,7 +25,7 @@ namespace RightScale.netClient.Test
         #region Instance.index tests
 
         [TestMethod]
-        public void indexSimpleTest()
+        public void indexInstanceSimpleTest()
         {
             List<Instance> instanceList = Instance.index(cloudID);
             Assert.IsNotNull(instanceList);
@@ -33,14 +33,14 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void indexServerArrayTest()
+        public void indexInstanceServerArrayTest()
         {
             List<Instance> instanceList = Instance.index_serverArray(serverArrayID);
             Assert.IsNotNull(instanceList);
         }
 
         [TestMethod]
-        public void indexDeploymentTest()
+        public void indexInstanceDeploymentTest()
         {
             List<Filter> filters = new List<Filter>();
             filters.Add(new Filter("deployment_href", FilterOperator.Equal, Utility.deploymentHref(deploymentID)));
@@ -50,7 +50,7 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void indexFilteredTest()
+        public void indexInstanceFilteredTest()
         {
             List<Filter> indexFilter = Filter.parseFilterList(filterListString);
             Assert.IsNotNull(indexFilter);
@@ -60,24 +60,24 @@ namespace RightScale.netClient.Test
         }
         
         [TestMethod]
-        public void indexViewExtendedTest()
+        public void indexInstanceViewExtendedTest()
         {
-            indexViewTest("extended");
+            indexInstanceViewTest("extended");
         }
 
         [TestMethod]
-        public void indexViewFullTest()
+        public void indexInstanceViewFullTest()
         {
-            indexViewTest("full");
+            indexInstanceViewTest("full");
         }
 
         [TestMethod]
-        public void indexViewInputs20Test()
+        public void indexInstanceViewInputs20Test()
         {
-            indexViewTest("full_inputs_2_0");
+            indexInstanceViewTest("full_inputs_2_0");
         }
 
-        private void indexViewTest(string viewName)
+        private void indexInstanceViewTest(string viewName)
         {
             List<Instance> instanceList = Instance.index(cloudID, viewName);
             Assert.IsNotNull(instanceList);
@@ -88,7 +88,7 @@ namespace RightScale.netClient.Test
         #region Instance.show tests
 
         [TestMethod]
-        public void showSimple()
+        public void showInstanceSimple()
         {
             List<Instance> instanceList = Instance.index(cloudID);
             Assert.IsNotNull(instanceList);
@@ -102,7 +102,7 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void showExtended()
+        public void showInstanceExtended()
         {
             List<Instance> instanceList = Instance.index(cloudID);
             Assert.IsNotNull(instanceList);
@@ -116,7 +116,7 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void showFull()
+        public void showInstanceFull()
         {
             List<Instance> instanceList = Instance.index(cloudID);
             Assert.IsNotNull(instanceList);
@@ -130,7 +130,7 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void showFullInputs20()
+        public void showInstanceFullInputs20()
         {
             List<Instance> instanceList = Instance.index(cloudID);
             Assert.IsNotNull(instanceList);

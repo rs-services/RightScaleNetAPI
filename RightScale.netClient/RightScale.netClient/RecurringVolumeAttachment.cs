@@ -6,18 +6,80 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A RecurringVolumeAttachment specifies a Volume/VolumeSnapshot to attach to a Server/ServerArray the next time an instance is launched.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeRecurringVolumeAttachment.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceRecurringVolumeAttachments.html
+    /// </summary>
     public class RecurringVolumeAttachment:Core.RightScaleObjectBase<RecurringVolumeAttachment>
     {
+
+        #region RecurringVolumeAttachment Properties
+
+        /// <summary>
+        /// Name of this RecurringVolumeAttachment 
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Device specific to this RecurringVolumeAttachment
+        /// </summary>
         public string device { get; set; }
+
+        /// <summary>
+        /// Datetime when this RecurringVolumeAttachment was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Size of this RecurringVolumeAttachment
+        /// </summary>
         public string size { get; set; }
+
+        /// <summary>
+        /// Datetime when this RecurringVolumeAttachment was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Storage Type of this RecurringVolumeAttachment
+        /// </summary>
         public string storage_type { get; set; }
+
+        /// <summary>
+        /// Device ID of this RecurringVolumeAttachment
+        /// </summary>
         public string device_id { get; set; }
+
+        /// <summary>
+        /// Runnable Type of this RecurringVolumeAttachment
+        /// </summary>
         public string runnable_type { get; set; }
+
+        /// <summary>
+        /// Status of this RecurringVolumeAttachment
+        /// </summary>
         public string status { get; set; }
 
+        #endregion
+
+        #region RecurringVolumeAttachment Relationships
+        //TODO: Figure out how to do storage relationship
+        //TODO: Figure out how to do runnable relationship
+
+        /// <summary>
+        /// Cloud associated with this RecurringVolumeAttachment
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region RecurringVolumeAttachment.ctor
         /// <summary>
@@ -50,7 +112,6 @@ namespace RightScale.netClient
 
         #endregion
 		
-        
         #region RecurringVolumeAttachment.index methods
 
         public static List<RecurringVolumeAttachment> index()

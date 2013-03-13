@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Web;
 
 namespace RightScale.netClient.Test.objects
 {
@@ -15,10 +16,10 @@ namespace RightScale.netClient.Test.objects
 
         public FilterTest()
         {
-            singleFilterString = @"isTestClass==yes";
-            singleFullFilterString = @"filter[]=isTestClass==yes";
-            multipleFilterString = @"name==Patrick&isAwesome==true&worksForRightScale==yep&location<>airport";
-            multipleFullFilterString = @"filter[]=name==Patrick&filter[]=isAwesome==true&filter[]=worksForRightScale==yep&filter[]=location<>airport";
+            singleFilterString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["FilterTest_singleFilterString"].ToString());
+            singleFullFilterString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["FilterTest_singleFullFilterString"].ToString());
+            multipleFilterString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["FilterTest_multipleFilterString"].ToString());
+            multipleFullFilterString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["FilterTest_multipleFullFilterString"].ToString());
         }
 
         [TestMethod]

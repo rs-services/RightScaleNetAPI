@@ -60,7 +60,7 @@ namespace RightScale.netClient
         {
             bool retVal = false;
 
-            if (!validViews.Contains(actualValue.ToLower()))
+            if (!validViews.Contains(actualValue))
             {
                 string validValueString = string.Empty;
 

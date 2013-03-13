@@ -7,16 +7,56 @@ using System.Collections;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Images represent base VM image existing in a cloud. An image will define the initial Operating System and root disk contents for a new Instance to have, and therefore it represents the basic starting point for creating a new one.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeImage.html
+    /// Resources Reference: http://reference.rightscale.com/api1.5/resources/ResourceImages.html
+    /// </summary>
     public class Image : Core.RightScaleObjectBase<Image>
     {
+        #region Image Properties
+
+        /// <summary>
+        /// Name of this Image
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// RightScale Resource Unique Identifier for this Image
+        /// </summary>
         public string resource_uid { get; set; }
+        
+        /// <summary>
+        /// CPU Architecture for this Image
+        /// </summary>
         public string cpu_architecture { get; set; }
+
+        /// <summary>
+        /// Image Type for this image
+        /// </summary>
         public string image_type { get; set; }
+
+        /// <summary>
+        /// Virtualization Type for this Image
+        /// </summary>
         public string virtualization_type { get; set; }
+
+        /// <summary>
+        /// OS Platform for this Image
+        /// </summary>
         public string os_platform { get; set; }
+
+        /// <summary>
+        /// Description for this Image
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Visibility for this Image
+        /// </summary>
         public string visibility { get; set; }
+
+        #endregion
 
         #region Image Relationships
 
@@ -33,7 +73,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-
 
         #region Image.ctor
         /// <summary>
@@ -189,7 +228,7 @@ namespace RightScale.netClient
         /// <returns>Image object with data</returns>
         private static Image showGet(string getHref, string view)
         {
-            List<string> validViews = new List<string>() { "default"};
+            List<string> validViews = new List<string>() { "default" };
             Utility.CheckStringInput("view", validViews, view);
 
             string queryString = string.Empty;
@@ -205,6 +244,5 @@ namespace RightScale.netClient
 
         
         #endregion
-
     }
 }

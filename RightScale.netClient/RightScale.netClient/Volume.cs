@@ -6,16 +6,132 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A Volume provides a highly reliable, efficient and persistent storage solution that can be mounted to a cloud instance (in the same datacenter / zone).
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolume.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumes.html
+    /// </summary>
     public class Volume:Core.RightScaleObjectBase<Volume>
     {
+        #region Volume properties
+
+        /// <summary>
+        /// Name of this Volume
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// RightScale Resource UID for this Volume
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// Datetime when this Volume was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Size of this volume (in GB)
+        /// </summary>
         public int size { get; set; }
+
+        /// <summary>
+        /// Datetime when this Volume was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Description of this Volume
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// VolumeType of this Volume
+        /// </summary>
         public VolumeType volume_type { get; set; }
+
+        /// <summary>
+        /// Current Status of this Volume
+        /// </summary>
         public string status { get; set; }
+
+        #endregion
+
+        #region Volume relationships
+
+        /// <summary>
+        /// The volume snapshot from which the volume was created, if any
+        /// </summary>
+        public VolumeSnapshot parentVolumeSnapshot
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("parent_volume_snapshot"));
+                return VolumeSnapshot.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// list of associated volume snapshots
+        /// </summary>
+        public List<VolumeSnapshot> volumeSnapshot
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_snapshots"));
+                return VolumeSnapshot.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated DataCenter
+        /// </summary>
+        public DataCenter datacenter
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("datacenter"));
+                return DataCenter.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of associated recurring volume attachments
+        /// </summary>
+        public List<RecurringVolumeAttachment> recurringVolumeAttachments
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("recurring_volume_attachments"));
+                return RecurringVolumeAttachment.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of associated volume attachments.  Describes where the volume is attached to and the attachment parameters
+        /// </summary>
+        public List<VolumeAttachment> currentVolumeAttachments
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("current_volume_attachments"));
+                return VolumeAttachment.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated Cloud
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region Volume.ctor
         /// <summary>
@@ -47,20 +163,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
-        public bool create()
-        {
-            //TODO: implement Volume.create
-            throw new NotImplementedException();
-        }
-
-        public bool destroy()
-        {
-            //TODO: implement Volume.destroy
-            throw new NotImplementedException();
-        }
-
         
         #region Volume.index methods
 
@@ -95,18 +197,5 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
         #endregion
-		
-
-        public static Volume show(string volumeId)
-        {
-            //TODO: implement Volume.show
-            throw new NotImplementedException();
-        }
-
-        public static bool destroy(string cloudID, string volumeID)
-        {
-            //TODO: implement static Volume.destroy
-            throw new NotImplementedException();
-        }
     }
 }
