@@ -82,18 +82,64 @@ namespace RightScale.netClient
 
         public static List<MultiCloudImage> index()
         {
-            return index(null);
+            return index(new List<Filter>());
         }
 
-        public static List<MultiCloudImage> index(List<Filter> filter)
+        public static List<MultiCloudImage> index(string filter)
         {
-            List<string> validFilters = new List<string>() { "name", "description", "revision" };
-            Utility.CheckFilterInput("filter", validFilters, filter);
+            List<Filter> filterList = Filter.parseFilterList(filter);
 
-            //TODO: implement MultiCloudImage.index
-            throw new NotImplementedException();
+            return index(filterList);
+        }
+
+        public static List<MultiCloudImage> index(List<Filter> filterList)
+        {
+
+            string getUrl = string.Format("/api/multi_cloud_images");
+            string queryString = string.Empty;
+
+            List<string> validFilters = new List<string>() { "name", "description", "revision" };
+            Utility.CheckFilterInput("filter", validFilters, filterList);
+
+            if (filterList != null && filterList.Count > 0)
+            {
+                queryString += Utility.BuildFilterString(filterList) + "&";
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
+
+            return deserializeList(jsonString);
+
         }
         #endregion
-		
+
+        #region MultiCloudImage.show methods
+        /// <summary>
+        /// Shows the information of a single multicloudimage.
+        /// </summary>
+        /// <param name="serverid">ID of the multicloudimage to be retrieved</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>Populated MultiCloudImage object</returns>
+        public static MultiCloudImage show(string multicloudimageID)
+        {
+            string getHref = string.Format("/api/multi_cloud_images/{0}", multicloudimageID);
+            return showGet(getHref, string.Empty);
+        }
+
+        /// <summary>
+        /// Internal implementation of show for both deployment and non-deployment calls.  
+        /// </summary>
+        /// <param name="getHref"></param>
+        /// <param name="view"></param>
+        /// <returns>Image object with data</returns>
+        private static MultiCloudImage showGet(string getHref, string view)
+        {
+
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
     }
 }
