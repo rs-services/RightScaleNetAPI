@@ -80,11 +80,21 @@ namespace RightScale.netClient
 		
         #region MultiCloudImage.index methods
 
+        /// <summary>
+        /// Lists the MultiCloudImages owned by this Account.
+        /// </summary>
+        /// <returns>List of MultiCloudImages</returns>
         public static List<MultiCloudImage> index()
         {
             return index(new List<Filter>());
         }
 
+        /// <summary>
+        /// This method is intended for use within PowerShell.
+        /// Lists the MultiCloudImages owned by this Account.
+        /// </summary>
+        /// <param name="filterList">Set of filters to modify query to return MultiCloudImages from RightScale API</param>
+        /// <returns>Filtered list of MultiCloudImages</returns>
         public static List<MultiCloudImage> index(string filter)
         {
             List<Filter> filterList = Filter.parseFilterList(filter);
@@ -92,6 +102,12 @@ namespace RightScale.netClient
             return index(filterList);
         }
 
+        /// <summary>       
+        /// Lists the MultiCloudImages owned by this Account.
+        /// </summary>
+        /// <param name="filterList">Set of filters to modify query to return MultiCloudImages from RightScale API</param>
+        /// <param name="view">Defines specific view to limit the MultiCloudImages returned from RightScale API</param>
+        /// <returns>Filtered list of MultiCloudImages based on filter and view input</returns>
         public static List<MultiCloudImage> index(List<Filter> filterList)
         {
 
