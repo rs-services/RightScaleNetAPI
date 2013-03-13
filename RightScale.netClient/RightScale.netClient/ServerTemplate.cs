@@ -169,7 +169,7 @@ namespace RightScale.netClient
         }
         #endregion
 
-        #region Image.show methods
+        #region ServerTemplate.show methods
 
         /// <summary>
         /// Shows the information of a single image.
@@ -223,6 +223,38 @@ namespace RightScale.netClient
 
 
         #endregion
-		
+
+        #region ServerTemplate.clone methods
+
+        /// <summary>
+        /// Clones a given servertemplate
+        /// </summary>
+        /// <param name="serverID">ID of the servertemplate to be cloned</param>
+        /// <returns>ID of the newly created servertemplate</returns>
+        public static string clone(string servertemplateID, List<KeyValuePair<string, string>> inputs)
+        {
+            string postHref = string.Format("/api/server_templates/{0}/clone", servertemplateID);
+
+            List<string> cloneResults = Core.APIClient.Instance.Post(postHref, inputs, "location");
+            return cloneResults.Last<string>().Split('/').Last<string>();
+
+        }
+        #endregion
+
+        #region ServerTemplate.destroy methods
+        /// <summary>
+        /// Deletes a given servertemplate.
+        /// </summary>
+        /// <param name="serverID">ID of the servertemplate to delete</param>
+        /// <param name="deploymentID">ID of deployment where servertemplate to delete can be found</param>
+        /// <returns>true if success, false if not</returns>
+        public static bool destroy(string servertemplateID)
+        {
+            string deleteHref = string.Format("/api/server_templates/{0}", servertemplateID);
+
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+        #endregion
+
     }
 }
