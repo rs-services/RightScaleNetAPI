@@ -147,13 +147,20 @@ namespace RightScale.netClient.Core
         /// <returns>Generic list of type <typeparamref name="T"/></returns>
         private static List<T> listDeserialize(string jsonString)
         {
-            try
+            if (string.IsNullOrWhiteSpace(jsonString))
             {
-                return JsonConvert.DeserializeObject<List<T>>(jsonString);
+                return new List<T>();
             }
-            catch (JsonReaderException jre)
+            else
             {
-                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
+                try
+                {
+                    return JsonConvert.DeserializeObject<List<T>>(jsonString);
+                }
+                catch (JsonReaderException jre)
+                {
+                    throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
+                }
             }
         }
 
@@ -164,13 +171,20 @@ namespace RightScale.netClient.Core
         /// <returns>Instance of type <typeparamref name="T"/></returns>
         private static T objectDeserialize(string jsonString)
         {
-            try
+            if (string.IsNullOrWhiteSpace(jsonString))
             {
-                return JsonConvert.DeserializeObject<T>(jsonString);
+                return default(T);
             }
-            catch (JsonReaderException jre)
+            else
             {
-                throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(jsonString);
+                }
+                catch (JsonReaderException jre)
+                {
+                    throw new RightScaleAPIException("Error Deserializing String.  See error data property for the string that was attempted to be deserialized.", null, jsonString, jre);
+                }
             }
         }
 

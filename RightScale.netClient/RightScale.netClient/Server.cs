@@ -493,7 +493,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         private static string createPost(string postHref, List<KeyValuePair<string, string>> parameterSet)
         {
-            List<string> resultSet = Core.APIClient.Instance.Create(postHref, parameterSet, "location");
+            List<string> resultSet = Core.APIClient.Instance.Post(postHref, parameterSet, "location");
             return resultSet[0].Split('/').Last<string>();
         }
 
@@ -561,7 +561,7 @@ namespace RightScale.netClient
         public static string clone(string serverID)
         {
             string postHref = string.Format("/api/servers/{0}/clone", serverID);
-            List<string> createResults =  Core.APIClient.Instance.Create(postHref, new List<KeyValuePair<string, string>>(), "location");
+            List<string> createResults =  Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location");
             return createResults.Last<string>().Split('/').Last<string>();
         }
 

@@ -239,7 +239,7 @@ namespace RightScale.netClient
             apiParams.Add(new KeyValuePair<string, string>("deployment[name]", name));
             apiParams.Add(new KeyValuePair<string, string>("deployment[server_tag_scope]", server_tag_scope));
 
-            List<string> locations = Core.APIClient.Instance.Create(postHref, apiParams, "location");
+            List<string> locations = Core.APIClient.Instance.Post(postHref, apiParams, "location");
             return locations.Last<string>().Split('/').Last<string>();
         }
 
@@ -296,7 +296,7 @@ namespace RightScale.netClient
         public static string clone(string deploymentID)
         {
             string postHref = string.Format("/api/deployments/{0}/clone", deploymentID);
-            List<string> locationHrefs = Core.APIClient.Instance.Create(postHref, null, "location");
+            List<string> locationHrefs = Core.APIClient.Instance.Post(postHref, null, "location");
             return locationHrefs.Last<string>().Split('/').Last<string>();
         }
 

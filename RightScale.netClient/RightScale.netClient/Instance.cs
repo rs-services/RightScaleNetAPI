@@ -574,7 +574,7 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         private static string launchPost(string postHref, List<KeyValuePair<string, string>> inputs)
         {
-            List<string> collectionArray =  Core.APIClient.Instance.Create(postHref, inputs, "location");
+            List<string> collectionArray =  Core.APIClient.Instance.Post(postHref, inputs, "location");
             return collectionArray.Last<string>().Split('/').Last<string>();
         }
 
@@ -718,7 +718,7 @@ namespace RightScale.netClient
             Utility.addParameter(ignore_lock.ToString().ToLower(), "ignore_lock", postParams);
             Utility.addParameter(recipeName, "recipe_name", postParams);
             Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParams);
-            List<string> retVals = Core.APIClient.Instance.Create(postHref, postParams, "location");
+            List<string> retVals = Core.APIClient.Instance.Post(postHref, postParams, "location");
             return Task.GetTaskList(retVals);
         }
 
@@ -778,7 +778,7 @@ namespace RightScale.netClient
                 Utility.addParameter(f.ToFilterOnlyString(), "filter[]", postParams);
             }
 
-            List<string> taskHrefs = Core.APIClient.Instance.Create(postHref, postParams, "location");
+            List<string> taskHrefs = Core.APIClient.Instance.Post(postHref, postParams, "location");
             return Task.GetTaskList(taskHrefs);
         }
 
@@ -985,7 +985,7 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParameters);
             Utility.addParameter(ignoreLock.ToString().ToLower(), "ignore_lock", postParameters);
 
-            List<string> taskList = Core.APIClient.Instance.Create(postHref, postParameters, "location");
+            List<string> taskList = Core.APIClient.Instance.Post(postHref, postParameters, "location");
             return Task.GetTask(taskList.Last<string>());
         }
 

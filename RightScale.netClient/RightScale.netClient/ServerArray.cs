@@ -236,6 +236,19 @@ namespace RightScale.netClient
 
 
         #endregion
-		
+
+        #region ServerArray.create methods
+
+
+        private static ServerArray createPost(string postHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, bool optimized, string state)
+        {
+            List<string> validStateValues = new List<string>() { "enabled", "disabled" };
+
+
+
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

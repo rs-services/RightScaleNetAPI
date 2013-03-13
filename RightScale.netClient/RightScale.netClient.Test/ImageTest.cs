@@ -33,7 +33,9 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void ImageIndexFilteredString()
         {
-            List<Image> imageList = Image.index(filterListString);
+            List<Filter> filters = new List<Filter>();
+            filters.AddRange(Filter.parseFilterList(filterListString));
+            List<Image> imageList = Image.index(filters);
             Assert.IsNotNull(imageList);
         }
         #endregion

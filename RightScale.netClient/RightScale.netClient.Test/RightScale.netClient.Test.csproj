@@ -54,6 +54,11 @@
   <ItemGroup>
     <Compile Include="Core\APIClientTest.cs" />
     <Compile Include="objects\FilterTest.cs" />
+    <Compile Include="objects\AlertSpecificParamsTest.cs" />
+    <Compile Include="objects\BoundsTest.cs" />
+    <Compile Include="objects\ScheduleEntryTest.cs" />
+    <Compile Include="objects\DataCenterPolicyTest.cs" />
+    <Compile Include="objects\PacingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccountGroupTest.cs" />
     <Compile Include="AccountTest.cs" />

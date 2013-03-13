@@ -132,7 +132,7 @@ namespace RightScale.netClient
             string postHref = string.Format("/api/clouds/{0}/ip_addresses", cloudID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             postParams.Add(new KeyValuePair<string, string>("ip_address[name]", name));
-            List<string> returnList = Core.APIClient.Instance.Create(postHref, postParams, "location");
+            List<string> returnList = Core.APIClient.Instance.Post(postHref, postParams, "location");
             return returnList.Last<string>().Split('/').Last<string>();
         }
 

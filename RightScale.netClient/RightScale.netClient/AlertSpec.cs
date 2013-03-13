@@ -450,7 +450,7 @@ namespace RightScale.netClient
                 throw new ArgumentNullException("Calls to AlertSpec.create must have an associated subject_href");
             }
             List<KeyValuePair<string, string>> parameters = getCreatePostData(condition, description, duration, escalation_name, file, name, subject_href, threshold, variable, vote_tag, vote_type);
-            List<string> returnList = Core.APIClient.Instance.Create(postUrl, parameters, "location");
+            List<string> returnList = Core.APIClient.Instance.Post(postUrl, parameters, "location");
             string[] hrefSplit = returnList[0].Split('/');
             return hrefSplit.Last<string>();
         }
@@ -475,7 +475,7 @@ namespace RightScale.netClient
         {
             string postUrl = string.Format("/api/servers/{0}/alert_specs", serverId);
             List<KeyValuePair<string, string>> parameters = getCreatePostData(condition, description, duration, escalation_name, file, name, subject_href, threshold, variable, vote_tag, vote_type);
-            List<string> returnList = Core.APIClient.Instance.Create(postUrl, parameters, "location");
+            List<string> returnList = Core.APIClient.Instance.Post(postUrl, parameters, "location");
             string[] hrefSplit = returnList[0].Split('/');
             return hrefSplit.Last<string>();
         }
@@ -500,7 +500,7 @@ namespace RightScale.netClient
         {
             string postUrl = string.Format("/api/server_templates/{0}/alert_specs", serverTemplateId);
             List<KeyValuePair<string, string>> parameters = getCreatePostData(condition, description, duration, escalation_name, file, name, subject_href, threshold, variable, vote_tag, vote_type);
-            List<string> returnList = Core.APIClient.Instance.Create(postUrl, parameters, "location");
+            List<string> returnList = Core.APIClient.Instance.Post(postUrl, parameters, "location");
             string[] hrefSplit = returnList[0].Split('/');
             return hrefSplit.Last<string>();
         }
@@ -525,7 +525,7 @@ namespace RightScale.netClient
         {
             string postUrl = string.Format("/api/server_arrays/{0}/alert_specs", serverArrayID);
             List<KeyValuePair<string, string>> parameters = getCreatePostData(condition, description, duration, escalation_name, file, name, subject_href, threshold, variable, vote_tag, vote_type);
-            List<string> returnList = Core.APIClient.Instance.Create(postUrl, parameters, "location");
+            List<string> returnList = Core.APIClient.Instance.Post(postUrl, parameters, "location");
             string[] hrefSplit = returnList[0].Split('/');
             return hrefSplit.Last<string>();
         }

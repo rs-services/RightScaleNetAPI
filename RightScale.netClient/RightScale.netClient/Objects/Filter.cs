@@ -72,17 +72,17 @@ namespace RightScale.netClient
         /// <returns>string only containing key=value for filter</returns>
         public string ToFilterOnlyString()
         {
-            return string.Format(toFilterOnlyStringFormat, this.Key, getOpSign(), this.Value);
+            return string.Format(toFilterOnlyStringFormat, this.Key, getOpSign(this.Operator), this.Value);
         }
 
         /// <summary>
         /// Private method gets string representation of the current Operator value
         /// </summary>
         /// <returns>string representation of this.Operator</returns>
-        private string getOpSign()
+        private static string getOpSign(FilterOperator filterOp)
         {
             string retVal = string.Empty;
-            switch (this.Operator)
+            switch (filterOp)
             {
                 case FilterOperator.Equal:
                     retVal = "==";
@@ -102,7 +102,7 @@ namespace RightScale.netClient
         /// <returns>RightScale API formatted filter string</returns>
         public override string ToString()
         {
-            return string.Format(toStringFormat, this.Key, getOpSign(), this.Value);
+            return string.Format(toStringFormat, this.Key, getOpSign(this.Operator), this.Value);
         }
 
         #region Filter Static Parsing Methods
@@ -174,18 +174,7 @@ namespace RightScale.netClient
         private static Filter parseFilterFromString(string workingString, FilterOperator filterOp)
         {
             Filter retVal = null;
-            string opVal = string.Empty;
-            switch (filterOp)
-            {
-                case FilterOperator.Equal:
-                    opVal = "==";
-                    break;
-                case FilterOperator.NotEqual:
-                    opVal = "<>";
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            string opVal = getOpSign(filterOp);
             workingString = workingString.Replace(opVal, "Þ");
             string[] filterTestSplit = workingString.Split('Þ');
             if (filterTestSplit.Length == 2)

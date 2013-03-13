@@ -142,6 +142,15 @@ namespace RightScale.netClient.Test
         {
             string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "this is another test server name");
             Assert.IsNotNull(newServerID);
+            Server initialTest = Server.show(newServerID);
+            Assert.IsNotNull(initialTest);
+            bool updated = Server.update(newServerID, "new description", string.Empty, false);
+            Assert.IsTrue(updated);
+            Server updatedTest = Server.show(newServerID);
+            Assert.IsNotNull(updatedTest);
+            Assert.AreNotEqual(updatedTest.description, initialTest.description);
+            bool destroyRetVal = Server.destroy_deployment(newServerID, deploymentID);
+            Assert.IsTrue(destroyRetVal);
         }
     }
 }

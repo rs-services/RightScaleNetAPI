@@ -280,7 +280,7 @@ namespace RightScale.netClient
             }
             putParameters.Add(new KeyValuePair<string, string>("audit_entry[summary]", audit_summary));
 
-            List<string> retVal = Core.APIClient.Instance.Create(putHref, putParameters, "location");
+            List<string> retVal = Core.APIClient.Instance.Post(putHref, putParameters, "location");
             return retVal.Last<string>().Split('/').Last<string>();
         }
 
