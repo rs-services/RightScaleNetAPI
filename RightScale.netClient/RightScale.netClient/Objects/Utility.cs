@@ -472,7 +472,7 @@ namespace RightScale.netClient
         /// <param name="inputParameter"></param>
         /// <param name="parameterName"></param>
         /// <param name="parameterSet"></param>
-        internal static void addParameter(string inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
+        public static void addParameter(string inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
         {
             if (!string.IsNullOrWhiteSpace(inputParameter) && parameterSet != null)
             {
@@ -485,7 +485,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="filterList">list of filters to push to a parameter set</param>
         /// <returns>list of keyvaluepairs for parameter inputs</returns>
-        internal static List<KeyValuePair<string, string>> FilterListToParameterSet(List<Filter> filterList)
+        public static List<KeyValuePair<string, string>> FilterListToParameterSet(List<Filter> filterList)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
             if (filterList != null && filterList.Count > 0)

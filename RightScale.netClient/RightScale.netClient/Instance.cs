@@ -1076,6 +1076,5 @@ namespace RightScale.netClient
         }
 
         #endregion
-
     }
 }

@@ -65,8 +65,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
         
         #region SshKey.index methods
 
@@ -104,6 +102,5 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
         #endregion
-		
     }
 }
