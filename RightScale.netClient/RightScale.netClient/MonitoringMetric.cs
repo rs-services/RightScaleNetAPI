@@ -6,11 +6,31 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A monitoring metric is a stream of data that is captured in an instance. Metrics can be monitored, graphed and can be used as the basis for triggering alerts.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeMonitoringMetric.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceMonitoringMetrics.html
+    /// </summary>
     public class MonitoringMetric:Core.RightScaleObjectBase<MonitoringMetric>
     {
+        #region MonitoringMetric Properties
+
+        /// <summary>
+        /// Plugin for this MonitoringMetric
+        /// </summary>
         public string plugin { get; set; }
+
+        /// <summary>
+        /// Href of the graph for this MonitoringMetric
+        /// </summary>
         public string graph_href { get; set; }
+
+        /// <summary>
+        /// View for this MonitoringMetric
+        /// </summary>
         public string view { get; set; }
+
+        #endregion
 
         #region MonitoringMetric.ctor
         /// <summary>
@@ -42,7 +62,23 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
+
+        #region MonitoringMetric Relationships
+
+        /// <summary>
+        /// MonitoringMetricData associated with this MonitoringMetric
+        /// </summary>
+        public List<MonitoringMetricData> monitoringMetricData
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("data"));
+                return MonitoringMetricData.deserializeList(jsonString);
+            }
+        }
+
+        #endregion
+
         #region MonitoringMetric.index methods
 
         public static List<MonitoringMetric> index()

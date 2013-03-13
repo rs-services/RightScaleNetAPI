@@ -6,11 +6,54 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Represents a permission object within the RightScale system
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypePermission.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourcePermissions.html
+    /// </summary>
     public class Permission:Core.RightScaleObjectBase<Permission>
     {
+        #region Permission Properties
+
+        /// <summary>
+        /// Timestamp representing when this permission object was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Title/role of this permission object
+        /// </summary>
         public string role_title { get; set; }
 
+        #endregion
+
+        #region Permission Relationships
+
+        /// <summary>
+        /// Account associated with this Permission object
+        /// </summary>
+        public Account account
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("account"));
+                return Account.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// User associated with this Permission object
+        /// </summary>
+        public User user
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("user"));
+                return User.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region Permission.ctor
         /// <summary>
@@ -42,7 +85,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
         
         #region Permission.index methods
 

@@ -6,18 +6,61 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A Publication is a revisioned component shared with a set of Account Groups. If shared with your account, it can be imported in to your account.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypePublication.html
+    /// Resources Reference: http://reference.rightscale.com/api1.5/resources/ResourcePublications.html
+    /// </summary>
     public class Publication:Core.RightScaleObjectBase<Publication>
     {
+        #region Publication Properties
+
+        /// <summary>
+        /// Name of this Publication
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Commit message for this Publication
+        /// </summary>
         public string commit_message { get; set; }
+
+        /// <summary>
+        /// Datestamp representing when this Publication was created
+        /// </summary>
         public int created_at { get; set; }
+
+        /// <summary>
+        /// Content Type for this Publication
+        /// </summary>
         public string content_type { get; set; }
+
+        /// <summary>
+        /// Datestamp representing when this Publication was last updated
+        /// </summary>
         public int updated_at { get; set; }
+
+        /// <summary>
+        /// Publisher for this Publication
+        /// </summary>
         public string publisher { get; set; }
+
+        /// <summary>
+        /// Revision number for this Publication
+        /// </summary>
         public int revision { get; set; }
+
+        /// <summary>
+        /// Description for this Publication
+        /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Revision Notes for this Publication
+        /// </summary>
         public string revision_notes { get; set; }
 
+        #endregion
 
         #region Publication.ctor
         /// <summary>
@@ -48,8 +91,7 @@ namespace RightScale.netClient
         {
         }
 
-        #endregion
-		
+        #endregion		
         
         #region Publication.index methods
 

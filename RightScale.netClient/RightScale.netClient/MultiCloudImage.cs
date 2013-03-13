@@ -6,12 +6,45 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A MultiCloudImage is a RightScale component that functions as a pointer to machine images in specific clouds (e.g. AWS US-East, Rackspace). Each ServerTemplate can reference many MultiCloudImages that defines which image should be used when a server is launched in a particular cloud.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeMultiCloudImage.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceMultiCloudImages.html
+    /// </summary>
     public class MultiCloudImage:Core.RightScaleObjectBase<MultiCloudImage>
     {
+        #region MultiCloudImage Properties
+
+        /// <summary>
+        /// Name of this MultiCloudImage
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Revision of this MultiCloudImage
+        /// </summary>
         public int revision { get; set; }
+
+        /// <summary>
+        /// Description of this MultiCloudImage
+        /// </summary>
         public string description { get; set; }
 
+        #endregion
+
+        #region MultiCloudImage Relationships
+
+        public List<MultiCloudImageSetting> settings
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("settings"));
+                return MultiCloudImageSetting.deserializeList(jsonString);
+            }
+        }
+
+
+        #endregion
 
 
         #region MultiCloudImage.ctor
