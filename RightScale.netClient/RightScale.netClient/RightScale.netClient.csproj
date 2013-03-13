@@ -84,6 +84,7 @@
     <Compile Include="RecurringVolumeAttachment.cs" />
     <Compile Include="Objects\ScheduleEntry.cs" />
     <Compile Include="SecurityGroup.cs" />
+    <Compile Include="Objects\SerializationExtensions.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ServerArray.cs" />
     <Compile Include="ServerTemplate.cs" />

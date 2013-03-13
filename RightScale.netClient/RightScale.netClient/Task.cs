@@ -75,8 +75,12 @@ namespace RightScale.netClient
         /// <returns>list of Task objects</returns>
         public static List<Task> GetTaskList(List<string> taskHrefs)
         {
-            //TODO: need to implement process of building task list
-            return null;
+            List<Task> retVal = new List<Task>();
+            foreach (string href in taskHrefs)
+            {
+                retVal.Add(GetTask(href));
+            }
+            return retVal;
         }
 
         /// <summary>
@@ -86,8 +90,8 @@ namespace RightScale.netClient
         /// <returns>Populated Task object</returns>
         public static Task GetTask(string taskHref)
         {
-            //TODO: need to implement process of build task
-            return null;
+            string jsonString = Core.APIClient.Instance.Get(taskHref);
+            return deserialize(jsonString);
         }
 		
     }
