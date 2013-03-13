@@ -6,14 +6,62 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// A VolumeType describes the type of volume particularly the size.
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolumeType.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumeTypes.html
+    /// </summary>
     public class VolumeType :Core.RightScaleObjectBase<VolumeType>
     {
+        #region VolumeType properties
+
+        /// <summary>
+        /// Name of this VolumeType
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// RightScale Resource Unique Identifier for this VolumeType
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// Datetime when this VolumeType was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Size of this VolumeType (in GB)
+        /// </summary>
         public string size { get; set; }
+
+        /// <summary>
+        /// Datetime when this VolumeType was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Description of this VolumeType
+        /// </summary>
         public string description { get; set; }
+
+        #endregion
+
+        #region VolumeType Relationships
+
+        /// <summary>
+        /// Associated Cloud
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region VolumeType.ctor
         /// <summary>
@@ -45,7 +93,8 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
+
+        #region VolumeType.show
 
         public static VolumeType show(string cloudID, string volumeTypeID)
         {
@@ -53,6 +102,7 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
 
+        #endregion
 
         #region VolumeType.index methods
 
@@ -90,6 +140,5 @@ namespace RightScale.netClient
             throw new NotImplementedException();
         }
         #endregion
-		
     }
 }

@@ -53,6 +53,58 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region ServerArray Relationships
+
+        /// <summary>
+        /// List of AlertSpecs associated with this ServerArray
+        /// </summary>
+        public List<AlertSpec> alertSpecs
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("alert_specs"));
+                return AlertSpec.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Next instance associated with this ServerArray
+        /// </summary>
+        public Instance nextInstance
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("next_instance"));
+                return Instance.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// List of current instances associated with this ServerArray
+        /// </summary>
+        public List<Instance> currentInstances
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("current_instances"));
+                return Instance.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Deployment associated with this ServerArray
+        /// </summary>
+        public Deployment deployment
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("deployment"));
+                return Deployment.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
         #region ServerArray.ctor
         /// <summary>
         /// Default Constructor for ServerArray

@@ -37,6 +37,59 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region ServerTemplate Relationships
+
+        /// <summary>
+        /// Associated MultiCloud Images
+        /// </summary>
+        public List<MultiCloudImage> multiCloudImages
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("multi_cloud_images"));
+                return MultiCloudImage.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated AlertSpecs
+        /// </summary>
+        public List<AlertSpec> alertSpecs
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("alert_specs"));
+                return AlertSpec.deserializeList(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated privately shared Publication
+        /// </summary>
+        public Publication publication
+        {
+            get
+            {
+                //TODO: test ServerTemplate.Publication to make sure this shouldn't return a list
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("publication"));
+                return Publication.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Default MultiCloudImage associated with this ServerTemplate
+        /// </summary>
+        public MultiCloudImage defaultMultiCloudImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("default_multi_cloud_image"));
+                return MultiCloudImage.deserialize(jsonString);
+            }
+        }
+
+        #endregion
+
         #region ServerTemplate.ctor
         /// <summary>
         /// Default Constructor for ServerTemplate

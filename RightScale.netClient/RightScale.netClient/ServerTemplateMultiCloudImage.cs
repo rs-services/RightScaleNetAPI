@@ -6,11 +6,59 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// This resource represents links between ServerTemplates and MultiCloud Images, it enables you to effectively add MultiCloud Images to ServerTemplates and make them the default one
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerTemplateMultiCloudImage.html
+    /// Resources Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerTemplateMultiCloudImage.html
+    /// </summary>
     public class ServerTemplateMultiCloudImage:Core.RightScaleObjectBase<ServerTemplateMultiCloudImage>
     {
+        #region ServerTemplateMultiCloudImage Properties
+
+        /// <summary>
+        /// Datetime when this ServerTemplateMultiCloudImage was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Boolean indicating that this image is the default ServerTemplateMultiCloudImage
+        /// </summary>
         public bool is_default { get; set; }
+
+        /// <summary>
+        /// Datetime when this ServerTemplateMultiCloudImage was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        #endregion
+
+        #region ServerTemplateMultiCloudImage Relationships
+
+        /// <summary>
+        /// MultiCloudImage associated with this ServerTemplateMultiCloudImage
+        /// </summary>
+        public MultiCloudImage multiCloudImage
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("multi_cloud_image"));
+                return MultiCloudImage.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// ServerTemplate associated with this ServerTemplateMultiCloudImage
+        /// </summary>
+        public ServerTemplate serverTemplate
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_template"));
+                return ServerTemplate.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region ServerTemplateMultiCloudImage.ctor
         /// <summary>
@@ -42,8 +90,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
 
         #region ServerTemplateMultiCloudImage.index methods
 

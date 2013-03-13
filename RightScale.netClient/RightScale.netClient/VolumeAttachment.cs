@@ -6,14 +6,86 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// Object defines the data related to the attachment of a volume to an instance
+    /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolumeAttachment.html
+    /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumeAttachments.html
+    /// </summary>
     public class VolumeAttachment:Core.RightScaleObjectBase<VolumeAttachment>
     {
+        #region VolumeAttachment properties
+
+        /// <summary>
+        /// Device for this VolumeAttachment
+        /// </summary>
         public string device { get; set; }
+
+        /// <summary>
+        /// RightScale resource unique identifier for this Volume Attachment
+        /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// Datetime when this VolumeAttachment was created
+        /// </summary>
         public string created_at { get; set; }
+
+        /// <summary>
+        /// Datetime when this VolumeAttachment was last updated
+        /// </summary>
         public string updated_at { get; set; }
+
+        /// <summary>
+        /// Device ID of this volume Attachment
+        /// </summary>
         public string device_id { get; set; }
+
+        /// <summary>
+        /// Current state of this Volume Attachment
+        /// </summary>
         public string state { get; set; }
+
+        #endregion
+
+        #region VolumeAttachment relationships
+
+        /// <summary>
+        /// Associated Volume
+        /// </summary>
+        public Volume volume
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume"));
+                return Volume.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated Instance
+        /// </summary>
+        public Instance instance
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance"));
+                return Instance.deserialize(jsonString);
+            }
+        }
+
+        /// <summary>
+        /// Associated Cloud
+        /// </summary>
+        public Cloud cloud
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                return Cloud.deserialize(jsonString);
+            }
+        }
+
+        #endregion
 
         #region VolumeAttachment.ctor
         /// <summary>
@@ -45,8 +117,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
-
 
         #region VolumeAttachment.index methods
 
