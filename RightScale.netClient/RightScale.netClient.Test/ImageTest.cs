@@ -35,13 +35,11 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void ImageIndexFilteredString()
         {
-<<<<<<< HEAD
-            List<Image> imageList = Image.index(cloudID,filterListString,"default");
-=======
+
             List<Filter> filters = new List<Filter>();
             filters.AddRange(Filter.parseFilterList(filterListString));
-            List<Image> imageList = Image.index(filters);
->>>>>>> 1ab0ffc19397b228eb49a024e33d92970e119dec
+            List<Image> imageList = Image.index(cloudID,filters);
+
             Assert.IsNotNull(imageList);
         }
         #endregion

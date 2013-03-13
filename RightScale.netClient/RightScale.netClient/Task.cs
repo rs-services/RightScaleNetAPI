@@ -90,14 +90,10 @@ namespace RightScale.netClient
         /// <returns>Populated Task object</returns>
         public static Task GetTask(string taskHref)
         {
-<<<<<<< HEAD
-            
-            //TODO: need to implement process of build task
-            return null;
-=======
+
             string jsonString = Core.APIClient.Instance.Get(taskHref);
             return deserialize(jsonString);
->>>>>>> 1ab0ffc19397b228eb49a024e33d92970e119dec
+
         }
 
         public static List<Task> GetTasks(string cloudID, string instanceID, string view)
