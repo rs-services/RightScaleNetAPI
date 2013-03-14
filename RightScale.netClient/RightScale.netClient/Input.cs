@@ -59,13 +59,15 @@ namespace RightScale.netClient
         
         #region Input.index methods
 
-        public static List<Input> index()
-        {
-            return index(null);
-        }
+        //public static List<Input> index()
+        //{
+        //   return index(null,null);
+        //}
 
-        public static List<Input> index(string view)
+        public static List<Input> index_deployment(string deploymentid, string view)
         {
+            string getURL = string.Format("/api/deployments/{0}/inputs", deploymentid);
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -76,8 +78,42 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            //TODO: implement Input.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
+
+            return deserializeList(jsonString);
+        }
+
+        public static List<Input> index_servertemplate(string servertemplateid, string view)
+        {
+            string getURL = string.Format("/api/server_templates/{0}/inputs", servertemplateid);
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "inputs_2_0" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
+
+            return deserializeList(jsonString);
         }
         #endregion
 		
