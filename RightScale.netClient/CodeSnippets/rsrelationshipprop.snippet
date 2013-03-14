@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Keywords>
+        <Keyword>rsrelationshipprop</Keyword>
+      </Keywords>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>RightScale API related object prop</Title>
+      <Author>pmcclory@gmail.com</Author>
+      <Description>Creates a single instance of an object that is related to the current class</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>rsrelationshipprop</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>alertSpecs</ID>
+          <ToolTip>alertSpecs</ToolTip>
+          <Default>alertSpecs</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>alert_specs</ID>
+          <ToolTip>alert_specs</ToolTip>
+          <Default>alert_specs</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>AlertSpecs</ID>
+          <ToolTip>AlertSpecs</ToolTip>
+          <Default>AlertSpecs</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[        /// <summary>
+        /// Associated list of $AlertSpecs$
+        /// </summary>
+        public $AlertSpecs$ $alertSpecs$
+        {
+            get
+            {
+                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("$alert_specs$"));
+                return $AlertSpecs$.deserialize(jsonString);
+            }
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

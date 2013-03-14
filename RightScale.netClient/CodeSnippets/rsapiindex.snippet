@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Keywords>
+        <Keyword>rsapiindex</Keyword>
+      </Keywords>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>RightScale API index method snippet</Title>
+      <Author>pmcclory@gmail.com</Author>
+      <Description>snippet creates an index method for RS API calls</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>rsapiindex</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>"default"</ID>
+          <ToolTip>valid views per RSAPI</ToolTip>
+          <Default>"default"</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>"datacenter_href", "description", "name", "parent_volume_snapshot_href", "resource_uid"</ID>
+          <ToolTip>valid filters per RSAPI</ToolTip>
+          <Default>"name"</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>"defaultView"</ID>
+          <ToolTip>default view if view is  null</ToolTip>
+          <Default>"default"</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Object Editable="false">
+          <ID>ObjectType</ID>
+          <ToolTip>List Type</ToolTip>
+          <Default>object</Default>
+          <Function>ClassName()</Function>
+          <Type>
+          </Type>
+        </Object>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[
+		#region $ObjectType$.index methods
+		
+        public static List<$ObjectType$> index()
+        {
+            return index(null, null);
+        }
+
+        public static List<$ObjectType$> index(List<KeyValuePair<string, string>> filter)
+        {
+            return index(filter, null);
+        }
+
+        public static List<$ObjectType$> index(string view)
+        {
+            return index(null, view);
+        }
+
+        public static List<$ObjectType$> index(List<KeyValuePair<string, string>> filter, string view)
+        {
+            if(string.IsNullOrWhiteSpace(view))
+            {
+                view = $"defaultView"$;
+            }
+			else
+			{
+				List<string> validViews = new List<string>() { $"default"$ };
+				Utility.CheckStringInput("view", validViews, view);
+            }
+			
+            List<string> validFilters = new List<string>() { $"datacenter_href", "description", "name", "parent_volume_snapshot_href", "resource_uid"$ };
+            Utility.CheckFilterInput("filter", validFilters, filter);
+
+            //TODO: implement $ObjectType$.index
+            throw new NotImplementedException();
+        }
+		#endregion
+		]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
