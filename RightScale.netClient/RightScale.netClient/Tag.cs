@@ -55,10 +55,10 @@ namespace RightScale.netClient
             string postURL = "/api/tags/by_resource";
             string queryString = string.Empty;
 
-            List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet("resource_hrefs", hrefs);
+            List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet(hrefs,"resource_hrefs");
 
             string retVal = "content";
-            List<string> tags =  Core.APIClient.Instance.Post(postURL, paramList,null);
+            List<string> tags =  Core.APIClient.Instance.Post(postURL, paramList,null,out retVal);
 
             return tags;
 

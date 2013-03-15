@@ -448,7 +448,8 @@ namespace RightScale.netClient
                 return string.Empty;
             }
         }
-
+        #endregion
+        #region Paramater builders
         /// <summary>
         /// Method converts hashtable to list of keyvaluepairs for use in RSAPI calls
         /// </summary>
@@ -497,6 +498,27 @@ namespace RightScale.netClient
             }
             return retVal;
         }
+
+        /// <summary>
+        /// Private method to translate string arrays to convert to a parameter set 
+        /// </summary>
+        /// <param name="filterList">array of string to push to a parameter set</param>
+        /// <returns>list of keyvaluepairs for parameter inputs</returns>
+        public static List<KeyValuePair<string, string>> StringArrayToParameterSet(string[] paramStrings, string paramName)
+        {
+            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+            if (paramStrings != null)
+            {
+                foreach (string param in paramStrings)
+                {
+                    string thisparamName = string.Format("{0}[]",paramName);
+                    //TODO:  I think this is not the correct format to pass, we don't need [] for each,  just one with multiple values
+                    Utility.addParameter(param.ToString(), thisparamName, retVal);
+                }
+            }
+            return retVal;
+        }
+
         #endregion
     }
 }
