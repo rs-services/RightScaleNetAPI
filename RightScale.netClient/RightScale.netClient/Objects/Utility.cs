@@ -389,7 +389,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/datacenters{1}", cloudID, objectID);
+                return string.Format("/api/clouds/{0}/datacenters/{1}", cloudID, objectID);
             }
             else
             {
