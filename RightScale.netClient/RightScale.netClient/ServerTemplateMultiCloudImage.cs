@@ -41,7 +41,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("multi_cloud_image"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("multi_cloud_image"));
                 return MultiCloudImage.deserialize(jsonString);
             }
         }
@@ -53,7 +53,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_template"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("server_template"));
                 return ServerTemplate.deserialize(jsonString);
             }
         }

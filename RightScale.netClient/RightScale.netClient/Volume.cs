@@ -66,7 +66,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("parent_volume_snapshot"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("parent_volume_snapshot"));
                 return VolumeSnapshot.deserialize(jsonString);
             }
         }
@@ -78,7 +78,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume_snapshots"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("volume_snapshots"));
                 return VolumeSnapshot.deserializeList(jsonString);
             }
         }
@@ -90,7 +90,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("datacenter"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("datacenter"));
                 return DataCenter.deserialize(jsonString);
             }
         }
@@ -102,7 +102,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("recurring_volume_attachments"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("recurring_volume_attachments"));
                 return RecurringVolumeAttachment.deserializeList(jsonString);
             }
         }
@@ -114,7 +114,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("current_volume_attachments"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("current_volume_attachments"));
                 return VolumeAttachment.deserializeList(jsonString);
             }
         }
@@ -126,7 +126,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("cloud"));
                 return Cloud.deserialize(jsonString);
             }
         }

@@ -38,14 +38,13 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("settings"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("settings"));
                 return MultiCloudImageSetting.deserializeList(jsonString);
             }
         }
 
 
         #endregion
-
 
         #region MultiCloudImage.ctor
         /// <summary>

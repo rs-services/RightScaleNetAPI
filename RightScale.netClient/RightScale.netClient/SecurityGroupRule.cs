@@ -46,7 +46,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("security_group"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("security_group"));
                 return SecurityGroup.deserialize(jsonString);
             }
         }

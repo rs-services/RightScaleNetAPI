@@ -41,7 +41,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("owner"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("owner"));
                 return Account.deserialize(jsonString);
             }
         }

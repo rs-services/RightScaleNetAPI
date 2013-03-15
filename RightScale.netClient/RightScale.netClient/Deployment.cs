@@ -47,7 +47,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("server_arrays"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("server_arrays"));
                 return ServerArray.deserializeList(jsonString);
             }
         }
@@ -60,7 +60,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("servers"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("servers"));
                 return Server.deserializeList(jsonString);
             }
         }

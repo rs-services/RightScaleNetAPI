@@ -51,7 +51,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("instance"));
                 return Instance.deserialize(jsonString);
             }
         }
@@ -63,7 +63,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ip_address"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("ip_address"));
                 return IPAddress.deserialize(jsonString);
             }
         }

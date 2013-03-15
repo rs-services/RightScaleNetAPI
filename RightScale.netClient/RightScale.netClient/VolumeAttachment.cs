@@ -56,7 +56,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("volume"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("volume"));
                 return Volume.deserialize(jsonString);
             }
         }
@@ -68,7 +68,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("instance"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("instance"));
                 return Instance.deserialize(jsonString);
             }
         }
@@ -80,7 +80,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("cloud"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("cloud"));
                 return Cloud.deserialize(jsonString);
             }
         }

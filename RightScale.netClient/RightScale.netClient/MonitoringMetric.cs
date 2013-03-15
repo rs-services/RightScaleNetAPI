@@ -72,7 +72,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("data"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("data"));
                 return MonitoringMetricData.deserializeList(jsonString);
             }
         }

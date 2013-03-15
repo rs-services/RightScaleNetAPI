@@ -59,7 +59,7 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkIDValue("ip_address_bindings"));
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("ip_address_bindings"));
                 return IPAddressBinding.deserialize(jsonString);
             }
         }
