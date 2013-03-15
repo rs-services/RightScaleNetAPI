@@ -41,5 +41,42 @@ namespace RightScale.netClient
 
         #endregion
 		
+
+        #region Tag.by_resource methods
+
+        /// <summary>
+        /// Gets tag for a specific resource.
+        /// </summary>
+        /// <param name="resource_hrefs">Set of hrefs to retrive tags from</param>
+        /// <returns>Not sure yet</returns>
+        /// TODO:  change this to return Tag object []
+        public static List<string> byResource(string[] hrefs)
+        {
+            string postURL = "/api/tags/by_resource";
+            string queryString = string.Empty;
+
+            List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet("resource_hrefs", hrefs);
+
+            string retVal = "content";
+            List<string> tags =  Core.APIClient.Instance.Post(postURL, paramList,null);
+
+            return tags;
+
+        }
+
+        #endregion
+
+        #region Tag.by_tag methods
+
+        #endregion
+
+        #region Tag.multi_add methods
+
+        #endregion
+
+        #region Tag.multi_delete methods
+
+        #endregion
+
     }
 }
