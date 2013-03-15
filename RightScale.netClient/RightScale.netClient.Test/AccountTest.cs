@@ -25,5 +25,18 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region Account Relationship tests
+
+        [TestMethod]
+        public void accountOwnerExists()
+        {
+            Account acct = Account.show(accountID);
+            Assert.IsNotNull(acct, "Account came back as null - issue with API call");
+            Account owner = acct.Owner;
+            Assert.IsNotNull(owner);
+        }
+
+        #endregion
     }
 }

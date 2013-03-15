@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace RightScale.netClient.Test
 {
@@ -35,5 +36,29 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region Cloud Relationships tests
+
+        [TestMethod]
+        public void cloudDatacentersExist()
+        {
+            Cloud azureCloud = Cloud.show(azureCloudID);
+            Assert.IsNotNull(azureCloud);
+            List<DataCenter> datacenters = azureCloud.datacenters;
+            Assert.IsTrue(datacenters.Count == 0);
+        }
+
+        [TestMethod]
+        public void cloudVolumeSnapshotsExist()
+        {
+            
+            Cloud azureCloud = Cloud.show(azureCloudID);
+            Assert.IsNotNull(azureCloud);
+            List<VolumeSnapshot> volSnaps = azureCloud.volumeSnapshots;
+            Assert.IsTrue(volSnaps.Count == 0);
+        }
+
+        #endregion
+
     }
 }

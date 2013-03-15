@@ -157,22 +157,29 @@ namespace RightScale.netClient.Core
         /// <returns>string content from RSAPI</returns>
         internal string Get(string apiHref, string queryStringValue)
         {
-            if (CheckAuthenticationStatus())
+            if (string.IsNullOrWhiteSpace(apiHref))
             {
-                string requestUrl = apiBaseAddress.Trim('/') + apiHref;
-
-                if(!string.IsNullOrWhiteSpace(queryStringValue))
-                {
-                    requestUrl += "?" + queryStringValue;
-                }
-                
-                return webClient.GetAsync(requestUrl).Result.Content.ReadAsStringAsync().Result;
+                return string.Empty;
             }
             else
             {
-                throw new RightScaleAPIException("RSAPI Authentication Error", apiHref, "Call to RightScale API could not be authenticated");
+                if (CheckAuthenticationStatus())
+                {
+                    string requestUrl = apiBaseAddress.Trim('/') + apiHref;
+
+                    if (!string.IsNullOrWhiteSpace(queryStringValue))
+                    {
+                        requestUrl += "?" + queryStringValue;
+                    }
+
+                    return webClient.GetAsync(requestUrl).Result.Content.ReadAsStringAsync().Result;
+                }
+                else
+                {
+                    throw new RightScaleAPIException("RSAPI Authentication Error", apiHref, "Call to RightScale API could not be authenticated");
+                }
+                throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
         /// <summary>

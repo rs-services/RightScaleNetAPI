@@ -44,5 +44,18 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region AccountGroup Relationship Tests
+
+        [TestMethod]
+        public void accountGroupAccountExists()
+        {            
+            AccountGroup ag = AccountGroup.show(accountGroupID);
+            Assert.IsNotNull(ag, "Account Group is null--bad call to API");
+            Account acc = ag.Account;
+            Assert.IsNotNull(acc);
+        }
+
+        #endregion
     }
 }

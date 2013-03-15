@@ -61,6 +61,46 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(serverobj);
         }
 
+        #endregion 
+
+        #region Server Relationship tests
+
+        [TestMethod]
+        public void serverNextInstanceExist()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+            Instance instance = serverobj.nextInstance;
+            Assert.IsNotNull(instance);
+        }
+
+        [TestMethod]
+        public void serverAlertSpecsExist()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+            List<AlertSpec> alertSpecs = serverobj.alertSpecs;
+            Assert.IsNotNull(alertSpecs);
+        }
+
+        [TestMethod]
+        public void serverCurrentInstanceExists()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+            Instance instance = serverobj.currentInstance;
+            Assert.IsNotNull(instance);
+        }
+
+        [TestMethod]
+        public void serverDeploymentExists()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+            Deployment d = serverobj.deployment;
+            Assert.IsNotNull(d);
+        }
+
         #endregion
 
         [TestMethod]
