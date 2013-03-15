@@ -86,6 +86,7 @@
     <Compile Include="PublicationLineage.cs" />
     <Compile Include="RecurringVolumeAttachment.cs" />
     <Compile Include="Objects\ScheduleEntry.cs" />
+    <Compile Include="Objects\APIHrefs.cs" />
     <Compile Include="SecurityGroup.cs" />
     <Compile Include="Objects\SerializationExtensions.cs" />
     <Compile Include="Server.cs" />
