@@ -116,6 +116,8 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
+
+        //TODO:  Add multi_update method
 		
     }
 }
