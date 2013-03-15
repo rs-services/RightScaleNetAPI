@@ -450,6 +450,7 @@ namespace RightScale.netClient
                 throw new ArgumentNullException("Calls to AlertSpec.create must have an associated subject_href");
             }
             List<KeyValuePair<string, string>> parameters = getCreatePostData(condition, description, duration, escalation_name, file, name, subject_href, threshold, variable, vote_tag, vote_type);
+
             List<string> returnList = Core.APIClient.Instance.Post(postUrl, parameters, "location");
             string[] hrefSplit = returnList[0].Split('/');
             return hrefSplit.Last<string>();

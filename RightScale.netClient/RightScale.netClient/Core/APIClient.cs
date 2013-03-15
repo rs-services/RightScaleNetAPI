@@ -210,8 +210,10 @@ namespace RightScale.netClient.Core
         /// </summary>
         /// <param name="apiHref">api stub for posting to RightScale API</param>
         /// <param name="parameterSet">List< of KeyValuePair(string, string) of parameters to be posted to RightScale API</param>
+        /// <param name="returnHeaderName">Name of the header whose content to return</param>
+        /// <param name="contentOutput">Output parameter containing the content of this POST call</param>
         /// <returns>JSON string result to be parsed</returns>
-        internal List<string> Post(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName)
+        internal List<string> Post(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName, out string contentOutput)
         {
             if (CheckAuthenticationStatus())
             {
@@ -226,6 +228,16 @@ namespace RightScale.netClient.Core
                     string requestUrl = apiBaseAddress.Trim('/') + apiHref;
                     HttpResponseMessage response = webClient.PostAsync(requestUrl, postContent).Result;
                     content = response.Content.ReadAsStringAsync().Result;
+                    
+                    if (!string.IsNullOrWhiteSpace(content))
+                    {
+                        contentOutput = content;
+                    }
+                    else
+                    {
+                        contentOutput = string.Empty;
+                    }
+
                     response.EnsureSuccessStatusCode();
                     if (!string.IsNullOrWhiteSpace(returnHeaderName))
                     {
@@ -237,7 +249,21 @@ namespace RightScale.netClient.Core
                     throw new RightScaleAPIException(apiHref, content, "Exception from API Gateway, see error data", hre, parameterSet);
                 }
             }
+            contentOutput = string.Empty;
             return null;
+        }
+
+        /// <summary>
+        /// Override to Post method without an output string 
+        /// </summary>
+        /// <param name="apiHref">api stub for posting to RightScale API</param>
+        /// <param name="parameterSet">List< of KeyValuePair(string, string) of parameters to be posted to RightScale API</param>
+        /// <param name="returnHeaderName">Name of the header whose content to return</param>
+        /// <returns>JSON string result to be parsed</returns>
+        internal List<string> Post(string apiHref, List<KeyValuePair<string, string>> parameterset, string returnHeaderName)
+        {
+            string outString = string.Empty;
+            return Post(apiHref, parameterset, returnHeaderName, out outString);
         }
 
         /// <summary>
