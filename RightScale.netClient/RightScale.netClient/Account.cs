@@ -104,7 +104,7 @@ namespace RightScale.netClient
         {
             Utility.CheckStringIsNumeric(accountID);
 
-            string getURL = string.Format("/api/accounts/{0}", accountID);
+            string getURL = string.Format(APIHrefs.Account, accountID);
 
             string jsonString = Core.APIClient.Instance.Get(getURL);
 

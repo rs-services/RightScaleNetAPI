@@ -17,6 +17,21 @@ namespace RightScale.netClient
         public static string Account = "/api/accounts/{0}";
 
         /// <summary>
+        /// AccountGroup href takes one parameter which is the AccountGroup ID
+        /// </summary>
+        public static string AccountGroup = "/api/account_groups/{0}";
+
+        /// <summary>
+        /// ServerAlertSpec href takes two parameters - the Server ID and the AlertSpec ID
+        /// </summary>
+        public static string ServerAlertSpec = "/api/servers/{0}/alert_specs/{1}";
+
+        /// <summary>
+        /// ServerArrayAlertSpec href takes two parameters - the ServerArray ID and the AlertSpec Id
+        /// </summary>
+        public static string ServerArrayAlertSpec = "/api/server_arrays/{0}/alert_specs/{1}";
+
+        /// <summary>
         /// Cloud href takes one parameter which is the Cloud ID
         /// </summary>
         public static string Cloud = "/api/clouds/{0}";
