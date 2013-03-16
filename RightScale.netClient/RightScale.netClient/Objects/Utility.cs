@@ -230,7 +230,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/accounts/{0}", objectID);
+                return string.Format(APIHrefs.Account, objectID);
             }
             else
             {
@@ -247,7 +247,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}", objectID);
+                return string.Format(APIHrefs.Cloud, objectID);
             }
             else
             {
@@ -264,7 +264,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/server_templates/{0}", objectID);
+                return string.Format(APIHrefs.ServerTemplate, objectID);
             }
             else
             {
@@ -282,7 +282,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/security_groups/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.SecurityGroup, cloudID, objectID);
             }
             else
             {
@@ -299,7 +299,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/multi_cloud_images/{0}", objectID);
+                return string.Format(APIHrefs.MultiCloudImage, objectID);
             }
             else
             {
@@ -317,7 +317,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.Image, cloudID, objectID);
             }
             else
             {
@@ -335,7 +335,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.InstanceType, cloudID, objectID);
             }
             else
             {
@@ -353,7 +353,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/ssh_keys/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.SshKey, cloudID, objectID);
             }
             else
             {
@@ -371,7 +371,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.Image, cloudID, objectID);
             }
             else
             {
@@ -389,7 +389,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/datacenters/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.DataCenter, cloudID, objectID);
             }
             else
             {
@@ -406,7 +406,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/deployments/{0}", objectID);
+                return string.Format(APIHrefs.Deployment, objectID);
             }
             else
             {
@@ -423,7 +423,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/right_scripts/{0}", objectID);
+                return string.Format(APIHrefs.RightScript, objectID);
             }
             else
             {
@@ -441,7 +441,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format("/api/clouds/{0}/images/{1}", cloudID, objectID);
+                return string.Format(APIHrefs.Image, cloudID, objectID);
             }
             else
             {
