@@ -389,7 +389,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.DataCenter, cloudID, objectID);
+                return string.Format(APIHrefs.DataCenterByID, cloudID, objectID);
             }
             else
             {
@@ -406,7 +406,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Deployment, objectID);
+                return string.Format(APIHrefs.DeploymentByID, objectID);
             }
             else
             {

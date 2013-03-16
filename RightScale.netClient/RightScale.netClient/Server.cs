@@ -276,7 +276,7 @@ namespace RightScale.netClient
         /// <returns>Populated Server object</returns>
         public static Server show_deployment(string serverid, string deploymentID, string view)
         {
-            string getHref = string.Format("/api/deployments/{0}/servers/{1}", deploymentID, serverid);
+            string getHref = string.Format(APIHrefs.DeploymentServerByID, deploymentID, serverid);
             return showGet(getHref, view);
         }
 
@@ -298,7 +298,7 @@ namespace RightScale.netClient
         /// <returns>Populated Server object</returns>
         public static Server show(string serverid, string view)
         {
-            string getHref = string.Format("/api/servers/{0}", serverid);
+            string getHref = string.Format(APIHrefs.ServerByID, serverid);
             return showGet(getHref, view);
         }
 
@@ -363,7 +363,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string create_deployment(string deploymentID, string cloudID, string serverTemplateID, string serverName)
         {
-            string postHref = string.Format("/api/deployments/{0}/servers", deploymentID);
+            string postHref = string.Format(APIHrefs.DeploymentServer, deploymentID);
             List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, null, cloudID, null, null, null, null, null, null, null, null, serverTemplateID, null, null, serverName, false);
             return createPost(postHref, parameters);
         }
@@ -390,9 +390,8 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string create(string cloudid, string deploymentID, string serverTemplateID, string serverName, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
         {
-            string postHref = "/api/servers";
             List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, serverName, optimized);
-            return createPost(postHref, parameters);
+            return createPost(APIHrefs.Server, parameters);
         }
 
         /// <summary>
@@ -404,9 +403,8 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string create(string cloudID, string deploymentID, string serverTemplateID, string serverName)
         {
-            string postHref = "/api/servers";
             List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, null, cloudID, null, null, null, null, null, null, null, null, serverTemplateID, null, null, serverName, false);
-            return createPost(postHref, parameters);
+            return createPost(APIHrefs.Server, parameters);
         }
 
         /// <summary>
@@ -511,7 +509,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         public static bool update(string serverID, string description, string name, bool optimized)
         {
-            string putHref = string.Format("/api/servers/{0}", serverID);
+            string putHref = string.Format(APIHrefs.ServerByID, serverID);
             return updatePut(putHref, description, name, optimized);
         }
 
@@ -526,7 +524,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         public static bool update_deployment(string serverID, string deploymentID, string description, string name, bool optimized)
         {
-            string putHref = string.Format("/api/deployments/{0}/servers/{1}", deploymentID, serverID);
+            string putHref = string.Format(APIHrefs.DeploymentServerByID, deploymentID, serverID);
             return updatePut(putHref, description, name, optimized);
         }
 
@@ -560,7 +558,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created server</returns>
         public static string clone(string serverID)
         {
-            string postHref = string.Format("/api/servers/{0}/clone", serverID);
+            string postHref = string.Format(APIHrefs.ServerClone, serverID);
             List<string> createResults =  Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location");
             return createResults.Last<string>().Split('/').Last<string>();
         }
@@ -577,7 +575,7 @@ namespace RightScale.netClient
         /// <returns>true if success, false if not</returns>
         public static bool destroy_deployment(string serverID, string deploymentID)
         {
-            string deleteHref = string.Format("/api/deployments/{0}/servers/{1}", deploymentID, serverID);
+            string deleteHref = string.Format(APIHrefs.DeploymentServerByID, deploymentID, serverID);
             return destroyDelete(deleteHref);
         }
 
@@ -588,7 +586,7 @@ namespace RightScale.netClient
         /// <returns>true if success, false if not</returns>
         public static bool destroy(string serverID)
         {
-            string deleteHref = string.Format("/api/servers/{0}", serverID);
+            string deleteHref = string.Format(APIHrefs.ServerByID, serverID);
             return destroyDelete(deleteHref);
         }
 
@@ -624,7 +622,7 @@ namespace RightScale.netClient
         /// <returns>True if success, false if not</returns>
         public static bool launch(string serverID, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/servers/{0}/launch", serverID);
+            string postHref = string.Format(APIHrefs.ServerLaunch, serverID);
             return Core.APIClient.Instance.Post(postHref, inputs);
         }
 
@@ -639,7 +637,7 @@ namespace RightScale.netClient
         /// <returns>true if success, false if not</returns>
         public static bool terminate(string serverID)
         {
-            string postHref = string.Format("/api/servers/{0}/terminate", serverID);
+            string postHref = string.Format(APIHrefs.ServerTerminate, serverID);
             return Core.APIClient.Instance.Post(postHref);
         }
         

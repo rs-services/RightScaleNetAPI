@@ -183,8 +183,6 @@ namespace RightScale.netClient
         /// <returns>Collection of AuditEntry objects from the start_time defined with a limit, filter and view as specified</returns>
         public static List<AuditEntry> index(List<Filter> filter, string view, string limit, DateTime start_date, DateTime end_date)
         {
-            string getHref = "/api/audit_entries";
-
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -241,7 +239,7 @@ namespace RightScale.netClient
                 queryString += Utility.BuildFilterString(filter);
             }
 
-            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.AuditEntry, queryString);
 
             return deserializeList(jsonString);
 
@@ -270,8 +268,6 @@ namespace RightScale.netClient
         /// <returns>ID of AuditEntry that was created</returns>
         public static string create(string auditee_href, string audit_summary, string detail)
         {
-            string putHref = "/api/audit_entries";
-
             List<KeyValuePair<string, string>> putParameters = new List<KeyValuePair<string, string>>();
             putParameters.Add(new KeyValuePair<string, string>("audit_entry[auditee_href]", auditee_href));
             if (!string.IsNullOrWhiteSpace(detail))
@@ -280,7 +276,7 @@ namespace RightScale.netClient
             }
             putParameters.Add(new KeyValuePair<string, string>("audit_entry[summary]", audit_summary));
 
-            List<string> retVal = Core.APIClient.Instance.Post(putHref, putParameters, "location");
+            List<string> retVal = Core.APIClient.Instance.Post(APIHrefs.AuditEntry, putParameters, "location");
             return retVal.Last<string>().Split('/').Last<string>();
         }
 
@@ -296,7 +292,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool update(string auditID, string summary)
         {
-            string putURL = string.Format("/api/audit_entries/{0}", auditID);
+            string putURL = string.Format(APIHrefs.AuditEntryByID, auditID);
             List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
             putParams.Add(new KeyValuePair<string, string>("audit_entry[summary]", summary));
 
@@ -327,7 +323,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool append(string auditID, string detail, string offset)
         {
-            string postHref = string.Format("/api/audit_entries/{0}/append", auditID);
+            string postHref = string.Format(APIHrefs.AuditEntryByID, auditID);
             Utility.CheckStringIsNumeric(offset);
             List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
             postParameters.Add(new KeyValuePair<string, string>("detail", detail));
@@ -346,7 +342,7 @@ namespace RightScale.netClient
         /// <returns>details of AuditEntry defined by ID passed in</returns>
         public static string detail(string auditID)
         {
-            string getHref = string.Format("/api/audit_entries/{0}/detail", auditID);
+            string getHref = string.Format(APIHrefs.AuditEntryDetail, auditID);
             return Core.APIClient.Instance.Get(getHref);
         }
 

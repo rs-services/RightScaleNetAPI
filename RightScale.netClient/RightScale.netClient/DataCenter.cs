@@ -84,7 +84,7 @@ namespace RightScale.netClient
             Utility.CheckStringIsNumeric(cloudID);
             Utility.CheckStringIsNumeric(dataCenterID);
 
-            string getURL = string.Format("/api/clouds/{0}/datacenters/{1}", cloudID, dataCenterID);
+            string getURL = string.Format(APIHrefs.DataCenterByID, cloudID, dataCenterID);
 
             string jsonString = Core.APIClient.Instance.Get(getURL);
 
@@ -135,7 +135,7 @@ namespace RightScale.netClient
         /// <returns>Collection of DataCenter objects</returns>
         public static List<DataCenter> index(string cloudID, List<Filter> filter, string view)
         {
-            string getHref = string.Format("/api/clouds/{0}/datacenters", cloudID);
+            string getHref = string.Format(APIHrefs.DataCenter, cloudID);
 
             if (string.IsNullOrWhiteSpace(view))
             {

@@ -310,7 +310,7 @@ namespace RightScale.netClient
         /// <returns>Instance object as specified</returns>
         public static Instance show(string cloudID, string instanceID, string view)
         {
-            string getHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+            string getHref = string.Format(APIHrefs.InstanceByID, cloudID, instanceID);
             string queryString = string.Empty;
             if (!string.IsNullOrWhiteSpace(view))
             {
@@ -400,7 +400,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         public static List<Instance> index_serverArray(string serverArrayID, List<Filter> filter, string view)
         {
-            string getHref = string.Format("/api/server_arrays/{0}/current_instances", serverArrayID);
+            string getHref = string.Format(APIHrefs.ServerArrayInstance, serverArrayID);
             return indexGet(getHref, filter, view);
         }
 
@@ -413,7 +413,7 @@ namespace RightScale.netClient
         /// <returns>collection of Instances within the given Cloud</returns>
         public static List<Instance> index(string cloudID, List<Filter> filter, string view)
         {
-            string getHref = string.Format("/api/clouds/{0}/instances", cloudID);
+            string getHref = string.Format(APIHrefs.Instance, cloudID);
             return indexGet(getHref, filter, view);
         }
 
@@ -490,7 +490,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/launch", cloudid, instanceid);
+            string postHref = string.Format(APIHrefs.InstanceLaunch, cloudid, instanceid);
             return launchPost(postHref, inputs);
         }
 
@@ -526,7 +526,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch_server(string serverid, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/servers/{0}/launch", serverid);
+            string postHref = string.Format(APIHrefs.ServerLaunch, serverid);
             return launchPost(postHref, inputs);
         }
 
@@ -562,7 +562,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch_serverArray(string serverArrayID, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/server_arrays/{0}/launch", serverArrayID);
+            string postHref = string.Format(APIHrefs.ServerArrayLaunch, serverArrayID);
             return launchPost(postHref, inputs);
         }
 
@@ -590,7 +590,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool reboot_server(string serverID)
         {
-            string postHref = string.Format("/api/servers/{0}/reboot", serverID);
+            string postHref = string.Format(APIHrefs.ServerReboot, serverID);
             return rebootPost(postHref);
         }
 
@@ -603,7 +603,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool reboot(string cloudID, string instanceID)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+            string postHref = string.Format(APIHrefs.InstanceReboot, cloudID, instanceID);
             return rebootPost(postHref);
         }
 
@@ -640,7 +640,7 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData)
         {
-            string putHref = string.Format("/api/clouds/{0}/instances/{1}", cloudID, instanceID);
+            string putHref = string.Format(APIHrefs.InstanceByID, cloudID, instanceID);
 
             List<KeyValuePair<string, string>> putParameters = new List<KeyValuePair<string, string>>();
 
@@ -681,7 +681,7 @@ namespace RightScale.netClient
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
         public List<Task> multi_run_executableServerArray(string serverArrayID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
         {
-            string postHref = string.Format("/api/server_arrays/{0}/multi_run_executable", serverArrayID);
+            string postHref = string.Format(APIHrefs.ServerArrayMultiRunExecutable, serverArrayID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
         }
 
@@ -698,7 +698,7 @@ namespace RightScale.netClient
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
         public List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/multi_run_executable", cloudID);
+            string postHref = string.Format(APIHrefs.InstanceMultiRunExecutable, cloudID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
         }
 
@@ -735,7 +735,7 @@ namespace RightScale.netClient
         /// <returns>true if process is queued successfully, false if not</returns>
         public List<Task> multi_terminate(string cloudID, bool terminateAll, List<Filter> filters)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/multi_terminate", cloudID);
+            string postHref = string.Format(APIHrefs.InstanceMultiTerminate, cloudID);
             return multi_terminatePost(terminateAll, filters, postHref);
         }
 
@@ -748,7 +748,7 @@ namespace RightScale.netClient
         /// <returns>true if process is queued successfully, false if not</returns>
         public List<Task> multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
         {
-            string postHref = string.Format("/api/server_arrays/{0}/multi_terminate");
+            string postHref = string.Format(APIHrefs.ServerArrayMultiTerminate, serverArrayID);
             return multi_terminatePost(terminateAll, filters, postHref);
         }
 
@@ -972,7 +972,7 @@ namespace RightScale.netClient
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
         private static Task run_executablePost(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/run_executable", cloudID, instanceID);
+            string postHref = string.Format(APIHrefs.InstanceRunExecutable, cloudID, instanceID);
 
             List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
 
