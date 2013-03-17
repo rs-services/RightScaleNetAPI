@@ -135,7 +135,7 @@ namespace RightScale.netClient
             Utility.CheckStringIsNumeric(serverID);
             Utility.CheckStringIsNumeric(alertSpecID);
 
-            string getURL = string.Format(APIHrefs.ServerAlertSpec, serverID, alertSpecID);
+            string getURL = string.Format(APIHrefs.ServerAlertSpecByID, serverID, alertSpecID);
 
             string jsonString = Core.APIClient.Instance.Get(getURL);
 
@@ -153,7 +153,7 @@ namespace RightScale.netClient
             Utility.CheckStringIsNumeric(serverArrayID);
             Utility.CheckStringIsNumeric(alertSpecID);
 
-            string getURL = string.Format(APIHrefs.ServerArrayAlertSpec, serverArrayID, alertSpecID);
+            string getURL = string.Format(APIHrefs.ServerArrayAlertSpecByID, serverArrayID, alertSpecID);
 
             string jsonString = Core.APIClient.Instance.Get(getURL);
 

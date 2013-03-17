@@ -230,7 +230,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Account, objectID);
+                return string.Format(APIHrefs.AccountByID, objectID);
             }
             else
             {
@@ -247,7 +247,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Cloud, objectID);
+                return string.Format(APIHrefs.CloudByID, objectID);
             }
             else
             {
@@ -264,7 +264,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.ServerTemplate, objectID);
+                return string.Format(APIHrefs.ServerTemplateByID, objectID);
             }
             else
             {
@@ -282,7 +282,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.SecurityGroup, cloudID, objectID);
+                return string.Format(APIHrefs.SecurityGroupByID, cloudID, objectID);
             }
             else
             {
@@ -299,7 +299,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.MultiCloudImage, objectID);
+                return string.Format(APIHrefs.MultiCloudImageByID, objectID);
             }
             else
             {
@@ -317,7 +317,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Image, cloudID, objectID);
+                return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
             else
             {
@@ -335,7 +335,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.InstanceType, cloudID, objectID);
+                return string.Format(APIHrefs.InstanceTypeByID, cloudID, objectID);
             }
             else
             {
@@ -353,7 +353,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.SshKey, cloudID, objectID);
+                return string.Format(APIHrefs.SshKeyByID, cloudID, objectID);
             }
             else
             {
@@ -371,7 +371,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Image, cloudID, objectID);
+                return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
             else
             {
@@ -423,7 +423,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.RightScript, objectID);
+                return string.Format(APIHrefs.RightScriptByID, objectID);
             }
             else
             {
@@ -441,7 +441,7 @@ namespace RightScale.netClient
         {
             if (!string.IsNullOrWhiteSpace(objectID))
             {
-                return string.Format(APIHrefs.Image, cloudID, objectID);
+                return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
             else
             {
