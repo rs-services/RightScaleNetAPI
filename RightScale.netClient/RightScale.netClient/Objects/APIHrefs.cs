@@ -27,9 +27,11 @@ namespace RightScale.netClient
 
         private static string cloneSegment = "/clone";
 
-        private static string ID0 = ID0;
+        private static string rebootSegment = "/reboot";
 
-        private static string ID1 = ID1;
+        private static string ID0 = "/{0}";
+
+        private static string ID1 = "/{1}";
 
         #endregion
 
@@ -123,13 +125,13 @@ namespace RightScale.netClient
 
         public static string ServerArrayById = ServerArray + ID0;
 
-        public static string ServerArrayLaunch = ServerArrayById + "/launch";
+        public static string ServerArrayLaunch = ServerArrayById + launchSegment;
 
-        public static string InstanceLaunch = InstanceByID + "/launch";
+        public static string InstanceLaunch = InstanceByID + launchSegment;
 
-        public static string ServerReboot = ServerByID + "/reboot";
+        public static string ServerReboot = ServerByID + rebootSegment;
 
-        public static string InstanceReboot = InstanceByID + "/reboot";
+        public static string InstanceReboot = InstanceByID + rebootSegment;
 
 
 
