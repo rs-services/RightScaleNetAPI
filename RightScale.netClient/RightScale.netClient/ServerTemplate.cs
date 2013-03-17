@@ -147,7 +147,7 @@ namespace RightScale.netClient
 
         public static List<ServerTemplate> index(List<Filter> filter, string view)
         {
-            string getUrl = "/api/server_templates";
+            string getUrl = APIHrefs.ServerTemplate ;
             string queryString = string.Empty;
 
             if (string.IsNullOrWhiteSpace(view))
@@ -189,7 +189,7 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            string getHref = string.Format("/api/server_templates/{0}", servertemplateid);
+            string getHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateid);
             return showGet(getHref, view);
         }
 
@@ -233,7 +233,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created servertemplate</returns>
         public static string clone(string servertemplateID, List<KeyValuePair<string, string>> inputs)
         {
-            string postHref = string.Format("/api/server_templates/{0}/clone", servertemplateID);
+            string postHref = string.Format(APIHrefs.ServerTemplateClone, servertemplateID);
 
             List<string> cloneResults = Core.APIClient.Instance.Post(postHref, inputs, "location");
             return cloneResults.Last<string>().Split('/').Last<string>();
@@ -250,7 +250,7 @@ namespace RightScale.netClient
         /// <returns>true if success, false if not</returns>
         public static bool destroy(string servertemplateID)
         {
-            string deleteHref = string.Format("/api/server_templates/{0}", servertemplateID);
+            string deleteHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
 
             return Core.APIClient.Instance.Delete(deleteHref);
         }

@@ -98,7 +98,7 @@ namespace RightScale.netClient
 
         public static List<Task> GetTasks(string cloudID, string instanceID, string view)
         {
-            string getUrl = string.Format("/api/clouds/{0}/instances/{1}/live/tasks",cloudID,instanceID);
+            string getUrl = string.Format(APIHrefs.InstanceTasks,cloudID,instanceID);
             string queryString = string.Empty;
 
             if (string.IsNullOrWhiteSpace(view))

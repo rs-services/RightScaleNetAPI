@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolumeType.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumeTypes.html
     /// </summary>
-    public class VolumeType :Core.RightScaleObjectBase<VolumeType>
+    public class VolumeType : Core.RightScaleObjectBase<VolumeType>
     {
         #region VolumeType properties
 

@@ -162,11 +162,9 @@ namespace RightScale.netClient
         public static List<Image> index(string cloudID, List<Filter> filterList, string view)
         {
 
-            string getUrl = string.Format("/api/clouds/{0}/images", cloudID);
+            string getUrl = string.Format(APIHrefs.Image, cloudID);
             string queryString = string.Empty;
-
             
-
            if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -216,7 +214,7 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            string getHref = string.Format("/api/clouds/{0}/images/{1}", cloudID, imageID);
+            string getHref = string.Format(APIHrefs.ImageByID, cloudID, imageID);
             return showGet(getHref, view);
         }
 

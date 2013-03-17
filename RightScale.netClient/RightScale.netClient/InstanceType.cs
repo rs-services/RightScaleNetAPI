@@ -153,7 +153,7 @@ namespace RightScale.netClient
         /// <returns>Collection of InstanceTypes</returns>
         public static List<InstanceType> index(string cloudID, List<Filter> filter, string view)
         {
-            string getHref = string.Format("/api/clouds/{0}/instance_types", cloudID);
+            string getHref = string.Format(APIHrefs.InstanceType, cloudID);
 
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -201,7 +201,7 @@ namespace RightScale.netClient
         /// <returns>Specific instance of InstanceType</returns>
         public static InstanceType show(string cloudID, string instanceTypeID, string view)
         {
-            string getHref = string.Format("/api/clouds/{0}/instance_types/{1}", cloudID, instanceTypeID);
+            string getHref = string.Format(APIHrefs.InstanceTypeByID, cloudID, instanceTypeID);
             string queryString = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(view))

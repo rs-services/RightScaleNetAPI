@@ -1001,7 +1001,7 @@ namespace RightScale.netClient
         /// <returns>True if successfully submitted to RSAPI, false if not</returns>
         public bool set_custom_lodgement(string cloudID, string instanceID, List<KeyValuePair<string, string>> quantity, string timeFrame)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/set_custom_lodgement", cloudID, instanceID);
+            string postHref = string.Format(APIHrefs.InstanceSetCustomLodgement, cloudID, instanceID);
             if (quantity.Count > 2 || quantity.Count < 1)
             {
                 throw new RightScaleAPIException("Currently, a maximum of 2 name/value pairs is supported.  " + quantity.Count.ToString() + " were specified.");
@@ -1036,7 +1036,7 @@ namespace RightScale.netClient
         /// <returns>True if success, false if failure</returns>
         public static bool start(string cloudID, string instanceID)
         {
-            string postUrl = string.Format("/api/clouds/{0}/instances/{1}/start", cloudID, instanceID);
+            string postUrl = string.Format(APIHrefs.InstanceStart, cloudID, instanceID);
             return Core.APIClient.Instance.Post(postUrl);
         }
 
@@ -1054,7 +1054,7 @@ namespace RightScale.netClient
         /// <returns>True if success, false if failure</returns>
         public static bool stop(string cloudID, string instanceID)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/stop", cloudID, instanceID);
+            string postHref = string.Format(APIHrefs.InstanceStop, cloudID, instanceID);
             return Core.APIClient.Instance.Post(postHref);
         }
 
@@ -1071,7 +1071,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         public bool terminate(string cloudID, string instanceID)
         {
-            string postHref = string.Format("/api/clouds/{0}/instances/{1}/terminate", cloudID, instanceID);
+            string postHref = string.Format(APIHrefs.InstanceTerminate, cloudID, instanceID);
             return Core.APIClient.Instance.Post(postHref);
         }
 

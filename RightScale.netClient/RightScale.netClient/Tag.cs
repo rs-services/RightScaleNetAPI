@@ -52,13 +52,12 @@ namespace RightScale.netClient
         /// TODO:  change this to return Tag object []
         public static List<string> byResource(string[] hrefs)
         {
-            string postURL = "/api/tags/by_resource";
             string queryString = string.Empty;
 
             List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet(hrefs,"resource_hrefs");
 
             string retVal = "content";
-            List<string> tags =  Core.APIClient.Instance.Post(postURL, paramList,null,out retVal);
+            List<string> tags =  Core.APIClient.Instance.Post(APIHrefs.TagByResource, paramList,null,out retVal);
 
             return tags;
 

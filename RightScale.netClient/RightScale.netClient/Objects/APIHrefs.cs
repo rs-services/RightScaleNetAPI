@@ -27,6 +27,8 @@ namespace RightScale.netClient
 
         private static string cloneSegment = "/clone";
 
+        private static string inputSegment = "/inputs";
+
         private static string rebootSegment = "/reboot";
 
         private static string ID0 = "/{0}";
@@ -34,6 +36,8 @@ namespace RightScale.netClient
         private static string ID1 = "/{1}";
 
         #endregion
+
+        #region string.format templates for RightScale API hrefs
 
         public static string Account = "/api/accounts";
 
@@ -133,8 +137,6 @@ namespace RightScale.netClient
 
         public static string InstanceReboot = InstanceByID + rebootSegment;
 
-
-
         public static string ServerArrayMultiRunExecutable = ServerArrayById + multiRunExecutableSegment;
 
         public static string InstanceMultiRunExecutable = InstanceByID + multiRunExecutableSegment;
@@ -188,11 +190,38 @@ namespace RightScale.netClient
 
         public static string DeploymentServer = DeploymentByID + "/servers";
 
+        public static string DeploymentClone = DeploymentByID + cloneSegment;
+
         public static string ServerClone = ServerByID + cloneSegment;
 
         public static string ServerLaunch = ServerByID + launchSegment;
 
         public static string ServerTerminate = ServerByID + terminateSegment;
 
+        public static string DeploymentInput = DeploymentByID + inputSegment;
+
+        public static string ServerTemplateInput = ServerTemplateByID + inputSegment;
+
+        public static string InstanceSetCustomLodgement = InstanceByID + "/set_custom_lodgement";
+
+        public static string InstanceStart = InstanceByID + "/start";
+
+        public static string InstanceStop = InstanceByID + "/stop";
+
+        public static string InstanceTerminate = InstanceByID + "/terminate";
+
+        public static string IPAddress = CloudByID + "/ip_addresses";
+
+        public static string IPAddressByID = IPAddress + ID1;
+
+        public static string ServerTemplateClone = ServerTemplateByID + cloneSegment;
+
+        public static string Tag = "/api/tags";
+
+        public static string TagByResource = Tag + "/by_resource";
+
+        public static string InstanceTasks = InstanceByID + "/live/tasks";
+
+        #endregion
     }
 }

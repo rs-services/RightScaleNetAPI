@@ -155,7 +155,7 @@ namespace RightScale.netClient
 
         public static List<ServerArray> index(List<Filter> filterlist, string view)
         {
-            string getUrl = "/api/server_arrays";
+            string getUrl = APIHrefs.ServerArray;
             string queryString = string.Empty;
 
             if (string.IsNullOrWhiteSpace(view))
@@ -208,7 +208,7 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            string getHref = string.Format("/api/server_arrays/{0}", serverarrayid);
+            string getHref = string.Format(APIHrefs.ServerArrayById, serverarrayid);
             return showGet(getHref, view);
         }
 

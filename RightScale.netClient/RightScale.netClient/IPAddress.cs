@@ -129,7 +129,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created IPAddress</returns>
         public static string create(string cloudID, string name)
         {
-            string postHref = string.Format("/api/clouds/{0}/ip_addresses", cloudID);
+            string postHref = string.Format(APIHrefs.IPAddress, cloudID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             postParams.Add(new KeyValuePair<string, string>("ip_address[name]", name));
             List<string> returnList = Core.APIClient.Instance.Post(postHref, postParams, "location");
@@ -149,7 +149,7 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         public static bool update(string cloudID, string ipAddressID, string name)
         {
-            string putHref = string.Format("/api/clouds/{0}/ip_addresses/{1}", cloudID, ipAddressID);
+            string putHref = string.Format(APIHrefs.IPAddressByID, cloudID, ipAddressID);
             List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
             putParams.Add(new KeyValuePair<string, string>("ip_address[name]", name));
             return Core.APIClient.Instance.Put(putHref, putParams);
@@ -167,7 +167,7 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         public static bool destroy(string cloudID, string ipAddressID)
         {
-            string deleteHref = string.Format("/api/clouds/{0}/ip_addresses/{1}", cloudID, ipAddressID);
+            string deleteHref = string.Format(APIHrefs.IPAddressByID, cloudID, ipAddressID);
             return Core.APIClient.Instance.Delete(deleteHref);
         }
 

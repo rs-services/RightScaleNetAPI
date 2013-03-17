@@ -143,7 +143,7 @@ namespace RightScale.netClient
         /// <returns>collection of Deployment objects</returns>
         public static List<Deployment> index(List<Filter> filter, string view)
         {
-            string getHref = "/api/deployments";
+            string getHref = APIHrefs.Deployment;
 
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -187,7 +187,7 @@ namespace RightScale.netClient
         /// <returns>Deployment specified by ID</returns>
         public static Deployment show(string deploymentID, string view)
         {
-            string getHref = string.Format("/api/deployments/{0}", deploymentID);
+            string getHref = string.Format(APIHrefs.DeploymentByID, deploymentID);
             string queryString = string.Empty;
             if (!string.IsNullOrWhiteSpace(view))
             {
@@ -223,7 +223,7 @@ namespace RightScale.netClient
         /// <returns>ID of the deployment created</returns>
         public static string create(string name, string description, string server_tag_scope)
         {
-            string postHref = "/api/deployments";
+            string postHref = APIHrefs.Deployment;
 
             if (string.IsNullOrWhiteSpace(server_tag_scope))
             {
@@ -258,7 +258,7 @@ namespace RightScale.netClient
         public static bool update(string deploymentID, string name, string description, string server_tag_scope)
         {
             Utility.CheckStringHasValue(deploymentID);
-            string putHref = string.Format("/api/deployments/{0}", deploymentID);
+            string putHref = string.Format(APIHrefs.DeploymentByID, deploymentID);
 
             List<KeyValuePair<string, string>> updateParams = new List<KeyValuePair<string, string>>();
             if (!string.IsNullOrWhiteSpace(name))
@@ -295,7 +295,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created deployment</returns>
         public static string clone(string deploymentID)
         {
-            string postHref = string.Format("/api/deployments/{0}/clone", deploymentID);
+            string postHref = string.Format(APIHrefs.DeploymentClone, deploymentID);
             List<string> locationHrefs = Core.APIClient.Instance.Post(postHref, null, "location");
             return locationHrefs.Last<string>().Split('/').Last<string>();
         }
@@ -310,7 +310,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool destroy(string deploymentID)
         {
-            string deleteHref = string.Format("/api/deployments/{0}", deploymentID);
+            string deleteHref = string.Format(APIHrefs.DeploymentByID, deploymentID);
             return Core.APIClient.Instance.Delete(deleteHref);
         }
 

@@ -110,7 +110,7 @@ namespace RightScale.netClient
         public static List<MultiCloudImage> index(List<Filter> filterList)
         {
 
-            string getUrl = string.Format("/api/multi_cloud_images");
+            string getUrl = string.Format(APIHrefs.MultiCloudImage);
             string queryString = string.Empty;
 
             List<string> validFilters = new List<string>() { "name", "description", "revision" };
@@ -137,7 +137,7 @@ namespace RightScale.netClient
         /// <returns>Populated MultiCloudImage object</returns>
         public static MultiCloudImage show(string multicloudimageID)
         {
-            string getHref = string.Format("/api/multi_cloud_images/{0}", multicloudimageID);
+            string getHref = string.Format(APIHrefs.MultiCloudImageByID, multicloudimageID);
             return showGet(getHref, string.Empty);
         }
 

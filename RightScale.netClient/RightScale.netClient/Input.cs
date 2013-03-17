@@ -66,7 +66,7 @@ namespace RightScale.netClient
 
         public static List<Input> index_deployment(string deploymentid, string view)
         {
-            string getURL = string.Format("/api/deployments/{0}/inputs", deploymentid);
+            string getURL = string.Format(APIHrefs.DeploymentInput, deploymentid);
 
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -92,7 +92,7 @@ namespace RightScale.netClient
 
         public static List<Input> index_servertemplate(string servertemplateid, string view)
         {
-            string getURL = string.Format("/api/server_templates/{0}/inputs", servertemplateid);
+            string getURL = string.Format(APIHrefs.ServerTemplateInput, servertemplateid);
 
             if (string.IsNullOrWhiteSpace(view))
             {
