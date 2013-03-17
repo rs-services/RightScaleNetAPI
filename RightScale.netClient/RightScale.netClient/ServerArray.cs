@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -250,5 +251,138 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region ServerArray.update methods
+
+        #endregion
+
+        #region ServerArray.clone methods
+
+        /// <summary>
+        /// Clones a given ServerArray 
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to clone</param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        public static string clone(string serverArrayID)
+        {
+            string postHref = string.Format(APIHrefs.ServerArrayClone, serverArrayID);
+            string retVal = string.Empty;
+            Core.APIClient.Instance.Post(postHref, "location", out retVal);
+            return retVal;
+        }
+
+        #endregion
+
+        #region ServerArray.current_instances methods
+
+        /// <summary>
+        /// Method returns a list of current instances within a given ServerArray based on the given filters
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to show current instances for</param>
+        /// <param name="filter">set of filters defining which instances to include or exclude</param>
+        /// <param name="view">view specifying the level of detail to return</param>
+        /// <returns>List of instances in the given ServerArray</returns>
+        public static List<Instance> current_instances(string serverArrayID, List<Filter> filter, string view)
+        {
+            return Instance.index_serverArray(serverArrayID, filter, view);
+        }
+
+        /// <summary>
+        /// Method returns a list of current instances within a given ServerArray based on the given filters
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to show current instances for</param>
+        /// <param name="filter">set of filters defining which instances to include or exclude</param>
+        /// <returns>List of instances in the given ServerArray</returns>
+        public static List<Instance> current_instances(string serverArrayID, List<Filter> filter)
+        {
+            return Instance.index_serverArray(serverArrayID, filter);
+        }
+
+        /// <summary>
+        /// Method returns a list of current instances within a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to show current instances for</param>
+        /// <param name="view">view specifying the level of detail to return</param>
+        /// <returns>List of instances in the given ServerArray</returns>
+        public static List<Instance> current_instances(string serverArrayID, string view)
+        {
+            return Instance.index_serverArray(serverArrayID, view);
+        }
+
+        /// <summary>
+        /// Method returns a list of current instances within a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to show current instances for</param>
+        /// <returns>List of instances in the given ServerArray</returns>
+        public static List<Instance> current_instances(string serverArrayID)
+        {
+            return Instance.index_serverArray(serverArrayID);
+        }
+
+        #endregion
+
+        #region ServerArray.destroy methods
+
+        /// <summary>
+        /// Destroys/deletes a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray to destroy/delete</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool destroy(string serverArrayID)
+        {
+            string deleteHref = string.Format(APIHrefs.ServerArrayDestroy, serverArrayID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        #endregion
+
+        #region ServerArray.launch methods
+
+        /// <summary>
+        /// Launches a new instance within the specified ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ServerArray ID</param>
+        /// <returns>Instance ID of the newly created Instance</returns>
+        public static string launch(string serverArrayID)
+        {
+            return Instance.launch_serverArray(serverArrayID);
+        }
+
+        /// <summary>
+        /// Launches a new instance within the specified ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ServerArray ID</param>
+        /// <param name="inputs">Hashtable of inputs</param>
+        /// <returns>Instance ID of the newly created Instance</returns>
+        public static string launch(string serverArrayID, Hashtable inputs)
+        {
+            return Instance.launch_serverArray(serverArrayID, inputs);
+        }
+
+        /// <summary>
+        /// Launches a new instance within the specified ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ServerArray ID</param>
+        /// <param name="inputs">List of KeyValuePairs of inputs</param>
+        /// <returns>Instance ID of the newly created Instance</returns>
+        public static string launch(string serverArrayID, List<KeyValuePair<string, string>> inputs)
+        {
+            return Instance.launch_serverArray(serverArrayID, inputs);
+        }
+
+        #endregion
+
+        #region ServerArray.multi_run_executable methods
+
+        
+
+        #endregion
+
+        #region ServerArray.multi_terminate methods
+        
+        
+
+        #endregion
+
     }
 }

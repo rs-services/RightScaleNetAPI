@@ -133,6 +133,16 @@ namespace RightScale.netClient
         public static string ServerArrayAlertSpecByID = ServerArrayById + ID1;
 
         /// <summary>
+        /// href performs a clone action on a given ServerArray - takes one parameter which is the ServerArray ID
+        /// </summary>
+        public static string ServerArrayClone = ServerArrayById + cloneSegment;
+
+        /// <summary>
+        /// href performs a destroy action on a given ServerArray - takes one parameter which is the ServerARray ID
+        /// </summary>
+        public static string ServerArrayDestroy = ServerArrayById + "/destroy";
+
+        /// <summary>
         /// Base href for working with Cloud obejects - takes no parameters
         /// </summary>
         public static string Cloud = "/api/clouds";

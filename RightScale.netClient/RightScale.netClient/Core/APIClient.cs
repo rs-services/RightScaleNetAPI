@@ -302,6 +302,26 @@ namespace RightScale.netClient.Core
         }
 
         /// <summary>
+        /// API method to perform a POST request to the RightScale API
+        /// </summary>
+        /// <param name="apiHref">API href fragment corresponding to the API root</param>
+        /// <param name="headerName">header to return if there is content</param>
+        /// <param name="outString">content of the header to return</param>
+        /// <returns>true if successful, false if not</returns>
+        internal bool Post(string apiHref, string headerName, out string outString)
+        {
+            if(Post(apiHref, new List<KeyValuePair<string, string>>(), headerName, out outString) == null)
+            {
+                return true;
+            }
+            else
+            {
+                outString = string.Empty;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// API Method to Delete a record within the RightScale system
         /// </summary>
         /// <param name="apiHref">API Href fragment corresponding to the API root</param>
