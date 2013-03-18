@@ -679,7 +679,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">name of recipe to execute</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
-        public List<Task> multi_run_executableServerArray(string serverArrayID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
+        public static List<Task> multi_run_executableServerArray(string serverArrayID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
         {
             string postHref = string.Format(APIHrefs.ServerArrayMultiRunExecutable, serverArrayID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
@@ -696,7 +696,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">name of recipe to execute</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
-        public List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
+        public static List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
         {
             string postHref = string.Format(APIHrefs.InstanceMultiRunExecutable, cloudID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
@@ -733,7 +733,7 @@ namespace RightScale.netClient
         /// <param name="terminateAll">Boolean indicating that all instances should be terminated</param>
         /// <param name="filters">Set of filters to limit the number of instances terminated</param>
         /// <returns>true if process is queued successfully, false if not</returns>
-        public List<Task> multi_terminate(string cloudID, bool terminateAll, List<Filter> filters)
+        public static List<Task> multi_terminate(string cloudID, bool terminateAll, List<Filter> filters)
         {
             string postHref = string.Format(APIHrefs.InstanceMultiTerminate, cloudID);
             return multi_terminatePost(terminateAll, filters, postHref);
@@ -746,7 +746,7 @@ namespace RightScale.netClient
         /// <param name="terminateAll">Boolean indicating that all instances should be terminated</param>
         /// <param name="filters">Set of filters to limit the number of instances terminated</param>
         /// <returns>true if process is queued successfully, false if not</returns>
-        public List<Task> multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
+        public static List<Task> multi_terminateServerArray(string serverArrayID, bool terminateAll, List<Filter> filters)
         {
             string postHref = string.Format(APIHrefs.ServerArrayMultiTerminate, serverArrayID);
             return multi_terminatePost(terminateAll, filters, postHref);

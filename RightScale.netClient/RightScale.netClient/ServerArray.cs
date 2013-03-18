@@ -696,13 +696,46 @@ namespace RightScale.netClient
 
         #region ServerArray.multi_run_executable methods
 
-        
+        /// <summary>
+        /// Run an executable on all instances of this array
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray</param>
+        /// <param name="ignoreLock">Boolean indicating whether locks will be ignored or not</param>
+        /// <param name="inputs">collection of inputs for this execution</param>
+        /// <param name="recipeName">name of recipe to execute</param>
+        /// <param name="rightScriptID">ID of RightScript to execute</param>
+        /// <returns>List of Tasks reporting status of execution process</returns>
+        public static List<Task> multi_run_executable(string serverArrayID, bool ignoreLock, List<KeyValuePair<string,string>> inputs, string recipeName, string rightScriptID)
+        {
+            return Instance.multi_run_executableServerArray(serverArrayID, ignoreLock, inputs, recipeName, rightScriptID);
+        }
 
         #endregion
 
         #region ServerArray.multi_terminate methods
-        
-        
+
+        /// <summary>
+        /// Terminate all instances of this array.
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray whose instances will be terminated</param>
+        /// <param name="terminateAll">boolean confirming that all instances will be terminated</param>
+        /// <returns>List of Tasks to report terminate progress on</returns>
+        public static List<Task> multi_terminate(string serverArrayID, bool terminateAll)
+        {
+            return Instance.multi_terminateServerArray(serverArrayID, terminateAll, new List<Filter>());
+        }
+
+        /// <summary>
+        /// Terminate all instances of this array within the given filters.
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray whose instances will be terminated</param>
+        /// <param name="terminateAll">boolean confirming that all instances will be terminated</param>
+        /// <param name="filters">set of filters limiting which instances are to be terminated</param>
+        /// <returns>List of Tasks to report terminate progress on</returns>
+        public static List<Task> multi_terminate(string serverArrayID, bool terminateAll, List<Filter> filters)
+        {
+            return Instance.multi_terminateServerArray(serverArrayID, terminateAll, filters);
+        }
 
         #endregion
 
