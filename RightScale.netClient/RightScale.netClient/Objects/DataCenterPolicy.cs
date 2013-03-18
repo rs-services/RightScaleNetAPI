@@ -28,7 +28,23 @@ namespace RightScale.netClient
         /// </summary>
         public string weight;
 
+        /// <summary>
+        /// ID of the cloud where the DataCenter resides
+        /// </summary>
+        public string cloudID;
+
         #endregion
+
+        /// <summary>
+        /// DataCenter that is related to this DataCenterPolicy
+        /// </summary>
+        public DataCenter DataCenter
+        {
+            get
+            {
+                return DataCenter.show(cloudID, dataCenterId);
+            }
+        }
 
         #region DataCenterPolicy ctor
 
@@ -38,9 +54,24 @@ namespace RightScale.netClient
         /// <param name="DataCenterID">ID of the DataCenter</param>
         /// <param name="Max">Maximum number of instances</param>
         /// <param name="Weight">Instance Allocation (total should be 100%)</param>
-        public DataCenterPolicy(string DataCenterID, string Max, string Weight)
+        public DataCenterPolicy(string CloudID, string DataCenterID, string Max, string Weight)
         {
+            this.cloudID = CloudID;
             this.dataCenterId = DataCenterID;
+            this.max = Max;
+            this.weight = Weight;
+        }
+
+        /// <summary>
+        /// Constructor that accepts a DataCenter object, and a max and min constraint for a DataCenterPolicy object
+        /// </summary>
+        /// <param name="dataCenter">DataCenter Object to which this policy applies</param>
+        /// <param name="Max">Maximum number of instances</param>
+        /// <param name="Weight">Instance Allocation (total should be 100%)</param>
+        public DataCenterPolicy(DataCenter dataCenter, string Max, string Weight)
+        {
+            this.cloudID = dataCenter.cloud.ID;
+            this.dataCenterId = dataCenter.ID;
             this.max = Max;
             this.weight = Weight;
         }

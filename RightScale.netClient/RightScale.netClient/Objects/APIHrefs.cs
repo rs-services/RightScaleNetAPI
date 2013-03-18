@@ -333,6 +333,11 @@ namespace RightScale.netClient
         public static string DeploymentServer = DeploymentByID + "/servers";
 
         /// <summary>
+        /// href for working with server arrays within a given deployment - takes one parameter which is the Deployment ID
+        /// </summary>
+        public static string DeploymentServerArray = DeploymentByID + "/server_arrays";
+
+        /// <summary>
         /// href for cloning a specific Deployment - takes one parameter which is the Deployment ID
         /// </summary>
         public static string DeploymentClone = DeploymentByID + cloneSegment;

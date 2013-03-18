@@ -31,7 +31,7 @@ namespace RightScale.netClient
             }
             return true;
         }
-
+        
         /// <summary>
         /// Method checks to ensure that the contents of the string are numeric
         /// </summary>

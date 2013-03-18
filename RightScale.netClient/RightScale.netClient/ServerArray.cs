@@ -240,14 +240,336 @@ namespace RightScale.netClient
 
         #region ServerArray.create methods
 
-
-        private static ServerArray createPost(string postHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, bool optimized, string state)
+        /// <summary>
+        /// Create a ServerArray with the specified parameters using the Deployment-specific href
+        /// </summary>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
+            string postString = string.Format(APIHrefs.DeploymentServerArray, deploymentID);
+            return createPost(postString, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+        }
+
+        /// <summary>
+        /// Minimal implementation of ServerArray.create_deployment
+        /// </summary>
+        /// <param name="array_type"></param>
+        /// <param name="dataCenterPolicy"></param>
+        /// <param name="elasticityParams"></param>
+        /// <param name="cloudID"></param>
+        /// <param name="deploymentID"></param>
+        /// <param name="serverTemplateID"></param>
+        /// <param name="name"></param>
+        /// <param name="state"></param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
+        {
+            string postString = string.Format(APIHrefs.DeploymentServerArray, deploymentID);
+            return createPost(postString, array_type, dataCenterPolicy, deploymentID, string.Empty, elasticityParams, cloudID, string.Empty, new List<KeyValuePair<string, string>>(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, new List<string>(), serverTemplateID, string.Empty, string.Empty, name, false, state);
+        }
+
+        /// <summary>
+        /// Create a ServerArray with the specified parameters
+        /// </summary>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            return createPost(APIHrefs.ServerArray, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+        }
+
+        /// <summary>
+        /// Minimal implementation of ServerArray.create 
+        /// </summary>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="serverTemplateID"></param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
+        {
+            return createPost(APIHrefs.ServerArray, array_type, dataCenterPolicy, deploymentID, string.Empty, elasticityParams, cloudID, string.Empty, new List<KeyValuePair<string, string>>(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, new List<string>(), serverTemplateID, string.Empty, string.Empty, name, false, state);
+        }
+
+        /// <summary>
+        /// Private method performs server array create with the specified parameters
+        /// </summary>
+        /// <param name="postHref">API fragment to post data to when creating this ServerArray</param>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>ID of the newly created ServerArray</returns>
+        private static string createPost(string postHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            validateRequiredServerArrayCreateInputs(array_type, dataCenterPolicy, elasticityParams, cloudID, serverTemplateID, name, state);
+
+            List<KeyValuePair<string, string>> paramSet = serverArrayParams(array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+
+            List<string> retVal = Core.APIClient.Instance.Post(APIHrefs.ServerArray, paramSet, "location");
+
+            return retVal.Last<string>().Split('/').Last<string>(); //id get hack
+        }
+
+        /// <summary>
+        /// Private method validates required inputs per the documentation provided within RS API 1.5 rdoc
+        /// </summary>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="serverTemplateID"></param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        private static void validateRequiredServerArrayCreateInputs(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string serverTemplateID, string name, string state)
+        {
+            Utility.CheckStringHasValue(array_type);
+
+            if (dataCenterPolicy != null && dataCenterPolicy.Count > 0)
+            {
+                foreach (var dcp in dataCenterPolicy)
+                {
+                    Utility.CheckStringHasValue(dcp.dataCenterId);
+                    Utility.CheckStringHasValue(dcp.max);
+                    Utility.CheckStringHasValue(dcp.weight);
+                }
+            }
+
+            if (elasticityParams != null && elasticityParams.Count > 0)
+            {
+                foreach (var ep in elasticityParams)
+                {
+                    if (ep.schedule_entries != null && ep.schedule_entries.Count > 0)
+                    {
+                        foreach (var se in ep.schedule_entries)
+                        {
+                            Utility.CheckStringHasValue(se.day);
+                            Utility.CheckStringHasValue(se.max_count);
+                            Utility.CheckStringHasValue(se.min_count);
+                            Utility.CheckStringHasValue(se.time);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("elasticityParams mst be populated to create a new ServerArray");
+            }
+
+            Utility.CheckStringHasValue(cloudID);
+            Utility.CheckStringHasValue(serverTemplateID);
+            Utility.CheckStringHasValue(name);
+            Utility.CheckStringHasValue(state);
+        }
+
+        #endregion
+
+        #region ServerArray shared private helper methods
+
+        /// <summary>
+        /// Private helper method takes all available inputs for a ServerArray and creates a collection of parameters to pass into the RightScale API
+        /// </summary>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>Collection of KeyValuePairs to be passed to the RightScale API to create or update a ServerArray</returns>
+        private static List<KeyValuePair<string, string>> serverArrayParams(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+            List<string> validArrayTypes = new List<string>() { "alert", "queue" };
             List<string> validStateValues = new List<string>() { "enabled", "disabled" };
 
+            if (Utility.CheckStringInput("array_type", validArrayTypes, array_type))
+            {
+                Utility.addParameter(array_type, "server_array[array_type]", retVal);
+            }
 
+            //datacenter policy section
+            if (dataCenterPolicy.Count > 1)
+            {
+                foreach (var dcp in dataCenterPolicy)
+                {
+                    Utility.addParameter(Utility.datacenterHref(dcp.cloudID, dcp.dataCenterId), "server_array[datacenter_policy][][datacenter_href]", retVal);
+                    Utility.addParameter(dcp.max, "server_array[datacenter_policy][][max]", retVal);
+                    Utility.addParameter(dcp.weight, "server_array[datacenter_policy][][weight]", retVal);
+                }
+            }
+            
+            Utility.addParameter(Utility.deploymentHref(deploymentID), "server_array[deployment_href", retVal);
 
-            throw new NotImplementedException();
+            Utility.addParameter(description, "server_array[description]", retVal);
+
+            if (elasticityParams != null && elasticityParams.Count > 0)
+            {
+                foreach (var ep in elasticityParams)
+                {
+                    if (ep.alert_specific_params != null)
+                    {
+                        Utility.addParameter(ep.alert_specific_params.decision_threshold, "server_array[elasticity_params][alert_specific_params][decision_threshold]", retVal);
+                        Utility.addParameter(ep.alert_specific_params.voters_tag_predicate, "server_array[elasticity_params][alert_specific_params][voters_tag_predicate]", retVal);
+                    }
+                    else if (ep.queue_specific_params != null)
+                    {
+                        Utility.addParameter(ep.queue_specific_params.collect_audit_entries, "server_array[elasticity_params][queue_specific_params][collect_audit_entries]", retVal);
+                        if (ep.queue_specific_params.item_age != null)
+                        {
+                            Utility.addParameter(ep.queue_specific_params.item_age.algorithm, "server_array[elasticity_params][queue_specific_params][item_age][algorithm]", retVal);
+                            Utility.addParameter(ep.queue_specific_params.item_age.max_age, "server_array[elasticity_params][queue_specific_params][item_age][max_age]", retVal);
+                            Utility.addParameter(ep.queue_specific_params.item_age.regexp, "server_array[elasticity_params][queue_specific_params][item_age][regexp]", retVal);
+                        }
+
+                        if (ep.queue_specific_params.queue_size != null)
+                        {
+                            Utility.addParameter(ep.queue_specific_params.queue_size.items_per_instance, "server_array[elasticity_params][queue_specific_params][queue_size][items_per_instance]", retVal);
+                        }
+                    }
+
+                    if (ep.bounds != null)
+                    {
+                        Utility.addParameter(ep.bounds.max_count, "server_array[elasticity_params][bounds][max_count]", retVal);
+                        Utility.addParameter(ep.bounds.min_count, "server_array[elasticity_params][bounds][min_count]", retVal);
+                    }
+
+                    if (ep.pacing != null)
+                    {
+                        Utility.addParameter(ep.pacing.resize_calm_time, "server_array[elasticity_params][pacing][resize_calm_time]", retVal);
+                        Utility.addParameter(ep.pacing.resize_down_by, "server_array[elasticity_params][pacing][resize_down_by]", retVal);
+                        Utility.addParameter(ep.pacing.resize_up_by, "server_array[elasticity_params][pacing][resize_up_by]", retVal);
+                    }
+
+                    if (ep.schedule_entries != null && ep.schedule_entries.Count > 0)
+                    {
+                        foreach (var se in ep.schedule_entries)
+                        {
+                            Utility.addParameter(se.day, "server_array[elasticity_params][schedule][][day]", retVal);
+                            Utility.addParameter(se.max_count, "server_array[elasticity_params][schedule][][max_count]", retVal);
+                            Utility.addParameter(se.min_count, "server_array[elasticity_params][schedule][][min_count]", retVal);
+                            Utility.addParameter(se.time, "server_array[elasticity_params][schedule][][time]", retVal);
+                        }
+                    }
+                }
+            }
+            
+            Utility.addParameter(Utility.datacenterHref(cloudID, dataCenterID), "server_array[instance][datacenter_href]", retVal);
+
+            Utility.addParameter(Utility.imageHref(cloudID, imageID), "server_array[instance][image_href]", retVal);
+
+            if (inputs != null && inputs.Count > 0)
+            {
+                foreach (var kvp in inputs)
+                {
+                    Utility.addParameter(kvp.Key, "server_array[instance][inputs][][name]", retVal);
+                    Utility.addParameter(kvp.Value, "server_array[instance][inputs][][value]", retVal);
+                }
+            }
+
+            Utility.addParameter(Utility.instanceTypeHref(cloudID, instanceTypeID), "server_array[instance][instance_type_href]", retVal);
+            
+            Utility.addParameter(Utility.imageHref(cloudID, kernelImageID), "server_array[instance][kernel_image_href]", retVal);
+            
+            Utility.addParameter(Utility.multiCloudImageHref(multiCloudImageID), "server_array[instance][multi_cloud_image_href]", retVal);
+            
+            Utility.addParameter(Utility.imageHref(cloudID, ramdiskImageID), "server_array[instance][ramdisk_image_href]", retVal);
+            
+            if (securityGroupIDs != null && securityGroupIDs.Count > 0)
+            {
+                foreach(var sgid in securityGroupIDs)
+                {
+                    Utility.addParameter(Utility.securityGroupHref(cloudID, sgid), "server_array[instance][security_group_hrefs]", retVal);
+                }
+            }
+
+            Utility.addParameter(Utility.serverTemplateHref(serverTemplateID), "server_array[instance][server_template_href]", retVal);
+
+            Utility.addParameter(Utility.sshKeyHref(cloudID, sshKeyID), "server_array[instance][ssh_key_href]", retVal);
+
+            Utility.addParameter(userData, "server_array[instance][user_data]", retVal);
+
+            Utility.addParameter(name, "server_array[name]", retVal);
+
+            Utility.addParameter(optimized.ToString().ToLower(), "server_array[optimized]", retVal);
+
+            if (Utility.CheckStringInput("state", validStateValues, state))
+            {
+                Utility.addParameter(state, "server_array[state]", retVal);
+            }
+
+            return retVal;
         }
 
         #endregion

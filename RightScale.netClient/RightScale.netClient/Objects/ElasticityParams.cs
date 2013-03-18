@@ -18,6 +18,8 @@ namespace RightScale.netClient
         /// </summary>
         public AlertSpecificParams alert_specific_params { get; set; }
 
+        public QueueSpecificParams queue_specific_params { get; set; }
+
         /// <summary>
         /// Bounds between which a ServerArray will scale up and down
         /// </summary>
