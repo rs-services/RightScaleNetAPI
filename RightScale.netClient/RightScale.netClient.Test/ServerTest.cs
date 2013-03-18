@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading;
 
 namespace RightScale.netClient.Test
 {
@@ -14,6 +15,9 @@ namespace RightScale.netClient.Test
         private string serverTemplateID;
         private string multiCloudImageID;
         private string instanceTypeID;
+        private string launchTestServerID;
+        private string windowsLaunchTestServerID;
+        private int maxWaitLoops;
 
         public ServerTest()
         {
@@ -23,6 +27,9 @@ namespace RightScale.netClient.Test
             serverTemplateID = ConfigurationManager.AppSettings["ServerTest_serverTemplateID"].ToString();
             multiCloudImageID = ConfigurationManager.AppSettings["ServerTest_multiCloudImageID"].ToString();
             instanceTypeID = ConfigurationManager.AppSettings["ServerTest_instanceTypeID"].ToString();
+            launchTestServerID = ConfigurationManager.AppSettings["ServerTest_launchTerminateServerID"].ToString();
+            windowsLaunchTestServerID = ConfigurationManager.AppSettings["ServerTest_winLaunchTerminateServerID"].ToString();
+            maxWaitLoops = 10;
         }
         
         #region Server.index tests
@@ -191,6 +198,105 @@ namespace RightScale.netClient.Test
             Assert.AreNotEqual(updatedTest.description, initialTest.description);
             bool destroyRetVal = Server.destroy_deployment(newServerID, deploymentID);
             Assert.IsTrue(destroyRetVal);
+        }
+
+        [TestMethod]
+        public void serverLaunchTerminate()
+        {
+            string currentState = Server.show(launchTestServerID).state;
+            int waitLoops = 0;
+
+            if (currentState != "inactive" && waitLoops <= maxWaitLoops)
+            {
+                Thread.Sleep(30000);
+                currentState = Server.show(launchTestServerID).state;
+                waitLoops++;
+            }
+            if (waitLoops >= maxWaitLoops)
+            {
+                Assert.Fail("Cannot start test because server is not in an available state.  Test has not started");
+            }
+
+            bool result = Server.launch(launchTestServerID);
+            Assert.IsTrue(result);
+
+            currentState = Server.show(launchTestServerID).state;
+
+            while (currentState == "queued")
+            {
+                Thread.Sleep(10000);
+                currentState = Server.show(launchTestServerID).state;
+            }
+            
+            bool terminateResult = Server.terminate(launchTestServerID);
+            Assert.IsTrue(terminateResult);
+
+            currentState = Server.show(launchTestServerID).state;
+
+            while (currentState != "inactive")
+            {
+                Thread.Sleep(10000);
+                currentState = Server.show(launchTestServerID).state;
+            }
+        }
+
+        [TestMethod]
+        public void windowsServerLaunchTerminate()
+        {
+            string currentState = Server.show(windowsLaunchTestServerID).state;
+            int waitLoops = 0;
+            if (currentState != "inactive" && waitLoops <= maxWaitLoops) // check to make sure machine is in an inactive state
+            {
+                Thread.Sleep(30000);
+                currentState = Server.show(windowsLaunchTestServerID).state;
+                waitLoops++;
+            }
+            if (waitLoops >= maxWaitLoops)
+            {
+                Assert.Fail("Cannot start test because server is not in an available state.  Test has not started");
+            }
+
+            List<KeyValuePair<string, string>> inputs = new List<KeyValuePair<string, string>>();
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_ID_APP", "cred:azureStorage_AccountName"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_PROVIDER_APP", "text:Windows_Azure_Storage"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_SECRET_APP", "cred:azureStorage_AccountKey"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_CONTAINER_APP", "text:media"));
+            inputs.Add(new KeyValuePair<string, string>("ZIP_FILE_NAME", "text:Build_20130219094040.zip"));
+            inputs.Add(new KeyValuePair<string, string>("BACKUP_FILE_NAME", "text:mileagestatsdata_sql2012.bak"));
+            inputs.Add(new KeyValuePair<string, string>("DB_LINEAGE_NAME", "text:thisisadblineage"));
+            inputs.Add(new KeyValuePair<string, string>("DB_NAME", "text:MileageStatsData"));
+            inputs.Add(new KeyValuePair<string, string>("DB_NEW_LOGIN_NAME", "text:patrick"));
+            inputs.Add(new KeyValuePair<string, string>("DB_NEW_LOGIN_PASSWORD", "text:P@ssword1"));
+            inputs.Add(new KeyValuePair<string, string>("LOGS_VOLUME_SIZE", "text:10"));
+            inputs.Add(new KeyValuePair<string, string>("MSSQL_PRODUCT_KEY", "cred:mssql_SQLStandardKey"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_ID", "cred:azureStorage_AccountName"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_PROVIDER", "text:Windows_Azure_Storage"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_SECRET", "cred:azureStorage_AccountKey"));
+            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_CONTAINER", "text:media"));
+            inputs.Add(new KeyValuePair<string, string>("ADMIN_PASSWORD", "text:P@ssword1"));
+            inputs.Add(new KeyValuePair<string, string>("SYS_WINDOWS_TZINFO", "text:Eastern Standard Time"));
+
+            bool result = Server.launch(windowsLaunchTestServerID, inputs);
+            Assert.IsTrue(result);
+
+            currentState = Server.show(windowsLaunchTestServerID).state;
+
+            while (currentState == "queued")
+            {
+                Thread.Sleep(10000);
+                currentState = Server.show(launchTestServerID).state;
+            }
+
+            bool terminateResult = Server.terminate(windowsLaunchTestServerID);
+            Assert.IsTrue(terminateResult);
+
+            currentState = Server.show(windowsLaunchTestServerID).state;
+
+            while (currentState != "inactive")
+            {
+                Thread.Sleep(10000);
+                currentState = Server.show(windowsLaunchTestServerID).state;
+            }
         }
     }
 }

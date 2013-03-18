@@ -622,8 +622,9 @@ namespace RightScale.netClient
         /// <returns>True if success, false if not</returns>
         public static bool launch(string serverID, List<KeyValuePair<string, string>> inputs)
         {
+            List<KeyValuePair<string, string>> inputParams = Utility.FormatInputCollection(inputs);
             string postHref = string.Format(APIHrefs.ServerLaunch, serverID);
-            return Core.APIClient.Instance.Post(postHref, inputs);
+            return Core.APIClient.Instance.Post(postHref, inputParams);
         }
 
         #endregion
