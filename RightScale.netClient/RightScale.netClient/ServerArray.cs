@@ -576,6 +576,99 @@ namespace RightScale.netClient
 
         #region ServerArray.update methods
 
+        /// <summary>
+        /// Method updates the properties of a given ServerArray within the context of a Deployment
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray being updated</param>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>True if updated, false if not</returns>
+        public static bool update(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            string putHref = string.Format(APIHrefs.ServerArrayById, serverArrayID);
+            return updatePut(putHref, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+        }
+
+        /// <summary>
+        /// Method updates the properties of a given ServerArray
+        /// </summary>
+        /// <param name="serverArrayID">ID of the ServerArray being updated</param>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>True if updated, false if not</returns>
+        public static bool update_deployment(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            string putHref = string.Format(APIHrefs.DeploymentServerArrayByID, deploymentID, serverArrayID);
+            return updatePut(putHref, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+        }
+
+        /// <summary>
+        /// Private method centralizes logic for managing ServerArray update calls
+        /// </summary>
+        /// <param name="putHref">href fragment to put data to</param>
+        /// <param name="array_type">Type of array (alert/queue)</param>
+        /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="description">Description of this ServerArray</param>
+        /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
+        /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
+        /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
+        /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
+        /// <param name="imageID">ID of OS Image to be used</param>
+        /// <param name="kernelImageID">ID of Kernel Image to be used</param>
+        /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
+        /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
+        /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
+        /// <param name="userData">user data to be passed to each instance at launch time</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <returns>True if updated, false if not</returns>
+        private static bool updatePut(string putHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        {
+            List<KeyValuePair<string, string>> putParams = serverArrayParams(array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
         #endregion
 
         #region ServerArray.clone methods
