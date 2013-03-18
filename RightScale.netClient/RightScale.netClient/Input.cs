@@ -23,8 +23,6 @@ namespace RightScale.netClient
         /// </summary>
         public string value { get; set; }
 
-
-
         #region Input.ctor
         /// <summary>
         /// Default Constructor for Input
@@ -56,7 +54,6 @@ namespace RightScale.netClient
 
         #endregion
 		
-        
         #region Input.index methods
 
         //public static List<Input> index()

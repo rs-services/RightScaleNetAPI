@@ -202,7 +202,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerArrayById + ID1;
+                return ServerArrayAlertSpec + ID1;
             }
         }
 

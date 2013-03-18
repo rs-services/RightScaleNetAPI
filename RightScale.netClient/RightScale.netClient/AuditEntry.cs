@@ -323,7 +323,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool append(string auditID, string detail, string offset)
         {
-            string postHref = string.Format(APIHrefs.AuditEntryByID, auditID);
+            string postHref = string.Format(APIHrefs.AuditEntryAppend, auditID);
             Utility.CheckStringIsNumeric(offset);
             List<KeyValuePair<string, string>> postParameters = new List<KeyValuePair<string, string>>();
             postParameters.Add(new KeyValuePair<string, string>("detail", detail));
