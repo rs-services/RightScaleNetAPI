@@ -840,7 +840,7 @@ namespace RightScale.netClient
         {
             get
             {
-                InstanceByID + "/live/tasks";
+                return InstanceByID + "/live/tasks";
             }
         }
 
