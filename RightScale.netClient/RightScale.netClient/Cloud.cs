@@ -44,21 +44,6 @@ namespace RightScale.netClient
 
         #endregion
 		
-        #region Cloud.show() methods
-
-        public static Cloud show(string cloudID)
-        {
-            Utility.CheckStringIsNumeric(cloudID);
-
-            string getURL = string.Format("/api/clouds/{0}", cloudID);
-
-            string jsonString = Core.APIClient.Instance.Get(getURL);
-
-            return deserialize(jsonString);
-        }
-
-        #endregion
-
         #region Cloud Relationships
 
         /// <summary>
