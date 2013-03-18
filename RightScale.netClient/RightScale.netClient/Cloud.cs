@@ -213,9 +213,12 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "cloud_type", "description", "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
             string queryString = string.Empty;
-            foreach (var f in filter)
+            if (filter != null && filter.Count > 0)
             {
-                queryString += f.ToString() + "&";
+                foreach (var f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
             }
             queryString = queryString.TrimEnd('&');
             string jsonString = Core.APIClient.Instance.Get(APIHrefs.Cloud, queryString);

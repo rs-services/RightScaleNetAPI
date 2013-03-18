@@ -186,6 +186,28 @@ namespace RightScale.netClient.Test
 
         #endregion
 
+        #region Cloud.index tests
+
+        [TestMethod]
+        public void CloudIndexSimple()
+        {
+            List<Cloud> cloudList = Cloud.index();
+            Assert.IsNotNull(cloudList);
+            Assert.IsTrue(cloudList.Count > 0);
+        }
+
+        [TestMethod]
+        public void CloudIndexFiltered()
+        {
+            List<Filter> filters = new List<Filter>();
+            filters.Add(new Filter("cloud_type", FilterOperator.Equal, "open_stack"));
+            List<Cloud> cloudList = Cloud.index(filters);
+            Assert.IsNotNull(cloudList);
+            Assert.IsTrue(cloudList.Count == 1);
+        }
+
+        #endregion
+
         #region Cloud Relationships tests
 
         [TestMethod]
