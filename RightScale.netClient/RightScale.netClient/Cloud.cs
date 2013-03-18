@@ -209,21 +209,50 @@ namespace RightScale.netClient
 
         #region Cloud.index methods
 
+        /// <summary>
+        /// Lists the clouds available to this account
+        /// </summary>
+        /// <returns>List of clouds available to this account</returns>
         public static List<Cloud> index()
         {
             return index(null);
         }
 
+        /// <summary>
+        /// Lists the clouds available to this account
+        /// </summary>
+        /// <param name="filter">Filter limits results returned</param>
+        /// <returns>List of clouds available to this account</returns>
         public static List<Cloud> index(List<Filter> filter)
-        {
-
+        {             
             List<string> validFilters = new List<string>() { "cloud_type", "description", "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
-
-            //TODO: implement Cloud.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+            foreach (var f in filter)
+            {
+                queryString += f.ToString() + "&";
+            }
+            queryString = queryString.TrimEnd('&');
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.Cloud, queryString);
+            return Cloud.deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region Cloud.show methods
+
+        /// <summary>
+        /// Show information about a single cloud
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to get details on</param>
+        /// <returns>Populated instance of a Cloud object</returns>
+        public static Cloud show(string cloudID)
+        {
+            string getHref = string.Format(APIHrefs.CloudByID, cloudID);
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return Cloud.deserialize(jsonString);
+        }
+
+        #endregion
+
     }
 }
