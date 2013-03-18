@@ -18,6 +18,16 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
+        public void DataCenterCloud()
+        {
+            DataCenter dc = DataCenter.show(cloudID, datacenterID);
+            Assert.IsNotNull(dc);
+            Cloud dcCloud = dc.cloud;
+            Assert.IsNotNull(dcCloud);
+            Assert.IsTrue(dcCloud.name.Length > 0);
+        }
+
+        [TestMethod]
         public void datacenterIndex()
         {
             try

@@ -15,6 +15,30 @@ namespace RightScale.netClient.Test
             deploymentID = ConfigurationManager.AppSettings["DeploymentTest_deploymentID"].ToString();
         }
 
+        #region Deployment relationship tests
+
+        [TestMethod]
+        public void DeploymentServerArray()
+        {
+            Deployment dep = Deployment.show(deploymentID);
+            Assert.IsNotNull(dep);
+            List<ServerArray> sas = dep.serverArrays;
+            Assert.IsNotNull(sas);
+            Assert.IsTrue(sas.Count > 0);
+        }
+
+        [TestMethod]
+        public void DeploymentServer()
+        {
+            Deployment dep = Deployment.show(deploymentID);
+            Assert.IsNotNull(dep);
+            List<Server> sv = dep.servers;
+            Assert.IsNotNull(sv);
+            Assert.IsTrue(sv.Count > 0);
+        }
+
+        #endregion
+
         #region Deployment.index tests
 
         [TestMethod]

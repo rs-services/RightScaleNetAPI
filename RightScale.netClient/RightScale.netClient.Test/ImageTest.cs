@@ -22,6 +22,20 @@ namespace RightScale.netClient.Test
             imageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_imageid"].ToString());
         }
 
+        #region Image relationship tests
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            Image img = Image.show(cloudID, imageid, "default");
+            Assert.IsNotNull(img);
+            Cloud c = img.cloud;
+            Assert.IsNotNull(c);
+            Assert.IsTrue(c.name.Length > 0);
+        }
+
+        #endregion
+
         #region Image.index tests
         [TestMethod]
         public void ImageIndexSimple()

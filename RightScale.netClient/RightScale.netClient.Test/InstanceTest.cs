@@ -22,6 +22,11 @@ namespace RightScale.netClient.Test
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InstanceTest_filterListString"].ToString());
         }
 
+        #region Image relationship tests
+
+
+        #endregion
+
         #region Instance.index tests
 
         [TestMethod]
