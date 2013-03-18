@@ -719,7 +719,7 @@ namespace RightScale.netClient
             Utility.addParameter(recipeName, "recipe_name", postParams);
             Utility.addParameter(Utility.rightScriptHref(rightScriptID), "right_script_href", postParams);
             List<string> retVals = Core.APIClient.Instance.Post(postHref, postParams, "location");
-            return Task.GetTaskList(retVals);
+            return Task.show(retVals);
         }
 
         #endregion
@@ -779,7 +779,7 @@ namespace RightScale.netClient
             }
 
             List<string> taskHrefs = Core.APIClient.Instance.Post(postHref, postParams, "location");
-            return Task.GetTaskList(taskHrefs);
+            return Task.show(taskHrefs);
         }
 
         #endregion
@@ -986,7 +986,7 @@ namespace RightScale.netClient
             Utility.addParameter(ignoreLock.ToString().ToLower(), "ignore_lock", postParameters);
 
             List<string> taskList = Core.APIClient.Instance.Post(postHref, postParameters, "location");
-            return Task.GetTask(taskList.Last<string>());
+            return Task.show(taskList.Last<string>());
         }
 
         #endregion
