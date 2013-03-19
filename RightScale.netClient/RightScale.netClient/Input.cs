@@ -120,7 +120,58 @@ namespace RightScale.netClient
         }
         #endregion
 
-        //TODO:  Add multi_update method
-		
+        #region Input.multi_update methods
+
+        /// <summary>
+        /// Multi_update inputs for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ID of ServerTemplate whose inputs should be updated</param>
+        /// <param name="inputs">collection of inputs to update</param>
+        /// <returns>true if successful, false if not</returns>
+        public bool multi_update_serverTemplate(string serverTemplateID, List<Input> inputs)
+        {
+            string putHref = string.Format(APIHrefs.ServerTemplateInputMultiUpdate, serverTemplateID);
+            return multi_updatePut(putHref, inputs);
+        }
+
+        /// <summary>
+        /// Multi_update inputs for a given Deployment
+        /// </summary>
+        /// <param name="deploymentid">ID of Deployment whose inputs should be updated</param>
+        /// <param name="inputs">collection of inputs to update</param>
+        /// <returns>true if successful, false if not</returns>
+        public bool multi_update_deployment(string deploymentid, List<Input> inputs)
+        {
+            string putHref = string.Format(APIHrefs.DeploymentInputMultiUpdate, deploymentid);
+            return multi_updatePut(putHref, inputs);
+        }
+
+        /// <summary>
+        /// Multi_update inputs for a given Instance
+        /// </summary>
+        /// <param name="cloudID">CloudId where instance is located</param>
+        /// <param name="instanceID">ID of instance whose inputs should be updated</param>
+        /// <param name="inputs">collection of inputs to update</param>
+        /// <returns>true if successful, false if not</returns>
+        public bool multi_update_instance(string cloudID, string instanceID, List<Input> inputs)
+        {
+            string putHref = string.Format(APIHrefs.InstanceInputMultiUpdate, cloudID, instanceID);
+            return multi_updatePut(putHref, inputs);
+        }
+
+        /// <summary>
+        /// Private multi update method to centralize logic of handling input mutli_update
+        /// </summary>
+        /// <param name="putHref">href to put to</param>
+        /// <param name="inputs">collection of inputs to update</param>
+        /// <returns>true if successful, false if not</returns>
+        private bool multi_updatePut(string putHref, List<Input> inputs)
+        {
+            List<KeyValuePair<string, string>> putParams = Utility.FormatInputCollection(inputs);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
+        #endregion
+
     }
 }

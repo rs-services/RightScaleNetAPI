@@ -361,6 +361,17 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// input multi_update for an instance
+        /// </summary>
+        public static string InstanceInputMultiUpdate
+        {
+            get
+            {
+                return InstanceByID + "/inputs/multi_update";
+            }
+        }
+
+        /// <summary>
         /// Href gets current instances in a given ServerArray - takes one input which is the ServerArray ID
         /// </summary>
         public static string ServerArrayInstance
@@ -724,6 +735,17 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Href for performing multi_update on Deployment
+        /// </summary>
+        public static string DeploymentInputMultiUpdate
+        {
+            get
+            {
+                return DeploymentInput + "/multi_update";
+            }
+        }
+
+        /// <summary>
         /// href for working with ServerTemplate-level inputs - takes one parameter which is the ServerTemplate ID
         /// </summary>
         public static string ServerTemplateInput
@@ -731,6 +753,17 @@ namespace RightScale.netClient
             get
             {
                 return ServerTemplateByID + inputSegment;
+            }
+        }
+
+        /// <summary>
+        /// href for performing a multi_update on a set of ServerTemplate Inputs
+        /// </summary>
+        public static string ServerTemplateInputMultiUpdate
+        {
+            get
+            {
+                return ServerTemplateInput + "/multi_update";
             }
         }
 
