@@ -96,32 +96,85 @@ namespace RightScale.netClient
 
         #region VolumeType.show
 
+        /// <summary>
+        /// Displays information about a single Volume
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud</param>
+        /// <param name="volumeTypeID">ID of the VolumeType</param>
+        /// <returns>Popultated instance of VolumeType</returns>
         public static VolumeType show(string cloudID, string volumeTypeID)
         {
-            //TODO: implement VolumeType.show 
-            throw new NotImplementedException();
+            return show(cloudID, volumeTypeID, null);
+        }
+
+        /// <summary>
+        /// Displays information about a single Volume
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud</param>
+        /// <param name="volumeTypeID">ID of the VolumeType</param>
+        /// <param name="view">Specifies how many attributes or relationships to include</param>
+        /// <returns>Populated instance of VolumeType</returns>
+        public static VolumeType show(string cloudID, string volumeTypeID, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+            string queryString = string.Format("view={0}", view);
+            string getString = string.Format(APIHrefs.VolumeTypeByID, cloudID, volumeTypeID);
+            string jsonString = Core.APIClient.Instance.Get(getString, queryString);
+            return deserialize(jsonString);
         }
 
         #endregion
 
         #region VolumeType.index methods
 
-        public static List<VolumeType> index()
+        /// <summary>
+        /// Lists Volume Types
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where volume types are to be listed</param>
+        /// <returns>List of VolumeTypes</returns>
+        public static List<VolumeType> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
+        }
+        
+        /// <summary>
+        /// Lists Volume Types
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where volume types are to be listed</param>
+        /// <param name="filter">limites return set based on provided filter parameters</param>
+        /// <returns>List of VolumeTypes</returns>
+        public static List<VolumeType> index(string cloudID, List<Filter> filter)
+        {
+            return index(cloudID, filter, null);
         }
 
-        public static List<VolumeType> index(List<Filter> filter)
+        /// <summary>
+        /// Lists Volume Types
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where volume types are to be listed</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of VolumeTypes</returns>
+        public static List<VolumeType> index(string cloudID, string view)
         {
-            return index(filter, null);
+            return index(cloudID, null, view);
         }
 
-        public static List<VolumeType> index(string view)
-        {
-            return index(null, view);
-        }
-
-        public static List<VolumeType> index(List<Filter> filter, string view)
+        /// <summary>
+        /// Lists Volume Types
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where volume types are to be listed</param>
+        /// <param name="filter">limites return set based on provided filter parameters</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of VolumeTypes</returns>
+        public static List<VolumeType> index(string cloudID, List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -136,8 +189,18 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "name", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement VolumeType.index
-            throw new NotImplementedException();
+            string queryString = string.Format("view={0}&", view);
+
+            foreach (Filter f in filter)
+            {
+                queryString += f.ToString() + "&";
+            }
+
+            queryString = queryString.TrimEnd('&');
+
+            string getHref = string.Format(APIHrefs.VolumeType, cloudID);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
     }
