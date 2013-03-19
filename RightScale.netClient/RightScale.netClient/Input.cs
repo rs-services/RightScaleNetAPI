@@ -128,7 +128,7 @@ namespace RightScale.netClient
         /// <param name="serverTemplateID">ID of ServerTemplate whose inputs should be updated</param>
         /// <param name="inputs">collection of inputs to update</param>
         /// <returns>true if successful, false if not</returns>
-        public bool multi_update_serverTemplate(string serverTemplateID, List<Input> inputs)
+        public static bool multi_update_serverTemplate(string serverTemplateID, List<Input> inputs)
         {
             string putHref = string.Format(APIHrefs.ServerTemplateInputMultiUpdate, serverTemplateID);
             return multi_updatePut(putHref, inputs);
@@ -140,7 +140,7 @@ namespace RightScale.netClient
         /// <param name="deploymentid">ID of Deployment whose inputs should be updated</param>
         /// <param name="inputs">collection of inputs to update</param>
         /// <returns>true if successful, false if not</returns>
-        public bool multi_update_deployment(string deploymentid, List<Input> inputs)
+        public static bool multi_update_deployment(string deploymentid, List<Input> inputs)
         {
             string putHref = string.Format(APIHrefs.DeploymentInputMultiUpdate, deploymentid);
             return multi_updatePut(putHref, inputs);
@@ -153,7 +153,7 @@ namespace RightScale.netClient
         /// <param name="instanceID">ID of instance whose inputs should be updated</param>
         /// <param name="inputs">collection of inputs to update</param>
         /// <returns>true if successful, false if not</returns>
-        public bool multi_update_instance(string cloudID, string instanceID, List<Input> inputs)
+        public static bool multi_update_instance(string cloudID, string instanceID, List<Input> inputs)
         {
             string putHref = string.Format(APIHrefs.InstanceInputMultiUpdate, cloudID, instanceID);
             return multi_updatePut(putHref, inputs);
@@ -165,7 +165,7 @@ namespace RightScale.netClient
         /// <param name="putHref">href to put to</param>
         /// <param name="inputs">collection of inputs to update</param>
         /// <returns>true if successful, false if not</returns>
-        private bool multi_updatePut(string putHref, List<Input> inputs)
+        private static bool multi_updatePut(string putHref, List<Input> inputs)
         {
             List<KeyValuePair<string, string>> putParams = Utility.FormatInputCollection(inputs);
             return Core.APIClient.Instance.Put(putHref, putParams);
