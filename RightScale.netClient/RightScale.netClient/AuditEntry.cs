@@ -294,7 +294,7 @@ namespace RightScale.netClient
         {
             string putURL = string.Format(APIHrefs.AuditEntryByID, auditID);
             List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
-            putParams.Add(new KeyValuePair<string, string>("audit_entry[summary]", summary));
+            putParams.Add(new KeyValuePair<string,string>("audit_entry[summary]", summary));
 
             return Core.APIClient.Instance.Put(putURL, putParams);
         }

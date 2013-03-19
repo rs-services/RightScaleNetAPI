@@ -188,7 +188,7 @@ namespace RightScale.netClient.Core
         /// <param name="putHref">RightScale API Href</param>
         /// <param name="putData">list of keyvaluepairs to serialize and PUT to the RS API</param>
         /// <returns>True if successful, false if not</returns>
-        internal bool Put(string putHref, List<KeyValuePair<string, string>> putData)
+        internal bool Put(string putHref, List<KeyValuePair<string,string>> putData)
         {
             if (CheckAuthenticationStatus())
             {
@@ -229,7 +229,7 @@ namespace RightScale.netClient.Core
                 {
                     if (parameterSet == null)
                     {
-                        parameterSet = new List<KeyValuePair<string, string>>();
+                        parameterSet = new List<KeyValuePair<string,string>>();
                     }
                     HttpContent postContent = new FormUrlEncodedContent(parameterSet);
                     string requestUrl = apiBaseAddress.Trim('/') + apiHref;
@@ -310,7 +310,7 @@ namespace RightScale.netClient.Core
         /// <returns>true if successful, false if not</returns>
         internal bool Post(string apiHref, string headerName, out string outString)
         {
-            if(Post(apiHref, new List<KeyValuePair<string, string>>(), headerName, out outString) == null)
+            if (Post(apiHref, new List<KeyValuePair<string, string>>(), headerName, out outString) == null)
             {
                 return true;
             }

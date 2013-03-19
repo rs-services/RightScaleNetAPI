@@ -176,8 +176,8 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void serverCreateComplicatedDestroySimpleTest()
         {
-            List<KeyValuePair<string, string>> inputs = new List<KeyValuePair<string, string>>();
-            inputs.Add(new KeyValuePair<string, string>("ADMIN_PASSWORD", "text:thisisapassword!@#$%^"));
+            List<Input> inputs = new List<Input>();
+            inputs.Add(new Input("ADMIN_PASSWORD", "text:thisisapassword!@#$%^"));
             string newServerID = Server.create(cloudID, deploymentID, serverTemplateID, "complicated Server Instance", "this is a description...", cloudID, null, null, inputs, instanceTypeID, null, multiCloudImageID, null, null, null, null, false);
             Assert.IsNotNull(newServerID);
             bool delRetVal = Server.destroy(newServerID);
@@ -256,25 +256,25 @@ namespace RightScale.netClient.Test
                 Assert.Fail("Cannot start test because server is not in an available state.  Test has not started");
             }
 
-            List<KeyValuePair<string, string>> inputs = new List<KeyValuePair<string, string>>();
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_ID_APP", "cred:azureStorage_AccountName"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_PROVIDER_APP", "text:Windows_Azure_Storage"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_SECRET_APP", "cred:azureStorage_AccountKey"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_CONTAINER_APP", "text:media"));
-            inputs.Add(new KeyValuePair<string, string>("ZIP_FILE_NAME", "text:Build_20130219094040.zip"));
-            inputs.Add(new KeyValuePair<string, string>("BACKUP_FILE_NAME", "text:mileagestatsdata_sql2012.bak"));
-            inputs.Add(new KeyValuePair<string, string>("DB_LINEAGE_NAME", "text:thisisadblineage"));
-            inputs.Add(new KeyValuePair<string, string>("DB_NAME", "text:MileageStatsData"));
-            inputs.Add(new KeyValuePair<string, string>("DB_NEW_LOGIN_NAME", "text:patrick"));
-            inputs.Add(new KeyValuePair<string, string>("DB_NEW_LOGIN_PASSWORD", "text:P@ssword1"));
-            inputs.Add(new KeyValuePair<string, string>("LOGS_VOLUME_SIZE", "text:10"));
-            inputs.Add(new KeyValuePair<string, string>("MSSQL_PRODUCT_KEY", "cred:mssql_SQLStandardKey"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_ID", "cred:azureStorage_AccountName"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_PROVIDER", "text:Windows_Azure_Storage"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_ACCOUNT_SECRET", "cred:azureStorage_AccountKey"));
-            inputs.Add(new KeyValuePair<string, string>("REMOTE_STORAGE_CONTAINER", "text:media"));
-            inputs.Add(new KeyValuePair<string, string>("ADMIN_PASSWORD", "text:P@ssword1"));
-            inputs.Add(new KeyValuePair<string, string>("SYS_WINDOWS_TZINFO", "text:Eastern Standard Time"));
+            List<Input> inputs = new List<Input>();
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_ID_APP", "cred:azureStorage_AccountName"));
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_PROVIDER_APP", "text:Windows_Azure_Storage"));
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_SECRET_APP", "cred:azureStorage_AccountKey"));
+            inputs.Add(new Input("REMOTE_STORAGE_CONTAINER_APP", "text:media"));
+            inputs.Add(new Input("ZIP_FILE_NAME", "text:Build_20130219094040.zip"));
+            inputs.Add(new Input("BACKUP_FILE_NAME", "text:mileagestatsdata_sql2012.bak"));
+            inputs.Add(new Input("DB_LINEAGE_NAME", "text:thisisadblineage"));
+            inputs.Add(new Input("DB_NAME", "text:MileageStatsData"));
+            inputs.Add(new Input("DB_NEW_LOGIN_NAME", "text:patrick"));
+            inputs.Add(new Input("DB_NEW_LOGIN_PASSWORD", "text:P@ssword1"));
+            inputs.Add(new Input("LOGS_VOLUME_SIZE", "text:10"));
+            inputs.Add(new Input("MSSQL_PRODUCT_KEY", "cred:mssql_SQLStandardKey"));
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_ID", "cred:azureStorage_AccountName"));
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_PROVIDER", "text:Windows_Azure_Storage"));
+            inputs.Add(new Input("REMOTE_STORAGE_ACCOUNT_SECRET", "cred:azureStorage_AccountKey"));
+            inputs.Add(new Input("REMOTE_STORAGE_CONTAINER", "text:media"));
+            inputs.Add(new Input("ADMIN_PASSWORD", "text:P@ssword1"));
+            inputs.Add(new Input("SYS_WINDOWS_TZINFO", "text:Eastern Standard Time"));
 
             bool result = Server.launch(windowsLaunchTestServerID, inputs);
             Assert.IsTrue(result);

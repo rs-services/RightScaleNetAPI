@@ -231,13 +231,39 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverID">ID of the servertemplate to be cloned</param>
         /// <returns>ID of the newly created servertemplate</returns>
-        public static string clone(string servertemplateID, List<KeyValuePair<string, string>> inputs)
+        public static string clone(string servertemplateID)
         {
-            string postHref = string.Format(APIHrefs.ServerTemplateClone, servertemplateID);
+            string postHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
+            return clonePost(postHref, new List<KeyValuePair<string, string>>());
+        }
 
-            List<string> cloneResults = Core.APIClient.Instance.Post(postHref, inputs, "location");
-            return cloneResults.Last<string>().Split('/').Last<string>();
+        /// <summary>
+        /// Clones a given servertemplate and assigns a new name and description as specified
+        /// </summary>
+        /// <param name="serverID">ID of the servertemplate to be cloned</param>
+        /// <param name="name">Name of the new ServerTemplate</param>
+        /// <param name="description">Description of the new ServerTemplate</param>
+        /// <returns>ID of the newly created servertemplate</returns>
+        public static string clone(string servertemplateID, string name, string description)
+        {
+            string postHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(name, "server_template[name]", postParams);
+            Utility.addParameter(description, "server_template[description]", postParams);
+            return clonePost(postHref, postParams);
+        }
 
+        /// <summary>
+        /// Private method handles post for ServerTemplate clones
+        /// </summary>
+        /// <param name="postHref">href fragment to post to</param>
+        /// <param name="postParams">collection of POST parameters</param>
+        /// <returns>ID of the newly created ServerTemplate</returns>
+        private static string clonePost(string postHref, List<KeyValuePair<string, string>> postParams)
+        {
+            string cloneResults = string.Empty;
+            Core.APIClient.Instance.Post(postHref, postParams, "location", out cloneResults);
+            return cloneResults.Split('/').Last<string>();
         }
         #endregion
 

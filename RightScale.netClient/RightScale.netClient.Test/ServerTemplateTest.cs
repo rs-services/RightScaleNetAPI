@@ -46,12 +46,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void serverTemplateCloneDestroyTest()
         {
-            List<KeyValuePair<string, string>> inputs = new List<KeyValuePair<string, string>>();
-
-            inputs.Add(new KeyValuePair<string, string>("[server_template]description", "NET API ServerTemplate Clone Test - NAME"));
-            inputs.Add(new KeyValuePair<string, string>("[server_template]name", "NET API ServerTemplate Clone Test - DESCRIPTION"));
-
-            string newServerTemplateID = ServerTemplate.clone(servertemplateid, inputs);
+            string newServerTemplateID = ServerTemplate.clone(servertemplateid);
             Assert.IsNotNull(newServerTemplateID);
 
             bool destroyResult = ServerTemplate.destroy(newServerTemplateID);

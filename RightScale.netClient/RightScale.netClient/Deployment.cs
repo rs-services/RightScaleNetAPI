@@ -236,7 +236,7 @@ namespace RightScale.netClient
             {
                 apiParams.Add(new KeyValuePair<string, string>("deployment[description]", description));
             }
-            apiParams.Add(new KeyValuePair<string, string>("deployment[name]", name));
+            apiParams.Add(new KeyValuePair<string,string>("deployment[name]", name));
             apiParams.Add(new KeyValuePair<string, string>("deployment[server_tag_scope]", server_tag_scope));
 
             List<string> locations = Core.APIClient.Instance.Post(postHref, apiParams, "location");

@@ -586,7 +586,7 @@ namespace RightScale.netClient
         /// <param name="variable">The RRD variable of the condition sentence.</param>
         /// <param name="vote_tag">Should correspond to a vote tag on a ServerArray if vote to grow or shrink</param>
         /// <param name="vote_type">Vote to grow or shrink a ServerArray when the alert is triggered. Must either escalate or vote</param>
-        /// <returns>List<KeyValuePair<string, string>> to be posted to AlertSpec.create process</returns>
+        /// <returns>List<Input> to be posted to AlertSpec.create process</returns>
         private static List<KeyValuePair<string, string>> getCreatePostData(string condition, string description, string duration, string escalation_name, string file, string name, string subject_href, string threshold, string variable, string vote_tag, string vote_type)
         {
             checkCreateInputs(condition, duration, file, name, threshold, variable, vote_type);

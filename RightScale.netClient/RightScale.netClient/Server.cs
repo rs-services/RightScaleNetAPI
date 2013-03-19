@@ -348,7 +348,7 @@ namespace RightScale.netClient
         /// <param name="name">The name of the server</param>
         /// <param name="optimized">A flag indicating whether instances of this Server should support optimized Volumes</param>
         /// <returns>ID of the newly created server</returns>
-        public static string create_deployment(string deploymentID, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
+        public static string create_deployment(string deploymentID, string description, string cloudID, string datacenterID, string imageID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
         {
             return create(cloudID, deploymentID, serverTemplateID, name, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, sshKeyID, userData, optimized);
         }
@@ -388,7 +388,7 @@ namespace RightScale.netClient
         /// <param name="name">The name of the server</param>
         /// <param name="optimized">A flag indicating whether instances of this Server should support optimized Volumes</param>
         /// <returns>ID of the newly created server</returns>
-        public static string create(string cloudid, string deploymentID, string serverTemplateID, string serverName, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
+        public static string create(string cloudid, string deploymentID, string serverTemplateID, string serverName, string description, string cloudID, string datacenterID, string imageID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
         {
             List<KeyValuePair<string, string>> parameters = createGetParameterSet(deploymentID, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, serverName, optimized);
             return createPost(APIHrefs.Server, parameters);
@@ -427,7 +427,7 @@ namespace RightScale.netClient
         /// <param name="name">The name of the server</param>
         /// <param name="optimized">A flag indicating whether instances of this Server should support optimized Volumes</param>
         /// <returns>Collection of parameters for post process to create server</returns>
-        private static List<KeyValuePair<string,string>> createGetParameterSet(string deploymentid, string description, string cloudID, string datacenterID, string imageID, List<KeyValuePair<string, string>> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
+        private static List<KeyValuePair<string,string>> createGetParameterSet(string deploymentid, string description, string cloudID, string datacenterID, string imageID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
         {
             //check required inputs
 
@@ -538,7 +538,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         private static bool updatePut(string putHref, string description, string name, bool optimized)
         {
-            List<KeyValuePair<string, string>> paramSet = new List<KeyValuePair<string,string>>();
+            List<KeyValuePair<string, string>> paramSet = new List<KeyValuePair<string, string>>();
             
             Utility.addParameter(description, "server[description]", paramSet);
             Utility.addParameter(name, "server[name]", paramSet);
@@ -559,7 +559,7 @@ namespace RightScale.netClient
         public static string clone(string serverID)
         {
             string postHref = string.Format(APIHrefs.ServerClone, serverID);
-            List<string> createResults =  Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location");
+            List<string> createResults = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location");
             return createResults.Last<string>().Split('/').Last<string>();
         }
 
@@ -611,7 +611,7 @@ namespace RightScale.netClient
         /// <returns>True if success, false if not</returns>
         public static bool launch(string serverID)
         {
-            return launch(serverID, new List<KeyValuePair<string, string>>());
+            return launch(serverID, new List<Input>());
         }
 
         /// <summary>
@@ -620,9 +620,9 @@ namespace RightScale.netClient
         /// <param name="serverID">ID of the server whose next instance will be launched</param>
         /// <param name="inputs">collection of inputs to be passed into the launch process</param>
         /// <returns>True if success, false if not</returns>
-        public static bool launch(string serverID, List<KeyValuePair<string, string>> inputs)
+        public static bool launch(string serverID, List<Input> inputs)
         {
-            List<KeyValuePair<string, string>> inputParams = Utility.FormatInputCollection(inputs);
+            List<KeyValuePair<string,string>> inputParams = Utility.FormatInputCollection(inputs);
             string postHref = string.Format(APIHrefs.ServerLaunch, serverID);
             return Core.APIClient.Instance.Post(postHref, inputParams);
         }

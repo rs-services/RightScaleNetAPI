@@ -464,7 +464,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch(string cloudid, string instanceid)
         {
-            return launch(cloudid, instanceid, new List<KeyValuePair<string, string>>());
+            return launch(cloudid, instanceid, new List<Input>());
         }
 
         /// <summary>
@@ -488,10 +488,11 @@ namespace RightScale.netClient
         /// <param name="instanceid">ID of the instance to be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static string launch(string cloudid, string instanceid, List<KeyValuePair<string, string>> inputs)
+        public static string launch(string cloudid, string instanceid, List<Input> inputs)
         {
             string postHref = string.Format(APIHrefs.InstanceLaunch, cloudid, instanceid);
-            return launchPost(postHref, inputs);
+            List<KeyValuePair<string, string>> postParams = Utility.FormatInputCollection(inputs);
+            return launchPost(postHref, postParams);
         }
 
         /// <summary>
@@ -502,7 +503,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch_server(string serverid)
         {
-            return launch_server(serverid, new List<KeyValuePair<string, string>>());
+            return launch_server(serverid, new List<Input>());
         }
 
         /// <summary>
@@ -524,10 +525,11 @@ namespace RightScale.netClient
         /// <param name="serverid">ID of server whose 'next' instance will be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static string launch_server(string serverid, List<KeyValuePair<string, string>> inputs)
+        public static string launch_server(string serverid, List<Input> inputs)
         {
             string postHref = string.Format(APIHrefs.ServerLaunch, serverid);
-            return launchPost(postHref, inputs);
+            List<KeyValuePair<string, string>> postParams = Utility.FormatInputCollection(inputs);
+            return launchPost(postHref, postParams);
         }
 
         /// <summary>
@@ -538,7 +540,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static string launch_serverArray(string serverArrayID)
         {
-            return launch_serverArray(serverArrayID, new List<KeyValuePair<string, string>>());
+            return launch_serverArray(serverArrayID, new List<Input>());
         }
 
         /// <summary>
@@ -560,10 +562,11 @@ namespace RightScale.netClient
         /// <param name="serverArrayID">ID of the ServerArray where an instance will be launched</param>
         /// <param name="inputs">List of KeyValuePairs for inputs to the launch process</param>
         /// <returns>true if successful, false if not</returns>
-        public static string launch_serverArray(string serverArrayID, List<KeyValuePair<string, string>> inputs)
+        public static string launch_serverArray(string serverArrayID, List<Input> inputs)
         {
             string postHref = string.Format(APIHrefs.ServerArrayLaunch, serverArrayID);
-            return launchPost(postHref, inputs);
+            List<KeyValuePair<string, string>> postParams = Utility.FormatInputCollection(inputs);
+            return launchPost(postHref, postParams);
         }
 
         /// <summary>
@@ -679,7 +682,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">name of recipe to execute</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
-        public static List<Task> multi_run_executableServerArray(string serverArrayID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
+        public static List<Task> multi_run_executableServerArray(string serverArrayID, bool ignoreLock, List<Input> inputs, string recipeName, string rightScriptID)
         {
             string postHref = string.Format(APIHrefs.ServerArrayMultiRunExecutable, serverArrayID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
@@ -696,7 +699,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">name of recipe to execute</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>List of Task objects for tracking asynchronous proces sstatus </returns>
-        public static List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
+        public static List<Task> multi_run_executable(string cloudID, bool ignoreLock, List<Input> inputs, string recipeName, string rightScriptID)
         {
             string postHref = string.Format(APIHrefs.InstanceMultiRunExecutable, cloudID);
             return multi_run_executablePost(postHref, ignoreLock, inputs, recipeName, rightScriptID);
@@ -711,7 +714,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">name of recipe to execute</param>
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <returns>list of task objects for tracking asynchronous process status</returns>
-        private static List<Task> multi_run_executablePost(string postHref, bool ignore_lock, List<KeyValuePair<string, string>> inputs, string recipeName, string rightScriptID)
+        private static List<Task> multi_run_executablePost(string postHref, bool ignore_lock, List<Input> inputs, string recipeName, string rightScriptID)
         {
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             postParams.AddRange(Utility.FormatInputCollection(inputs));
@@ -796,7 +799,7 @@ namespace RightScale.netClient
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
         public static Task run_recipe(string cloudID, string instanceID, string recipeName)
         {
-            return run_executable(cloudID, instanceID, recipeName, null, new List<KeyValuePair<string, string>>(), false);
+            return run_executable(cloudID, instanceID, recipeName, null, new List<Input>(), false);
         }
 
         /// <summary>
@@ -822,7 +825,7 @@ namespace RightScale.netClient
         /// <param name="recipeName">Name of Recipe to execute</param>
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<Input> inputs)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, false);
         }
@@ -852,7 +855,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_recipe(string cloudID, string instanceID, string recipeName, List<Input> inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, recipeName, null, inputs, ignoreLock);
         }
@@ -867,7 +870,7 @@ namespace RightScale.netClient
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
         public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID)
         {
-            return run_executable(cloudID, instanceID, null, rightScriptID, new List<KeyValuePair<string, string>>(), false);
+            return run_executable(cloudID, instanceID, null, rightScriptID, new List<Input>(), false);
         }
 
         /// <summary>
@@ -879,7 +882,7 @@ namespace RightScale.netClient
         /// <param name="rightScriptID">ID of RightScript to execute</param>
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<Input> inputs)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, false);
         }
@@ -908,7 +911,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_rightScript(string cloudID, string instanceID, string rightScriptID, List<Input> inputs, bool ignoreLock)
         {
             return run_executable(cloudID, instanceID, null, rightScriptID, inputs, ignoreLock);
         }
@@ -939,7 +942,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        public static Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        public static Task run_executable(string cloudID, string instanceID, string recipeName, string rightScriptID, List<Input> inputs, bool ignoreLock)
         {
             return run_executablePost(cloudID, instanceID, recipeName, rightScriptID, inputs, ignoreLock);
         }
@@ -970,7 +973,7 @@ namespace RightScale.netClient
         /// <param name="inputs">collection of inputs for script or recipe</param>
         /// <param name="ignoreLock">Specifies the ability to ignore the lock on the Instance.</param>
         /// <returns>Task instance for tracking progress of asynchronous process</returns>
-        private static Task run_executablePost(string cloudID, string instanceID, string recipeName, string rightScriptID, List<KeyValuePair<string, string>> inputs, bool ignoreLock)
+        private static Task run_executablePost(string cloudID, string instanceID, string recipeName, string rightScriptID, List<Input> inputs, bool ignoreLock)
         {
             string postHref = string.Format(APIHrefs.InstanceRunExecutable, cloudID, instanceID);
 
@@ -999,7 +1002,7 @@ namespace RightScale.netClient
         /// <param name="quantity">At least one name/value pair must be specified. Currently, a maximum of 2 name/value pairs is supported.</param>
         /// <param name="timeFrame">The timeframe (either a month or a single day) for which the quantity value is valid (currently for the PDT timezone only).</param>
         /// <returns>True if successfully submitted to RSAPI, false if not</returns>
-        public bool set_custom_lodgement(string cloudID, string instanceID, List<KeyValuePair<string, string>> quantity, string timeFrame)
+        public bool set_custom_lodgement(string cloudID, string instanceID, List<KeyValuePair<string,string>> quantity, string timeFrame)
         {
             string postHref = string.Format(APIHrefs.InstanceSetCustomLodgement, cloudID, instanceID);
             if (quantity.Count > 2 || quantity.Count < 1)
@@ -1009,7 +1012,7 @@ namespace RightScale.netClient
 
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
 
-            foreach (KeyValuePair<string, string> kvp in quantity)
+            foreach (var kvp in quantity)
             {
                 Utility.CheckStringRegex("quantity[][name]", @"^(\w|\/|\ )+$", kvp.Key);
                 Utility.CheckStringRegex("quantity[][value]", @"^-?\d+$", kvp.Value);

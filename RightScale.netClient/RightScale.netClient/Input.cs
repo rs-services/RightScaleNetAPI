@@ -32,6 +32,12 @@ namespace RightScale.netClient
         {
         }
 
+        public Input(string inputName, string inputValue):base()
+        {
+            this.name = inputName;
+            this.value = inputValue;
+        }
+
         /// <summary>
         /// Constructor for Input object that takes in an oAuth Refresh token for RSAPI Authentication purposes
         /// </summary>

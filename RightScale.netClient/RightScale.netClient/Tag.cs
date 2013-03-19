@@ -54,7 +54,7 @@ namespace RightScale.netClient
         {
             string queryString = string.Empty;
 
-            List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet(hrefs,"resource_hrefs");
+            List<KeyValuePair<string, string>> paramList = Utility.StringArrayToParameterSet(hrefs, "resource_hrefs");
 
             string retVal = "content";
             List<string> tags =  Core.APIClient.Instance.Post(APIHrefs.TagByResource, paramList,null,out retVal);

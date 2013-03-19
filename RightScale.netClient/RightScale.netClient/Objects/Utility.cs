@@ -148,7 +148,7 @@ namespace RightScale.netClient
         public static string BuildGetQueryString(List<KeyValuePair<string, string>> qsData)
         {
             string retVal = string.Empty;
-            foreach (KeyValuePair<string, string> kvp in qsData)
+            foreach (var kvp in qsData)
             {
                 retVal += string.Format("{0}={1}&", kvp.Key, kvp.Value);
             }
@@ -178,13 +178,13 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="inputSet">list of key value pairs to be built into an input string when passing inputs to the RightScale API</param>
         /// <returns>properly formatted string for input collection</returns>
-        public static string BuildInputString(List<KeyValuePair<string, string>> inputSet)
+        public static string BuildInputString(List<Input> inputSet)
         {
             string retVal = string.Empty;
 
-            foreach (KeyValuePair<string, string> kvp in inputSet)
+            foreach (Input kvp in inputSet)
             {
-                retVal += string.Format("inputs[][name]={0}&inputs[][value]={1}&", kvp.Key, kvp.Value);
+                retVal += string.Format("inputs[][name]={0}&inputs[][value]={1}&", kvp.name, kvp.value);
             }
 
             retVal = retVal.TrimEnd('&');
@@ -197,22 +197,22 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="inputSet">Raw key/value set of inputs</param>
         /// <returns>API formatted input collection</returns>
-        public static List<KeyValuePair<string, string>> FormatInputCollection(List<KeyValuePair<string, string>> inputSet)
+        public static List<KeyValuePair<string, string>> FormatInputCollection(List<Input> inputSet)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
             if (inputSet != null && inputSet.Count > 0)
             {
-                foreach (KeyValuePair<string, string> kvp in inputSet)
+                foreach (Input kvp in inputSet)
                 {
-                    retVal.Add(new KeyValuePair<string, string>("inputs[][name]", kvp.Key));
-                    if (kvp.Value.StartsWith("text:") || kvp.Value.StartsWith("cred:") || kvp.Value.StartsWith("env:") || kvp.Value.StartsWith("key:"))
+                    retVal.Add(new KeyValuePair<string, string>("inputs[][name]", kvp.name));
+                    if (kvp.value.StartsWith("text:") || kvp.value.StartsWith("cred:") || kvp.value.StartsWith("env:") || kvp.value.StartsWith("key:"))
                     {
-                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", kvp.Value));
+                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", kvp.value));
                     }
                     else
                     {
                         //assume iput is a text input if not otherwise specified
-                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", string.Format("text:{0}", kvp.Value)));
+                        retVal.Add(new KeyValuePair<string, string>("inputs[][value]", string.Format("text:{0}", kvp.value)));
                     }
                 }
             }
@@ -455,13 +455,13 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="htToConvert">Hashtable to convert</param>
         /// <returns>list of keyvaluepair(string,string) corresponding to the hashtable input</returns>
-        public static List<KeyValuePair<string, string>> convertToKVP(Hashtable htToConvert)
+        public static List<Input> convertToKVP(Hashtable htToConvert)
         {
-            List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+            List<Input> retVal = new List<Input>();
 
             foreach (string key in htToConvert.Keys)
             {
-                retVal.Add(new KeyValuePair<string, string>(key, htToConvert[key].ToString()));
+                retVal.Add(new Input(key, htToConvert[key].ToString()));
             }
 
             return retVal;
