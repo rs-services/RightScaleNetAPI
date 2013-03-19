@@ -52,5 +52,14 @@ namespace RightScale.netClient.Test
 
 
         #endregion
+
+        [TestMethod]
+        public void serverArrayCloneDestroy()
+        {
+            string newServerArrayID = ServerArray.clone(serverarrayID);
+            Assert.IsNotNull(newServerArrayID);
+            bool retVal = ServerArray.destroy(newServerArrayID);
+            Assert.IsTrue(retVal);
+        }
     }
 }

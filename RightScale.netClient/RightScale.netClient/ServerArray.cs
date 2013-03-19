@@ -681,9 +681,9 @@ namespace RightScale.netClient
         public static string clone(string serverArrayID)
         {
             string postHref = string.Format(APIHrefs.ServerArrayClone, serverArrayID);
-            string retVal = string.Empty;
-            Core.APIClient.Instance.Post(postHref, "location", out retVal);
-            return retVal;
+            string outStr = string.Empty;
+            List<string> retVal = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string,string>>(), "location", out outStr);
+            return retVal.Last<string>().Split('/').Last<string>();
         }
 
         #endregion
