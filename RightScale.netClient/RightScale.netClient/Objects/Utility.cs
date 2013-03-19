@@ -256,6 +256,59 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Helper method returns a properly formatted volume snapshot href
+        /// </summary>
+        /// <param name="cloudID">CloudID </param>
+        /// <param name="volumeid">VolumeID</param>
+        /// <param name="objectid">Snapshot ID</param>
+        /// <returns>formatted volume_snapshot_href</returns>
+        public static string volumeSnapshotHref(string cloudID, string volumeid, string objectid)
+        {
+            if (!string.IsNullOrWhiteSpace(objectid))
+            {
+                return string.Format(APIHrefs.VolumeSnapshotByID, cloudID, volumeid, objectid); 
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Helper method returns a properly formatted volume type href
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <returns>formatted volume_types href</returns>
+        public static string volumeTypeHref(string cloudID)
+        {
+            if (!string.IsNullOrWhiteSpace(cloudID))
+            {
+                return string.Format(APIHrefs.VolumeType, cloudID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Helper method returns a properly formatted volume type href for a specific volume type
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="volumeTypeID">VolumeType ID</param>
+        /// <returns>volume_type_href for specific volume type</returns>
+        public static string volumeTypeHrefByID(string cloudID, string volumeTypeID)
+        {
+            if (!string.IsNullOrWhiteSpace(cloudID))
+            {
+                return string.Format(APIHrefs.VolumeTypeByID, cloudID, volumeTypeID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        /// <summary>
         /// Helper method returns properly formatted server_template_href
         /// </summary>
         /// <param name="objectID">ServerTempalte ID</param>
@@ -449,6 +502,7 @@ namespace RightScale.netClient
             }
         }
         #endregion
+
         #region Paramater builders
         /// <summary>
         /// Method converts hashtable to list of keyvaluepairs for use in RSAPI calls

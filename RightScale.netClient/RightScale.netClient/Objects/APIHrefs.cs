@@ -70,6 +70,11 @@ namespace RightScale.netClient
         /// </summary>
         private static string ID1 = "/{1}";
 
+        /// <summary>
+        /// Segment that's included to accept index 2 replacement in a string.format operation
+        /// </summary>
+        private static string ID2 = "/{2}";
+
         #endregion
 
         #region string.format templates for RightScale API hrefs
@@ -874,6 +879,72 @@ namespace RightScale.netClient
             get
             {
                 return InstanceByID + "/live/tasks";
+            }
+        }
+
+        /// <summary>
+        /// href for working with volumes - takes one parameter which is the cloud ID
+        /// </summary>
+        public static string Volume
+        {
+            get
+            {
+                return CloudByID + "/volumes";
+            }
+        }
+
+        /// <summary>
+        /// Href for working with a specific volume - takes two parameters which are the cloud ID and the Volume ID
+        /// </summary>
+        public static string VolumeByID
+        {
+            get
+            {
+                return Volume + ID1;
+            }
+        }
+
+        /// <summary>
+        /// Href for working with volume snapshots
+        /// </summary>
+        public static string VolumeSnapshot
+        {
+            get
+            {
+                return VolumeByID + "/volume_snapshots";
+            }
+        }
+
+        /// <summary>
+        /// Href for working with a specific volume snapshot
+        /// </summary>
+        public static string VolumeSnapshotByID
+        {
+            get
+            {
+                return VolumeSnapshot + ID2;
+            }
+        }
+
+        /// <summary>
+        /// href for working with volume types
+        /// </summary>
+        public static string VolumeType
+        {
+            get
+            {
+                return CloudByID + "/volume_types";
+            }
+        }
+
+        /// <summary>
+        /// href for working with a specific volume type
+        /// </summary>
+        public static string VolumeTypeByID
+        {
+            get
+            {
+                return VolumeType + ID1;
             }
         }
 
