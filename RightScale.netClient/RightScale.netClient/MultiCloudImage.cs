@@ -217,5 +217,70 @@ namespace RightScale.netClient
         
         #endregion
 
+        #region MultiCloudImage.create methods
+
+        /// <summary>
+        /// Creates a new MultiCloudImage with the given parameters
+        /// </summary>
+        /// <param name="name">Name of the MultiCloud Image</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        public static string create(string name)
+        {
+            return create(name, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a new MultiCloudImage with the given parameters
+        /// </summary>
+        /// <param name="name">Name of the MultiCloud Image</param>
+        /// <param name="description">Description for this MultiCloud Image</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        public static string create(string name, string description)
+        {
+            string postHref = APIHrefs.MultiCloudImage;
+            return createPost(postHref, name, description);
+        }
+
+        /// <summary>
+        /// Creates a new MultiCloudImage with the given parameters
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to associate with</param>
+        /// <param name="name">Name of the MultiCloud Image</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        public static string create_serverTemplate(string serverTemplateID, string name)
+        {
+            return create_serverTemplate(serverTemplateID, name, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a new MultiCloudImage with the given parameters
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to associate with</param>
+        /// <param name="name">Name of the MultiCloud Image</param>
+        /// <param name="description">Description for this MultiCloud Image</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        public static string create_serverTemplate(string serverTemplateID, string name, string description)
+        {
+            string postHref = string.Format(APIHrefs.ServerTemplateMultiCloudImage, serverTemplateID);
+            return createPost(postHref, name, description);
+        }
+
+        /// <summary>
+        /// Centralized method to handle all create posts
+        /// </summary>
+        /// <param name="postHref">api href for making a request to create a new MultiCloud Image</param>
+        /// <param name="name">Name of the MultiCloud Image</param>
+        /// <param name="description">Description for this MultiCloud Image</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        private static string createPost(string postHref, string name, string description)
+        {
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(description, "multi_cloud_image[description]", postParams);
+            Utility.addParameter(name, "multi_cloud_image[name]", postParams);
+            string outStr = string.Empty;
+            List<string> strList = Core.APIClient.Instance.Post(postHref, postParams, "location", out outStr);
+            return strList.Last<string>().Split('/').Last<string>();
+        }
+        #endregion
     }
 }
