@@ -47,6 +47,18 @@ namespace RightScale.netClient
         /// <summary>
         /// Gets tag for a specific resource.
         /// </summary>
+        /// <param name="href">href of the resource being queried for tags</param>        
+        /// <returns>Not sure yet</returns>
+        /// TODO:  change this to return Tag object []
+        public static List<string> byResource(string href)
+        {
+            string[] hrefs = new string[] {href};
+            return byResource(hrefs);
+        }
+
+        /// <summary>
+        /// Gets tag for a specific resource.
+        /// </summary>
         /// <param name="resource_hrefs">Set of hrefs to retrive tags from</param>
         /// <returns>Not sure yet</returns>
         /// TODO:  change this to return Tag object []
@@ -66,7 +78,7 @@ namespace RightScale.netClient
         #endregion
 
         #region Tag.by_tag methods
-
+            
         #endregion
 
         #region Tag.multi_add methods

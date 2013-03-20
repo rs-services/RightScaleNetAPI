@@ -32,6 +32,17 @@ namespace RightScale.netClient
 
         #endregion
 
+        /// <summary>
+        /// Associated tags for this object
+        /// </summary>
+        public List<string> Tags
+        {
+            get
+            {
+                return Tag.byResource(getLinkValue("self"));
+            }
+        }
+
         #region MultiCloudImage Relationships
 
         public List<MultiCloudImageSetting> settings

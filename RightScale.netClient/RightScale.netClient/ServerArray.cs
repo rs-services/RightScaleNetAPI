@@ -106,6 +106,17 @@ namespace RightScale.netClient
 
         #endregion
 
+        /// <summary>
+        /// Associated tags for this object
+        /// </summary>
+        public List<string> Tags
+        {
+            get
+            {
+                return Tag.byResource(getLinkValue("self"));
+            }
+        }
+
         #region ServerArray.ctor
         /// <summary>
         /// Default Constructor for ServerArray

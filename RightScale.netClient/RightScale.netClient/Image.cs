@@ -58,6 +58,17 @@ namespace RightScale.netClient
 
         #endregion
 
+        /// <summary>
+        /// Associated tags for this object
+        /// </summary>
+        public List<string> Tags
+        {
+            get
+            {
+                return Tag.byResource(getLinkValue("self"));
+            }
+        }
+
         #region Image Relationships
 
         /// <summary>
