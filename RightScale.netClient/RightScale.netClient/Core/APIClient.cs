@@ -447,7 +447,6 @@ namespace RightScale.netClient.Core
                         this.oauthBearerToken = result["access_token"].ToString();
                         this.isAuthenticated = true;
                     }
-                    this.isAuthenticating = false;
                 }
                 if (this.isAuthenticated)
                 {
@@ -458,6 +457,8 @@ namespace RightScale.netClient.Core
             {
                 retVal = true;
             }
+
+            this.isAuthenticating = false;
             return retVal;
         }
 
@@ -500,6 +501,7 @@ namespace RightScale.netClient.Core
             {
                 retVal = true;
             }
+            this.isAuthenticating = false;
             return retVal;
         }
 
