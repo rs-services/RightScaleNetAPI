@@ -267,13 +267,24 @@ namespace RightScale.netClient
         }
 
         /// <summary>
-        /// 
+        /// Href used for refering to a specific ServerTemplateMultiCloudImage object by ID
         /// </summary>
         public static string ServerTemplateMultiCloudImagesByID
         {
             get
             {
                 return ServerTemplateMultiCloudImages + ID0;
+            }
+        }
+
+        /// <summary>
+        /// Href used for setting a specific ServerTemplateMultiCloudImage to the default MCI for the specified ST
+        /// </summary>
+        public static string ServerTemplateMultiCloudImagesMakeDefault
+        {
+            get
+            {
+                return ServerTemplateMultiCloudImagesByID + "/make_default";
             }
         }
 

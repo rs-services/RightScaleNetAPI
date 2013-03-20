@@ -196,9 +196,31 @@ namespace RightScale.netClient
 
         #region ServerTemplateMultiCloudImage.destroy methods
 
+        /// <summary>
+        /// Deletes a given ServerTemplateMultiCloudImage
+        /// </summary>
+        /// <param name="serverTemplateMultiCloudImageID">ID of the ServerTemplateMultiCloudImage to delete</param>
+        /// <returns>true if success, false if not</returns>
+        public static bool destroy(string serverTemplateMultiCloudImageID)
+        {
+            string destroyHref = string.Format(APIHrefs.ServerTemplateMultiCloudImagesByID, serverTemplateMultiCloudImageID);
+            return Core.APIClient.Instance.Delete(destroyHref);
+        }
+
         #endregion
 
         #region ServerTemplateMultiCloudImage.make_default methods
+
+        /// <summary>
+        /// Makes a given ServerTemplateMultiCloudImage the default for the ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateMultiCloudImageID">ID of the ServerTemplateMultiCloudImage</param>
+        /// <returns>True if successful, false if not</returns>
+        public static bool make_default(string serverTemplateMultiCloudImageID)
+        {
+            string postHref = string.Format(APIHrefs.ServerTemplateMultiCloudImagesMakeDefault, serverTemplateMultiCloudImageID);
+            return Core.APIClient.Instance.Post(postHref);
+        }
 
         #endregion
 
