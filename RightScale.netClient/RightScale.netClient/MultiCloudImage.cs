@@ -285,6 +285,48 @@ namespace RightScale.netClient
 
         #region MultiCloudImage.update methods
 
+        /// <summary>
+        /// Updates attributes of a given MultiCloudImage.  Only HEAD revisions can be updated (revision 0). 
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloud Image</param>
+        /// <param name="name">updated name for the MultiCloudImage</param>
+        /// <param name="description">updated description for the MultiCloudImage</param>
+        /// <returns>true if updated, false if not</returns>
+        public static bool update(string multiCloudImageID, string name, string description)
+        {
+            string putHref = string.Format(APIHrefs.MultiCloudImageByID, multiCloudImageID);
+            return updatePut(putHref, name, description);
+        }
+
+        /// <summary>
+        /// Updates attributes of a given MultiCloudImage.  Only HEAD revisions can be updated (revision 0). 
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate where the MultiCloudImage is located</param>
+        /// <param name="multiCloudImageID">ID of the MultiCloud Image</param>
+        /// <param name="name">updated name for the MultiCloudImage</param>
+        /// <param name="description">updated description for the MultiCloudImage</param>
+        /// <returns>true if updated, false if not</returns>
+        public static bool update_ServerTemplate(string serverTemplateID, string multiCloudImageID, string name, string description)
+        {
+            string putHref = string.Format(APIHrefs.ServerTemplateMultiCloudImageByID, serverTemplateID, multiCloudImageID);
+            return updatePut(putHref, name, description);
+        }
+
+        /// <summary>
+        /// Private centralized caller for updating MultiCloudImage
+        /// </summary>
+        /// <param name="putHref">API Href fragment to perform PUT operation against</param>
+        /// <param name="name">updated name for the MultiCloudImage</param>
+        /// <param name="description">updated description for the MultiCloudImage</param>
+        /// <returns>true if updated, false if not</returns>
+        private static bool updatePut(string putHref, string name, string description)
+        {
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(name, "multi_cloud_image[name]", putParams);
+            Utility.addParameter(description, "multi_cloud_image[description]", putParams);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
         #endregion
 
         #region MultiCloudImage.clone methods
