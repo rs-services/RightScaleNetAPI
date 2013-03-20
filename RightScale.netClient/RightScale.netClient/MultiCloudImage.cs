@@ -91,6 +91,40 @@ namespace RightScale.netClient
         #region MultiCloudImage.index methods
 
         /// <summary>
+        /// Lists the MultiCloudImages for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <returns>List of MultiCloudImages</returns>
+        public static List<MultiCloudImage> index_ServerTemplate(string serverTemplateID)
+        {
+            return index_ServerTemplate(serverTemplateID, new List<Filter>());
+        }
+
+        /// <summary>
+        /// Lists the MultiCloudImages for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <param name="filter">String of filters to be applied to this index query</param>
+        /// <returns>List of MultiCloudImages</returns>
+        public static List<MultiCloudImage> index_ServerTemplate(string serverTemplateID, string filter)
+        {
+            List<Filter> filterList = Filter.parseFilterList(filter);
+            return index_ServerTemplate(serverTemplateID, filterList);
+        }
+
+        /// <summary>
+        /// Lists the MultiCloudImages for a given ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <param name="filter">List of filters to be applied to this index query</param>
+        /// <returns>List of MultiCloudImages</returns>
+        public static List<MultiCloudImage> index_ServerTemplate(string serverTemplateID, List<Filter> filter)
+        {
+            string getHref = string.Format(APIHrefs.ServerTemplateMultiCloudImage, serverTemplateID);
+            return indexGet(filter, getHref);
+        }
+
+        /// <summary>
         /// Lists the MultiCloudImages owned by this Account.
         /// </summary>
         /// <returns>List of MultiCloudImages</returns>
@@ -122,6 +156,12 @@ namespace RightScale.netClient
         {
 
             string getUrl = string.Format(APIHrefs.MultiCloudImage);
+            return indexGet(filterList, getUrl);
+
+        }
+
+        private static List<MultiCloudImage> indexGet(List<Filter> filterList, string getUrl)
+        {
             string queryString = string.Empty;
 
             List<string> validFilters = new List<string>() { "name", "description", "revision" };
@@ -135,7 +175,6 @@ namespace RightScale.netClient
             string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
 
             return deserializeList(jsonString);
-
         }
         #endregion
 
@@ -149,7 +188,7 @@ namespace RightScale.netClient
         public static MultiCloudImage show(string multicloudimageID)
         {
             string getHref = string.Format(APIHrefs.MultiCloudImageByID, multicloudimageID);
-            return showGet(getHref, string.Empty);
+            return showGet(getHref);
         }
 
         /// <summary>
@@ -158,13 +197,24 @@ namespace RightScale.netClient
         /// <param name="getHref"></param>
         /// <param name="view"></param>
         /// <returns>Image object with data</returns>
-        private static MultiCloudImage showGet(string getHref, string view)
+        private static MultiCloudImage showGet(string getHref)
         {
-
             string jsonString = Core.APIClient.Instance.Get(getHref);
             return deserialize(jsonString);
         }
 
+        /// <summary>
+        /// Shows the information about a single MultiCloudImage in the context of a ServerTemplate
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to query</param>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to show</param>
+        /// <returns>Populated MultiCloudImage object</returns>
+        public static MultiCloudImage show_ServerTemplate(string serverTemplateID, string multiCloudImageID)
+        {
+            string getHref = string.Format(APIHrefs.ServerTemplateMultiCloudImageByID, serverTemplateID, multiCloudImageID);
+            return showGet(getHref);
+        }
+        
         #endregion
 
     }

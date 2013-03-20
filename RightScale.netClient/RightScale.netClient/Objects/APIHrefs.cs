@@ -322,6 +322,25 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// ServerTemplate href for working with MultiCloudImages on a given ST
+        /// </summary>
+        public static string ServerTemplateMultiCloudImage
+        {
+            get
+            {
+                return ServerTemplateByID + "/multi_cloud_images";
+            }
+        }
+
+        public static string ServerTemplateMultiCloudImageByID
+        {
+            get
+            {
+                return ServerTemplateMultiCloudImage + ID1;
+            }
+        }
+
+        /// <summary>
         /// Base href for working with images - takes one parameter which is the Cloud ID where the images are located
         /// </summary>
         public static string Image
