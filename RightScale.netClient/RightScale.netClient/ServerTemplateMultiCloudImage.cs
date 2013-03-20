@@ -176,6 +176,22 @@ namespace RightScale.netClient
 
         #region ServerTemplateMultiCloudImage.create methods
 
+        /// <summary>
+        /// Creates a new ServerTemplateMultiCloudImage with the given parameters
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage</param>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <returns>ID of the newly created ServerTemplateMultiCloudImage object</returns>
+        public static string create(string multiCloudImageID, string serverTemplateID)
+        {
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(Utility.multiCloudImageHref(multiCloudImageID), "server_template_multi_cloud_image[multi_cloud_image_href]", postParams);
+            Utility.addParameter(Utility.serverTemplateHref(serverTemplateID), "server_template_multi_cloud_image[server_template_href]", postParams);
+            string outString = string.Empty;
+            List<string> retVal = Core.APIClient.Instance.Post(APIHrefs.ServerTemplateMultiCloudImages, postParams, "location", out outString);
+            return retVal.Last<string>().Split('/').Last<string>();
+        }
+
         #endregion
 
         #region ServerTemplateMultiCloudImage.destroy methods
