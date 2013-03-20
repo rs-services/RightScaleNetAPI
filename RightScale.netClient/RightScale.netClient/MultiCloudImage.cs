@@ -282,5 +282,54 @@ namespace RightScale.netClient
             return strList.Last<string>().Split('/').Last<string>();
         }
         #endregion
+
+        #region MultiCloudImage.update methods
+
+        /// <summary>
+        /// Clones a given MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of MultiCloudImage to clone</param>
+        /// <returns>ID of newly created MCI</returns>
+        public static bool clone(string multiCloudImageID)
+        {
+            string postHref = string.Format(APIHrefs.MultiCloudImageByID, multiCloudImageID);
+            return Core.APIClient.Instance.Post(postHref);
+        }
+
+        #endregion
+
+        #region MultiCloudImage.clone methods
+
+        /// <summary>
+        /// Clones a given MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloud Image to clone</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+        public static string clone(string multiCloudImageID)
+        {
+            string postHref = string.Format(APIHrefs.MultiCloudImageClone, multiCloudImageID);
+            string outString = string.Empty;
+            List<string> results = Core.APIClient.Instance.Post(postHref,new List<KeyValuePair<string,string>>(), "location", out outString);
+            return results.Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+        #region MultiCloudImage.commit methods
+       
+        /// <summary>
+        /// Commits a given MultiCloudImage.  Only HEAD revisions can be committed.
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to be committed</param>
+        /// <returns>ID fo the committed MultiCloud Image</returns>
+        public static string commit(string multiCloudImageID)
+        {
+            string postHref = string.Format(APIHrefs.MultiCloudImageCommit, multiCloudImageID);
+            string outString = string.Empty;
+            List<string> results = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location", out outString);
+            return results.Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
     }
 }

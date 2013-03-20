@@ -322,6 +322,28 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// MultiCloud Image href takes one parameter for cloning 
+        /// </summary>
+        public static string MultiCloudImageClone
+        {
+            get
+            {
+                return MultiCloudImageByID + "/clone";
+            }
+        }
+
+        /// <summary>
+        /// MultiCloud Image Href takes one parameter for committing
+        /// </summary>
+        public static string MultiCloudImageCommit
+        {
+            get
+            {
+                return MultiCloudImageByID + "/commit";
+            }
+        }
+
+        /// <summary>
         /// ServerTemplate href for working with MultiCloudImages on a given ST
         /// </summary>
         public static string ServerTemplateMultiCloudImage
