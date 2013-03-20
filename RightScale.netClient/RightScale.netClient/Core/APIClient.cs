@@ -384,7 +384,7 @@ namespace RightScale.netClient.Core
         /// Default and base authentication call which pulls authentication data from the app.config or web.config for the specified keys.  OAuth2 token is prioritized in front of username/password/accountid if specified.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> Authenticate()
+        public bool Authenticate()
         {
             if (!this.isAuthenticated)
             {
@@ -401,11 +401,11 @@ namespace RightScale.netClient.Core
 
                 if (!string.IsNullOrWhiteSpace(this.oauthRefreshToken))
                 {
-                    return await Authenticate(this.oauthRefreshToken);
+                    return Authenticate(this.oauthRefreshToken);
                 }
                 else if (!string.IsNullOrWhiteSpace(this.userName) && !string.IsNullOrWhiteSpace(this.password) && !string.IsNullOrWhiteSpace(this.accountId))
                 {
-                    return await Authenticate(this.userName, this.password, this.accountId);
+                    return Authenticate(this.userName, this.password, this.accountId);
                 }
                 else
                 {
@@ -420,7 +420,7 @@ namespace RightScale.netClient.Core
         /// </summary>
         /// <param name="oAuthRefreshToken">OAuth2 Token taken from RightScale Dashboard</param>
         /// <returns>true if successfully authenticated, false if not</returns>
-        public async Task<bool> Authenticate(string oAuthRefreshToken)
+        public bool Authenticate(string oAuthRefreshToken)
         {
             bool retVal = false;
             if (!this.isAuthenticated)
@@ -435,17 +435,23 @@ namespace RightScale.netClient.Core
                     postData.Add(new KeyValuePair<string, string>("refresh_token", oAuthRefreshToken));
                     HttpContent postContent = new FormUrlEncodedContent(postData);
 
-                    HttpResponseMessage response = await webClient.PostAsync(@"https://my.rightscale.com/api/oauth2", postContent);
-                    response.EnsureSuccessStatusCode();
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    dynamic result = JsonConvert.DeserializeObject<dynamic>(content);
-
-                    if (result["access_token"] != null)
+                    HttpResponseMessage  responseMessage = webClient.PostAsync(@"https://my.rightscale.com/api/oauth2", postContent).Result;
+                    if (responseMessage.IsSuccessStatusCode)
                     {
-                        webClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", result["access_token"].ToString()));
-                        this.oauthBearerToken = result["access_token"].ToString();
-                        this.isAuthenticated = true;
+                        string content = responseMessage.Content.ReadAsStringAsync().Result;
+
+                        dynamic result = JsonConvert.DeserializeObject<dynamic>(content);
+
+                        if (result["access_token"] != null)
+                        {
+                            webClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", result["access_token"].ToString()));
+                            this.oauthBearerToken = result["access_token"].ToString();
+                            this.isAuthenticated = true;
+                        }
+                    }
+                    else
+                    {
+                        this.isAuthenticated = false; ;
                     }
                 }
                 if (this.isAuthenticated)
@@ -469,7 +475,7 @@ namespace RightScale.netClient.Core
         /// <param name="password">RightScale login password</param>
         /// <param name="accountID">RightScale Account ID to be programmatically accessed</param>
         /// <returns>True if authenticated successfully, false if not</returns>
-        public async Task<bool> Authenticate(string userName, string password, string accountID)
+        public bool Authenticate(string userName, string password, string accountID)
         {
             bool retVal = false;
             if (!this.isAuthenticated)
@@ -484,12 +490,17 @@ namespace RightScale.netClient.Core
                     postData.Add(new KeyValuePair<string, string>("account_href", string.Format(@"/api/accounts/{0}", accountID)));
                     HttpContent postContent = new FormUrlEncodedContent(postData);
 
-                    HttpResponseMessage response = await webClient.PostAsync("https://my.rightscale.com/api/session", postContent);
-                    response.EnsureSuccessStatusCode();
-
-                    if (this.cookieContainer.Count > 1)
+                    HttpResponseMessage response = webClient.PostAsync("https://my.rightscale.com/api/session", postContent).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        this.isAuthenticated = true;
+                        if (this.cookieContainer.Count > 1)
+                        {
+                            this.isAuthenticated = true;
+                        }
+                    }
+                    else
+                    {
+                        this.isAuthenticated = false;
                     }
                 }
                 if (this.isAuthenticated)
@@ -513,7 +524,7 @@ namespace RightScale.netClient.Core
         {
             if (!this.isAuthenticated && !this.isAuthenticating)
             {
-                return Authenticate().Result;
+                return Authenticate();
             }
             else
             {

@@ -31,7 +31,18 @@ namespace RightScale.netClient
         public string updated_at { get; set; }
 
         #endregion
-        
+
+        /// <summary>
+        /// Associated tags for this object
+        /// </summary>
+        public List<string> Tags
+        {
+            get
+            {
+                return Tag.byResource(getLinkValue("self"));
+            }
+        }
+
         #region ID Properties
 
         /// <summary>

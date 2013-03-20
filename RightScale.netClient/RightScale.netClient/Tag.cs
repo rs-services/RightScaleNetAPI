@@ -78,7 +78,23 @@ namespace RightScale.netClient
         #endregion
 
         #region Tag.by_tag methods
-            
+
+        /// <summary>
+        /// Search for resources having a list of tags in a specific resource_type. If the parameter match_all is not "true" then the search is performed as an "OR" operation i.e. resources having any of the tags are returned. If it is set to "true", only resources having all the tags are returned.
+        /// The list of tags may contain plain tags ("my_db_server"), machine tags ("server:db=true"), namespace matches ("server:"), or namespace & predicate matches ("server:db="). The result set includes links to the resources, as well as optionally additional tags matching the include_tags_with_prefix expression.
+        /// For example, a search with tag[]="server:db=true" and include_tags_with_prefix="backup:" will return resources that match the first expression and for each one return any tags matching "backup:".
+        /// If the include_tags_with_prefix is not passed, the list of tags for each resource will be empty.
+        /// </summary>
+        /// <param name="includeTagsWithPrefix">If included, all tags matching this prefix will be returned. If not included, no tags will be returned</param>
+        /// <param name="matchAll">If set to 'true', resources having all the tags specified in the 'tags' parameter are returned. Otherwise, resources having any of the tags are returned.</param>
+        /// <param name="resourceTag">Search among a single resource type</param>
+        /// <param name="tags">The tags which must be present on the resource.</param>
+        public static void byTag(string includeTagsWithPrefix, bool matchAll, string resourceType, List<string> tags)
+        {
+            List<string> validResourceTypes = new List<string>() { "servers", "instances", "volumes", "volume_snapshots", "deployments", "server_templates", "multi_cloud_images", "images", "server_arrays", "accounts" };
+            Utility.CheckStringInput("resource_type", validResourceTypes, resourceType);
+        }
+
         #endregion
 
         #region Tag.multi_add methods
