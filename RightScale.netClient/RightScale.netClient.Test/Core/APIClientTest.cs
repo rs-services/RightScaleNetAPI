@@ -96,5 +96,22 @@ namespace RightScale.netClient.Test.Core
             bool result2 = testTask2.Result;
             Assert.IsTrue(result2, "Second RSAPI Failed to authenticate with OAtuth2 Refresh Token");
         }
+
+        [TestMethod]
+        public void badPasswordAuth()
+        {
+            APIClient.Instance.InitWebClient();
+            Task<bool> testTask = APIClient.Instance.Authenticate(userName, "thisisnotapassword", accountID);
+            try
+            {
+                bool result = testTask.Result;
+                Assert.Fail();
+            }
+            catch (AggregateException)
+            {
+                Assert.IsTrue(true);
+            }
+            
+        }
     }
 }
