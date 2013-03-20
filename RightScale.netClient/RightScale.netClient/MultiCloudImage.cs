@@ -285,17 +285,6 @@ namespace RightScale.netClient
 
         #region MultiCloudImage.update methods
 
-        /// <summary>
-        /// Clones a given MultiCloudImage
-        /// </summary>
-        /// <param name="multiCloudImageID">ID of MultiCloudImage to clone</param>
-        /// <returns>ID of newly created MCI</returns>
-        public static bool clone(string multiCloudImageID)
-        {
-            string postHref = string.Format(APIHrefs.MultiCloudImageByID, multiCloudImageID);
-            return Core.APIClient.Instance.Post(postHref);
-        }
-
         #endregion
 
         #region MultiCloudImage.clone methods
@@ -328,6 +317,33 @@ namespace RightScale.netClient
             string outString = string.Empty;
             List<string> results = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location", out outString);
             return results.Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+        #region MultiCloudImage.destroy methods
+
+        /// <summary>
+        /// Deletes a given MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to delete</param>
+        /// <returns>True if success, false if not</returns>
+        public static bool destroy(string multiCloudImageID)
+        {
+            string deleteHref = string.Format(APIHrefs.MultiCloudImageByID, multiCloudImageID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        /// <summary>
+        /// Deletes a given MultiCloudImage 
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate the MCI is associated with</param>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to delete</param>
+        /// <returns>true if success, false if not</returns>
+        public static bool destroy_ServerTemplate(string serverTemplateID, string multiCloudImageID)
+        {
+            string deleteHref = string.Format(APIHrefs.ServerTemplateMultiCloudImageByID, serverTemplateID, multiCloudImageID);
+            return Core.APIClient.Instance.Delete(deleteHref);
         }
 
         #endregion
