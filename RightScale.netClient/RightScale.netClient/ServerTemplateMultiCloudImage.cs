@@ -93,21 +93,41 @@ namespace RightScale.netClient
 
         #region ServerTemplateMultiCloudImage.index methods
 
+        /// <summary>
+        /// Lists the ServerTemplateMultiCloudImages that are available to this account
+        /// </summary>
+        /// <returns>List of ServerTemplateMultiCloudImage objects</returns>
         public static List<ServerTemplateMultiCloudImage> index()
         {
             return index(null, null);
         }
 
+        /// <summary>
+        /// Lists the ServerTemplateMultiCloudImages that are available to this account
+        /// </summary>
+        /// <param name="filter">Set of filters to limit return of query</param>
+        /// <returns>List of ServerTemplateMultiCloudImage objects</returns>
         public static List<ServerTemplateMultiCloudImage> index(List<Filter> filter)
         {
             return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists the ServerTemplateMultiCloudImages that are available to this account
+        /// </summary>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of ServerTemplateMultiCloudImage objects</returns>
         public static List<ServerTemplateMultiCloudImage> index(string view)
         {
             return index(null, view);
         }
 
+        /// <summary>
+        /// Lists the ServerTemplateMultiCloudImages that are available to this account
+        /// </summary>
+        /// <param name="filter">Set of filters to limit return of query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of ServerTemplateMultiCloudImage objects</returns>
         public static List<ServerTemplateMultiCloudImage> index(List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
@@ -123,10 +143,48 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "is_default", "multi_cloud_image_href", "server_template_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement ServerTemplateMultiCloudImage.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+
+            if (filter != null && filter.Count > 0)
+            {
+                queryString += Utility.BuildFilterString(filter) + "&";
+            }
+
+            queryString += string.Format("view={0}", view);
+
+            string getHref = APIHrefs.ServerTemplateMultiCloudImages;
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region ServerTemplateMultiCloudImage.show methods
+
+        /// <summary>
+        /// Show information about a single ServerTemplateMultiCloudImage which represents an association between a ServerTemplate and a MultiCloudImage
+        /// </summary>
+        /// <param name="serverTemplateMultiCloudImageID">ID of the ServerTemplateMultiCloudImage</param>
+        /// <returns>Populated instance of a ServerTemplateMultiCloudImage</returns>
+        public static ServerTemplateMultiCloudImage show(string serverTemplateMultiCloudImageID)
+        {
+            string getHref = string.Format(APIHrefs.ServerTemplateMultiCloudImagesByID, serverTemplateMultiCloudImageID);
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region ServerTemplateMultiCloudImage.create methods
+
+        #endregion
+
+        #region ServerTemplateMultiCloudImage.destroy methods
+
+        #endregion
+
+        #region ServerTemplateMultiCloudImage.make_default methods
+
+        #endregion
+
     }
 }
