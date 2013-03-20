@@ -48,5 +48,53 @@ namespace RightScale.netClient.Test.Core
             bool result = testTask.Result;
             Assert.IsTrue(result, "RSAPI Failed to authenticate with default, configuration based constructor");
         }
+
+        [TestMethod]
+        public void UsernamePassDoubleAuth()
+        {
+            APIClient.Instance.InitWebClient();
+            Task<bool> testTask = APIClient.Instance.Authenticate(userName, password, accountID);
+            bool result = testTask.Result;
+            Assert.IsTrue(result, "RSAPI Failed to authenticate with username, password and account ID");
+            Task<bool> testTask2 = APIClient.Instance.Authenticate(userName, password, accountID);
+            bool result2 = testTask2.Result;
+            Assert.IsTrue(result2, "Second RSAPI Failed to authenticate with username, password and account ID");
+        }
+
+        [TestMethod]
+        public void OauthDoubleAuth()
+        {
+            APIClient.Instance.InitWebClient();
+            Task<bool> testTask =  APIClient.Instance.Authenticate(refreshToken);
+            bool result = testTask.Result;
+            Assert.IsTrue(result, "RSAPI Failed to authenticate with OAtuth2 Refresh Token");
+            Task<bool> testTask2 =  APIClient.Instance.Authenticate(refreshToken);
+            bool result2 = testTask2.Result;
+            Assert.IsTrue(result2, "Second RSAPI Failed to authenticate with OAtuth2 Refresh Token");
+        }
+
+        [TestMethod]
+        public void OauthUsernamePasswordAuth()
+        {
+            APIClient.Instance.InitWebClient();
+            Task<bool> testTask = APIClient.Instance.Authenticate(refreshToken);
+            bool result = testTask.Result;
+            Assert.IsTrue(result, "RSAPI Failed to authenticate with OAtuth2 Refresh Token");
+            Task<bool> testTask2 = APIClient.Instance.Authenticate(userName, password, accountID);
+            bool result2 = testTask2.Result;
+            Assert.IsTrue(result2, "Second RSAPI Failed to authenticate with username, password and account ID");
+        }
+
+        [TestMethod]
+        public void UsernamePasswordOauthAuth()
+        {
+            APIClient.Instance.InitWebClient();
+            Task<bool> testTask = APIClient.Instance.Authenticate(userName, password, accountID);
+            bool result = testTask.Result;
+            Assert.IsTrue(result, "RSAPI Failed to authenticate with username, password and account ID");
+            Task<bool> testTask2 =  APIClient.Instance.Authenticate(refreshToken);
+            bool result2 = testTask2.Result;
+            Assert.IsTrue(result2, "Second RSAPI Failed to authenticate with OAtuth2 Refresh Token");
+        }
     }
 }
