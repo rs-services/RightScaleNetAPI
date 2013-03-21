@@ -82,7 +82,7 @@ namespace RightScale.netClient
         public static DataCenter show(string cloudID, string dataCenterID)
         {
             Utility.CheckStringIsNumeric(cloudID);
-            Utility.CheckStringIsNumeric(dataCenterID);
+            Utility.CheckStringHasValue(dataCenterID);
 
             string getURL = string.Format(APIHrefs.DataCenterByID, cloudID, dataCenterID);
 

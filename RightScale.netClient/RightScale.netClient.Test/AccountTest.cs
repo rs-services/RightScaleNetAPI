@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RightScale.netClient;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace RightScale.netClient.Test
 {
@@ -35,6 +36,15 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(acct, "Account came back as null - issue with API call");
             Account owner = acct.Owner;
             Assert.IsNotNull(owner);
+        }
+
+        [TestMethod]
+        public void accountTags()
+        {
+            Account acct = Account.show(accountID);
+            Assert.IsNotNull(acct, "Account came back as null - issue with API call");
+            List<string> tags = acct.Tags;
+            Assert.IsTrue(true); //no exception is a good thing!
         }
 
         #endregion

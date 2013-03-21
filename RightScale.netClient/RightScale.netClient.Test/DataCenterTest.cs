@@ -10,27 +10,37 @@ namespace RightScale.netClient.Test
     {
         string cloudID;
         string datacenterID;
+        string servicesOauthToken;
 
         public DataCenterTest()
         {
             cloudID = ConfigurationManager.AppSettings["DataCenter_cloudID"].ToString();
             datacenterID = ConfigurationManager.AppSettings["DataCenter_datacenterID"].ToString();
+            servicesOauthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
         }
 
-        //TODO: Figure out this unit test
-        //[TestMethod]
+        [TestMethod]
         public void DataCenterCloud()
         {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(servicesOauthToken);
+
             DataCenter dc = DataCenter.show(cloudID, datacenterID);
             Assert.IsNotNull(dc);
             Cloud dcCloud = dc.cloud;
             Assert.IsNotNull(dcCloud);
             Assert.IsTrue(dcCloud.name.Length > 0);
+
+            netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void datacenterIndex()
         {
+
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(servicesOauthToken);
+
             try
             {
                 List<DataCenter> dcList = DataCenter.index(cloudID);
@@ -48,6 +58,8 @@ namespace RightScale.netClient.Test
                     Assert.Fail(rsae.Message + Environment.NewLine + rsae.ErrorData);
                 }
             }
+
+            netClient.Core.APIClient.Instance.InitWebClient();
         }
     }
 }
