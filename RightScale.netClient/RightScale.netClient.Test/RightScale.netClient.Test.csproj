@@ -80,6 +80,7 @@
     <Compile Include="InputTest.cs" />
     <Compile Include="TagTest.cs" />
     <Compile Include="ServerTemplateMultiCloudImageTest.cs" />
+    <Compile Include="VolumTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">
