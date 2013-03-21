@@ -257,7 +257,7 @@ namespace RightScale.netClient
         public static string clone(string servertemplateID, string name, string description)
         {
             Utility.CheckStringHasValue(name);
-            string postHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
+            string postHref = string.Format(APIHrefs.ServerTemplateClone, servertemplateID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             Utility.addParameter(name, "server_template[name]", postParams);
             Utility.addParameter(description, "server_template[description]", postParams);

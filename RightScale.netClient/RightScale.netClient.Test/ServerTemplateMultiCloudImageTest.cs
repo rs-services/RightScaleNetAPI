@@ -115,13 +115,15 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void createDeleteTest()
         {
+            prepSTMCI();
+
             string retVal = ServerTemplateMultiCloudImage.create(newMciID, serverTemplateID);
             Assert.IsNotNull(retVal);
             Assert.IsTrue(retVal.Length > 0);
             bool isDeleted = ServerTemplateMultiCloudImage.destroy(retVal);
             Assert.IsTrue(isDeleted);
         }
-
+        
         #endregion
 
         #region ServerTemplateMultiCloudImageTest Update tests
@@ -129,6 +131,8 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void createUpdateDeleteTest()
         {
+            prepSTMCI();
+
             string retVal = ServerTemplateMultiCloudImage.create(newMciID, serverTemplateID);
             Assert.IsNotNull(retVal);
             Assert.IsTrue(retVal.Length > 0);
@@ -142,5 +146,19 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(isDeleted);
         }
         #endregion
+
+
+        private void prepSTMCI()
+        {
+            List<Filter> filter = new List<Filter>();
+            filter.Add(new Filter("multi_cloud_image_href", FilterOperator.Equal, Utility.multiCloudImageHref(newMciID)));
+            filter.Add(new Filter("server_template_href", FilterOperator.Equal, Utility.serverTemplateHref(serverTemplateID)));
+            List<ServerTemplateMultiCloudImage> stmci = ServerTemplateMultiCloudImage.index(filter);
+            if (stmci.Count == 1)
+            {
+                bool predelete = ServerTemplateMultiCloudImage.destroy(stmci[0].ID);
+                Assert.IsTrue(predelete);
+            }
+        }
     }
 }

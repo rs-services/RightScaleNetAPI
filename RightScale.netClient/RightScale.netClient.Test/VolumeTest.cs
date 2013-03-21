@@ -52,7 +52,7 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(volumelist.Count > 0);
         }
 
-        //---------------
+        
         [TestMethod]
         public void index_volumeFilterViewTest()
         {
