@@ -10,11 +10,13 @@ namespace RightScale.netClient.Test
     public class VolumeTest
     {
         private string cloudID;
+        private string volumeID;
 
         public VolumeTest()
         {
 
             cloudID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_cloudid"].ToString());
+            volumeID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_volumeid"].ToString());
         }
 
         #region Volume.index tests
@@ -64,6 +66,21 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(volumelist);
             Assert.IsTrue(volumelist.Count > 0);
         }
+        #endregion
+
+
+        #region Volume.show tests
+
+        //TODO:  Need to get valid volume cloudID
+        [TestMethod]
+        public void index_volumeShowTest()
+        {
+
+            Volume volumelist = Volume.show(cloudID, volumeID);
+
+            Assert.IsNotNull(volumelist);
+        }
+
         #endregion
     }
 }

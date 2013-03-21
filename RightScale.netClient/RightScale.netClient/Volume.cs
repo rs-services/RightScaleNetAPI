@@ -269,9 +269,15 @@ namespace RightScale.netClient
         public static Volume show(string cloudID, string volumeID, string view)
         {
             string getHref = string.Format(APIHrefs.VolumeByID, cloudID, volumeID);
-            List<string> validViews = new List<string>() { "default", "extended" };
-            Utility.CheckStringInput("view", validViews, view);
-            string queryString = string.Format("view={0}", view);
+            string queryString = string.Empty;
+
+            if (view != null)
+            {
+                List<string> validViews = new List<string>() { "default", "extended" };
+                Utility.CheckStringInput("view", validViews, view);
+                queryString = string.Format("view={0}", view);
+            }
+
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserialize(jsonString);
         }
