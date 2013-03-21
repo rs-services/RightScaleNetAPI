@@ -90,6 +90,7 @@ namespace RightScale.netClient.Test
         #endregion
 
         #region MultiCloudImage.clone tests
+        //MCI clone test
         [TestMethod]
         public void MultiCloudImageClone()
         {
