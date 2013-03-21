@@ -11,20 +11,28 @@ namespace RightScale.netClient.Test
     {
         private string filterListString;
         private string multicloudimageid;
+<<<<<<< HEAD
         private string multicloudimageidupdate;
         private string multicloudimageiddestroy;
         private string serverTemplateID;
 
+=======
+        private string serverTemplateID;
+>>>>>>> MultiCloudImage unit tests
 
         public MultiCloudImageTest()
         {
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_filterListString"].ToString());
             multicloudimageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_imageid"].ToString());
+<<<<<<< HEAD
             multicloudimageidupdate = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestUpdate_imageid"].ToString());
             multicloudimageiddestroy = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestDestroy_imageid"].ToString());
 
             serverTemplateID = ConfigurationManager.AppSettings["MultiCloudImageTest_ServerTemplateID"].ToString();
 
+=======
+            serverTemplateID = ConfigurationManager.AppSettings["MultiCloudImageTest_ServerTemplateID"].ToString();
+>>>>>>> MultiCloudImage unit tests
         }
 
         #region MultiCloudImage.Index tests
@@ -59,6 +67,7 @@ namespace RightScale.netClient.Test
 
         #endregion
 
+<<<<<<< HEAD
 
         #region MultiCloudImage.create tests
         [TestMethod]
@@ -124,6 +133,8 @@ namespace RightScale.netClient.Test
 
 
         #endregion
+=======
+>>>>>>> MultiCloudImage unit tests
         #region MultiCloudImage.create .destroy tests
 
         [TestMethod]
@@ -176,7 +187,10 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(isDeleted);
         }
 
+<<<<<<< HEAD
         [TestMethod]
+=======
+>>>>>>> MultiCloudImage unit tests
         public void createSTMCIdestroyMCITest()
         {
             string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
@@ -187,6 +201,7 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+<<<<<<< HEAD
 
         #region MultiCloudImage.clone .destroy tests
 
@@ -324,6 +339,8 @@ namespace RightScale.netClient.Test
 
 
         #endregion
+=======
+>>>>>>> MultiCloudImage unit tests
     }
 }
 
