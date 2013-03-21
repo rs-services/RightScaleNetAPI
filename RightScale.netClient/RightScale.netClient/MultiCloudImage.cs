@@ -336,11 +336,16 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="multiCloudImageID">ID of the MultiCloud Image to clone</param>
         /// <returns>ID of the newly created MultiCloud Image</returns>
-        public static string clone(string multiCloudImageID)
+        public static string clone(string multiCloudImageID, string name)
         {
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+
             string postHref = string.Format(APIHrefs.MultiCloudImageClone, multiCloudImageID);
             string outString = string.Empty;
-            List<string> results = Core.APIClient.Instance.Post(postHref,new List<KeyValuePair<string,string>>(), "location", out outString);
+
+            Utility.addParameter(name, "multi_cloud_image[name]", putParams);
+
+            List<string> results = Core.APIClient.Instance.Post(postHref,putParams, "location", out outString);
             return results.Last<string>().Split('/').Last<string>();
         }
 
@@ -352,12 +357,17 @@ namespace RightScale.netClient
         /// Commits a given MultiCloudImage.  Only HEAD revisions can be committed.
         /// </summary>
         /// <param name="multiCloudImageID">ID of the MultiCloudImage to be committed</param>
-        /// <returns>ID fo the committed MultiCloud Image</returns>
-        public static string commit(string multiCloudImageID)
+        /// <returns>ID for the committed MultiCloud Image</returns>
+        public static string commit(string multiCloudImageID, string message)
         {
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+
             string postHref = string.Format(APIHrefs.MultiCloudImageCommit, multiCloudImageID);
             string outString = string.Empty;
-            List<string> results = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location", out outString);
+
+            Utility.addParameter(message, "commit_message", putParams);
+
+            List<string> results = Core.APIClient.Instance.Post(postHref, putParams, "location", out outString);
             return results.Last<string>().Split('/').Last<string>();
         }
 
