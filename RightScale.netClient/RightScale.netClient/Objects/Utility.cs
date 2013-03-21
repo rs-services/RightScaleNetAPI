@@ -379,6 +379,42 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Helper method returns properly formatted instance_href
+        /// </summary>
+        /// <param name="cloudID">Cloud ID where Instance can be found</param>
+        /// <param name="objectID">Instance ID</param>
+        /// <returns>Formatted instance_href</returns>
+        public static string InstanceHref(string cloudID, string objectID)
+        {
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format(APIHrefs.InstanceByID, cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Helper method returns properly formatted volume_href
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud where Volume can be found</param>
+        /// <param name="objectID">ID of Volume</param>
+        /// <returns>properly formatted volume_href</returns>
+        public static string VolumeHref(string cloudID, string objectID)
+        {
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format(APIHrefs.VolumeByID, cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Helper method returns properly formatted instance_type_href
         /// </summary>
         /// <param name="cloudID">Cloud ID where instanceType can be found</param>

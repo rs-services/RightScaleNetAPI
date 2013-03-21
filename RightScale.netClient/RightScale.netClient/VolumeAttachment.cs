@@ -348,5 +348,71 @@ namespace RightScale.netClient
         }
         #endregion
 
+        #region VolumeAttachment.create methods
+
+        /// <summary>
+        /// Creates a new Volume Attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="device">The device location where the volume will be mounted. Value must be of format /dev/xvd[bcefghij]. This is not reliable and will be deprecated</param>
+        /// <param name="instanceID">The ID of the instance to which the volume will be attached to</param>
+        /// <param name="volumeID">The ID of the volume to be attached</param>
+        /// <returns>ID of newly created VolumeAttachment</returns>
+        public static string create(string cloudID, string device, string instanceID, string volumeID)
+        {
+            string postHref = string.Format(APIHrefs.VolumeAttachment, cloudID);
+            return createPost(postHref, cloudID, device, instanceID, volumeID);
+        }
+
+        /// <summary>
+        /// Creates a new Volume Attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="instanceID">The ID of the instance to which the volume will be attached to</param>
+        /// <param name="device">The device location where the volume will be mounted. Value must be of format /dev/xvd[bcefghij]. This is not reliable and will be deprecated</param>
+        /// <param name="volumeID">The ID of the volume to be attached</param>
+        /// <returns>ID of newly created VolumeAttachment</returns>
+        public static string create_Instance(string cloudID, string instanceID, string device, string volumeID)
+        {
+            string postHref = string.Format(APIHrefs.InstanceVolumeAttachment, cloudID, instanceID);
+            return createPost(postHref, cloudID, device, instanceID, volumeID);
+        }
+
+        /// <summary>
+        /// Creates a new Volume Attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="volumeID">The ID of the volume to be attached</param>
+        /// <param name="device">The device location where the volume will be mounted. Value must be of format /dev/xvd[bcefghij]. This is not reliable and will be deprecated</param>
+        /// <param name="instanceID">The ID of the instance to which the volume will be attached to</param>
+        /// <returns>ID of newly created VolumeAttachment</returns>
+        public static string create_Volume(string cloudID, string volumeID, string device, string instanceID)
+        {
+            string postHref = string.Format(APIHrefs.VolumeVolumeAttachments, cloudID, volumeID);
+            return createPost(postHref, cloudID, device, instanceID, volumeID);
+        }
+
+        /// <summary>
+        /// Private method for centralizing all logic for VolumeAttachment Create clals
+        /// </summary>
+        /// <param name="postHref">Href fragment for calling RSAPI</param>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="device">The device location where the volume will be mounted. Value must be of format /dev/xvd[bcefghij]. This is not reliable and will be deprecated</param>
+        /// <param name="instanceID">The ID of the instance to which the volume will be attached to</param>
+        /// <param name="volumeID">The ID of the volume to be attached</param>
+        /// <returns>ID of newly created VolumeAttachment</returns>
+        private static string createPost(string postHref, string cloudID, string device, string instanceID, string volumeID)
+        {
+            List<KeyValuePair<string,string>> inputs = new List<KeyValuePair<string,string>>();
+            inputs.Add(new KeyValuePair<string,string>("device", device));
+            inputs.Add(new KeyValuePair<string,string>("instance_href", Utility.InstanceHref(cloudID, instanceID)));
+            inputs.Add(new KeyValuePair<string, string>("volume_href", Utility.VolumeHref(cloudID, volumeID)));
+            string outString = string.Empty;
+
+            List<string> retVal = Core.APIClient.Instance.Post(postHref, inputs,"location", out outString);
+            return retVal.Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
     }
 }
