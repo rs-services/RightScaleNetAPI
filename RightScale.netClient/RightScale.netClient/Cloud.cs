@@ -209,18 +209,23 @@ namespace RightScale.netClient
         /// <param name="filter">Filter limits results returned</param>
         /// <returns>List of clouds available to this account</returns>
         public static List<Cloud> index(List<Filter> filter)
-        {             
-            List<string> validFilters = new List<string>() { "cloud_type", "description", "name" };
-            Utility.CheckFilterInput("filter", validFilters, filter);
+        {    
+
             string queryString = string.Empty;
+
             if (filter != null && filter.Count > 0)
             {
+                List<string> validFilters = new List<string>() { "cloud_type", "description", "name" };
+                Utility.CheckFilterInput("filter", validFilters, filter);
+
                 foreach (var f in filter)
                 {
                     queryString += f.ToString() + "&";
                 }
             }
+
             queryString = queryString.TrimEnd('&');
+
             string jsonString = Core.APIClient.Instance.Get(APIHrefs.Cloud, queryString);
             return Cloud.deserializeList(jsonString);
         }
