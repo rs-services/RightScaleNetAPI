@@ -120,22 +120,108 @@ namespace RightScale.netClient
 
         #region VolumeAttachment.index methods
 
-        public static List<VolumeAttachment> index()
+        /// <summary>
+        /// Lists all volume attachments
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
         }
 
-        public static List<VolumeAttachment> index(List<Filter> filter)
+        /// <summary>
+        /// Lists all volume attachments
+        /// </summary>
+        /// <param name="cloudID">ID fo the cloud to query</param>
+        /// <param name="filter">Set of filters for query</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index(string cloudID, List<Filter> filter)
         {
-            return index(filter, null);
+            return index(cloudID, filter, null);
         }
 
-        public static List<VolumeAttachment> index(string view)
+        /// <summary>
+        /// Lists all volume attachments
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index(string cloudID, string view)
         {
-            return index(null, view);
+            return index(cloudID, null, view);
         }
 
-        public static List<VolumeAttachment> index(List<Filter> filter, string view)
+        /// <summary>
+        /// Lists all volume attachments
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
+        /// <param name="filter">Set of filters for query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index(string cloudID, List<Filter> filter, string view)
+        {
+            string getHref = string.Format(APIHrefs.VolumeAttachment, cloudID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// Lists all Volume Attachments for an Instance
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud being queried</param>
+        /// <param name="instanceID">Id of the Instance being queried</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index_Instance(string cloudID, string instanceID)
+        {
+            return index_Instance(cloudID, instanceID, new List<Filter>(), string.Empty);
+        }
+
+        /// <summary>
+        /// Lists all Volume Attachments for an Instance
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud being queried</param>
+        /// <param name="instanceID">Id of the Instance being queried</param>
+        /// <param name="filter">Set of filters for query</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index_Instance(string cloudID, string instanceID, List<Filter> filter)
+        {
+            return index_Instance(cloudID, instanceID, filter, string.Empty);
+        }
+
+        /// <summary>
+        /// Lists all Volume Attachments for an Instance
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud being queried</param>
+        /// <param name="instanceID">Id of the Instance being queried</param>
+        /// <param name="view">Specifies how many attributes and/or expanded ne
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index_Instance(string cloudID, string instanceID, string view)
+        {
+            return index_Instance(cloudID, instanceID, new List<Filter>(), view);
+        }
+
+        /// <summary>
+        /// Lists all Volume Attachments for an Instance
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud being queried</param>
+        /// <param name="instanceID">Id of the Instance being queried</param>
+        /// <param name="filter">Set of filters for query</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of VolumeAttachment objects</returns>
+        public static List<VolumeAttachment> index_Instance(string cloudID, string instanceID, List<Filter> filter, string view)
+        {
+            string getHref = string.Format(APIHrefs.InstanceVolumeAttachment, cloudID, instanceID);
+            return indexGet(getHref, filter, view);
+        }
+
+        /// <summary>
+        /// Private method managing central process for getting list of VolumeAttachment classes
+        /// </summary>
+        /// <param name="getHref">API Href fragment for RSAPI call</param>
+        /// <param name="filter">collection of filters for this request</param>
+        /// <param name="view">View specified for this request</param>
+        /// <returns>List of VolumeAttachmemt objects</returns>
+        private static List<VolumeAttachment> indexGet(string getHref, List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -149,9 +235,16 @@ namespace RightScale.netClient
 
             List<string> validFilters = new List<string>() { "instance_href", "resource_uid", "volume_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
+            string queryString = string.Empty;
 
-            //TODO: implement VolumeAttachment.index
-            throw new NotImplementedException();
+            foreach (Filter f in filter)
+            {
+                queryString += f.ToString() + "&";
+            }
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		

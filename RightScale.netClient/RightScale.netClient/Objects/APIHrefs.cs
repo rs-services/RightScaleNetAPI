@@ -957,6 +957,61 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// href for working with VolumeAttachments - takes one parameter which is the CloudID
+        /// </summary>
+        public static string VolumeAttachment
+        {
+            get
+            {
+                return CloudByID + "/volume_attachments";
+            }
+        }
+
+        /// <summary>
+        /// href for working with VolumeAttachments on a specific instance - takes two parameters which are the Cloud ID and the Instance ID
+        /// </summary>
+        public static string InstanceVolumeAttachment
+        {
+            get
+            {
+                return InstanceByID + "/volume_attachments";
+            }
+        }
+
+        /// <summary>
+        /// href for working with a specific VolumeAttachment - takes two parameters which are the Cloud ID and the Instance ID
+        /// </summary>
+        public static string VolumeAttachmentByID
+        {
+            get
+            {
+                return VolumeAttachment + ID1;
+            }
+        }
+
+        /// <summary>
+        /// href for working with volume attachments related to a specific volume - takes two parameters which are the Cloud ID and the Volume ID
+        /// </summary>
+        public static string VolumeVolumeAttachments
+        {
+            get
+            {
+                return VolumeByID + "/volume_attachment";
+            }
+        }
+
+        /// <summary>
+        /// href for working with a specific volume attachment on a specific instance - takes three parameters which are the Cloud ID, Instance ID and VolumeAttachment ID
+        /// </summary>
+        public static string InstanceVolumeAttachmentByID
+        {
+            get
+            {
+                return InstanceVolumeAttachment + ID2;
+            }
+        }
+
+        /// <summary>
         /// href for working with volumes - takes one parameter which is the cloud ID
         /// </summary>
         public static string Volume
