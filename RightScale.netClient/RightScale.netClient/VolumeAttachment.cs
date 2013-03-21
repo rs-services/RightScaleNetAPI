@@ -247,6 +247,106 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region VolumeAttachment.show methods
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="instanceID">ID of instance where VolumeAttachment is located</param>
+        /// <param name="volumeID">ID of Volume for VolumeAttachment</param>
+        /// <returns><Instance of VolumeAttachment/returns>
+        public static VolumeAttachment show_Instance(string cloudID, string instanceID, string volumeID)
+        {
+            return show_Instance(cloudID, instanceID, volumeID, string.Empty);
+        }
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="instanceID">ID of instance where VolumeAttachment is located</param>
+        /// <param name="volumeID">ID of Volume for VolumeAttachment</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        public static VolumeAttachment show_Instance(string cloudID, string instanceID, string volumeID, string view)
+        {
+            string getHref = string.Format(APIHrefs.InstanceVolumeAttachmentByID, cloudID, instanceID, volumeID);
+            return showGet(getHref, view);
+        }
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="volumeAttachmentID">ID of VolumeAttachment</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        public static VolumeAttachment show(string cloudID, string volumeAttachmentID)
+        {
+            return show(cloudID, volumeAttachmentID, string.Empty);
+        }
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="volumeAttachmentID">ID of VolumeAttachment</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        public static VolumeAttachment show(string cloudID, string volumeAttachmentID, string view)
+        {
+            string getHref = string.Format(APIHrefs.VolumeAttachmentByID, cloudID, volumeAttachmentID);
+            return showGet(getHref, view);
+        }
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="volumeID">ID of Volume for VolumeAttachment</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        public static VolumeAttachment show_Volume(string cloudID, string volumeID)
+        {
+            return show_Volume(cloudID, volumeID, string.Empty);
+        }
+
+        /// <summary>
+        /// Displays information about a single volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where VolumeAttachment is located</param>
+        /// <param name="volumeID">ID of Volume for VolumeAttachment</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        public static VolumeAttachment show_Volume(string cloudID, string volumeID, string view)
+        {
+            string getHref = string.Format(APIHrefs.VolumeVolumeAttachments, cloudID, volumeID);
+            return showGet(getHref, view);
+        }
+
+        /// <summary>
+        /// Private method for centralizing logic for getting a VolumeAttachment object
+        /// </summary>
+        /// <param name="getHref">href fragment for making calls to the RSAPI</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance of VolumeAttachment</returns>
+        private static VolumeAttachment showGet(string getHref, string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string queryStringValue = string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryStringValue);
+            return deserialize(jsonString);
+        }
+        #endregion
+
     }
 }
