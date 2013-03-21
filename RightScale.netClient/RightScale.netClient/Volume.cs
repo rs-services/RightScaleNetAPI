@@ -232,11 +232,14 @@ namespace RightScale.netClient
 
             string queryString = string.Empty;
 
-            foreach (Filter f in filter)
+            if (filter != null)
             {
-                queryString += filter.ToString() + "&";
+                foreach (Filter f in filter)
+                {
+                    queryString += filter.ToString() + "&";
+                }
+                queryString += string.Format("view={0}", view);
             }
-            queryString += string.Format("view={0}", view);
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
