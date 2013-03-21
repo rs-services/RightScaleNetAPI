@@ -206,13 +206,25 @@ namespace RightScale.netClient.Test
             string currentState = Server.show(launchTestServerID).state;
             int waitLoops = 0;
 
-            if (currentState != "inactive" && waitLoops <= maxWaitLoops)
+            if (currentState != "inactive")
             {
-                Thread.Sleep(30000);
+                try
+                {
+                    Server.terminate(launchTestServerID);
+                }
+                catch
+                {
+
+                }
+            }
+
+            while (currentState != "inactive" && (waitLoops <= maxWaitLoops || maxWaitLoops < 0))
+            {
+                Thread.Sleep(5000);
                 currentState = Server.show(launchTestServerID).state;
                 waitLoops++;
             }
-            if (waitLoops >= maxWaitLoops)
+            if (waitLoops >= maxWaitLoops && maxWaitLoops >= 0)
             {
                 Assert.Fail("Cannot start test because server is not in an available state.  Test has not started");
             }
@@ -224,7 +236,7 @@ namespace RightScale.netClient.Test
 
             while (currentState == "queued")
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(5000);
                 currentState = Server.show(launchTestServerID).state;
             }
             
@@ -235,7 +247,7 @@ namespace RightScale.netClient.Test
 
             while (currentState != "inactive")
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(5000);
                 currentState = Server.show(launchTestServerID).state;
             }
         }
