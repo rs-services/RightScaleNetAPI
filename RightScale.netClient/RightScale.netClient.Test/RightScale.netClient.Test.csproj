@@ -80,6 +80,7 @@
     <Compile Include="InputTest.cs" />
     <Compile Include="TagTest.cs" />
     <Compile Include="ServerTemplateMultiCloudImageTest.cs" />
+    <Compile Include="VolumeTypeTest.cs" />
     <Compile Include="VolumeTest.cs" />
   </ItemGroup>
   <ItemGroup>

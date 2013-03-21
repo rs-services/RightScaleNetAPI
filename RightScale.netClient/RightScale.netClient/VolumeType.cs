@@ -191,9 +191,12 @@ namespace RightScale.netClient
 
             string queryString = string.Format("view={0}&", view);
 
-            foreach (Filter f in filter)
+            if (filter != null)
             {
-                queryString += f.ToString() + "&";
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
             }
 
             queryString = queryString.TrimEnd('&');

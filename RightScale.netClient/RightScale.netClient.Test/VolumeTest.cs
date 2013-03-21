@@ -24,7 +24,8 @@ namespace RightScale.netClient.Test
         {
 
             List<Volume> volumeList = Volume.index(cloudID);
-
+            Assert.IsNotNull(volumeList);
+            Assert.IsTrue(volumeList.Count > 0);
 
         }
 
