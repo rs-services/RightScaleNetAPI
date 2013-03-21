@@ -118,8 +118,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del $(ProjectDir)..\RightScale.netClient.PowerShell.zip
-$(ProjectDir)..\Packages\7zip\7za.exe u -tzip $(ProjectDir)..\RightScale.netClient.PowerShell.zip @$(ProjectDir)..\Packages\7zip\zipFiles.txt</PostBuildEvent>
+    <PostBuildEvent>del $(ProjectDir)..\..\PowerShell\RightScale.netClient.PowerShell.zip
+$(ProjectDir)..\Packages\7zip\7za.exe u -tzip $(ProjectDir)..\..\PowerShell\RightScale.netClient.PowerShell.zip @$(ProjectDir)..\Packages\7zip\zipFiles.txt</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
