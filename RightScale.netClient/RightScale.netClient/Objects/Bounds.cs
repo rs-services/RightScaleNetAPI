@@ -11,6 +11,7 @@ namespace RightScale.netClient
     /// </summary>
     public class Bounds
     {
+
         #region Bounds Properties
 
 
