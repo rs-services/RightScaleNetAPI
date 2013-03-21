@@ -414,5 +414,47 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region VolumeAttachment.destroy methods
+
+        /// <summary>
+        /// Deletes a given volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="volumeAttachmentID">ID of Volume Attachment</param>
+        /// <returns>True if successful, false if not</returns>
+        public static bool destroy(string cloudID, string volumeAttachmentID)
+        {
+            string deleteHref = string.Format(APIHrefs.VolumeAttachmentByID, cloudID, volumeAttachmentID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        /// <summary>
+        /// Deletes a given volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="instanceID">ID of Instance</param>
+        /// <param name="volumeAttachmentID">ID of Volume Attachment</param>
+        /// <returns>True if successful, false if not</returns>
+        public static bool destroy_Instance(string cloudID, string instanceID, string volumeAttachmentID)
+        {
+            string deleteHref = string.Format(APIHrefs.InstanceVolumeAttachmentByID, cloudID, instanceID, volumeAttachmentID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        /// <summary>
+        /// Deletes a given volume attachment
+        /// </summary>
+        /// <param name="cloudID">ID of Cloud</param>
+        /// <param name="volumeID">ID of Volume</param>
+        /// <param name="volumeAttachmentID">ID of Volume Attachment</param>
+        /// <returns>True if successful, false if not</returns>
+        public static bool destroy_Volume(string cloudID, string volumeID, string volumeAttachmentID)
+        {
+            string deleteHref = string.Format(APIHrefs.VolumeVolumeAttachmentByID, cloudID, volumeID, volumeAttachmentID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        #endregion
     }
 }

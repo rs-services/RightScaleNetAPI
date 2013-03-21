@@ -1001,6 +1001,17 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// href for working with a volume attachment for a specific volume - takes three parameters which are the Cloud ID, Volume ID and VolumeAttachment ID
+        /// </summary>
+        public static string VolumeVolumeAttachmentByID
+        {
+            get
+            {
+                return VolumeVolumeAttachments + ID2;
+            }
+        }
+
+        /// <summary>
         /// href for working with a specific volume attachment on a specific instance - takes three parameters which are the Cloud ID, Instance ID and VolumeAttachment ID
         /// </summary>
         public static string InstanceVolumeAttachmentByID
