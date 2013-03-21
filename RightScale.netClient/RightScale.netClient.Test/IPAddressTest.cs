@@ -16,6 +16,15 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
+        public void IPAddressIPAddressBinding()
+        {
+            List<IPAddress> ipAddressList = IPAddress.index(cloudID);
+            Assert.IsNotNull(ipAddressList);
+            List<IPAddressBinding> ipBinding = ipAddressList[0].ipAddressBindings;
+            Assert.IsTrue(ipBinding.Count > 0);            
+        }
+
+        [TestMethod]
         public void IPAddressIndexTest()
         {
             List<IPAddress> ipAddressList = IPAddress.index(cloudID);

@@ -18,6 +18,16 @@ namespace RightScale.netClient.Test
             instanceTypeID = ConfigurationManager.AppSettings["InstanceTypeTest_instanceID"].ToString();
         }
 
+        [TestMethod]
+        public void instanceTypeCloud()
+        {            
+            InstanceType testIT = InstanceType.show(cloudID, instanceTypeID);
+            Assert.IsNotNull(testIT);
+            Cloud c = testIT.cloud;
+            Assert.IsNotNull(c);
+            Assert.IsTrue(c.name.Length > 0);
+        }
+
         #region InstanceType.index tests
 
         [TestMethod]

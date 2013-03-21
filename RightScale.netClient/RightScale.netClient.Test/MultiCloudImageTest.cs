@@ -27,6 +27,25 @@ namespace RightScale.netClient.Test
 
         }
 
+        [TestMethod]
+        public void multiCloudImageTags()
+        {
+            MultiCloudImage multicloudimage = MultiCloudImage.show(multicloudimageid);
+            Assert.IsNotNull(multicloudimage);
+            List<string> tags = multicloudimage.Tags;
+            Assert.IsTrue(true);//no exception            
+        }
+
+        [TestMethod]
+        public void multiCloudImageMultiCloudImageSettings()
+        {
+            
+            MultiCloudImage multicloudimage = MultiCloudImage.show(multicloudimageid);
+            Assert.IsNotNull(multicloudimage);
+            List<MultiCloudImageSetting> settings = multicloudimage.settings;
+            Assert.IsTrue(true);
+        }
+
         #region MultiCloudImage.Index tests
 
         [TestMethod]

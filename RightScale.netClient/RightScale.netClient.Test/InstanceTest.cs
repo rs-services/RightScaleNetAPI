@@ -24,6 +24,165 @@ namespace RightScale.netClient.Test
 
         #region Instance relationship tests
 
+        [TestMethod]
+        public void instanceTags()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            List<string> tags = testInstance.Tags;
+            Assert.IsTrue(true);//no exception!
+        }
+
+        [TestMethod]
+        public void instanceDatacenter()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            DataCenter dc = testInstance.datacenter;
+            Assert.IsTrue(true); //no exception
+        }
+
+        [TestMethod]
+        public void instanceMultiCloudImage()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            MultiCloudImage mci = testInstance.multiCloudImage;
+            Assert.IsTrue(true); //no exception
+        }
+
+        [TestMethod]
+        public void instanceServerTemplate()
+        {            
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            ServerTemplate st = testInstance.serverTemplate;
+            Assert.IsNotNull(st);
+            Assert.IsTrue(st.ID.Length > 0);
+        }
+
+        [TestMethod]
+        public void instanceRamdiskImage()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Image ramdiskImage = testInstance.ramdiskImage;
+            Assert.IsTrue(true);//no exception            
+        }
+
+        [TestMethod]
+        public void instanceInstanceType()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            InstanceType it = testInstance.instanceType;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
+        public void instanceMonitoringMetrics()
+        {            
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            List<MonitoringMetric> mms = testInstance.monitoringMetrics;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
+        public void instanceKernelImage()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Image kernelImage = testInstance.kernelImage;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
+        public void instaneSSHKey()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            SshKey ssh = testInstance.sshKey;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
+        public void instanceImage()
+        {            
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Image img = testInstance.image;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void instanceDeployment()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Deployment dep = testInstance.deployment;
+            Assert.IsNotNull(dep);
+            Assert.IsTrue(dep.name.Length > 0);            
+        }
+
+        [TestMethod]
+        public void instanceCloud()
+        {
+            List<Instance> instanceList = Instance.index(cloudID);
+            Assert.IsNotNull(instanceList);
+            Assert.IsTrue(instanceList.Count > 0);
+            string instanceID = instanceList[0].ID;
+            Instance testInstance = Instance.show(cloudID, instanceID, "full");
+            Assert.IsNotNull(testInstance);
+            Cloud cl = testInstance.cloud;
+            Assert.IsNotNull(cl);
+            Assert.IsTrue(cl.name.Length > 0);
+            
+        }
 
         #endregion
 

@@ -20,7 +20,7 @@ namespace RightScale.netClient.Test
         }
 
 
-        [TestMethod]
+        //[TestMethod]
         public void TagbyResourceTest()
         {
             string[] arrHrefs = new string[] { serverhref, deploymenthref};           

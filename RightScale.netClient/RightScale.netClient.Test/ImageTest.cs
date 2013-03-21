@@ -25,13 +25,22 @@ namespace RightScale.netClient.Test
         #region Image relationship tests
 
         [TestMethod]
-        public void MyTestMethod()
+        public void imageCloudTest()
         {
             Image img = Image.show(cloudID, imageid, "default");
             Assert.IsNotNull(img);
             Cloud c = img.cloud;
             Assert.IsNotNull(c);
             Assert.IsTrue(c.name.Length > 0);
+        }
+
+        [TestMethod]
+        public void imageTags()
+        {
+            Image img = Image.show(cloudID, imageid, "default");
+            Assert.IsNotNull(img);
+            List<string> tags = img.Tags;
+            Assert.IsTrue(true); //no exception!
         }
 
         #endregion

@@ -55,12 +55,12 @@ namespace RightScale.netClient
         /// <summary>
         /// IPAddressBinding for this IPAddress
         /// </summary>
-        public IPAddressBinding ipAddressBinding
+        public List<IPAddressBinding> ipAddressBindings
         {
             get
             {
                 string jsonString = Core.APIClient.Instance.Get(getLinkValue("ip_address_bindings"));
-                return IPAddressBinding.deserialize(jsonString);
+                return IPAddressBinding.deserializeList(jsonString);
             }
         }
 
