@@ -11,28 +11,20 @@ namespace RightScale.netClient.Test
     {
         private string filterListString;
         private string multicloudimageid;
-<<<<<<< HEAD
+
         private string multicloudimageidupdate;
         private string multicloudimageiddestroy;
         private string serverTemplateID;
-
-=======
-        private string serverTemplateID;
->>>>>>> MultiCloudImage unit tests
 
         public MultiCloudImageTest()
         {
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_filterListString"].ToString());
             multicloudimageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_imageid"].ToString());
-<<<<<<< HEAD
             multicloudimageidupdate = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestUpdate_imageid"].ToString());
             multicloudimageiddestroy = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestDestroy_imageid"].ToString());
 
             serverTemplateID = ConfigurationManager.AppSettings["MultiCloudImageTest_ServerTemplateID"].ToString();
 
-=======
-            serverTemplateID = ConfigurationManager.AppSettings["MultiCloudImageTest_ServerTemplateID"].ToString();
->>>>>>> MultiCloudImage unit tests
         }
 
         #region MultiCloudImage.Index tests
@@ -67,8 +59,6 @@ namespace RightScale.netClient.Test
 
         #endregion
 
-<<<<<<< HEAD
-
         #region MultiCloudImage.create tests
         [TestMethod]
         public void MultiCloudImageCreate()
@@ -98,8 +88,20 @@ namespace RightScale.netClient.Test
         //MCI clone test
         [TestMethod]
         public void MultiCloudImageClone()
+       {
+           string guidID = Guid.NewGuid().ToString();
+            string resltVal = MultiCloudImage.clone(multicloudimageidupdate,"MCI Clone Test " + guidID);
+
+            Assert.IsNotNull(resltVal);
+            Assert.IsFalse(string.IsNullOrEmpty(resltVal));
+            Assert.IsFalse(string.IsNullOrWhiteSpace(resltVal));
+        }
+
+        [TestMethod]
+        public void MultiCloudImageCloneFull()
         {
-            string resltVal = MultiCloudImage.clone(multicloudimageidupdate,"MCI Clone Test");
+            string guidID = Guid.NewGuid().ToString();
+            string resltVal = MultiCloudImage.clone(multicloudimageidupdate, "MCI Clone Test " + guidID, "this is a description");
 
             Assert.IsNotNull(resltVal);
             Assert.IsFalse(string.IsNullOrEmpty(resltVal));
@@ -133,8 +135,7 @@ namespace RightScale.netClient.Test
 
 
         #endregion
-=======
->>>>>>> MultiCloudImage unit tests
+
         #region MultiCloudImage.create .destroy tests
 
         [TestMethod]
@@ -186,11 +187,8 @@ namespace RightScale.netClient.Test
             bool isDeleted = MultiCloudImage.destroy(mciID);
             Assert.IsTrue(isDeleted);
         }
-
-<<<<<<< HEAD
+       
         [TestMethod]
-=======
->>>>>>> MultiCloudImage unit tests
         public void createSTMCIdestroyMCITest()
         {
             string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
@@ -201,7 +199,6 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
-<<<<<<< HEAD
 
         #region MultiCloudImage.clone .destroy tests
 
@@ -339,8 +336,7 @@ namespace RightScale.netClient.Test
 
 
         #endregion
-=======
->>>>>>> MultiCloudImage unit tests
+
     }
 }
 

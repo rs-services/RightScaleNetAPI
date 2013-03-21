@@ -242,10 +242,9 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="serverID">ID of the servertemplate to be cloned</param>
         /// <returns>ID of the newly created servertemplate</returns>
-        public static string clone(string servertemplateID)
+        public static string clone(string servertemplateID, string name)
         {
-            string postHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
-            return clonePost(postHref, new List<KeyValuePair<string, string>>());
+            return clone(servertemplateID, name, string.Empty);
         }
 
         /// <summary>
@@ -257,6 +256,7 @@ namespace RightScale.netClient
         /// <returns>ID of the newly created servertemplate</returns>
         public static string clone(string servertemplateID, string name, string description)
         {
+            Utility.CheckStringHasValue(name);
             string postHref = string.Format(APIHrefs.ServerTemplateByID, servertemplateID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             Utility.addParameter(name, "server_template[name]", postParams);
@@ -273,8 +273,8 @@ namespace RightScale.netClient
         private static string clonePost(string postHref, List<KeyValuePair<string, string>> postParams)
         {
             string cloneResults = string.Empty;
-            Core.APIClient.Instance.Post(postHref, postParams, "location", out cloneResults);
-            return cloneResults.Split('/').Last<string>();
+            List<string> returnVal = Core.APIClient.Instance.Post(postHref, postParams, "location", out cloneResults);
+            return returnVal.Last<string>().Split('/').Last<string>();
         }
         #endregion
 

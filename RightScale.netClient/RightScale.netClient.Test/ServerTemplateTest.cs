@@ -46,13 +46,24 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void serverTemplateCloneDestroyTest()
         {
-            string newServerTemplateID = ServerTemplate.clone(servertemplateid);
+            Guid stNameID = Guid.NewGuid();
+            string newServerTemplateID = ServerTemplate.clone(servertemplateid, "this is a new servertemplate " + stNameID.ToString());
             Assert.IsNotNull(newServerTemplateID);
-
+            Assert.IsTrue(newServerTemplateID.Length > 0);
             bool destroyResult = ServerTemplate.destroy(newServerTemplateID);
             Assert.IsTrue(destroyResult);
         }
 
+        [TestMethod]
+        public void serverTemplateCloneFullDestroyTest()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newServerTemplateID = ServerTemplate.clone(servertemplateid, "this is a new servertemplate  " + stNameID.ToString(), "this is a description");
+            Assert.IsNotNull(newServerTemplateID);
+            Assert.IsTrue(newServerTemplateID.Length > 0);
+            bool destroyResult = ServerTemplate.destroy(newServerTemplateID);
+            Assert.IsTrue(destroyResult);
+        }
         #endregion
 
     }
