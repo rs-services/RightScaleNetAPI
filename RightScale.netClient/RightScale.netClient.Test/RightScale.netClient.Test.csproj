@@ -79,6 +79,7 @@
     <Compile Include="MultiCloudImageTest.cs" />
     <Compile Include="InputTest.cs" />
     <Compile Include="TagTest.cs" />
+    <Compile Include="ServerTemplateMultiCloudImageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">
