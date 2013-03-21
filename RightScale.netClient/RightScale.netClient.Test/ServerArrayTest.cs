@@ -21,6 +21,52 @@ namespace RightScale.netClient.Test
             serverarrayID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ServerArrayTest_serverarrayid"].ToString());
         }
 
+        [TestMethod]
+        public void serverArrayAlertSpecs()
+        {
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+            List<AlertSpec> alertSpecs = serverarray.alertSpecs;
+            Assert.IsNotNull(alertSpecs);
+        }
+
+        [TestMethod]
+        public void serverArrayNextInstance()
+        {
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+            Instance inst = serverarray.nextInstance;
+            Assert.IsNotNull(inst);
+        }
+
+        [TestMethod]
+        public void serverArrayCurrentInstances()
+        {            
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+            List<Instance> currInstances = serverarray.currentInstances;
+            Assert.IsNotNull(currInstances);
+        }
+
+        [TestMethod]
+        public void serverArrayDeployment()
+        {
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+            Deployment dep = serverarray.deployment;
+            Assert.IsNotNull(dep);
+            Assert.IsTrue(dep.name.Length > 0);
+        }
+
+        [TestMethod]
+        public void serverArrayTags()
+        {
+            ServerArray serverarray = ServerArray.show(serverarrayID, null);
+            Assert.IsNotNull(serverarray);
+            List<string> tags = serverarray.Tags;
+            Assert.IsTrue(true);
+        }
+
         #region ServerArray.index tests
         [TestMethod]
         public void ServerArrayIndexSimple()
