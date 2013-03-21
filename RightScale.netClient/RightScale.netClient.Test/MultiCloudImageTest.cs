@@ -11,16 +11,24 @@ namespace RightScale.netClient.Test
     {
         private string filterListString;
         private string multicloudimageid;
+<<<<<<< HEAD
         private string multicloudimageidupdate;
         private string multicloudimageiddestroy;
+=======
+        private string serverTemplateID;
+>>>>>>> 951364e8797c76afbfa8d07a7a28edb66f877a41
 
         public MultiCloudImageTest()
         {
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_filterListString"].ToString());
             multicloudimageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTest_imageid"].ToString());
+<<<<<<< HEAD
             multicloudimageidupdate = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestUpdate_imageid"].ToString());
             multicloudimageiddestroy = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["MultiCloudImageTestDestroy_imageid"].ToString());
 
+=======
+            serverTemplateID = ConfigurationManager.AppSettings["MultiCloudImageTest_ServerTemplateID"].ToString();
+>>>>>>> 951364e8797c76afbfa8d07a7a28edb66f877a41
         }
 
         #region MultiCloudImage.Index tests
@@ -55,6 +63,7 @@ namespace RightScale.netClient.Test
 
         #endregion
 
+<<<<<<< HEAD
         #region MultiCloudImage.create tests
         [TestMethod]
         public void MultiCloudImageCreate()
@@ -120,5 +129,208 @@ namespace RightScale.netClient.Test
         #endregion
 
 
+=======
+        #region MultiCloudImage.create .destroy tests
+
+        [TestMethod]
+        public void createDestroyMCISimple()
+        {
+            string mciID = MultiCloudImage.create("new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createDestroyMCITest()
+        {
+            string mciID = MultiCloudImage.create("new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createDestroySTMCISimple()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy_ServerTemplate(serverTemplateID, mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createDestroySTMCITest()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy_ServerTemplate(serverTemplateID, mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createSTMCIdestroyMCISimple()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createSTMCIdestroyMCITest()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        #endregion
+
+        #region MultiCloudImage.clone .destroy tests
+
+        [TestMethod]
+        public void mciCloneDestroy()
+        {
+            string mciID = MultiCloudImage.clone(multicloudimageid, "this is a new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void mciCloneDescriptionDestroy()
+        {    
+            string mciID = MultiCloudImage.clone(multicloudimageid, "this is a new MCI", "here's the description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        #endregion
+
+        #region MultiCloudImage.create .update .destroy tests
+
+        [TestMethod]
+        public void createUpdateDestroyMCISimple()
+        {
+            string mciID = MultiCloudImage.create("new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createUpdateDestroyMCITest()
+        {
+            string mciID = MultiCloudImage.create("new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createUpdateDestroySTMCISimple()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy_ServerTemplate(serverTemplateID, mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createUpdateDestroySTMCITest()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy_ServerTemplate(serverTemplateID, mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createUpdateSTMCIdestroyMCISimple()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [TestMethod]
+        public void createUpdateSTMCIdestroyMCITest()
+        {
+            string mciID = MultiCloudImage.create_serverTemplate(serverTemplateID, "new MCI", "this is a description");
+            Assert.IsNotNull(mciID);
+            Assert.IsTrue(mciID.Length > 0);
+            MultiCloudImage mci1 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci1);
+            bool isUpdated = MultiCloudImage.update(mciID, "new name", "new description");
+            Assert.IsTrue(isUpdated);
+            MultiCloudImage mci2 = MultiCloudImage.show(mciID);
+            Assert.IsNotNull(mci2);
+            Assert.AreNotEqual(mci1.name, mci2.name);
+            Assert.AreNotEqual(mci1.description, mci2.description);
+            bool isDeleted = MultiCloudImage.destroy(mciID);
+            Assert.IsTrue(isDeleted);
+        }
+
+
+        #endregion
+>>>>>>> 951364e8797c76afbfa8d07a7a28edb66f877a41
     }
 }
+

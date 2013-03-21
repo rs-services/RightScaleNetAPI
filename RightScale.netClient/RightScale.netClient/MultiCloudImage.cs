@@ -335,17 +335,41 @@ namespace RightScale.netClient
         /// Clones a given MultiCloudImage
         /// </summary>
         /// <param name="multiCloudImageID">ID of the MultiCloud Image to clone</param>
-        /// <returns>ID of the newly created MultiCloud Image</returns>
+        /// <param name="name">Name of the new MultiCloudImage</param>
+        /// <returns>ID of the newly created MultiCloudImage</returns>
         public static string clone(string multiCloudImageID, string name)
+        {
+            return clone(multiCloudImageID, name, string.Empty);
+        }
+
+        /// <summary>
+        /// Clones a given MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloud Image to clone</param>
+        /// <param name="name">Name of the new MultiCloudImage</param>
+        /// <param name="description">Description for the new MultiCloudImage</param>
+        /// <returns>ID of the newly created MultiCloud Image</returns>
+<<<<<<< HEAD
+        public static string clone(string multiCloudImageID, string name)
+=======
+        public static string clone(string multiCloudImageID, string name, string description)
+>>>>>>> 951364e8797c76afbfa8d07a7a28edb66f877a41
         {
             List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
 
             string postHref = string.Format(APIHrefs.MultiCloudImageClone, multiCloudImageID);
             string outString = string.Empty;
+<<<<<<< HEAD
 
             Utility.addParameter(name, "multi_cloud_image[name]", putParams);
 
             List<string> results = Core.APIClient.Instance.Post(postHref,putParams, "location", out outString);
+=======
+            List<KeyValuePair<string,string>> postParams = new List<KeyValuePair<string,string>>();
+            Utility.addParameter(name, "multi_cloud_image[name]", postParams);
+            Utility.addParameter(description, "multi_cloud_image[description]", postParams);
+            List<string> results = Core.APIClient.Instance.Post(postHref,postParams, "location", out outString);
+>>>>>>> 951364e8797c76afbfa8d07a7a28edb66f877a41
             return results.Last<string>().Split('/').Last<string>();
         }
 
