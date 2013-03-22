@@ -129,6 +129,23 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region MultiCloudImageSetting.show methods
+
+        /// <summary>
+        /// Shows information about a single MultiCloudImage Setting
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage</param>
+        /// <param name="multiCloudImageSettingID">ID of the MultiCloudImage Setting</param>
+        /// <returns>Populated instance of MultiCloudImageSetting</returns>
+        public static MultiCloudImageSetting show(string multiCloudImageID, string multiCloudImageSettingID)
+        {
+            string getHref = string.Format(APIHrefs.MultiCloudImageSettingsByID, multiCloudImageID, multiCloudImageSettingID);
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
     }
 }
