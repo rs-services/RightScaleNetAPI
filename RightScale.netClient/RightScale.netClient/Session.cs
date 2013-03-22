@@ -19,6 +19,8 @@ namespace RightScale.netClient
         /// Message related to this Session object
         /// </summary>
         public string message { get; set; }
+        public string[] actions { get; set; }
+        public string[] links {get;set;}
 
         #endregion
 
@@ -63,6 +65,7 @@ namespace RightScale.netClient
         {
             string getHref = "/api/session";
             string jsonString = Core.APIClient.Instance.Get(getHref);
+            var j = deserializeList(jsonString);
             return deserializeList(jsonString);
         }
 
