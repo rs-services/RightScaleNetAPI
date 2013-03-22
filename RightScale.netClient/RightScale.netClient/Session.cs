@@ -19,8 +19,6 @@ namespace RightScale.netClient
         /// Message related to this Session object
         /// </summary>
         public string message { get; set; }
-        public string[] actions { get; set; }
-        public string[] links {get;set;}
 
         #endregion
 
@@ -32,27 +30,7 @@ namespace RightScale.netClient
             : base()
         {
         }
-
-        /// <summary>
-        /// Constructor for Session object that takes in an oAuth Refresh token for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
-        public Session(string oAuthRefreshToken)
-            : base(oAuthRefreshToken)
-        {
-        }
-
-        /// <summary>
-        /// Cosntructor for Session object that takes username, password and accountno for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="userName">RightScale user name</param>
-        /// <param name="password">RightScale user password</param>
-        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
-        public Session(string userName, string password, string accountNo)
-            : base(userName, password, accountNo)
-        {
-        }
-
+        
         #endregion
 
         #region Session.index methods

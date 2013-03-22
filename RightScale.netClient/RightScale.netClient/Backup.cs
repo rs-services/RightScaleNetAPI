@@ -27,26 +27,6 @@ namespace RightScale.netClient
         {
         }
 
-        /// <summary>
-        /// Constructor for Backup object that takes in an oAuth Refresh token for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
-        public Backup(string oAuthRefreshToken)
-            : base(oAuthRefreshToken)
-        {
-        }
-
-        /// <summary>
-        /// Cosntructor for Backup object that takes username, password and accountno for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="userName">RightScale user name</param>
-        /// <param name="password">RightScale user password</param>
-        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
-        public Backup(string userName, string password, string accountNo)
-            : base(userName, password, accountNo)
-        {
-        }
-
         #endregion
 
         #region Backup.show() methods

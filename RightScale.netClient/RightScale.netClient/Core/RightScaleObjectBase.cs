@@ -62,30 +62,31 @@ namespace RightScale.netClient.Core
             return linkToReturn.Last<string>();
         }
 
-        #region RightScaleObjectBase.ctor
-
         /// <summary>
-        /// RightScaleObjectBase constructor for authenticating via Username, password and accountno
+        /// Public method for setting username/password/accountNo authentication information in the API Caller from the context of the object
         /// </summary>
         /// <param name="userName">emmail address for logging into the RightScale API</param>
         /// <param name="password">password for the given account used for authenticating to the RightScale API</param>
         /// <param name="accountNo">Account Number to perform API actions against</param>
-        public RightScaleObjectBase(string userName, string password, string accountNo)
+        public void SetAuthCreds(string userName, string password, string accountNo)
         {
+            APIClient.Instance.InitWebClient();
             APIClient.Instance.userName = userName;
             APIClient.Instance.password = password;
             APIClient.Instance.accountId = accountNo;
         }
 
         /// <summary>
-        /// RightScaleObjectBase constructor for authenticating via oAuth2
+        /// Public method for setting OAuth2 authentication information in the API Caller from the context of the object
         /// </summary>
         /// <param name="oAuthRefreshToken">RightScale oAuth2 refresh token</param>
-        public RightScaleObjectBase(string oAuthRefreshToken)
+        public void SetAuthCreds(string oAuthRefreshToken)
         {
             APIClient.Instance.oauthRefreshToken = oAuthRefreshToken;
         }
-
+        
+        #region RightScaleObjectBase.ctor
+        
         /// <summary>
         /// RightScaleObjectBase default constructor.  By using this constructor it is implied that authentication information will be placed in the application's configuration file
         /// </summary>

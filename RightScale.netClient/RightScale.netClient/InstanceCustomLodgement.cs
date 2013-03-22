@@ -24,26 +24,6 @@ namespace RightScale.netClient
         {
         }
 
-        /// <summary>
-        /// Constructor for InstanceCustomLodgement object that takes in an oAuth Refresh token for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="oAuthRefreshToken">RightScale OAuth Refresh Token</param>
-        public InstanceCustomLodgement(string oAuthRefreshToken)
-            : base(oAuthRefreshToken)
-        {
-        }
-
-        /// <summary>
-        /// Cosntructor for InstanceCustomLodgement object that takes username, password and accountno for RSAPI Authentication purposes
-        /// </summary>
-        /// <param name="userName">RightScale user name</param>
-        /// <param name="password">RightScale user password</param>
-        /// <param name="accountNo">RightScale account to be accessed programmatically</param>
-        public InstanceCustomLodgement(string userName, string password, string accountNo)
-            : base(userName, password, accountNo)
-        {
-        }
-
         #endregion
 
         #region InstanceCustomLodgement Relationships
