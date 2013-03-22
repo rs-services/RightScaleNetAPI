@@ -26,7 +26,7 @@ namespace RightScale.netClient.Test
         {
             List<Volume> volumeList = Volume.index(cloudID);
             Assert.IsNotNull(volumeList);
-            List<String> tags = volumeList[0].Tags;
+            List<Tag> tags = volumeList[0].tags;
             Assert.IsTrue(true);
         }
 

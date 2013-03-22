@@ -18,6 +18,15 @@ namespace RightScale.netClient.Test
         #region Deployment relationship tests
 
         [TestMethod]
+        public void DeploymentTag()
+        {
+            Deployment dep = Deployment.show(deploymentID, "inputs");
+            Assert.IsNotNull(dep);
+            List<Tag> tags = dep.tags;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
         public void DeploymentServerArray()
         {
             Deployment dep = Deployment.show(deploymentID);

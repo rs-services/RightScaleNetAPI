@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeMultiCloudImage.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceMultiCloudImages.html
     /// </summary>
-    public class MultiCloudImage:Core.RightScaleObjectBase<MultiCloudImage>
+    public class MultiCloudImage:Core.TaggableResourceBase<MultiCloudImage>
     {
         #region MultiCloudImage Properties
 
@@ -31,17 +31,6 @@ namespace RightScale.netClient
         public string description { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region MultiCloudImage Relationships
 

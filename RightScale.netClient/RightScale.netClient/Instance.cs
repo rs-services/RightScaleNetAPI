@@ -13,7 +13,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstance.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeInstance.html
     /// </summary>
-    public class Instance : Core.RightScaleObjectBase<Instance>
+    public class Instance : Core.TaggableResourceBase<Instance>
     {
         #region Instance properties
 
@@ -108,17 +108,6 @@ namespace RightScale.netClient
         public List<string> public_dns_names { get; set; }
         
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region Instance Relationships
 

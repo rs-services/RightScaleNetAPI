@@ -12,7 +12,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeImage.html
     /// Resources Reference: http://reference.rightscale.com/api1.5/resources/ResourceImages.html
     /// </summary>
-    public class Image : Core.RightScaleObjectBase<Image>
+    public class Image : Core.TaggableResourceBase<Image>
     {
         #region Image Properties
 
@@ -57,17 +57,6 @@ namespace RightScale.netClient
         public string visibility { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region Image Relationships
 

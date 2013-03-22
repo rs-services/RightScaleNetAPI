@@ -12,7 +12,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServer.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServers.html
     /// </summary>
-    public class Server:Core.RightScaleObjectBase<Server>
+    public class Server:Core.TaggableResourceBase<Server>
     {
         #region Server Properties
 
@@ -52,18 +52,7 @@ namespace RightScale.netClient
         public string state { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
-
+        
         #region Server Relationships
 
         /// <summary>
@@ -239,8 +228,14 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "cloud_href", "deployment_href", "name" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            string jsonString = Core.APIClient.Instance.Get(getHref);
-            return deserializeList(jsonString);
+            string queryString = string.Empty;
+            foreach (Filter f in filter)
+            {
+                queryString += f.ToString() + "&";
+            }
+            queryString += string.Format("view={0}", view);
+            
+            return GetObjectListByHref(getHref, queryString);
         }
         #endregion
 
@@ -309,9 +304,7 @@ namespace RightScale.netClient
             {
                 queryString += string.Format("view={0}", view);
             }
-
-            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
-            return deserialize(jsonString);
+            return GetObjectByHref(getHref, queryString);
         }
 
         #endregion

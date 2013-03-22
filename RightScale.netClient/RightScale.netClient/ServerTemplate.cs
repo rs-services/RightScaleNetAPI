@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerTemplate.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServerTemplates.html
     /// </summary>
-    public class ServerTemplate:Core.RightScaleObjectBase<ServerTemplate>
+    public class ServerTemplate:Core.TaggableResourceBase<ServerTemplate>
     {
         #region ServerTemplate properties
 
@@ -36,17 +36,6 @@ namespace RightScale.netClient
         public string description { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region ServerTemplate Relationships
 

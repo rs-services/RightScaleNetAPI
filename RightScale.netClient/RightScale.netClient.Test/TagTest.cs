@@ -23,14 +23,12 @@ namespace RightScale.netClient.Test
         //[TestMethod]
         public void TagbyResourceTest()
         {
-            string[] arrHrefs = new string[] { serverhref, deploymenthref};           
+            List<string> arrHrefs = new List<string>() { serverhref, deploymenthref };
             
-            List<string> resHref = Tag.byResource(arrHrefs);
+            List<Tag> resHref = Tag.byResource(arrHrefs);
 
             Assert.IsNotNull(resHref);
-
-
-
+            
         }
     }
 }

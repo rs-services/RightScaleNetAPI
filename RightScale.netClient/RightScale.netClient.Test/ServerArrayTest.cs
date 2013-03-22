@@ -63,7 +63,7 @@ namespace RightScale.netClient.Test
         {
             ServerArray serverarray = ServerArray.show(serverarrayID, null);
             Assert.IsNotNull(serverarray);
-            List<string> tags = serverarray.Tags;
+            List<Tag> tags = serverarray.tags;
             Assert.IsTrue(true);
         }
 

@@ -39,7 +39,7 @@ namespace RightScale.netClient.Test
         {
             Image img = Image.show(cloudID, imageid, "default");
             Assert.IsNotNull(img);
-            List<string> tags = img.Tags;
+            List<Tag> tags = img.tags;
             Assert.IsTrue(true); //no exception!
         }
 

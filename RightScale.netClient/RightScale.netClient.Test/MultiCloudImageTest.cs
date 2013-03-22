@@ -32,7 +32,7 @@ namespace RightScale.netClient.Test
         {
             MultiCloudImage multicloudimage = MultiCloudImage.show(multicloudimageid);
             Assert.IsNotNull(multicloudimage);
-            List<string> tags = multicloudimage.Tags;
+            List<Tag> tags = multicloudimage.tags;
             Assert.IsTrue(true);//no exception            
         }
 

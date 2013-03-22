@@ -26,7 +26,7 @@ namespace RightScale.netClient.Test
         {
             ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
             Assert.IsNotNull(servertemplate);
-            List<string> tags = servertemplate.Tags;
+            List<Tag> tags = servertemplate.tags;
             Assert.IsTrue(true);            
         }
 

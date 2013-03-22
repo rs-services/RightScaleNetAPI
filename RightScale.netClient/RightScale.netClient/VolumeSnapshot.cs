@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolumeSnapshot.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumeSnapshots.html
     /// </summary>
-    public class VolumeSnapshot:Core.RightScaleObjectBase<VolumeSnapshot>
+    public class VolumeSnapshot:Core.TaggableResourceBase<VolumeSnapshot>
     {
         #region VolumeSnapshot properties
 
@@ -51,18 +51,7 @@ namespace RightScale.netClient
         public string state { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
-
+        
         #region VolumeSnapshot Relationships
 
         /// <summary>

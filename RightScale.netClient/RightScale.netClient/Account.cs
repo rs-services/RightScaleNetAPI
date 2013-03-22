@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeAccount.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceAccounts.html
     /// </summary>
-    public class Account : Core.RightScaleObjectBase<Account>
+    public class Account : Core.TaggableResourceBase<Account>
     {
         #region Account Properties
 
@@ -31,17 +31,6 @@ namespace RightScale.netClient
         public string updated_at { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region ID Properties
 

@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeVolume.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceVolumes.html
     /// </summary>
-    public class Volume:Core.RightScaleObjectBase<Volume>
+    public class Volume:Core.TaggableResourceBase<Volume>
     {
         #region Volume properties
 
@@ -56,17 +56,6 @@ namespace RightScale.netClient
         public string status { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region Volume relationships
 

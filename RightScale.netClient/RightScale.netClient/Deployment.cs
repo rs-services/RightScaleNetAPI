@@ -11,7 +11,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeDeployment.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceDeployments.html
     /// </summary>
-    public class Deployment : Core.RightScaleObjectBase<Deployment>
+    public class Deployment : Core.TaggableResourceBase<Deployment>
     {
         #region Deployment Properties
 
@@ -36,18 +36,7 @@ namespace RightScale.netClient
         public string description { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
-
+        
         #region Deployment Relationhsips
 
         /// <summary>

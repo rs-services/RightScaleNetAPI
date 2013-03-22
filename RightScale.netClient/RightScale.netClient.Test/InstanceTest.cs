@@ -33,7 +33,7 @@ namespace RightScale.netClient.Test
             string instanceID = instanceList[0].ID;
             Instance testInstance = Instance.show(cloudID, instanceID, "full");
             Assert.IsNotNull(testInstance);
-            List<string> tags = testInstance.Tags;
+            List<Tag> tags = testInstance.tags;
             Assert.IsTrue(true);//no exception!
         }
 

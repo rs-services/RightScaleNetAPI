@@ -13,7 +13,7 @@ namespace RightScale.netClient
     /// MediaType Reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeServerArray.html
     /// Resource Reference: http://reference.rightscale.com/api1.5/resources/ResourceServerArrays.html
     /// </summary>
-    public class ServerArray : Core.RightScaleObjectBase<ServerArray>
+    public class ServerArray : Core.TaggableResourceBase<ServerArray>
     {
         #region ServerArray properties
 
@@ -105,17 +105,6 @@ namespace RightScale.netClient
         }
 
         #endregion
-
-        /// <summary>
-        /// Associated tags for this object
-        /// </summary>
-        public List<string> Tags
-        {
-            get
-            {
-                return Tag.byResource(getLinkValue("self"));
-            }
-        }
 
         #region ServerArray.ctor
         /// <summary>

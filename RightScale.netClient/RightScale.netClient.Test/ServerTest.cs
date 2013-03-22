@@ -77,7 +77,7 @@ namespace RightScale.netClient.Test
         {
             Server serverobj = Server.show_deployment(serverID, deploymentID);
             Assert.IsNotNull(serverobj);
-            List<string> tags = serverobj.Tags;
+            List<Tag> tags = serverobj.tags;
             Assert.IsTrue(true);//no exception
         }
 

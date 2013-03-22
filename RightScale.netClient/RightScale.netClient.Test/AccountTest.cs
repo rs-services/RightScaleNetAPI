@@ -43,7 +43,7 @@ namespace RightScale.netClient.Test
         {
             Account acct = Account.show(accountID);
             Assert.IsNotNull(acct, "Account came back as null - issue with API call");
-            List<string> tags = acct.Tags;
+            List<Tag> tags = acct.tags;
             Assert.IsTrue(true); //no exception is a good thing!
         }
 

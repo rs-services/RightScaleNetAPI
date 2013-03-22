@@ -13,6 +13,7 @@ namespace RightScale.netClient.Core
     /// <typeparam name="T">Type of the derived class--used to manage proper serialization</typeparam>
     public class RightScaleObjectBase<T>
     {
+        #region RightScaleObjectBase common properties
         /// <summary>
         /// Generic collection of Action objects accompanying a given RightScale API Object
         /// Defines what actions are currently possible on the current object instance
@@ -34,6 +35,55 @@ namespace RightScale.netClient.Core
             {
                 return getLinkIDValue("self");
             }
+        }
+
+        #endregion
+
+        #region Common get methods for all classes
+
+        protected static T GetObjectByHref(string href)
+        {
+            return GetObjectByHref(href, string.Empty);
+        }
+
+        protected static T GetObjectByHref(string href, string queryString)
+        {
+            Utility.CheckStringHasValue(href);
+            string jsonString = Core.APIClient.Instance.Get(href, queryString);
+            return deserialize(jsonString);
+        }
+
+        protected static List<T> GetObjectListByHref(string href)
+        {
+            return GetObjectListByHref(href, string.Empty);
+        }
+
+        protected static List<T> GetObjectListByHref(string href, string queryString)
+        {
+            Utility.CheckStringHasValue(href);
+            string jsonString = Core.APIClient.Instance.Get(href, queryString);
+            return deserializeList(jsonString);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Method populates the values for a given instance of a class if a resource href is already provided
+        /// </summary>
+        public virtual void populateObject()
+        {
+            populateObject(getLinkValue("self"));
+        }
+
+        /// <summary>
+        /// Method populates the values for a given instance of a class
+        /// </summary>
+        /// <param name="getHref">RightScale API Href to get the values for this class from</param>
+        public virtual void populateObject(string getHref)
+        {
+            Utility.CheckStringHasValue(getHref);
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            JsonConvert.PopulateObject(jsonString, this);
         }
 
         /// <summary>

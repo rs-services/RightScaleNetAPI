@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountGroup.cs" />
+    <Compile Include="Core\ITaggableResource.cs" />
+    <Compile Include="Core\TaggableResourceBase.cs" />
     <Compile Include="Objects\CommitMessage.cs" />
     <Compile Include="Objects\ItemAge.cs" />
     <Compile Include="Objects\DataCenterPolicy.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Objects\Link.cs" />
     <Compile Include="Objects\Pacing.cs" />
     <Compile Include="Objects\QueueSize.cs" />
+    <Compile Include="Objects\Resource.cs" />
     <Compile Include="Objects\RightScaleAPIException.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
