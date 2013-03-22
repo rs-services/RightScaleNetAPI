@@ -131,6 +131,10 @@ namespace RightScale.netClient
 
         #endregion
 
+        /// <summary>
+        /// Method writes a tag out from the values specified
+        /// </summary>
+        /// <returns>String representation of this tag</returns>
         public override string ToString()
         {
             return getTag();
@@ -138,6 +142,11 @@ namespace RightScale.netClient
 
         #region Tag.by_resource methods
 
+        /// <summary>
+        /// Method parses a list of strings and produces a list of tags
+        /// </summary>
+        /// <param name="tagStrings">list of strings to parse into tags</param>
+        /// <returns>List of tags</returns>
         public static List<Tag> StringToTags(List<string> tagStrings)
         {
             List<Tag> retVal = new List<Tag>();
