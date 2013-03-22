@@ -106,6 +106,8 @@ namespace RightScale.netClient
         /// <returns>List of MultiCloudImageSettings</returns>
         public static List<MultiCloudImageSetting> index(string multiCloudImageID)
         {
+            Utility.CheckStringHasValue(multiCloudImageID);
+
             return index(multiCloudImageID, null);
         }
 
@@ -140,6 +142,9 @@ namespace RightScale.netClient
         /// <returns>Populated instance of MultiCloudImageSetting</returns>
         public static MultiCloudImageSetting show(string multiCloudImageID, string multiCloudImageSettingID)
         {
+            Utility.CheckStringHasValue(multiCloudImageID);
+            Utility.CheckStringHasValue(multiCloudImageSettingID);
+
             string getHref = string.Format(APIHrefs.MultiCloudImageSettingsByID, multiCloudImageID, multiCloudImageSettingID);
             string jsonString = Core.APIClient.Instance.Get(getHref);
             return deserialize(jsonString);
@@ -159,6 +164,7 @@ namespace RightScale.netClient
         /// <returns>ID of newly created MultiCloudImageSetting</returns>
         public static string create(string multiCloudImageID, string cloudID, string imageID, string instanceTypeID)
         {
+            Utility.CheckStringHasValue(multiCloudImageID);
             return create(multiCloudImageID, cloudID, imageID, instanceTypeID, string.Empty, string.Empty, string.Empty);
         }
 
@@ -175,6 +181,8 @@ namespace RightScale.netClient
         /// <returns>ID of newly created MultiCloudImageSetting</returns>
         public static string create(string multiCloudImageID, string cloudID, string imageID, string instanceTypeID, string kernelImageID, string ramdiskImageID, string userData)
         {
+            Utility.CheckStringHasValue(multiCloudImageID);
+
             string postHref = string.Format(APIHrefs.MultiCloudImageSettings, multiCloudImageID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             Utility.addParameter(Utility.cloudHref(cloudID), "multi_cloud_image_setting[cloud_href]", postParams);
@@ -189,5 +197,51 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region MultiCloudImageSetting.update methods
+
+        /// <summary>
+        /// Updates a generic cloud setting
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage</param>
+        /// <param name="cloudID">ID of the Cloud</param>
+        /// <param name="imageID">ID of the Image</param>
+        /// <param name="instanceTypeID">ID of the InstanceType</param>
+        /// <param name="kernelImageID">ID of kernel image</param>
+        /// <param name="ramdiskImageID">ID of ramdisk image</param>
+        /// <param name="userData">User data that RightScale automaticaly passes to your instance at boot time</param>
+        /// <returns>True if updated, false if not</returns>
+        public static bool update(string multiCloudImageID, string cloudID, string imageID, string instanceTypeID, string kernelImageID, string ramdiskID, string userData)
+        {
+            Utility.CheckStringHasValue(multiCloudImageID);
+            string putHref = string.Format(APIHrefs.MultiCloudImageSettings, multiCloudImageID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(Utility.cloudHref(cloudID), "multi_cloud_image_setting[cloud_href]", postParams);
+            Utility.addParameter(Utility.imageHref(cloudID, imageID), "multi_cloud_image_setting[image_href]", postParams);
+            Utility.addParameter(Utility.instanceTypeHref(cloudID, instanceTypeID), "multi_cloud_image_setting[instance_type_href]", postParams);
+            Utility.addParameter(Utility.kernelImageHref(cloudID, kernelImageID), "multi_cloud_image_setting[kernel_image_href]", postParams);
+            Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskImageID), "multi_cloud_image_setting[ramdisk_image_href", postParams);
+            Utility.addParameter(userData, "multi_cloud_image_setting[user_data]", postParams);
+            return Core.APIClient.Instance.Put(putHref, postParams);
+        }
+
+        #endregion
+
+        #region MultiCloudImageSetting.destroy
+
+        /// <summary>
+        /// Deletes a MultiCloudImage setting
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage</param>
+        /// <param name="multiCloudImageSettingID">ID of the MultiCloudImageSetting</param>
+        /// <returns></returns>
+        public static bool destroy(string multiCloudImageID, string multiCloudImageSettingID)
+        {
+            Utility.CheckStringHasValue(multiCloudImageID);
+            Utility.CheckStringHasValue(multiCloudImageSettingID);
+            string deleteHref = string.Format(APIHrefs.MultiCloudImageSettingsByID, multiCloudImageID, multiCloudImageSettingID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        #endregion
     }
 }
