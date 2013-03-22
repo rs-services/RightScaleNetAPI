@@ -219,7 +219,7 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.imageHref(cloudID, imageID), "multi_cloud_image_setting[image_href]", postParams);
             Utility.addParameter(Utility.instanceTypeHref(cloudID, instanceTypeID), "multi_cloud_image_setting[instance_type_href]", postParams);
             Utility.addParameter(Utility.kernelImageHref(cloudID, kernelImageID), "multi_cloud_image_setting[kernel_image_href]", postParams);
-            Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskImageID), "multi_cloud_image_setting[ramdisk_image_href", postParams);
+            Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskID), "multi_cloud_image_setting[ramdisk_image_href", postParams);
             Utility.addParameter(userData, "multi_cloud_image_setting[user_data]", postParams);
             return Core.APIClient.Instance.Put(putHref, postParams);
         }
