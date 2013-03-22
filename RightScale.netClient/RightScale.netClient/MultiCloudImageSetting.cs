@@ -99,18 +99,34 @@ namespace RightScale.netClient
 
         #region MultiCloudImageSetting.index methods
 
-        public static List<MultiCloudImageSetting> index()
+        /// <summary>
+        /// Lists the MultiCloudImageSettings for a MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to query</param>
+        /// <returns>List of MultiCloudImageSettings</returns>
+        public static List<MultiCloudImageSetting> index(string multiCloudImageID)
         {
-            return index(null);
+            return index(multiCloudImageID, null);
         }
 
-        public static List<MultiCloudImageSetting> index(List<Filter> filter)
+        /// <summary>
+        /// Lists the MultiCloudImageSettings for a MultiCloudImage
+        /// </summary>
+        /// <param name="multiCloudImageID">ID of the MultiCloudImage to query</param>
+        /// <param name="filter">Set of filters for querying for MultiCloudImageSettings</param>
+        /// <returns>List of MultiCloudImageSettings</returns>
+        public static List<MultiCloudImageSetting> index(string multiCloudImageID, List<Filter> filter)
         {
             List<string> validFilters = new List<string>() { "cloud_href", "multi_cloud_image_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
-
-            //TODO: implement MultiCloudImageSetting.index
-            throw new NotImplementedException();
+            string getHref = string.Format(APIHrefs.MultiCloudImageSettings, multiCloudImageID);
+            string queryString = string.Empty;
+            foreach (Filter f in filter)
+            {
+                queryString += f.ToString() + "&";
+            }
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		

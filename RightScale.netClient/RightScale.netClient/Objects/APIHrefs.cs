@@ -355,6 +355,28 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// base href for working with MultiCloudImage settings
+        /// </summary>
+        public static string MultiCloudImageSettings
+        {
+            get
+            {
+                return MultiCloudImageByID + "/settings";
+            }
+        }
+
+        /// <summary>
+        /// href for working with a specific MultiCloudImageSetting object
+        /// </summary>
+        public static string MultiCloudImageSettingsByID
+        {
+            get
+            {
+                return MultiCloudImageSettings + ID1;
+            }
+        }
+
+        /// <summary>
         /// MultiCloud Image href takes one parameter for cloning 
         /// </summary>
         public static string MultiCloudImageClone
