@@ -19,6 +19,23 @@ namespace RightScale.netClient.Test
             cloudStackVTID = ConfigurationManager.AppSettings["VolumeType_cloudStackVTID"].ToString();
         }
 
+        #region VolumeType Relationships
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(servicesOAuthToken);
+            VolumeType vt = VolumeType.show(cloudStackID, cloudStackVTID);
+            Assert.IsNotNull(vt);
+            Cloud cl = vt.cloud;
+            Assert.IsNotNull(cl);
+            Assert.IsTrue(cl.name.Length > 0);
+            netClient.Core.APIClient.Instance.InitWebClient(); //reclean auth on the instance
+        }
+
+        #endregion
+
         #region VolumeType.index tests
 
         [TestMethod]

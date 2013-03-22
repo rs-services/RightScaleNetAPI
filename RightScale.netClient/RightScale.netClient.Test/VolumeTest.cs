@@ -19,6 +19,74 @@ namespace RightScale.netClient.Test
             volumeID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_volumeid"].ToString());
         }
 
+        #region Volume Relationship Tests
+
+        [TestMethod]
+        public void volumeTags()
+        {
+            List<Volume> volumeList = Volume.index(cloudID);
+            Assert.IsNotNull(volumeList);
+            List<String> tags = volumeList[0].Tags;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void volumeParentVolume()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            VolumeSnapshot parVol = vol.parentVolumeSnapshot;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
+        public void volumeVolumeSnapshots()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            List<VolumeSnapshot> vsnaps = vol.volumeSnapshot;
+            Assert.IsNotNull(vsnaps);
+        }
+
+        [TestMethod]
+        public void volumeDatacenter()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            DataCenter dc = vol.datacenter;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void volumeRecurringVolumeAttachments()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            List<RecurringVolumeAttachment> rva = vol.recurringVolumeAttachments;
+            Assert.IsNotNull(rva);
+        }
+
+        [TestMethod]
+        public void volumeCurrentVolumeAttachments()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            List<VolumeAttachment> vas = vol.currentVolumeAttachments;
+            Assert.IsNotNull(vas);
+        }
+
+        [TestMethod]
+        public void volumeCloud()
+        {
+            Volume vol = Volume.show(cloudID, volumeID);
+            Assert.IsNotNull(vol);
+            Cloud cl = vol.cloud;
+            Assert.IsNotNull(cl);
+            Assert.IsTrue(cl.name.Length > 0);
+        }
+
+        #endregion
+
         #region Volume.index tests
 
         [TestMethod]

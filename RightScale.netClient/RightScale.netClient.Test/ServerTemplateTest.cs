@@ -19,6 +19,57 @@ namespace RightScale.netClient.Test
             servertemplateid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ServerTemplateTest_servertemplateid"].ToString());
         }
 
+        #region ServerTemplate relationship tests
+
+        [TestMethod]
+        public void serverTemplateTags()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+            List<string> tags = servertemplate.Tags;
+            Assert.IsTrue(true);            
+        }
+
+        [TestMethod]
+        public void serverTemplateMultiCloudImages()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+            List<MultiCloudImage> mcis = servertemplate.multiCloudImages;
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.Count > 0);
+        }
+
+        [TestMethod]
+        public void serverTemplateAlertSpecs()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+            List<AlertSpec> aspecs = servertemplate.alertSpecs;
+            Assert.IsNotNull(aspecs);            
+        }
+
+        [TestMethod]
+        public void serverTemplatePublication()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+            Publication pub = servertemplate.publication;
+            Assert.IsTrue(true);//no exception            
+        }
+
+        [TestMethod]
+        public void serverTemplateDefaultMCI()
+        {
+            ServerTemplate servertemplate = ServerTemplate.show(servertemplateid, null);
+            Assert.IsNotNull(servertemplate);
+            MultiCloudImage mci = servertemplate.defaultMultiCloudImage;
+            Assert.IsNotNull(mci);
+            Assert.IsTrue(mci.name.Length > 0);
+        }
+
+        #endregion
+
         #region Instance.index tests
 
         [TestMethod]

@@ -73,6 +73,15 @@ namespace RightScale.netClient.Test
         #region Server Relationship tests
 
         [TestMethod]
+        public void serverTags()
+        {
+            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Assert.IsNotNull(serverobj);
+            List<string> tags = serverobj.Tags;
+            Assert.IsTrue(true);//no exception
+        }
+
+        [TestMethod]
         public void serverNextInstanceExist()
         {
             Server serverobj = Server.show_deployment(serverID, deploymentID);
@@ -295,7 +304,7 @@ namespace RightScale.netClient.Test
 
             while (currentState == "queued")
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(5000);
                 currentState = Server.show(launchTestServerID).state;
             }
 
@@ -306,7 +315,7 @@ namespace RightScale.netClient.Test
 
             while (currentState != "inactive")
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(5000);
                 currentState = Server.show(windowsLaunchTestServerID).state;
             }
         }

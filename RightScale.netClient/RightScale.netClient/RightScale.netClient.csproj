@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountGroup.cs" />
+    <Compile Include="Objects\CommitMessage.cs" />
     <Compile Include="Objects\ItemAge.cs" />
     <Compile Include="Objects\DataCenterPolicy.cs" />
     <Compile Include="MonitoringMetricData.cs" />

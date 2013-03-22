@@ -23,12 +23,12 @@ namespace RightScale.netClient
         /// <summary>
         /// Commit message for this Publication
         /// </summary>
-        public string commit_message { get; set; }
+        public CommitMessage commit_message { get; set; }
 
         /// <summary>
         /// Datestamp representing when this Publication was created
         /// </summary>
-        public int created_at { get; set; }
+        public string created_at { get; set; }
 
         /// <summary>
         /// Content Type for this Publication
@@ -38,7 +38,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Datestamp representing when this Publication was last updated
         /// </summary>
-        public int updated_at { get; set; }
+        public string updated_at { get; set; }
 
         /// <summary>
         /// Publisher for this Publication
