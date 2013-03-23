@@ -9,10 +9,12 @@ namespace RightScale.netClient.Test
     public class MultiCloudImageSettingTest
     {
         public string multiCloudImageID;
+        private string multiCloudImageSettingID;
 
         public MultiCloudImageSettingTest()
         {
             multiCloudImageID = ConfigurationManager.AppSettings["MultiCloudImageSettingTest_multiCloudImageID"].ToString();
+            multiCloudImageSettingID = ConfigurationManager.AppSettings["MultiCloudImageSettingTest_multiCloudImageSettingID"].ToString();
         }
 
         [TestMethod]
@@ -31,6 +33,14 @@ namespace RightScale.netClient.Test
             List<MultiCloudImageSetting> mcis = MultiCloudImageSetting.index(multiCloudImageID, filters);
             Assert.IsNotNull(mcis);
             Assert.IsTrue(mcis.Count>0);
+        }
+
+        [TestMethod]
+        public void showMultiCloudImageSetting()
+        {
+            MultiCloudImageSetting mcis = MultiCloudImageSetting.show(multiCloudImageID, multiCloudImageSettingID);
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.links.Count > 0);
         }
     }
 }
