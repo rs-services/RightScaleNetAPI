@@ -103,9 +103,12 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
             string getHref = string.Format(APIHrefs.MultiCloudImageSettings, multiCloudImageID);
             string queryString = string.Empty;
-            foreach (Filter f in filter)
+            if (filter != null)
             {
-                queryString += f.ToString() + "&";
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
             }
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserializeList(jsonString);
