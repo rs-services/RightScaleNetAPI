@@ -17,6 +17,8 @@ namespace RightScale.netClient.Test
             multiCloudImageSettingID = ConfigurationManager.AppSettings["MultiCloudImageSettingTest_multiCloudImageSettingID"].ToString();
         }
 
+        #region MultiCloudImageSetting.index() tests
+
         [TestMethod]
         public void indexMultiCloudImageSettingSimple()
         {
@@ -35,6 +37,10 @@ namespace RightScale.netClient.Test
             Assert.IsTrue(mcis.Count>0);
         }
 
+        #endregion
+
+        #region MultiCloudImageSetting.show() tests
+
         [TestMethod]
         public void showMultiCloudImageSetting()
         {
@@ -42,5 +48,53 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(mcis);
             Assert.IsTrue(mcis.links.Count > 0);
         }
+
+        #endregion
+
+        #region MultiCloudImageSetting Relationships tests
+
+        [TestMethod]
+        public void multiCloudImageSettingInstanceType()
+        {
+            List<MultiCloudImageSetting> mcis = MultiCloudImageSetting.index(multiCloudImageID);
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.Count > 0);
+            InstanceType instanceType = mcis[0].instanceType;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void multiCloudImageSettingMultiCloudImage()
+        {
+            
+            List<MultiCloudImageSetting> mcis = MultiCloudImageSetting.index(multiCloudImageID);
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.Count > 0);
+            MultiCloudImage mci = mcis[0].multiCloudImage;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void multiCloudImageSettingImaeg()
+        {
+            
+            List<MultiCloudImageSetting> mcis = MultiCloudImageSetting.index(multiCloudImageID);
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.Count > 0);
+            Image image = mcis[0].image;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void multiCloudImageSettingCloud()
+        {
+            List<MultiCloudImageSetting> mcis = MultiCloudImageSetting.index(multiCloudImageID);
+            Assert.IsNotNull(mcis);
+            Assert.IsTrue(mcis.Count > 0);
+            Cloud instanceType = mcis[0].cloud;
+            Assert.IsTrue(true);
+            
+        }
+        #endregion
     }
 }
