@@ -72,7 +72,7 @@ namespace RSPosh
         [Parameter(Position = 1, Mandatory = true)]
         public string cloudID;
 
-        [Parameter(Position = 1, Mandatory = true)]
+        [Parameter(Position = 2, Mandatory = true)]
         public string name;
 
         protected override void ProcessRecord()
@@ -81,24 +81,35 @@ namespace RSPosh
 
             base.ProcessRecord();
 
-            string rsVolumeID = RightScale.netClient.Volume.create(cloudID, name);
-
-            if (rsVolumeID != "")
+            try
             {
-                result.VolumeID = rsVolumeID;
-                result.Message = "Volume created";
-                result.Result = true;
+                string rsVolumeID = RightScale.netClient.Volume.create(cloudID, name);
 
-                WriteObject(result);
+                if (rsVolumeID != "")
+                {
+                    result.VolumeID = rsVolumeID;
+                    result.Message = "Volume created";
+                    result.Result = true;
+
+                    WriteObject(result);
+                }
+                else
+                {
+                    result.VolumeID = rsVolumeID;
+                    result.Message = "Error creating volume";
+                    result.Result = false;
+
+                    WriteObject(result);
+                }
             }
-            else
+            catch (RightScaleAPIException errNewVol)
             {
-                result.VolumeID = rsVolumeID;
-                result.Message = "Error creating volume";
+                result.VolumeID = "";
+                result.Message = "Error creating volume - " + errNewVol.InnerException;
                 result.Result = false;
 
                 WriteObject(result);
-           }         
+            }
         }
     }
     #endregion
