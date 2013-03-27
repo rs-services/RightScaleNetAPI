@@ -10,12 +10,12 @@ namespace RSPosh
     {
 
         [Parameter(Position = 1, Mandatory = true)]
-        public string[] hrefs;       
+        public string href;       
 
         protected override void ProcessRecord()
         {
            
-            List<string> rsTags = RightScale.netClient.Tag.byResource(hrefs);
+            List<RightScale.netClient.Tag> rsTags = RightScale.netClient.Tag.byResource(href);
 
             WriteObject(rsTags);
 

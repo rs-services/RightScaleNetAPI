@@ -53,9 +53,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RightScale.netClient">
-      <HintPath>..\..\..\..\..\Users\michael\Documents\GitHub\RightScaleNetAPI\RightScale.netClient\RightScale.netClient\bin\Debug\RightScale.netClient.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Management.Automation" />
@@ -89,6 +86,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RightScale.netClient\RightScale.netClient.csproj">
+      <Project>{e59b78d0-4499-4d86-b538-6d1e92fbea12}</Project>
+      <Name>RightScale.netClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
