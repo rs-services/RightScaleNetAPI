@@ -229,9 +229,12 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
 
             string queryString = string.Empty;
-            foreach (Filter f in filter)
+            if (filter != null)
             {
-                queryString += f.ToString() + "&";
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
             }
             queryString += string.Format("view={0}", view);
             
