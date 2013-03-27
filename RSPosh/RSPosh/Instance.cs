@@ -4,7 +4,7 @@ using RightScale.netClient;
 
 namespace RSPosh
 {
-    #region servers cmdlets
+    #region Instance index / show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSInstances")]
     public class instance : Cmdlet
     {
@@ -57,6 +57,28 @@ namespace RSPosh
             Instance rsInstance = RightScale.netClient.Instance.show(cloudID,instanceID,view);
 
             WriteObject(rsInstance);
+
+        }
+    }
+    #endregion
+
+    #region Instance run executable rightscripts chef cmdlets
+    [Cmdlet("Run", "RSScript")]
+    public class instance_runrsscript : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        [Parameter(Position = 3, Mandatory = true)]
+        public string rightScriptID;
+
+        protected override void ProcessRecord()
+        {
+
+            Task rsRunScript = RightScale.netClient.Instance.run_rightScript(cloudID, instanceID, rightScriptID);
 
         }
     }
