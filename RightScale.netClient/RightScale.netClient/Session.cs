@@ -39,12 +39,12 @@ namespace RightScale.netClient
         /// Returns a list of root resources so an authenticated session can use them as a starting point or a way to know what features are available within its privileges.
         /// </summary>
         /// <returns>list of session objects</returns>
-        public static List<Session> index()
+        public static Session index()
         {
             string getHref = "/api/session";
             string jsonString = Core.APIClient.Instance.Get(getHref);
-            var j = deserializeList(jsonString);
-            return deserializeList(jsonString);
+            var j = deserialize(jsonString);
+            return j;
         }
 
         #endregion
