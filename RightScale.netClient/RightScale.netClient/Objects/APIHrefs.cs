@@ -946,6 +946,17 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// href for performing a commit action on a ServerTemplate - takes one parameter which is the ServerTemplate ID
+        /// </summary>
+        public static string ServerTemplateCommit
+        {
+            get
+            {
+                return ServerTemplateByID + "/commit";
+            }
+        }
+
+        /// <summary>
         /// base href for working with Tag objects
         /// </summary>
         public static string Tag

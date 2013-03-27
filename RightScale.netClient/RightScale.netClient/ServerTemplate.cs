@@ -262,5 +262,38 @@ namespace RightScale.netClient
         }
         #endregion
 
+        #region ServerTemplate.create methods
+
+        #endregion
+
+        #region ServerTemplate.update methods
+
+        #endregion
+
+        #region ServerTemplate.commit methods
+
+        /// <summary>
+        /// Commits a given ServerTemplate.  Only HEAD revisions (revision 0) that are owned by the account can be committed.
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to be committed</param>
+        /// <param name="commit_head_dependencies">Commit all HEAD revisions (if any) of the associated MultiCloud images, RightScripts and Chef repo sequences.</param>
+        /// <param name="commit_message">The message associated with the commit.</param>
+        /// <param name="freeze_repositories">Freeze the repositories</param>
+        /// <returns>ID of the committed ServerTemplate</returns>
+        public static string commit(string serverTemplateID, bool commit_head_dependencies, string commit_message, bool freeze_repositories)
+        {
+            string postHref = string.Format(APIHrefs.ServerTemplateCommit, serverTemplateID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(commit_head_dependencies.ToString().ToLower(), "commit_head_dependencies", postParams);
+            Utility.addParameter(commit_message, "commit_message", postParams);
+            Utility.addParameter(freeze_repositories.ToString().ToLower(), "freeze_repositories", postParams);
+            return Core.APIClient.Instance.Post(postHref, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+        #region ServerTemplate.publish methods
+
+        #endregion
     }
 }
