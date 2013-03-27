@@ -75,6 +75,29 @@ namespace RSPosh
         [Parameter(Position = 2, Mandatory = true)]
         public string name;
 
+        [Parameter(Position = 3, Mandatory = false)]
+        public string datacenterid;
+
+        [Parameter(Position = 4, Mandatory = false)]
+        public string iops;
+
+        [Parameter(Position = 5, Mandatory = false)]
+
+        [Parameter(Position = 6, Mandatory = false)]
+        public string description;
+
+        [Parameter(Position = 7, Mandatory = false)]
+        public string parentvolumeid;
+
+        [Parameter(Position = 8, Mandatory = false)]
+        public string parentvolumesnapshotid;
+
+        [Parameter(Position = 9, Mandatory = false)]
+        public string size;
+
+        [Parameter(Position = 10, Mandatory = false)]
+        public string volumetypeid;
+
         protected override void ProcessRecord()
         {
             Types.returnVolumeCreate result = new Types.returnVolumeCreate();
@@ -83,13 +106,20 @@ namespace RSPosh
 
             try
             {
-                string rsVolumeID = RightScale.netClient.Volume.create(cloudID, name);
+                string rsVolumeID = RightScale.netClient.Volume.create(cloudID, name, datacenterid, description, iops, parentvolumeid, parentvolumesnapshotid, size, volumetypeid);
 
                 if (rsVolumeID != "")
                 {
                     result.VolumeID = rsVolumeID;
                     result.Message = "Volume created";
                     result.Result = true;
+                    result.DatacenterID = datacenterid;
+                    result.Description = description;
+                    result.Iops = iops;
+                    result.ParentVolumeID = parentvolumeid;
+                    result.ParentVolumeSnapshotID = parentvolumesnapshotid;
+                    result.Size = size;
+                    result.VolumeTypeID = volumetypeid;
 
                     WriteObject(result);
                 }
@@ -98,6 +128,13 @@ namespace RSPosh
                     result.VolumeID = rsVolumeID;
                     result.Message = "Error creating volume";
                     result.Result = false;
+                    result.DatacenterID = datacenterid;
+                    result.Description = description;
+                    result.Iops = iops;
+                    result.ParentVolumeID = parentvolumeid;
+                    result.ParentVolumeSnapshotID = parentvolumesnapshotid;
+                    result.Size = size;
+                    result.VolumeTypeID = volumetypeid;
 
                     WriteObject(result);
                 }
@@ -107,6 +144,13 @@ namespace RSPosh
                 result.VolumeID = "";
                 result.Message = "Error creating volume - " + errNewVol.InnerException;
                 result.Result = false;
+                result.DatacenterID = datacenterid;
+                result.Description = description;
+                result.Iops = iops;
+                result.ParentVolumeID = parentvolumeid;
+                result.ParentVolumeSnapshotID = parentvolumesnapshotid;
+                result.Size = size;
+                result.VolumeTypeID = volumetypeid;
 
                 WriteObject(result);
             }

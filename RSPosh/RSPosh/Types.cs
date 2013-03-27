@@ -37,6 +37,13 @@ namespace RSPosh
             public string VolumeID { get; set; }
             public bool Result { get; set; }
             public string Message { get; set; }
+            public string DatacenterID { get; set; }
+            public string Iops { get; set; }
+            public string Description { get; set; }
+            public string ParentVolumeID { get; set; }
+            public string ParentVolumeSnapshotID { get; set; }
+            public string Size { get; set; }
+            public string VolumeTypeID { get; set; }
         }
 
     }
