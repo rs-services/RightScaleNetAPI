@@ -12,6 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architectur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSPosh", "RSPosh\RSPosh.csproj", "{0D561A89-9775-4768-890C-321D8E50183E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{FF8951B5-067A-4D34-8275-B110854BCC53}"
+	ProjectSection(SolutionItems) = preProject
+		RightScale.netClient\packages.config = RightScale.netClient\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

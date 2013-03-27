@@ -122,8 +122,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del $(ProjectDir)..\..\PowerShell\RightScale.netClient.PowerShell.zip
-$(ProjectDir)..\Packages\7zip\7za.exe u -tzip $(ProjectDir)..\..\PowerShell\RightScale.netClient.PowerShell.zip @$(ProjectDir)..\Packages\7zip\zipFiles.txt</PostBuildEvent>
+    <PostBuildEvent>echo POSTBUILDSTEP for $(ProjectName) - Copy output to $(SolutionDir)RSNetClient
+
+echo Delete existing files
+del $(SolutionDir)Packages\RSNetClient\*.* /s /q
+
+echo Copy build output files to Packages\RSNetClient
+xcopy /y $(ProjectDir)$(OutDir)*.* $(SolutionDir)Packages\RSNetClient\
+
+echo Creating zip in -  $(SolutionDir)Packages\RSNetClient\
+$(SolutionDir)..\Packages\7zip\7za.exe u -tzip $(SolutiontDir)..\..\RSPosh\RightScale.netClient.zip @$(SolutionDir)..\Packages\7zip\zipFiles.txt
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
