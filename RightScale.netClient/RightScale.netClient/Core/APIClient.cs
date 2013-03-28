@@ -222,6 +222,7 @@ namespace RightScale.netClient.Core
         /// <returns>JSON string result to be parsed</returns>
         internal List<string> Post(string apiHref, List<KeyValuePair<string, string>> parameterSet, string returnHeaderName, out string contentOutput)
         {
+            contentOutput = string.Empty;
             if (CheckAuthenticationStatus())
             {
                 string content = string.Empty;
@@ -256,7 +257,6 @@ namespace RightScale.netClient.Core
                     throw new RightScaleAPIException(apiHref, content, "Exception from API Gateway, see error data", hre, parameterSet);
                 }
             }
-            contentOutput = string.Empty;
             return null;
         }
 

@@ -213,13 +213,14 @@ namespace RightScale.netClient
             Utility.addParameter(includeTagsWithPrefix, "include_tags_with_prefix", postParams);
             Utility.addParameter(matchAll.ToString().ToLower(), "match_all", postParams);
             Utility.addParameter(resourceType, "resource_type", postParams);
+
             foreach (Tag t in tags)
             {
                 Utility.addParameter(t.ToString(), "tags[]", postParams);
             }
-            string postHref = "/api/tags/by_resource";
+
             string outString = string.Empty;
-            Core.APIClient.Instance.Post(postHref, postParams, string.Empty, out outString);
+            Core.APIClient.Instance.Post(APIHrefs.TagByTag, postParams, string.Empty, out outString);
             return Resource.deserializeList(outString);
         }
 
@@ -237,7 +238,6 @@ namespace RightScale.netClient
         /// <returns>True if successful, false if not</returns>
         public static bool multiAdd(List<string> resourceHrefs, List<Tag> tags)
         {
-            string postHref = "/api/tags/multi_add";
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
             foreach (string s in resourceHrefs)
             {
@@ -247,8 +247,9 @@ namespace RightScale.netClient
             {
                 Utility.addParameter(t.ToString(), "tags[]", postParams);
             }
-            return Core.APIClient.Instance.Post(postHref, postParams);
+            return Core.APIClient.Instance.Post(APIHrefs.TagMultiAdd, postParams);
         }
+
         #endregion
 
         #region Tag.multiDelete methods

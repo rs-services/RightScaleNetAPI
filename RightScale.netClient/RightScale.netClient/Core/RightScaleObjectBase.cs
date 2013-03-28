@@ -37,6 +37,17 @@ namespace RightScale.netClient.Core
             }
         }
 
+        /// <summary>
+        /// Href of the object <typeparam name="T"/>
+        /// </summary>
+        public string href
+        {
+            get
+            {
+                return getLinkValue("self");
+            }
+        }
+
         #endregion
 
         #region Common get methods for all classes

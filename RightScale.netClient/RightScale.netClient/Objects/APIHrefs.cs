@@ -92,6 +92,8 @@ namespace RightScale.netClient
 
         private static string stopSegment = "/stop";
 
+        private static string multiAddSegment = "/multi_add";
+
         /// <summary>
         /// Segment that's included to accept index 0 replacement in a string.format operation
         /// </summary>
@@ -934,7 +936,28 @@ namespace RightScale.netClient
         /// base href for working with Tag objects
         /// </summary>
         public static string Tag = "/api/tags";
-          
+        
+        /// <summary>
+        /// Href for working with tags by tag
+        /// </summary>
+        public static string TagByTag 
+        {
+            get
+            {
+                return Tag + "/by_tag";
+            }
+        }
+
+        /// <summary>
+        /// href for performing multiadd operations with tags
+        /// </summary>
+        public static string TagMultiAdd
+        {
+            get
+            {
+                return Tag + multiAddSegment;
+            }
+        }
 
         /// <summary>
         /// href for working with Tag objects by resource - takes no parameters
