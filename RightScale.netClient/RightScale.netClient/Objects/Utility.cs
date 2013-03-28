@@ -264,7 +264,7 @@ namespace RightScale.netClient
         /// <returns>formatted volume_snapshot_href</returns>
         public static string volumeSnapshotHref(string cloudID, string volumeid, string objectid)
         {
-            if (!string.IsNullOrWhiteSpace(objectid))
+            if (!string.IsNullOrWhiteSpace(objectid) && !string.IsNullOrWhiteSpace(volumeid) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.VolumeSnapshotByID, cloudID, volumeid, objectid); 
             }
@@ -299,7 +299,7 @@ namespace RightScale.netClient
         /// <returns>volume_type_href for specific volume type</returns>
         public static string volumeTypeHrefByID(string cloudID, string volumeTypeID)
         {
-            if (!string.IsNullOrWhiteSpace(cloudID))
+            if (!string.IsNullOrWhiteSpace(cloudID) && !string.IsNullOrWhiteSpace(volumeTypeID))
             {
                 return string.Format(APIHrefs.VolumeTypeByID, cloudID, volumeTypeID);
             }
@@ -308,6 +308,24 @@ namespace RightScale.netClient
                 return string.Empty;
             }
         }
+
+        /// <summary>
+        /// Helper method returns a properly formatted account group href for a specific account group
+        /// </summary>
+        /// <param name="accountGroupID">ID of account group</param>
+        /// <returns>account_group_href for specific account group</returns>
+        public static string accountGroupHrefByID(string accountGroupID)
+        {
+            if (!string.IsNullOrWhiteSpace(accountGroupID))
+            {
+                return string.Format(APIHrefs.AccountGroupByID, accountGroupID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         /// <summary>
         /// Helper method returns properly formatted server_template_href
         /// </summary>
@@ -333,7 +351,7 @@ namespace RightScale.netClient
         /// <returns>formatted security_group_href</returns>
         public static string securityGroupHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(objectID))
             {
                 return string.Format(APIHrefs.SecurityGroupByID, cloudID, objectID);
             }
@@ -368,7 +386,7 @@ namespace RightScale.netClient
         /// <returns>Formatted kernel_image_href</returns>
         public static string kernelImageHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
@@ -386,7 +404,7 @@ namespace RightScale.netClient
         /// <returns>Formatted instance_href</returns>
         public static string InstanceHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(objectID))
             {
                 return string.Format(APIHrefs.InstanceByID, cloudID, objectID);
             }
@@ -404,7 +422,7 @@ namespace RightScale.netClient
         /// <returns>properly formatted volume_href</returns>
         public static string VolumeHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(objectID))
             {
                 return string.Format(APIHrefs.VolumeByID, cloudID, objectID);
             }
@@ -422,7 +440,7 @@ namespace RightScale.netClient
         /// <returns>Formatted instance_type_href</returns>
         public static string instanceTypeHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.InstanceTypeByID, cloudID, objectID);
             }
@@ -440,7 +458,7 @@ namespace RightScale.netClient
         /// <returns>Formatted ssh_key_href</returns>
         public static string sshKeyHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.SshKeyByID, cloudID, objectID);
             }
@@ -458,7 +476,7 @@ namespace RightScale.netClient
         /// <returns>Formatted image_href</returns>
         public static string imageHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
@@ -476,7 +494,7 @@ namespace RightScale.netClient
         /// <returns>Formatted datacenter_href</returns>
         public static string datacenterHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.DataCenterByID, cloudID, objectID);
             }
@@ -528,7 +546,7 @@ namespace RightScale.netClient
         /// <returns>Formatted ramdisk_image_href</returns>
         public static string ramdiskImageHref(string cloudID, string objectID)
         {
-            if (!string.IsNullOrWhiteSpace(objectID))
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
             {
                 return string.Format(APIHrefs.ImageByID, cloudID, objectID);
             }
