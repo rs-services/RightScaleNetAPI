@@ -53,4 +53,51 @@ namespace RSPosh
     }
     #endregion
 
+    #region
+    [Cmdlet(VerbsCommon.New, "RSServerTemplate")]
+        public class servertemplate_new: Cmdlet
+        {
+
+            [Parameter(Position = 1, Mandatory = true)]
+            public string name;
+
+            [Parameter(Position = 2, Mandatory = false)]
+            public string description;
+
+            protected override void ProcessRecord()
+            {
+
+                Types.returnServerTemplateCreate result = new Types.returnServerTemplateCreate();
+
+                base.ProcessRecord();
+
+                try
+                {
+                    string rsServerTemplate = RightScale.netClient.ServerTemplate.create(name, description);
+
+                    if (rsServerTemplate != "")
+                    {
+                        result.ServerTemplateID = rsServerTemplate;
+                        result.Message = "Server Launched";
+                        result.Result = true;                        
+                    }
+                    else
+                    {
+                        result.ServerTemplateID = rsServerTemplate;
+                        result.Message = "Error creating server template";
+                        result.Result = false;                        
+                    }
+                }
+                catch (RightScaleAPIException errLaunch)
+                {
+                    result.Result = false;
+                    result.Message = errLaunch.InnerException.ToString() + "-" + errLaunch;
+                    result.MessageData = errLaunch.ErrorData;
+                }
+
+                WriteObject(result);
+            }
+    }
+    #endregion
+
 }

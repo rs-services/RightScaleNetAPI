@@ -68,9 +68,6 @@
     <Compile Include="ServerTemplate.cs" />
     <Compile Include="Servers.cs" />
     <Compile Include="Deployments.cs" />
-    <Compile Include="RSPoshSnapIn.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Authentication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types.cs" />

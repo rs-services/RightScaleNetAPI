@@ -46,5 +46,13 @@ namespace RSPosh
             public string VolumeTypeID { get; set; }
         }
 
+        public class returnServerTemplateCreate
+        {
+            public string ServerTemplateID { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string MessageData { get; set; }
+        }
+
     }
 }
