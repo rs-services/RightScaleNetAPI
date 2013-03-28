@@ -53,6 +53,7 @@
     <Compile Include="Core\ITaggableResource.cs" />
     <Compile Include="Core\TaggableResourceBase.cs" />
     <Compile Include="Objects\CommitMessage.cs" />
+    <Compile Include="Objects\Description.cs" />
     <Compile Include="Objects\ItemAge.cs" />
     <Compile Include="Objects\DataCenterPolicy.cs" />
     <Compile Include="MonitoringMetricData.cs" />

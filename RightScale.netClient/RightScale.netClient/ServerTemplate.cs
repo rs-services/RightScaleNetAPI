@@ -294,6 +294,96 @@ namespace RightScale.netClient
 
         #region ServerTemplate.publish methods
 
+        /// <summary>
+        /// Publishes a given ServerTemplate and its subordinates
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to publish</param>
+        /// <param name="accountGroupIDs">Collection of Account Group IDs to publish to </param>
+        /// <param name="allowComments">Allow users to leave comments on this ServerTemplate</param>
+        /// <param name="longDescription">Long Description</param>
+        /// <param name="descriptionNotes">New Revision Notes</param>
+        /// <param name="shortDescription">Short Description</param>
+        /// <param name="email_comments">Email me when a user comments on this ServerTemplate</param>
+        /// <returns>Id of the newly created publication</returns>
+        public static string publish(string serverTemplateID, List<string> accountGroupIDs, bool allowComments, string longDescription, string descriptionNotes, string shortDescription, bool email_comments)
+        {
+            return publish(serverTemplateID, accountGroupIDs, allowComments, new Description(longDescription, shortDescription, descriptionNotes), email_comments, null);
+        }
+
+        /// <summary>
+        /// Publishes a given ServerTemplate and its subordinates
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to publish</param>
+        /// <param name="accountGroupIDs">Collection of Account Group IDs to publish to </param>
+        /// <param name="allowComments">Allow users to leave comments on this ServerTemplate</param>
+        /// <param name="longDescription">Long Description</param>
+        /// <param name="descriptionNotes">New Revision Notes</param>
+        /// <param name="shortDescription">Short Description</param>
+        /// <param name="email_comments">Email me when a user comments on this ServerTemplate</param>
+        /// <param name="categories">List of Categories</param>
+        /// <returns>Id of the newly created publication</returns>
+        public static string publish(string serverTemplateID, List<string> accountGroupIDs, bool allowComments, string longDescription, string descriptionNotes, string shortDescription, bool email_comments, List<string> categories)
+        {
+            return publish(serverTemplateID, accountGroupIDs, allowComments, new Description(longDescription, shortDescription, descriptionNotes), email_comments, categories);
+        }
+
+        /// <summary>
+        /// Publishes a given ServerTemplate and its subordinates
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to publish</param>
+        /// <param name="accountGroupIDs">Collection of Account Group IDs to publish to </param>
+        /// <param name="allowComments">Allow users to leave comments on this ServerTemplate</param>
+        /// <param name="description">Description for this publish</param>
+        /// <param name="email_comments">Email me when a user comments on this ServerTemplate</param>
+        /// <returns>ID of the newly created publication</returns>
+        public static string publish(string serverTemplateID, List<string> accountGroupIDs, bool allowComments, Description description, bool email_comments)
+        {
+            return publish(serverTemplateID, accountGroupIDs, allowComments, description, email_comments, null);
+        }
+
+        /// <summary>
+        /// Publishes a given ServerTemplate and its subordinates
+        /// </summary>
+        /// <param name="serverTemplateID">ID of the ServerTemplate to publish</param>
+        /// <param name="accountGroupIDs">Collection of Account Group IDs to publish to </param>
+        /// <param name="allowComments">Allow users to leave comments on this ServerTemplate</param>
+        /// <param name="description">Description for this publish</param>
+        /// <param name="email_comments">Email me when a user comments on this ServerTemplate</param>
+        /// <param name="categories">List of Categories</param>
+        /// <returns>ID of the newly created publication</returns>
+        public static string publish(string serverTemplateID, List<string> accountGroupIDs, bool allowComments, Description description, bool email_comments, List<string> categories)
+        {
+            string postHref = string.Format(APIHrefs.ServerTemplatePublish, serverTemplateID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            
+            if (accountGroupIDs != null && accountGroupIDs.Count > 0)
+            {
+                foreach (string accountGroupID in accountGroupIDs)
+                {
+                    Utility.addParameter(Utility.accountGroupHrefByID(accountGroupID), "account_group_hrefs", postParams);
+                }
+            }
+            
+            Utility.addParameter(allowComments.ToString().ToLower(), "allow_comments", postParams);
+            
+            if (categories != null && categories.Count > 0)
+            {
+                foreach (string category in categories)
+                {
+                    Utility.addParameter(category, "categories[]", postParams);
+                }
+            }
+
+            if (description != null)
+            {
+                postParams.AddRange(description.descriptionParameters("descriptions[{0}]"));
+            }
+
+            Utility.addParameter(email_comments.ToString().ToLower(), "email_comments", postParams);
+
+            return Core.APIClient.Instance.Post(postHref, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
         #endregion
     }
 }

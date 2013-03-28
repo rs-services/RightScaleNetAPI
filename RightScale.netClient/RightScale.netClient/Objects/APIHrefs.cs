@@ -42,13 +42,16 @@ namespace RightScale.netClient
         /// Segment that's tacked on to the end of an existing href to terminate a single instance
         /// </summary>
         private static string terminateSegment = "/terminate";
-          
+
+        /// <summary>
+        /// Segment that's tacked onto the end of an existing href to destroy an object
+        /// </summary>
+        private static string destroySegment = "/destroy";
 
         /// <summary>
         /// Segment that's tacked on to the end of an existing href to clone that object
         /// </summary>
         private static string cloneSegment  = "/clone";
-
 
         /// <summary>
         /// Segment that's included when working with inputs
@@ -59,6 +62,35 @@ namespace RightScale.netClient
         /// Segment that's tacked on to the end of a href to reboot a server
         /// </summary>
         private static string rebootSegment = "/reboot";
+
+        /// <summary>
+        /// Segment that's tacked on to the end of an object to get alert specs
+        /// </summary>
+        private static string alertSpecSegment = "/alert_specs";
+
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to commit the asset
+        /// </summary>
+        private static string commitSegment = "/commit";
+
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to publish the asset
+        /// </summary>
+        private static string publishSegment = "/publish";
+
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to get current volume attachments
+        /// </summary>
+        private static string volumeAttachmentSegment = "/volume_attachment";
+
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to perform multi updates 
+        /// </summary>
+        private static string multiUpdateSegment = "/multi_update";
+
+        private static string startSegment = "/start";
+
+        private static string stopSegment = "/stop";
 
         /// <summary>
         /// Segment that's included to accept index 0 replacement in a string.format operation
@@ -82,14 +114,8 @@ namespace RightScale.netClient
         /// <summary>
         /// Base account href that takes no parameters
         /// </summary>
-        public static string Account
-        {
-            get
-            {
-                return "/api/accounts";
-            }
-        }
-
+        public static string Account = "/api/accounts";
+            
         /// <summary>
         /// Account href takes one parameter which is the Account ID
         /// </summary>
@@ -104,14 +130,8 @@ namespace RightScale.netClient
         /// <summary>
         /// Base AccountGroup href that takes no parameters
         /// </summary>
-        public static string AccountGroup
-        {
-            get
-            {
-                return "/api/account_groups";
-            }
-        }
-
+        public static string AccountGroup = "/api/account_groups";
+  
         /// <summary>
         /// AccountGroup href takes one parameter which is the AccountGroup ID
         /// </summary>
@@ -126,14 +146,8 @@ namespace RightScale.netClient
         /// <summary>
         /// AuditEntry - takes no parameters
         /// </summary>
-        public static string AuditEntry
-        {
-            get
-            {
-                return "/api/audit_entries";
-            }
-        }
-
+        public static string AuditEntry = "/api/audit_entries";
+            
         /// <summary>
         /// Audit Entry - for getting specific AuditEntries takes one parameter which is the AuditEntry ID
         /// </summary>
@@ -174,7 +188,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerByID + "/alert_specs";
+                return ServerByID + alertSpecSegment;
             }
         }
 
@@ -196,7 +210,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerArrayById + "/alert_specs";
+                return ServerArrayById + alertSpecSegment;
             }
         }
 
@@ -229,20 +243,14 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerArrayById + "/destroy";
+                return ServerArrayById + destroySegment;
             }
         }
 
         /// <summary>
         /// Base href for working with Cloud obejects - takes no parameters
         /// </summary>
-        public static string Cloud
-        {
-            get
-            {
-                return "/api/clouds";
-            }
-        }
+        public static string Cloud = "/api/clouds";
 
         /// <summary>
         /// Cloud href takes one parameter which is the Cloud ID
@@ -258,13 +266,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Base href for working with SeverTemplate MultiCloud Images
         /// </summary>
-        public static string ServerTemplateMultiCloudImages
-        {
-            get
-            {
-                return "/api/server_template_multi_cloud_images";
-            }
-        }
+        public static string ServerTemplateMultiCloudImages = "/api/server_template_multi_cloud_images";
 
         /// <summary>
         /// Href used for refering to a specific ServerTemplateMultiCloudImage object by ID
@@ -291,14 +293,8 @@ namespace RightScale.netClient
         /// <summary>
         /// Base href for working with ServerTemplates - takes no parameters
         /// </summary>
-        public static string ServerTemplate
-        {
-            get
-            {
-                return "/api/server_templates";
-            }
-        }
-
+        public static string ServerTemplate = "/api/server_templates";
+ 
         /// <summary>
         /// ServerTemplate href takes one parameter which is the ServerTempalte ID
         /// </summary>
@@ -307,6 +303,14 @@ namespace RightScale.netClient
             get
             {
                 return ServerTemplate + ID0;
+            }
+        }
+
+        public static string ServerTemplatePublish
+        {
+            get
+            {
+                return ServerTemplateByID + publishSegment;
             }
         }
 
@@ -335,13 +339,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Base href for working with MultiCloud Image objects - takes no parameters
         /// </summary>
-        public static string MultiCloudImage
-        {
-            get
-            {
-                return "/api/multi_cloud_images";
-            }
-        }
+        public static string MultiCloudImage = "/api/multi_cloud_images";
 
         /// <summary>
         /// MultiCloud Image href takes one parameter which is the MultiCloud Image ID
@@ -383,7 +381,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return MultiCloudImageByID + "/clone";
+                return MultiCloudImageByID + cloneSegment;
             }
         }
 
@@ -394,7 +392,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return MultiCloudImageByID + "/commit";
+                return MultiCloudImageByID + commitSegment;
             }
         }
 
@@ -468,7 +466,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return InstanceByID + "/inputs/multi_update";
+                return InstanceByID + inputSegment + multiUpdateSegment;
             }
         }
 
@@ -486,13 +484,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Base Href for working with ServerArray objects
         /// </summary>
-        public static string ServerArray
-        {
-            get
-            {
-                return "/api/server_arrays";
-            }
-        }
+        public static string ServerArray = "/api/server_arrays";
 
         /// <summary>
         /// Href gets a specific ServerArray - takes one parameter which is the ServerArray ID
@@ -684,13 +676,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Base href for working with RightScript objects - takes no parameters
         /// </summary>
-        public static string RightScript
-        {
-            get
-            {
-                return "/api/right_scripts";
-            }
-        }
+        public static string RightScript= "/api/right_scripts";
 
         /// <summary>
         /// RightScript href takes one parameter which is the RightScript ID
@@ -728,24 +714,12 @@ namespace RightScale.netClient
         /// <summary>
         /// Base href for working with servers - takes no parameters
         /// </summary>
-        public static string Server
-        {
-            get
-            {
-                return "/api/servers";
-            }
-        }
+        public static string Server = "/api/servers";
 
         /// <summary>
         /// Base href for working with deployments - takes no parameters
         /// </summary>
-        public static string Deployment 
-        {
-            get
-            {
-                return "/api/deployments";
-            }
-        }
+        public static string Deployment = "/api/deployments";
 
         /// <summary>
         /// href for working with servers within a given deployment - takes one parameter which is the Deployment ID
@@ -842,7 +816,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return DeploymentInput + "/multi_update";
+                return DeploymentInput + multiUpdateSegment;
             }
         }
 
@@ -864,7 +838,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerTemplateInput + "/multi_update";
+                return ServerTemplateInput + multiUpdateSegment;
             }
         }
 
@@ -886,7 +860,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return InstanceByID + "/start"; 
+                return InstanceByID + startSegment; 
             }
         }
 
@@ -897,7 +871,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return InstanceByID + "/stop";
+                return InstanceByID + stopSegment;
             }
         }
 
@@ -908,7 +882,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return InstanceByID + "/terminate";
+                return InstanceByID + terminateSegment;
             }
         }
 
@@ -952,20 +926,15 @@ namespace RightScale.netClient
         {
             get
             {
-                return ServerTemplateByID + "/commit";
+                return ServerTemplateByID + commitSegment;
             }
         }
 
         /// <summary>
         /// base href for working with Tag objects
         /// </summary>
-        public static string Tag
-        {
-            get
-            {
-                return "/api/tags";
-            }
-        }
+        public static string Tag = "/api/tags";
+          
 
         /// <summary>
         /// href for working with Tag objects by resource - takes no parameters
@@ -996,7 +965,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return CloudByID + "/volume_attachments";
+                return CloudByID + volumeAttachmentSegment;
             }
         }
 
@@ -1007,7 +976,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return InstanceByID + "/volume_attachments";
+                return InstanceByID + volumeAttachmentSegment;
             }
         }
 
@@ -1029,7 +998,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return VolumeByID + "/volume_attachment";
+                return VolumeByID + volumeAttachmentSegment;
             }
         }
 
