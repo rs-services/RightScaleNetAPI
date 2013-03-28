@@ -264,6 +264,30 @@ namespace RightScale.netClient
 
         #region ServerTemplate.create methods
 
+        /// <summary>
+        /// Creates a new ServerTemplate with the given parameters
+        /// </summary>
+        /// <param name="name">The name of the ServerTemplate to be created</param>
+        /// <returns>ID of the newly created ServerTemplate</returns>
+        public static string create(string name)
+        {
+            return create(name, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a new ServerTemplate with the given parameters
+        /// </summary>
+        /// <param name="name">The name of the ServerTemplate to be created</param>
+        /// <param name="description">The description of the ServerTemplate to be created</param>
+        /// <returns>ID of the newly created ServerTemplate</returns>
+        public static string create(string name, string description)
+        {
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(description, "server_template[description]", postParams);
+            Utility.addParameter(name, "server_template[name]", postParams);
+            return Core.APIClient.Instance.Post(APIHrefs.ServerTemplate, postParams, "location").Last<string>().Split('/').Last<string>(); 
+        }
+
         #endregion
 
         #region ServerTemplate.update methods
