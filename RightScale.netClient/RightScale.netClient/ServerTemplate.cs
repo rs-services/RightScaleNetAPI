@@ -292,6 +292,22 @@ namespace RightScale.netClient
 
         #region ServerTemplate.update methods
 
+        /// <summary>
+        /// Updates attributes of a given ServerTemplate.  Only HEAD revisions can be updated (revision 0).  Currently the attributes you can update are only the 'direct' attributes of a ServerTemplate.  To manage multi cloud images of a ServerTemplate, please see the 'ServerTemplateMultiCloudImages' object.
+        /// </summary>
+        /// <param name="serverTemplateId"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static bool update(string serverTemplateId, string name, string description)
+        {
+            string putHref = string.Format(APIHrefs.ServerTemplateByID, serverTemplateId);
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(name, "server_template[name]", putParams);
+            Utility.addParameter(description, "server_template[description]", putParams);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
         #endregion
 
         #region ServerTemplate.commit methods
