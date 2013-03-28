@@ -5,6 +5,9 @@ using RightScale.netClient;
 namespace RSPosh
 {
     #region Tags index / show cmdlets
+    /// <summary>
+    /// Get RSTags by href
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "RSTags")]
     public class tags : Cmdlet
     {

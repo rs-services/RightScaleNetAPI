@@ -112,7 +112,9 @@
     <Compile Include="VolumeType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\RightScaleObjectBase.cs" />
@@ -122,16 +124,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo POSTBUILDSTEP for $(ProjectName) - Copy output to $(SolutionDir)RSNetClient
+    <PostBuildEvent>echo POSTBUILDSTEP for $(ProjectName) - Copy output to $(SolutionDir)RightScaleNetClient
 
 echo Delete existing files
-del $(SolutionDir)Packages\RSNetClient\*.* /s /q
+del $(SolutionDir)Packages\RightScaleNetClientt\*.* /s /q
 
 echo Copy build output files to Packages\RSNetClient
-xcopy /y $(ProjectDir)$(OutDir)*.* $(SolutionDir)Packages\RSNetClient\
+xcopy /y $(ProjectDir)$(OutDir)*.* $(SolutionDir)Packages\RightScaleNetClient\
 
-echo Creating zip in -  $(SolutionDir)Packages\RSNetClient\
-$(SolutionDir)..\Packages\7zip\7za.exe u -tzip $(SolutiontDir)..\..\RSPosh\RightScale.netClient.zip @$(SolutionDir)..\Packages\7zip\zipFiles.txt
+
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

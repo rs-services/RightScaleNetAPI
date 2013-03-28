@@ -1,4 +1,4 @@
 Newtonsoft.Json.dll
 Newtonsoft.Json.xml
 RightScale.netClient.dll
-RightScale.netClient.pdb
+RSPosh.dll

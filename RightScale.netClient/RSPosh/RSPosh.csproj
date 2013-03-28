@@ -95,16 +95,20 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo POSTBUILDSTEP for $(ProjectName) - Copy output to $(SolutionDir)RSNetClient
+    <PostBuildEvent>echo POSTBUILDSTEP for $(ProjectName) - Copy output to $(SolutionDir)RightScaleNetClient
 
-echo Delete existing files
-del $(SolutionDir)Packages\RSNetClient\*.* /s /q
+echo Copy build output files to Packages\RightScaleNetClient
+xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)Packages\RightScaleNetClient\
 
-echo Copy build output files to Packages\RSNetClient
-xcopy /y $(ProjectDir)$(OutDir)*.* $(SolutionDir)Packages\RSNetClient\
+echo Deleting pdb files
+del $(SolutionDir)Packages\RightScaleNetClient\*.pdb
 
-echo Creating zip in -  $(SolutionDir)Packages\RSNetClient\
-$(SolutionDir)..\Packages\7zip\7za.exe u -tzip $(SolutiontDir)..\..\RSPosh\RightScale.netClient.zip @$(SolutionDir)..\Packages\7zip\zipFiles.txt
+echo Updating Package dir -  $(SolutionDir)Packages\RightScaleNetClient
+
+echo Creating zip archive in RightScaleNetClient directory - $(SolutionDir)RightScaleNetClient
+$(SolutionDir)Packages\7zip\7za.exe u $(SolutiontDir)Packages\RightScaleNetClient\RightScaleNetClient.zip $(SolutionDir)Packages\RightScaleNetClient\*.*
+
+echo Post build finished
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
