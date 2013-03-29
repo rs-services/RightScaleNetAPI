@@ -53,7 +53,7 @@ namespace RSPosh
     }
     #endregion
 
-    #region
+    #region create clone
     [Cmdlet(VerbsCommon.New, "RSServerTemplate")]
         public class servertemplate_new: Cmdlet
         {
@@ -98,6 +98,60 @@ namespace RSPosh
                 WriteObject(result);
             }
     }
+
+    [Cmdlet("Clone", "RSServerTemplate")]
+    public class servertemplate_clone : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string servertemplateID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string name;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        public string description;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnServerTemplateClone result = new Types.returnServerTemplateClone();
+
+            base.ProcessRecord();
+
+            try
+            {
+                string rsServerTemplateID = RightScale.netClient.ServerTemplate.clone(servertemplateID, name, description);
+
+                if (rsServerTemplateID != "")
+                {
+                    result.ServerTemplateID = rsServerTemplateID;
+                    result.ServerTemplateName = name;
+                    result.Description = description;
+                    result.Message = "ServerTemplate cloned";
+                    result.Result = true;
+                }
+                else
+                {
+                    result.ServerTemplateID = rsServerTemplateID;
+                    result.ServerTemplateName = name;
+                    result.Description = description;
+                    result.Message = "Error cloning server template";
+                    result.Result = false;
+                }
+            }
+            catch (RightScaleAPIException errLaunch)
+            {
+                result.ServerTemplateName = name;
+                result.Description = description;
+                result.Result = false;
+                result.Message = errLaunch.InnerException.ToString() + "-" + errLaunch;
+                result.MessageData = errLaunch.ErrorData;
+            }
+
+            WriteObject(result);
+        }
+    }
+
     #endregion
 
 }
