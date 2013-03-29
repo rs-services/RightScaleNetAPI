@@ -53,7 +53,7 @@ namespace RSPosh
     }
     #endregion
 
-    #region create clone
+    #region create / clone
     [Cmdlet(VerbsCommon.New, "RSServerTemplate")]
         public class servertemplate_new: Cmdlet
         {
@@ -78,13 +78,13 @@ namespace RSPosh
                     if (rsServerTemplate != "")
                     {
                         result.ServerTemplateID = rsServerTemplate;
-                        result.Message = "Server Launched";
+                        result.Message = "ServerTemplate Launched";
                         result.Result = true;                        
                     }
                     else
                     {
                         result.ServerTemplateID = rsServerTemplate;
-                        result.Message = "Error creating server template";
+                        result.Message = "Error creating ServerTemplate";
                         result.Result = false;                        
                     }
                 }
@@ -135,7 +135,7 @@ namespace RSPosh
                     result.ServerTemplateID = rsServerTemplateID;
                     result.ServerTemplateName = name;
                     result.Description = description;
-                    result.Message = "Error cloning server template";
+                    result.Message = "Error cloning ServerTemplate";
                     result.Result = false;
                 }
             }
@@ -154,4 +154,48 @@ namespace RSPosh
 
     #endregion
 
+
+    #region destroy
+    [Cmdlet("Destroy", "RSServerTemplate")]
+    public class servertemplate_destroy : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverTemplateID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnServerTemplateDestroy result = new Types.returnServerTemplateDestroy();
+
+            base.ProcessRecord();
+
+            try
+            {
+                bool rsServerTemplate = RightScale.netClient.ServerTemplate.destroy(serverTemplateID);
+
+                if (rsServerTemplate == true)
+                {
+                    result.ServerTemplateID = serverTemplateID;
+                    result.Message = "ServerTemplate Destroyed";
+                    result.Result = true;
+                }
+                else
+                {
+                    result.ServerTemplateID = serverTemplateID;
+                    result.Message = "Error destroying ServerTemplate";
+                    result.Result = false;
+                }
+            }
+            catch (RightScaleAPIException errDestroy)
+            {
+                result.ServerTemplateID = serverTemplateID;
+                result.Result = false;
+                result.Message = errDestroy.InnerException.ToString() + "-" + errDestroy;
+                result.MessageData = errDestroy.ErrorData;
+            }
+
+            WriteObject(result);
+        }
+    }
+    #endregion
 }
