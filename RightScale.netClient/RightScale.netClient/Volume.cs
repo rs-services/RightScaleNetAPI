@@ -290,7 +290,7 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.volumeSnapshotHref(cloudID, parentVolumeID, parentVolumeSnapshotID), "volume[parent_volume_snapshot_href]", postParams);
             Utility.addParameter(Utility.volumeTypeHrefByID(cloudID, volumeTypeID), "volume[volume_type_href]", postParams);
 
-            string postString = string.Format(APIHrefs.VolumeType, cloudID);
+            string postString = string.Format(APIHrefs.Volume, cloudID);
             List<string> retVals = Core.APIClient.Instance.Post(postString, postParams, "location");
             return retVals.Last<string>().Split('/').Last<string>();
 

@@ -172,5 +172,9 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region ServerTemplate.Publish tests
+        //TODO: need the publish object to perform this first
+        #endregion
     }
 }
