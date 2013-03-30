@@ -54,5 +54,24 @@ namespace RSPosh
             public string MessageData { get; set; }
         }
 
+        public class returnServerTemplateClone
+        {
+            public string ServerTemplateID { get; set; }
+            public string ServerTemplateName { get; set; }
+            public bool Result { get; set; }
+            public string Description { get; set; }
+            public string Message { get; set; }
+            public string MessageData { get; set; }
+        }
+
+        public class returnServerTemplateDestroy
+        {
+            public string ServerTemplateID { get; set; }
+            public string ServerTemplateName { get; set; }
+            public bool Result { get; set; }
+            public string Description { get; set; }
+            public string Message { get; set; }
+            public string MessageData { get; set; }
+        }
     }
 }
