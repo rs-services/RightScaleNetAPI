@@ -119,6 +119,7 @@ namespace RightScale.netClient.Core
         {
             this.isAuthenticated = false;
             this.isAuthenticating = false;
+            this.isInstanceAuthenticated = false;
             this.cookieContainer = new CookieContainer();
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
             this.webClient = new HttpClient(this.clientHandler);
