@@ -37,15 +37,8 @@ namespace RightScale.netClient.Core
 
         private void populateTags()
         {
-            this.tags = Tag.byResource(this.resource_href);
+            this.tags = Tag.byResource(getLinkValue("self"));
         }
 
-        public string resource_href
-        {
-            get 
-            { 
-                return getLinkValue("self"); 
-            }
-        }
     }
 }

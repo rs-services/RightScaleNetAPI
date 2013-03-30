@@ -115,12 +115,14 @@ namespace RightScale.netClient.Core
         /// <returns>href value for link</returns>
         internal string getLinkValue(string linkName)
         {
-            var linkToReturn = from link in links where link.rel == linkName select link.href;
-            if(linkToReturn.Count<string>() != 1 )
+            foreach (Link l in links)
             {
-                return null;
+                if (l.rel == linkName)
+                {
+                    return l.href;
+                }
             }
-            return linkToReturn.Last<string>();
+            return null;
         }
 
         /// <summary>
