@@ -59,10 +59,10 @@ namespace RightScale.netClient
         /// <param name="email">The email to login with</param>
         /// <param name="password">The corresponding password</param>
         /// <param name="accountID">The account id for which the session needs to be created.</param>
-        public static void create(string email, string password, string accountID)
+        public static bool create(string email, string password, string accountID)
         {
             Core.APIClient.Instance.InitWebClient();
-            Core.APIClient.Instance.Authenticate(email, password, accountID);
+            return Core.APIClient.Instance.Authenticate(email, password, accountID);
         }
 
         #endregion
@@ -95,13 +95,10 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="accountID">The account id for which the session needs to be created</param>
         /// <param name="instanceToken">The instance token to login with</param>
-        public static void create_instance_session(string accountID, string instanceToken)
+        public static bool create_instance_session(string instanceToken)
         {
-            string postHref = "/api/session/instance";
-            List<KeyValuePair<string, string>> parameterSet = new List<KeyValuePair<string, string>>();
-            Utility.addParameter(Utility.accountHref(accountID), "account_href", parameterSet);
-            Utility.addParameter(instanceToken, "instance_token", parameterSet);
-            Core.APIClient.Instance.Post(postHref, parameterSet);
+            Core.APIClient.Instance.InitWebClient();
+            return Core.APIClient.Instance.Authenticate_Instance(instanceToken);
         }
 
         #endregion

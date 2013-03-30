@@ -23,14 +23,19 @@ namespace RightScale.netClient.Core
         #region APIClient Properties 
 
         /// <summary>
+        /// Boolean indicating that this session is an instance-facing session rather than a fully-fledged session.  Instance sessions can only utilize a limited portion of the API.
+        /// </summary>
+        public bool isInstanceAuthenticated { get; set; }
+
+        /// <summary>
+        /// RightScale Instance token from the given RS instance
+        /// </summary>
+        public string instanceToken { get; set; }
+
+        /// <summary>
         /// RightScale OAuth Refresh token from RightScale dashboard
         /// </summary>
         public string oauthRefreshToken { get; set; }
-
-        /// <summary>
-        /// Instance token for authenticating an instance only
-        /// </summary>
-        public string instanceToken { get; set; }
         
         /// <summary>
         /// RightScale OAuth Bearer Token retrieved when authenticating with oauthRefreshToken
@@ -413,6 +418,47 @@ namespace RightScale.netClient.Core
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Authentication process for instance-based RSAPI authentication
+        /// </summary>
+        /// <param name="api_instance_token">$env:RS_API_TOKEN value</param>
+        /// <returns>true if authenticated, false if not</returns>
+        public bool Authenticate_Instance(string api_instance_token)
+        {
+            bool retVal = false;
+            string[] instanceTokenSplit = api_instance_token.Split(':');
+            if (instanceTokenSplit.Length != 2)
+            {
+                throw new ArgumentException("api_instance_token was not well formed.");
+            }
+
+            var postData = new List<KeyValuePair<string, string>>();
+            postData.Add(new KeyValuePair<string, string>("account_href", Utility.accountHref(instanceTokenSplit[0])));
+            postData.Add(new KeyValuePair<string, string>("instance_token", instanceTokenSplit[1]));
+            HttpContent postContent = new FormUrlEncodedContent(postData);
+            HttpResponseMessage responseMessage = webClient.PostAsync(this.apiBaseAddress + APIHrefs.SessionInstance, postContent).Result;
+            
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                if (this.cookieContainer.Count > 1)
+                {
+                    this.isAuthenticated = true;
+                    this.isInstanceAuthenticated = true;
+                }
+            }
+            else
+            {
+                this.isAuthenticated = false;
+                this.isInstanceAuthenticated = false;
+            }
+            
+            if (this.isAuthenticated)
+            {
+                retVal = true;
+            }
+            return retVal;
         }
 
         /// <summary>
