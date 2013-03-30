@@ -146,9 +146,5 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
-        #region Volume.show tests
-
-
-        #endregion
     }
 }

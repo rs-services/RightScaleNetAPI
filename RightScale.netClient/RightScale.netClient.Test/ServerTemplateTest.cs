@@ -117,5 +117,30 @@ namespace RightScale.netClient.Test
         }
         #endregion
 
+        #region ServerTemplate.create tests
+
+        [TestMethod]
+        public void serverTemplateCreateDestroy()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString(), "this is a new description");
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            bool destroyResult = ServerTemplate.destroy(newSTID);
+            Assert.IsTrue(destroyResult);
+        }
+
+        [TestMethod]
+        public void serverTemplateCreateDestroySimple()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString());
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            bool destroyResult = ServerTemplate.destroy(newSTID);
+            Assert.IsTrue(destroyResult);
+        }
+        #endregion
+
     }
 }
