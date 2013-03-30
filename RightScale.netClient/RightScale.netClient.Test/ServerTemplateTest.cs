@@ -161,5 +161,16 @@ namespace RightScale.netClient.Test
         }
         
         #endregion
+
+        #region ServerTemplate.update tests
+
+        //[TestMethod]//currently throwing 422 errors... not sure why
+        public void serverTemplateUpdateSimple()
+        {
+            bool isUpdated = ServerTemplate.update(servertemplateid, "new name for ST " + DateTime.Now.ToString(), "This description is from " + DateTime.Now.ToString());
+            Assert.IsTrue(isUpdated);
+        }
+
+        #endregion
     }
 }
