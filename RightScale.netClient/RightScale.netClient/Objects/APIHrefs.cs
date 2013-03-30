@@ -900,6 +900,33 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Base href for working with session objects
+        /// </summary>
+        public static string Session = "/api/session";
+
+        /// <summary>
+        /// href for getting accounts available for a given session
+        /// </summary>
+        public static string SessionAccount
+        {
+            get
+            {
+                return Session + "/accounts";
+            }
+        }
+
+        /// <summary>
+        /// Href for getting instance session information
+        /// </summary>
+        public static string SessionInstance
+        {
+            get
+            {
+                return Session + "/instance";
+            }
+        }
+
+        /// <summary>
         /// href is for working with a specific IPAddress object - takes two parameters which are the CloudID and IPAddress ID
         /// </summary>
         public static string IPAddressByID

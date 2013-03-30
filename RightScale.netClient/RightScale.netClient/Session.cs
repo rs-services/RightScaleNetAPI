@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace RightScale.netClient
@@ -60,14 +61,8 @@ namespace RightScale.netClient
         /// <param name="accountID">The account id for which the session needs to be created.</param>
         public static void create(string email, string password, string accountID)
         {
-            string postHref = "/api/session";
-            List<KeyValuePair<string, string>> parameterSet = new List<KeyValuePair<string, string>>();
-            
-            Utility.addParameter(email, "email", parameterSet);
-            Utility.addParameter(password, "password", parameterSet);
-            Utility.addParameter(Utility.accountHref(accountID), "account_href", parameterSet);
-
-            Core.APIClient.Instance.Post(postHref, parameterSet);
+            Core.APIClient.Instance.InitWebClient();
+            Core.APIClient.Instance.Authenticate(email, password, accountID);
         }
 
         #endregion
@@ -83,10 +78,10 @@ namespace RightScale.netClient
         /// <returns></returns>
         public static List<Account> accounts(string email, string password)
         {
-            string getHref = "/api/session";
             string queryString = string.Format("email={0}&password={1}", email, password);
 
-            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.SessionAccount, queryString);
+
             return Account.populateObjectListFromJson(jsonString);
         }
 

@@ -23,7 +23,7 @@ namespace RightScale.netClient.Test
             userName = ConfigurationManager.AppSettings["RightScaleAPIUserName"].ToString();
         }
         
-        #region Cloud.index tests
+        #region Session.index tests
         [TestMethod]
         public void SessionIndexSimple()
         {
@@ -36,6 +36,18 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(sessionList);
             //Assert.IsTrue(listofSessions.count > 0);
         }
+        #endregion
+
+        #region Session.accounts test
+
+        [TestMethod]
+        public void SessionAccounts()
+        {
+            List<Account> accounts = Session.accounts(userName, password);
+            Assert.IsNotNull(accounts);
+            Assert.IsTrue(accounts.Count > 0);
+        }
+
         #endregion
     }
 }

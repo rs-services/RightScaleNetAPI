@@ -85,7 +85,7 @@ namespace RightScale.netClient.Core
         /// <summary>
         /// private member to hold the api base address
         /// </summary>
-        private string apiBaseAddress;
+        internal string apiBaseAddress;
 
         #endregion
 
@@ -103,7 +103,7 @@ namespace RightScale.netClient.Core
             }
             else
             {
-                apiBaseAddress = @"https://my.rightscale.com/";
+                apiBaseAddress = @"https://my.rightscale.com";
             }
         }
 
