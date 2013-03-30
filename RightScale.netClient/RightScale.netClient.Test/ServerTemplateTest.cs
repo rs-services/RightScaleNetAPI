@@ -142,5 +142,24 @@ namespace RightScale.netClient.Test
         }
         #endregion
 
+
+        #region ServerTemplate.commit tests
+
+        [TestMethod]
+        public void serverTemplateCreateCommitDestroySimple()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString());
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            string newHeadSTID = ServerTemplate.commit(newSTID, true, "Committing for API Unit Tests", true);
+            Assert.IsNotNull(newHeadSTID);
+            Assert.IsTrue(newHeadSTID.Length > 0);
+            Assert.IsTrue(newSTID != newHeadSTID);
+            bool destroyResult = ServerTemplate.destroy(newHeadSTID);
+            Assert.IsTrue(destroyResult);
+        }
+        
+        #endregion
     }
 }
