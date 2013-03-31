@@ -82,6 +82,7 @@
     <Compile Include="ServerTemplateMultiCloudImageTest.cs" />
     <Compile Include="MultiCloudImageSettingTest.cs" />
     <Compile Include="ResourceTagTest.cs" />
+    <Compile Include="VolumeAttachmentTest.cs" />
     <Compile Include="VolumeTypeTest.cs" />
     <Compile Include="SessionTest.cs" />
     <Compile Include="VolumeTest.cs" />

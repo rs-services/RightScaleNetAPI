@@ -216,10 +216,14 @@ namespace RightScale.netClient
             Utility.CheckFilterInput("filter", validFilters, filter);
             string queryString = string.Empty;
 
-            foreach (Filter f in filter)
+            if (filter != null && filter.Count > 0)
             {
-                queryString += f.ToString() + "&";
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
             }
+
             queryString += string.Format("view={0}", view);
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);

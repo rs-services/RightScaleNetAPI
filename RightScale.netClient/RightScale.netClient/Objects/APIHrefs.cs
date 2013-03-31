@@ -81,7 +81,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Segment that's tacked on to the end of a href to get current volume attachments
         /// </summary>
-        private static string volumeAttachmentSegment = "/volume_attachment";
+        private static string volumeAttachmentSegment = "/volume_attachments";
 
         /// <summary>
         /// Segment that's tacked on to the end of a href to perform multi updates 
