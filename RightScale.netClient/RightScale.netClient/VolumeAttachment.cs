@@ -386,13 +386,13 @@ namespace RightScale.netClient
         /// <returns>ID of newly created VolumeAttachment</returns>
         private static string createPost(string postHref, string cloudID, string device, string instanceID, string volumeID)
         {
-            List<KeyValuePair<string,string>> inputs = new List<KeyValuePair<string,string>>();
-            inputs.Add(new KeyValuePair<string,string>("device", device));
-            inputs.Add(new KeyValuePair<string,string>("instance_href", Utility.InstanceHref(cloudID, instanceID)));
-            inputs.Add(new KeyValuePair<string, string>("volume_href", Utility.VolumeHref(cloudID, volumeID)));
+            List<KeyValuePair<string,string>> postParams = new List<KeyValuePair<string,string>>();
+            Utility.addParameter(Utility.InstanceHref(cloudID, instanceID), "volume_attachment[instance_href]", postParams);
+            Utility.addParameter(Utility.VolumeHref(cloudID, volumeID), "volume_attachment[volume_href]", postParams);
+            Utility.addParameter(device, "volume_attachment[device]", postParams);
             string outString = string.Empty;
 
-            List<string> retVal = Core.APIClient.Instance.Post(postHref, inputs,"location", out outString);
+            List<string> retVal = Core.APIClient.Instance.Post(postHref, postParams,"location", out outString);
             return retVal.Last<string>().Split('/').Last<string>();
         }
 
