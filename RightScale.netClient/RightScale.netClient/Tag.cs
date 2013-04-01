@@ -165,7 +165,7 @@ namespace RightScale.netClient
         public static List<Tag> byResource(string href)
         {
             string[] hrefs = new string[] {href};
-            return byResource(hrefs.ToList<string>());
+            return byResource(hrefs.ToList<string>()).Last<Resource>().tags;
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="resource_hrefs">Set of hrefs to retrive tags from</param>
         /// <returns>Not sure yet</returns>
-        public static List<Tag> byResource(List<string> resourceHrefs)
+        public static List<Resource> byResource(List<string> resourceHrefs)
         {
             string queryString = string.Empty;
 
@@ -185,9 +185,7 @@ namespace RightScale.netClient
 
             string retVal = "content";
             List<string> tags =  Core.APIClient.Instance.Post(APIHrefs.TagByResource, paramList,null,out retVal);
-
-            return Tag.StringToTags(tags);
-
+            return Resource.deserializeList(retVal);
         }
 
         #endregion

@@ -96,5 +96,13 @@ namespace RightScale.netClient.Test
             
         }
         #endregion
+
+        #region MultiCloudImageSetting.create() .destroy() tests
+
+        #endregion
+
+        #region MuliCloudImageSetting.create() .update() .destroy() tests
+
+        #endregion
     }
 }

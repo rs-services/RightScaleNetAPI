@@ -23,14 +23,19 @@ namespace RightScale.netClient.Core
         #region APIClient Properties 
 
         /// <summary>
+        /// Boolean indicating that this session is an instance-facing session rather than a fully-fledged session.  Instance sessions can only utilize a limited portion of the API.
+        /// </summary>
+        public bool isInstanceAuthenticated { get; set; }
+
+        /// <summary>
+        /// RightScale Instance token from the given RS instance
+        /// </summary>
+        public string instanceToken { get; set; }
+
+        /// <summary>
         /// RightScale OAuth Refresh token from RightScale dashboard
         /// </summary>
         public string oauthRefreshToken { get; set; }
-
-        /// <summary>
-        /// Instance token for authenticating an instance only
-        /// </summary>
-        public string instanceToken { get; set; }
         
         /// <summary>
         /// RightScale OAuth Bearer Token retrieved when authenticating with oauthRefreshToken
@@ -85,7 +90,7 @@ namespace RightScale.netClient.Core
         /// <summary>
         /// private member to hold the api base address
         /// </summary>
-        private string apiBaseAddress;
+        internal string apiBaseAddress;
 
         #endregion
 
@@ -103,7 +108,7 @@ namespace RightScale.netClient.Core
             }
             else
             {
-                apiBaseAddress = @"https://my.rightscale.com/";
+                apiBaseAddress = @"https://my.rightscale.com";
             }
         }
 
@@ -114,6 +119,7 @@ namespace RightScale.netClient.Core
         {
             this.isAuthenticated = false;
             this.isAuthenticating = false;
+            this.isInstanceAuthenticated = false;
             this.cookieContainer = new CookieContainer();
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
             this.webClient = new HttpClient(this.clientHandler);
@@ -412,7 +418,43 @@ namespace RightScale.netClient.Core
                     throw new RightScaleAPIException("API Credentials were not found in the application configuration file.  The default/no parameter authentication method can only be used if authentication credentials are set within the aplications app.config or web.config.");
                 }
             }
-            return true;
+            return this.isAuthenticated;
+        }
+
+        /// <summary>
+        /// Authentication process for instance-based RSAPI authentication
+        /// </summary>
+        /// <param name="api_instance_token">$env:RS_API_TOKEN value</param>
+        /// <returns>true if authenticated, false if not</returns>
+        public bool Authenticate_Instance(string api_instance_token)
+        {
+            string[] instanceTokenSplit = api_instance_token.Split(':');
+            if (instanceTokenSplit.Length != 2)
+            {
+                throw new ArgumentException("api_instance_token was not well formed.");
+            }
+
+            var postData = new List<KeyValuePair<string, string>>();
+            postData.Add(new KeyValuePair<string, string>("account_href", Utility.accountHref(instanceTokenSplit[0])));
+            postData.Add(new KeyValuePair<string, string>("instance_token", instanceTokenSplit[1]));
+            HttpContent postContent = new FormUrlEncodedContent(postData);
+            HttpResponseMessage responseMessage = webClient.PostAsync(this.apiBaseAddress + APIHrefs.SessionInstance, postContent).Result;
+            
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                if (this.cookieContainer.Count > 1)
+                {
+                    this.isAuthenticated = true;
+                    this.isInstanceAuthenticated = true;
+                }
+            }
+            else
+            {
+                this.isAuthenticated = false;
+                this.isInstanceAuthenticated = false;
+            }
+
+            return this.isAuthenticated;
         }
 
         /// <summary>
@@ -422,7 +464,6 @@ namespace RightScale.netClient.Core
         /// <returns>true if successfully authenticated, false if not</returns>
         public bool Authenticate(string oAuthRefreshToken)
         {
-            bool retVal = false;
             if (!this.isAuthenticated)
             {
                 if (!this.isAuthenticating)
@@ -451,21 +492,13 @@ namespace RightScale.netClient.Core
                     }
                     else
                     {
-                        this.isAuthenticated = false; ;
+                        this.isAuthenticated = false;
                     }
                 }
-                if (this.isAuthenticated)
-                {
-                    retVal = true;
-                }
-            }
-            else
-            {
-                retVal = true;
             }
 
             this.isAuthenticating = false;
-            return retVal;
+            return this.isAuthenticated;
         }
 
         /// <summary>
@@ -477,7 +510,6 @@ namespace RightScale.netClient.Core
         /// <returns>True if authenticated successfully, false if not</returns>
         public bool Authenticate(string userName, string password, string accountID)
         {
-            bool retVal = false;
             if (!this.isAuthenticated)
             {
                 if (!this.isAuthenticating)
@@ -503,17 +535,9 @@ namespace RightScale.netClient.Core
                         this.isAuthenticated = false;
                     }
                 }
-                if (this.isAuthenticated)
-                {
-                    retVal = true;
-                }
-            }
-            else
-            {
-                retVal = true;
             }
             this.isAuthenticating = false;
-            return retVal;
+            return this.isAuthenticated;
         }
 
         /// <summary>

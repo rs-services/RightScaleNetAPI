@@ -81,7 +81,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Segment that's tacked on to the end of a href to get current volume attachments
         /// </summary>
-        private static string volumeAttachmentSegment = "/volume_attachment";
+        private static string volumeAttachmentSegment = "/volume_attachments";
 
         /// <summary>
         /// Segment that's tacked on to the end of a href to perform multi updates 
@@ -896,6 +896,33 @@ namespace RightScale.netClient
             get
             {
                 return CloudByID + "/ip_addresses";
+            }
+        }
+
+        /// <summary>
+        /// Base href for working with session objects
+        /// </summary>
+        public static string Session = "/api/session";
+
+        /// <summary>
+        /// href for getting accounts available for a given session
+        /// </summary>
+        public static string SessionAccount
+        {
+            get
+            {
+                return Session + "/accounts";
+            }
+        }
+
+        /// <summary>
+        /// Href for getting instance session information
+        /// </summary>
+        public static string SessionInstance
+        {
+            get
+            {
+                return Session + "/instance";
             }
         }
 

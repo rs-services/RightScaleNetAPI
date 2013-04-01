@@ -117,5 +117,64 @@ namespace RightScale.netClient.Test
         }
         #endregion
 
+        #region ServerTemplate.create tests
+
+        [TestMethod]
+        public void serverTemplateCreateDestroy()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString(), "this is a new description");
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            bool destroyResult = ServerTemplate.destroy(newSTID);
+            Assert.IsTrue(destroyResult);
+        }
+
+        [TestMethod]
+        public void serverTemplateCreateDestroySimple()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString());
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            bool destroyResult = ServerTemplate.destroy(newSTID);
+            Assert.IsTrue(destroyResult);
+        }
+        #endregion
+
+
+        #region ServerTemplate.commit tests
+
+        [TestMethod]
+        public void serverTemplateCreateCommitDestroySimple()
+        {
+            Guid stNameID = Guid.NewGuid();
+            string newSTID = ServerTemplate.create("new server template " + stNameID.ToString());
+            Assert.IsNotNull(newSTID);
+            Assert.IsTrue(newSTID.Length > 0);
+            string newHeadSTID = ServerTemplate.commit(newSTID, true, "Committing for API Unit Tests", true);
+            Assert.IsNotNull(newHeadSTID);
+            Assert.IsTrue(newHeadSTID.Length > 0);
+            Assert.IsTrue(newSTID != newHeadSTID);
+            bool destroyResult = ServerTemplate.destroy(newHeadSTID);
+            Assert.IsTrue(destroyResult);
+        }
+        
+        #endregion
+
+        #region ServerTemplate.update tests
+
+        //[TestMethod]//currently throwing 422 errors... not sure why
+        public void serverTemplateUpdateSimple()
+        {
+            bool isUpdated = ServerTemplate.update(servertemplateid, "new name for ST " + DateTime.Now.ToString(), "This description is from " + DateTime.Now.ToString());
+            Assert.IsTrue(isUpdated);
+        }
+
+        #endregion
+
+        #region ServerTemplate.Publish tests
+        //TODO: need the publish object to perform this first
+        #endregion
     }
 }

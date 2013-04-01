@@ -11,12 +11,14 @@ namespace RightScale.netClient.Test
         string servicesOAuthToken;
         string cloudStackID;
         string cloudStackVTID;
+        string raxCloudID;
 
         public VolumeTypeTest()
         {
             servicesOAuthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             cloudStackID = ConfigurationManager.AppSettings["VolumeType_cloudStackID"].ToString();
             cloudStackVTID = ConfigurationManager.AppSettings["VolumeType_cloudStackVTID"].ToString();
+            raxCloudID = ConfigurationManager.AppSettings["VolumeType_raxID"].ToString();
         }
 
         #region VolumeType Relationships
@@ -44,6 +46,17 @@ namespace RightScale.netClient.Test
             netClient.Core.APIClient.Instance.InitWebClient();
             netClient.Core.APIClient.Instance.Authenticate(servicesOAuthToken);
             List<VolumeType> volTypes = VolumeType.index(cloudStackID);
+            Assert.IsNotNull(volTypes);
+            Assert.IsTrue(volTypes.Count > 0);
+            netClient.Core.APIClient.Instance.InitWebClient(); //reclean auth on the instance
+        }
+
+        [TestMethod]
+        public void indexVolumeTypeRaxOpen()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(servicesOAuthToken);
+            List<VolumeType> volTypes = VolumeType.index(raxCloudID);
             Assert.IsNotNull(volTypes);
             Assert.IsTrue(volTypes.Count > 0);
             netClient.Core.APIClient.Instance.InitWebClient(); //reclean auth on the instance

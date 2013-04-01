@@ -90,6 +90,7 @@ namespace RightScale.netClient.Test
 
 
         #endregion
+
         #region MultiCloudImage.update tests
         [TestMethod]
         public void MultiCloudImageUpdate()

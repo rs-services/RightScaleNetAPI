@@ -26,7 +26,7 @@ namespace RightScale.netClient.Test
         {
             List<string> arrHrefs = new List<string>() { serverhref, deploymenthref };
             
-            List<Tag> resHref = Tag.byResource(arrHrefs);
+            List<Resource> resHref = Tag.byResource(arrHrefs);
 
             Assert.IsNotNull(resHref);
         }

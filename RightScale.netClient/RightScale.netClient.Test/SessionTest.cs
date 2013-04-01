@@ -14,6 +14,7 @@ namespace RightScale.netClient.Test
         private string userName = "";
         private string password = "";
         private string accountID = "";
+        private string instanceToken = "";
 
         public SessionTest()
         {
@@ -21,9 +22,10 @@ namespace RightScale.netClient.Test
             accountID = ConfigurationManager.AppSettings["RightScaleAPIAccountId"].ToString();
             password = ConfigurationManager.AppSettings["RightScaleAPIPassword"].ToString();
             userName = ConfigurationManager.AppSettings["RightScaleAPIUserName"].ToString();
+            instanceToken = ConfigurationManager.AppSettings["RightScaleInstanceAPIToken"].ToString();
         }
         
-        #region Cloud.index tests
+        #region Session.index tests
         [TestMethod]
         public void SessionIndexSimple()
         {
@@ -36,6 +38,47 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(sessionList);
             //Assert.IsTrue(listofSessions.count > 0);
         }
+        #endregion
+
+        #region Session.accounts test
+
+        [TestMethod]
+        public void SessionAccounts()
+        {
+            List<Account> accounts = Session.accounts(userName, password);
+            Assert.IsNotNull(accounts);
+            Assert.IsTrue(accounts.Count > 0);
+        }
+
+        #endregion
+
+        #region Session.create_instance_session test
+
+        [TestMethod]
+        public void CreateInstanceSession()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            bool isAuthenticated = Session.create_instance_session(instanceToken);
+            Assert.IsTrue(netClient.Core.APIClient.Instance.isInstanceAuthenticated);
+            Assert.IsTrue(isAuthenticated);
+            netClient.Core.APIClient.Instance.InitWebClient();//clean up after ourselves
+        }
+
+        #endregion
+
+        #region Session.index_instance_session test
+
+        [TestMethod]
+        public void IndexInstanceSession()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            bool isAuthenticated = Session.create_instance_session(instanceToken);
+            Assert.IsTrue(netClient.Core.APIClient.Instance.isInstanceAuthenticated);
+            Assert.IsTrue(isAuthenticated);
+            Instance self = Session.index_instance_session();
+            netClient.Core.APIClient.Instance.InitWebClient();//clean up after ourselves            
+        }
+
         #endregion
     }
 }

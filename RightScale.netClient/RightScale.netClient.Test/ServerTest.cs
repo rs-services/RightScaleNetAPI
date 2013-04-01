@@ -22,9 +22,9 @@ namespace RightScale.netClient.Test
         public ServerTest()
         {
             deploymentID = ConfigurationManager.AppSettings["ServerTest_deploymentID"].ToString();
-            serverID = ConfigurationManager.AppSettings["ServerTest_serverID"].ToString();
             cloudID = ConfigurationManager.AppSettings["ServerTest_cloudID"].ToString();
             serverTemplateID = ConfigurationManager.AppSettings["ServerTest_serverTemplateID"].ToString();
+            serverID = ConfigurationManager.AppSettings["ServerTest_serverID"].ToString();
             multiCloudImageID = ConfigurationManager.AppSettings["ServerTest_multiCloudImageID"].ToString();
             instanceTypeID = ConfigurationManager.AppSettings["ServerTest_instanceTypeID"].ToString();
             launchTestServerID = ConfigurationManager.AppSettings["ServerTest_launchTerminateServerID"].ToString();
