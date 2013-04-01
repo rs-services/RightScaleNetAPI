@@ -418,7 +418,7 @@ namespace RightScale.netClient.Core
                     throw new RightScaleAPIException("API Credentials were not found in the application configuration file.  The default/no parameter authentication method can only be used if authentication credentials are set within the aplications app.config or web.config.");
                 }
             }
-            return true;
+            return this.isAuthenticated;
         }
 
         /// <summary>
@@ -428,7 +428,6 @@ namespace RightScale.netClient.Core
         /// <returns>true if authenticated, false if not</returns>
         public bool Authenticate_Instance(string api_instance_token)
         {
-            bool retVal = false;
             string[] instanceTokenSplit = api_instance_token.Split(':');
             if (instanceTokenSplit.Length != 2)
             {
@@ -454,12 +453,8 @@ namespace RightScale.netClient.Core
                 this.isAuthenticated = false;
                 this.isInstanceAuthenticated = false;
             }
-            
-            if (this.isAuthenticated)
-            {
-                retVal = true;
-            }
-            return retVal;
+
+            return this.isAuthenticated;
         }
 
         /// <summary>
@@ -469,7 +464,6 @@ namespace RightScale.netClient.Core
         /// <returns>true if successfully authenticated, false if not</returns>
         public bool Authenticate(string oAuthRefreshToken)
         {
-            bool retVal = false;
             if (!this.isAuthenticated)
             {
                 if (!this.isAuthenticating)
@@ -498,21 +492,13 @@ namespace RightScale.netClient.Core
                     }
                     else
                     {
-                        this.isAuthenticated = false; ;
+                        this.isAuthenticated = false;
                     }
                 }
-                if (this.isAuthenticated)
-                {
-                    retVal = true;
-                }
-            }
-            else
-            {
-                retVal = true;
             }
 
             this.isAuthenticating = false;
-            return retVal;
+            return this.isAuthenticated;
         }
 
         /// <summary>
@@ -524,7 +510,6 @@ namespace RightScale.netClient.Core
         /// <returns>True if authenticated successfully, false if not</returns>
         public bool Authenticate(string userName, string password, string accountID)
         {
-            bool retVal = false;
             if (!this.isAuthenticated)
             {
                 if (!this.isAuthenticating)
@@ -550,17 +535,9 @@ namespace RightScale.netClient.Core
                         this.isAuthenticated = false;
                     }
                 }
-                if (this.isAuthenticated)
-                {
-                    retVal = true;
-                }
-            }
-            else
-            {
-                retVal = true;
             }
             this.isAuthenticating = false;
-            return retVal;
+            return this.isAuthenticated;
         }
 
         /// <summary>
