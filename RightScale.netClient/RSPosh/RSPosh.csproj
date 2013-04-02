@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Cloud.cs" />
+    <Compile Include="AuditEntry.cs" />
     <Compile Include="Tags.cs" />
     <Compile Include="Volume.cs" />
     <Compile Include="Input.cs" />

@@ -78,7 +78,7 @@ namespace RSPosh
                     if (rsServerTemplate != "")
                     {
                         result.ServerTemplateID = rsServerTemplate;
-                        result.Message = "ServerTemplate Launched";
+                        result.Message = "ServerTemplate Created";
                         result.Result = true;                        
                     }
                     else
