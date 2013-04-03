@@ -59,33 +59,50 @@ namespace RSPosh
         [Parameter(Position = 4, Mandatory = true)]
         public string serverTemplateID;
 
+        [Parameter(Position = 5, Mandatory = false)]
+        public string description;
+
         protected override void ProcessRecord()
         {
             Types.returnServer result = new Types.returnServer();
 
             base.ProcessRecord();
-            string rsNewServerID = RightScale.netClient.Server.create(cloudID,deploymentID,serverTemplateID,serverName);
 
-            if (rsNewServerID != "")
+            try
             {
-                result.ServerID = rsNewServerID;
-                result.Message = "Server created";
-                result.Result = true;
-                result.DeploymentID = deploymentID;                
-                result.ServerTemplateID = serverTemplateID;
-                
-                WriteObject(result);
+                string rsNewServerID = RightScale.netClient.Server.create(cloudID, deploymentID, serverTemplateID, serverName);
+
+                if (rsNewServerID != "")
+                {
+                    result.ServerID = rsNewServerID;
+                    result.Message = "Server created";
+                    result.Result = true;
+                    result.DeploymentID = deploymentID;
+                    result.ServerTemplateID = serverTemplateID;
+
+                    WriteObject(result);
+                }
+                else
+                {
+                    result.ServerID = rsNewServerID;
+                    result.Message = "Error creating server";
+                    result.Result = false;
+                    result.DeploymentID = deploymentID;
+                    result.ServerTemplateID = serverTemplateID;
+
+                    WriteObject(result);
+                }
             }
-            else
+            catch (RightScaleAPIException errCreate)
             {
-                result.ServerID = rsNewServerID;
-                result.Message = "Error creating server";
+                result.Message = errCreate.InnerException.Message;
                 result.Result = false;
-                result.DeploymentID = deploymentID;                
-                result.ServerTemplateID = serverTemplateID;                
-            
+                result.DeploymentID = deploymentID;
+                result.ServerTemplateID = serverTemplateID;
+
                 WriteObject(result);
             }
+
         }
     }
 
@@ -94,7 +111,7 @@ namespace RSPosh
     {
         [Parameter(Position = 1, Mandatory = true)]
         public string serverID;
-       
+
         protected override void ProcessRecord()
         {
             Types.returnServer result = new Types.returnServer();
@@ -106,17 +123,17 @@ namespace RSPosh
             {
                 result.ServerID = serverID;
                 result.Message = "Server destroyed";
-                result.Result = true;               
-                
+                result.Result = true;
+
                 WriteObject(result);
             }
             else
             {
                 result.ServerID = serverID;
                 result.Message = "Error destroying server";
-                result.Result = false;               
-                
-                WriteObject(result);               
+                result.Result = false;
+
+                WriteObject(result);
 
             }
         }
@@ -166,5 +183,67 @@ namespace RSPosh
         }
     }
     #endregion
+
+ #region server create / delete cmdlets
+    [Cmdlet(VerbsCommon.Set, "RSServerInputs")]
+    public class server_setinputs : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string[] inputs;
+
+
+        protected override void ProcessRecord()
+        {
+            base.ProcessRecord();
+
+            try
+            {
+                List<Input> newInputs = new List<Input>();
+
+                foreach (string input in inputs)
+                {
+                    //INPUTNAME:INPUTTYPE:INPUTVALUE
+                    string[] inpTkns = input.Split(':');
+
+                    WriteObject("Input - " + input);
+
+                    string inputName = inpTkns[0];
+                    string inputVal = inpTkns[1] + ":" + inpTkns[2];
+
+                    //newInputs.Add(new Input("DB_NAME", "text:MileageStatsData"))
+                    newInputs.Add(new Input(inputName, inputVal));
+                }
+
+              
+                Server svr = Server.show(serverID);               
+                string nextInstanceID = svr.nextInstance.ID;
+
+                bool retval = Input.multi_update_instance(svr.nextInstance.cloud.ID, nextInstanceID, newInputs);
+
+                WriteObject("Server Inputs Set");
+                
+
+            }
+            catch (RightScaleAPIException errInputUpdate)
+            {
+
+                WriteObject("Error setting inputs");
+                WriteObject(errInputUpdate);
+                WriteObject(errInputUpdate.InnerException);
+            }
+            catch (System.Exception excp)
+            {
+
+                WriteObject("Generic Error setting inputs");
+                WriteObject(excp);
+                WriteObject(excp.InnerException);
+            }
+
+        }
+    }
+#endregion
 
 }

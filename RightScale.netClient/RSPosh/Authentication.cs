@@ -24,7 +24,21 @@ namespace RSPosh
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            bool auth = APIClient.Instance.Authenticate(Username,Password,AccountID);
+
+            bool auth;
+
+            if (string.IsNullOrEmpty(oAuthToken))
+            {
+                
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(AccountID)) { throw new System.Exception("Username, Password and AccountID required if not using token authentication"); }
+               
+                auth = APIClient.Instance.Authenticate(Username, Password, AccountID);
+
+            }
+            else
+            {
+                auth = APIClient.Instance.Authenticate(oAuthToken);
+            }
 
             if (auth == true)
             {
