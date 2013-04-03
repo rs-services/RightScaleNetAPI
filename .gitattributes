@@ -23,4 +23,4 @@
 
 *.zip	merge=ours
 *.ZIP	merge=ours
-\Packages\RightScaleNetClient\*.dll	merge=ours
+RightScale.netClient\Packages\RightScaleNetClient\*.dll	merge=ours
