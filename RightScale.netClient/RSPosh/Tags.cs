@@ -80,4 +80,51 @@ namespace RSPosh
     }
 
     #endregion
+   #region Tags Create
+    /// <summary>
+    /// Create RS Tags
+    /// Tag format - predicate:name=value
+    /// </summary>
+    [Cmdlet(VerbsCommon.Set, "RSTags")]
+    public class tags_set : Cmdlet
+    {
+
+        [Parameter(Position = 1, Mandatory = true,HelpMessage="HREF of object to apply tags to")]
+        public string href;
+
+        [Parameter(Position = 1, Mandatory = true, HelpMessage = "Array of Tags to add")]
+        public string[] tags;
+
+        protected override void ProcessRecord()
+        {
+
+
+            List<string> resourceHrefs = new List<string>() {href};
+            List<Tag> lstTags = new List<Tag>();
+
+            foreach(string tag in tags)
+            {
+                Tag newTag = new Tag(tag);
+                lstTags.Add(newTag);
+            }
+
+            try
+            {
+                bool result = Tag.multiAdd(resourceHrefs, lstTags);
+
+                WriteObject(result);
+            }
+            catch (RightScaleAPIException rsEx)
+            {
+                WriteObject(rsEx);
+            }
+            catch (System.Exception genEx)
+            {
+                WriteObject(genEx);
+
+            }
+        }
+    }
+    #endregion
+
 }
