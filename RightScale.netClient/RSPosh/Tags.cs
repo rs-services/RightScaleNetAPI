@@ -4,7 +4,7 @@ using RightScale.netClient;
 
 namespace RSPosh
 {
-    #region Tags byResource
+    #region Tags byHref
     /// <summary>
     /// Get RSTags by href
     /// </summary>
@@ -44,12 +44,20 @@ namespace RSPosh
         [Parameter(Position = 3, Mandatory = true)]
         public string resourceType;
 
+        //scope,name,value
         [Parameter(Position = 4, Mandatory = true)]
-        public string tags;
+        public string[] tags;
 
         protected override void ProcessRecord()
         {
             List<Tag> lstTags = new List<Tag>();
+
+            foreach (string tag in tags)
+            {
+                Tag srchTag = new Tag(tag);
+                lstTags.Add(srchTag);
+            }
+
 
             try
             {
