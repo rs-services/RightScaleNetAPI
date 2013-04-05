@@ -353,9 +353,15 @@ namespace RightScale.netClient.Core
                 {
                     requestUrl += "?" + queryStringValue;
                 }
-                
-                webClient.DeleteAsync(requestUrl);
-                return true;
+                HttpResponseMessage response = webClient.DeleteAsync(requestUrl).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new RightScaleAPIException("Object failed to delete with status code " + response.StatusCode.ToString(), apiHref, response.Content.ReadAsStringAsync().Result);
+                }
             }
             return false;
         }
