@@ -24,7 +24,7 @@ namespace RightScale.netClient.Test
         #region VolumeType Relationships
 
         [TestMethod]
-        public void MyTestMethod()
+        public void VolumeTypeShowCloudStack()
         {
             netClient.Core.APIClient.Instance.InitWebClient();
             netClient.Core.APIClient.Instance.Authenticate(servicesOAuthToken);

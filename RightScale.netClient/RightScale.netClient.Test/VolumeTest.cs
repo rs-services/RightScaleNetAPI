@@ -13,6 +13,7 @@ namespace RightScale.netClient.Test
         private string volumeID;
         private string apiRefreshToken;
         private string volumeTypeID;
+        private string childVolumeID;
 
         public VolumeTest()
         {
@@ -21,6 +22,7 @@ namespace RightScale.netClient.Test
             volumeID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_volumeID"].ToString());
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             volumeTypeID = ConfigurationManager.AppSettings["VolumeTest_volumeTypeID"].ToString();
+            childVolumeID = ConfigurationManager.AppSettings["VolumeTest_childVolumeID"].ToString();
         }
 
         #region Volume Relationship Tests
@@ -42,7 +44,7 @@ namespace RightScale.netClient.Test
         {
             RightScale.netClient.Core.APIClient.Instance.InitWebClient();
             RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
-            Volume vol = Volume.show(cloudID, volumeID);
+            Volume vol = Volume.show(cloudID, childVolumeID);
             Assert.IsNotNull(vol);
             VolumeSnapshot parVol = vol.parentVolumeSnapshot;
             Assert.IsTrue(true);//no exception
