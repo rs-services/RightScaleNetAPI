@@ -119,21 +119,45 @@ namespace RightScale.netClient
 		        
         #region ServerArray.index methods
 
+        /// <summary>
+        /// Lists server arrays.
+        /// By using the available filters, it is possible to retrieve server arrays that have common characteristics.
+        /// </summary>
+        /// <returns>Collection of ServerArray objects</returns>
         public static List<ServerArray> index()
         {
             return index(null, null);
         }
 
+        /// <summary>
+        /// Lists server arrays.
+        /// By using the available filters, it is possible to retrieve server arrays that have common characteristics.
+        /// </summary>
+        /// <param name="filter">Collection of filters for query against RightScale API</param>
+        /// <returns>Collection of ServerArray objects</returns>
         public static List<ServerArray> index(List<Filter> filter)
         {
             return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists server arrays.
+        /// By using the available filters, it is possible to retrieve server arrays that have common characteristics.
+        /// </summary>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Collection of ServerArray objects</returns>
         public static List<ServerArray> index(string view)
         {
             return index(null, view);
         }
 
+        /// <summary>
+        /// Lists server arrays.
+        /// By using the available filters, it is possible to retrieve server arrays that have common characteristics.
+        /// </summary>
+        /// <param name="filter">Collection of filters for query against RightScale API</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Collection of ServerArray objects</returns>
         public static List<ServerArray> index(List<Filter> filterlist, string view)
         {
             string getUrl = APIHrefs.ServerArray;
