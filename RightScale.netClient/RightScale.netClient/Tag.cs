@@ -245,6 +245,7 @@ namespace RightScale.netClient
             {
                 Utility.addParameter(t.ToString(), "tags[]", postParams);
             }
+
             return Core.APIClient.Instance.Post(APIHrefs.TagMultiAdd, postParams);
         }
 
