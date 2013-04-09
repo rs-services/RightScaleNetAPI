@@ -297,10 +297,13 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="array_type">Type of array (alert/queue)</param>
         /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
-        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
-        /// <param name="description">Description of this ServerArray</param>
         /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
         /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
+        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
+        /// <param name="name">name of the ServerArray</param>
+        /// <param name="state">State of the server (enabled/disabled)</param>
+        /// <param name="description">Description of this ServerArray</param>
         /// <param name="dataCenterID">ID of DataCenter to be deployed in if multiple datacenters are not available</param>
         /// <param name="inputs">Collection of inputs to be passed to servers as they're being deployed</param>
         /// <param name="instanceTypeID">ID of InstanceType to be launched</param>
@@ -309,14 +312,11 @@ namespace RightScale.netClient
         /// <param name="multiCloudImageID">ID of MultiCloud Image to be used</param>
         /// <param name="ramdiskImageID">ID of Ramdisk image to be used</param>
         /// <param name="securityGroupIDs">Collection of SecurityGroup IDs to be applied to each instance when launched</param>
-        /// <param name="serverTemplateID">ID of ServerTemplate to be used when launching instances</param>
         /// <param name="sshKeyID">ID of SSH Key to be used when launching instances</param>
         /// <param name="userData">user data to be passed to each instance at launch time</param>
-        /// <param name="name">name of the ServerArray</param>
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
-        /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>ID of the newly created ServerArray</returns>
-        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParam> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state, string description, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
         {
             return createPost(APIHrefs.ServerArray, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
         }
@@ -328,6 +328,7 @@ namespace RightScale.netClient
         /// <param name="dataCenterPolicy">DataCenterPolicy object defining ServerArray launch target behavior</param>
         /// <param name="elasticityParams">ElasticityParams object defininig how the ServerArray will grow under load/demand</param>
         /// <param name="cloudID">Id of Cloud this Array is being deployed to</param>
+        /// <param name="deploymentID">ID of deployment this ServerArray should be created in</param>
         /// <param name="serverTemplateID"></param>
         /// <param name="name">name of the ServerArray</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
