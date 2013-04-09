@@ -16,6 +16,7 @@ namespace RightScale.netClient.Test
         private string serverID;
         private int maxWaitLoops;
         private string volumeTypeID;
+        private int waitInterval;
 
         public VolumeAttachmentTest()
         {
@@ -23,14 +24,18 @@ namespace RightScale.netClient.Test
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             serverID = ConfigurationManager.AppSettings["VolumeAttachmentTest_serverID"].ToString();
             volumeTypeID = ConfigurationManager.AppSettings["VolumeAttachmentTest_volumeTypeID"].ToString();
-            maxWaitLoops = 30;
+            maxWaitLoops = 50;
+            waitInterval = 10000;
         }
 
         [TestMethod]
         public void volumeAttachmentIndexSimple()
         {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             List<VolumeAttachment> volAttachments = VolumeAttachment.index(cloudID);
             Assert.IsNotNull(volAttachments);
+            netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         
@@ -66,7 +71,7 @@ namespace RightScale.netClient.Test
 
             while (currentState != "inactive" && (waitLoops <= maxWaitLoops || maxWaitLoops < 0))
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(waitInterval);
                 currentState = Server.show(serverID).state;
                 waitLoops++;
             }
@@ -82,16 +87,16 @@ namespace RightScale.netClient.Test
 
             while (currentState != "operational")
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(waitInterval);
                 currentState = Server.show(serverID).state;
             }
 
-            string newVolumeID = Volume.create(cloudID, "testVolume", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "100", volumeTypeID);
+            string newVolumeID = Volume.create(cloudID, "testVolume " + Guid.NewGuid().ToString(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "100", volumeTypeID);
             
             string volStatus = Volume.show(cloudID, newVolumeID).status;
             while (volStatus != "available")
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(waitInterval);
                 volStatus = Volume.show(cloudID, newVolumeID).status;
             }
 
@@ -103,7 +108,7 @@ namespace RightScale.netClient.Test
 
             while (volAttachStatus != "attached")
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(waitInterval);
                 volStatus = VolumeAttachment.show(cloudID, volAttachID).state;
             }
 

@@ -34,9 +34,24 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Private variable to hold value of this.scope
+        /// </summary>
+        private string _tagScope;
+
+        /// <summary>
         /// Scope of this tag
         /// </summary>
-        public string scope { get; set; }
+        public string scope
+        {
+            get
+            {
+                return _tagScope;
+            }
+            set
+            {
+                _tagScope = value.ToLower();
+            }
+        }
 
         /// <summary>
         /// key name for this tag

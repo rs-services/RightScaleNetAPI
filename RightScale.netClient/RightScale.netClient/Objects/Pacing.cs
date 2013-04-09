@@ -106,6 +106,19 @@ namespace RightScale.netClient
         /// <param name="resizeUpBy">Number of servers to terminate at a time when scaling down (until minimum # of servers is reached)</param>
         /// <param name="resizeDownBy">Number of servers to launch at a time when scaling up (until maximum # of servers is reached)</param>
         /// <param name="resizeCalmTime">Time between scaling events</param>
+        public Pacing(int resizeUpBy, int resizeDownBy, int resizeCalmTime)
+        {
+            this.resize_up_by = resizeUpBy.ToString();
+            this.resize_down_by = resizeDownBy.ToString();
+            this.resize_calm_time = resizeCalmTime.ToString();
+        }
+
+        /// <summary>
+        /// Fully parameterized constructor for Pacing
+        /// </summary>
+        /// <param name="resizeUpBy">Number of servers to terminate at a time when scaling down (until minimum # of servers is reached)</param>
+        /// <param name="resizeDownBy">Number of servers to launch at a time when scaling up (until maximum # of servers is reached)</param>
+        /// <param name="resizeCalmTime">Time between scaling events</param>
         public Pacing(string resizeUpBy, string resizeDownBy, string resizeCalmTime)
         {
             this.resize_up_by = resizeUpBy;
@@ -113,9 +126,6 @@ namespace RightScale.netClient
             this.resize_calm_time = resizeCalmTime;
         }
 
-        /// <summary>
-        /// Default constructor for Pacing
-        /// </summary>
         public Pacing()
         {
 

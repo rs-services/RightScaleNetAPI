@@ -307,6 +307,7 @@ namespace RightScale.netClient.Test
                 Thread.Sleep(5000);
                 currentState = Server.show(launchTestServerID).state;
             }
+            Assert.IsTrue(currentState != "queued");
 
             bool terminateResult = Server.terminate(windowsLaunchTestServerID);
             Assert.IsTrue(terminateResult);
@@ -318,6 +319,7 @@ namespace RightScale.netClient.Test
                 Thread.Sleep(5000);
                 currentState = Server.show(windowsLaunchTestServerID).state;
             }
+            Assert.IsTrue(currentState == "inactive");
         }
     }
 }

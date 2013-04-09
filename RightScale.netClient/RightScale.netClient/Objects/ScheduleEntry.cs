@@ -9,7 +9,7 @@ namespace RightScale.netClient
     /// <summary>
     /// Schedule-based bounds for a ServerArray defining the minimum and maximum size of a ServerArray by day and time
     /// </summary>
-    public class ScheduleEntry : Bounds
+    public class ScheduleEntry : Bound
     {
         #region ScheduleEntry Properties
 
@@ -93,10 +93,7 @@ namespace RightScale.netClient
             this.day = Day;
         }
 
-        /// <summary>
-        /// Default constructor for ScheduleEntry
-        /// </summary>
-        public ScheduleEntry()
+        public ScheduleEntry():base()
         {
 
         }

@@ -9,7 +9,7 @@ namespace RightScale.netClient
     /// <summary>
     /// Bounds define the upper and lower bounds for server counts within a ServerArray
     /// </summary>
-    public class Bounds
+    public class Bound
     {
 
         #region Bounds Properties
@@ -83,16 +83,24 @@ namespace RightScale.netClient
         /// </summary>
         /// <param name="minCount">The minimum number of servers that must be operational at all times in the server array. NOTE: Any changes that are made to the min/max count in the server array schedule will overwrite the array's default min/max count settings.</param>
         /// <param name="maxCount">The maximum number of servers that must be operational at all times in the server array. NOTE: Any changes that are made to the min/max count in the server array schedule will overwrite the array's default min/max count settings.</param>
-        public Bounds(string minCount, string maxCount)
+        public Bound(string minCount, string maxCount)
         {
             this.min_count = minCount;
             this.max_count = maxCount;
         }
 
         /// <summary>
-        /// Default constructor for Bounds
+        /// Fully parameterized constructor for Bounds
         /// </summary>
-        public Bounds()
+        /// <param name="minCount">The minimum number of servers that must be operational at all times in the server array. NOTE: Any changes that are made to the min/max count in the server array schedule will overwrite the array's default min/max count settings.</param>
+        /// <param name="maxCount">The maximum number of servers that must be operational at all times in the server array. NOTE: Any changes that are made to the min/max count in the server array schedule will overwrite the array's default min/max count settings.</param>
+        public Bound(int minCount, int maxCount)
+        {
+            this.min_count = minCount.ToString();
+            this.max_count = maxCount.ToString();
+        }
+
+        public Bound()
         {
 
         }

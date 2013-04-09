@@ -17,7 +17,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{FF
 		RightScale.netClient\packages.config = RightScale.netClient\packages.config
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Framework Settings", "Test Framework Settings", "{CDF626E3-1017-43DB-AA26-9EBD82B3646D}"
+	ProjectSection(SolutionItems) = preProject
+		RightScale.netClient.testsettings = RightScale.netClient.testsettings
+		RightScale.netClient.vsmdi = RightScale.netClient.vsmdi
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = RightScale.netClient.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

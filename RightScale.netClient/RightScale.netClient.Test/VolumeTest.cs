@@ -13,6 +13,7 @@ namespace RightScale.netClient.Test
         private string volumeID;
         private string apiRefreshToken;
         private string volumeTypeID;
+        private string childVolumeID;
 
         public VolumeTest()
         {
@@ -21,6 +22,7 @@ namespace RightScale.netClient.Test
             volumeID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_volumeID"].ToString());
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             volumeTypeID = ConfigurationManager.AppSettings["VolumeTest_volumeTypeID"].ToString();
+            childVolumeID = ConfigurationManager.AppSettings["VolumeTest_childVolumeID"].ToString();
         }
 
         #region Volume Relationship Tests
@@ -28,65 +30,86 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void volumeTags()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             List<Volume> volumeList = Volume.index(cloudID);
             Assert.IsNotNull(volumeList);
             List<Tag> tags = volumeList[0].tags;
             Assert.IsTrue(true);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeParentVolume()
         {
-            Volume vol = Volume.show(cloudID, volumeID);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
+            Volume vol = Volume.show(cloudID, childVolumeID);
             Assert.IsNotNull(vol);
             VolumeSnapshot parVol = vol.parentVolumeSnapshot;
             Assert.IsTrue(true);//no exception
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeVolumeSnapshots()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             Volume vol = Volume.show(cloudID, volumeID);
             Assert.IsNotNull(vol);
             List<VolumeSnapshot> vsnaps = vol.volumeSnapshot;
             Assert.IsNotNull(vsnaps);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeDatacenter()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             Volume vol = Volume.show(cloudID, volumeID);
             Assert.IsNotNull(vol);
             DataCenter dc = vol.datacenter;
             Assert.IsTrue(true);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeRecurringVolumeAttachments()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             Volume vol = Volume.show(cloudID, volumeID);
             Assert.IsNotNull(vol);
             List<RecurringVolumeAttachment> rva = vol.recurringVolumeAttachments;
             Assert.IsNotNull(rva);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeCurrentVolumeAttachments()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             Volume vol = Volume.show(cloudID, volumeID);
             Assert.IsNotNull(vol);
             List<VolumeAttachment> vas = vol.currentVolumeAttachments;
             Assert.IsNotNull(vas);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         [TestMethod]
         public void volumeCloud()
         {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
             Volume vol = Volume.show(cloudID, volumeID);
             Assert.IsNotNull(vol);
             Cloud cl = vol.cloud;
             Assert.IsNotNull(cl);
             Assert.IsTrue(cl.name.Length > 0);
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         #endregion

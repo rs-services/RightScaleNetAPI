@@ -156,8 +156,36 @@ namespace RightScale.netClient.Test
             Assert.IsNotNull(newHeadSTID);
             Assert.IsTrue(newHeadSTID.Length > 0);
             Assert.IsTrue(newSTID != newHeadSTID);
-            bool destroyResult = ServerTemplate.destroy(newHeadSTID);
+            bool destroyResult = ServerTemplate.destroy(newSTID);
             Assert.IsTrue(destroyResult);
+        }
+
+        /// <summary>
+        ///This is a cleanup method and is in place to remove extraneous 
+        /// </summary>
+        //[TestMethod]
+        public void serverTemplateCleanup()
+        {
+            int i = 0;
+            List<ServerTemplate> serverTemplates = ServerTemplate.index();
+            foreach (ServerTemplate st in serverTemplates)
+            {
+                if (st.revision == 0)
+                {
+                    if (st.name.Contains("new server template") && st.name.Length == 65)
+                    {
+                        if (ServerTemplate.destroy(st.ID))
+                        {
+                            i++;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+            }
+            Assert.IsTrue(i > 0);
         }
         
         #endregion

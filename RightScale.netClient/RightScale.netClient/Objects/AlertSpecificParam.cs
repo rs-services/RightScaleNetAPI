@@ -9,9 +9,9 @@ namespace RightScale.netClient
     /// <summary>
     /// AlertSpecificParams define the parameters for controling AlertSpec behavior
     /// </summary>
-    public class AlertSpecificParams
+    public class AlertSpecificParam
     {
-        #region AlertSpecificParams Properties
+        #region AlertSpecificParam Properties
 
         string decisionThresholdRegexValidator = @"^\d+$";
 
@@ -46,14 +46,14 @@ namespace RightScale.netClient
 
         #endregion
 
-        #region AlertSpecificParams.ctor
+        #region AlertSpecificParam.ctor
 
         /// <summary>
         /// Fully parameterized constructor for AlertSpecificParams
         /// </summary>
         /// <param name="votersTagPredicate">Tag predicate for vote tags</param>
         /// <param name="decisionThreshold">Decision threshold for AlertSpec</param>
-        public AlertSpecificParams(string votersTagPredicate, string decisionThreshold)
+        public AlertSpecificParam(string votersTagPredicate, string decisionThreshold)
         {
             this.voters_tag_predicate = votersTagPredicate;
             this.decision_threshold = decisionThreshold;
@@ -62,7 +62,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Default constructor for AlertSpecificParams
         /// </summary>
-        public AlertSpecificParams()
+        public AlertSpecificParam()
         {
 
         }
