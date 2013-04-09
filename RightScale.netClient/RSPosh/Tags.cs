@@ -97,8 +97,6 @@ namespace RSPosh
 
         protected override void ProcessRecord()
         {
-
-
             List<string> resourceHrefs = new List<string>() {href};
             List<Tag> lstTags = new List<Tag>();
 
@@ -109,22 +107,23 @@ namespace RSPosh
             }
 
             try
-            {
+            {                
                 bool result = Tag.multiAdd(resourceHrefs, lstTags);
-
+                
+                WriteObject("Tag added");
                 WriteObject(result);
             }
             catch (RightScaleAPIException rsEx)
             {
+                WriteObject("Error adding tag");
                 WriteObject(rsEx);
             }
             catch (System.Exception genEx)
             {
+                WriteObject("Error adding tag");
                 WriteObject(genEx);
-
             }
         }
     }
     #endregion
-
 }
