@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
-    public class QueueSpecificParams
+    public class QueueSpecificParam
     {
         /// <summary>
         /// The audit SQS queue that will store audit entries

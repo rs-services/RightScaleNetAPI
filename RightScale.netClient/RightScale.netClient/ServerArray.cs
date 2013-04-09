@@ -25,7 +25,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Elasticity parameters for this server array
         /// </summary>
-        public ElasticityParams elasticity_params { get; set; }
+        public ElasticityParam elasticity_params { get; set; }
 
         /// <summary>
         /// Instance object defining the next instance within this ServerArray
@@ -244,7 +244,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>ID of the newly created ServerArray</returns>
-        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             string postString = string.Format(APIHrefs.DeploymentServerArray, deploymentID);
             return createPost(postString, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
@@ -262,7 +262,7 @@ namespace RightScale.netClient
         /// <param name="name"></param>
         /// <param name="state"></param>
         /// <returns>ID of the newly created ServerArray</returns>
-        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
+        public static string create_deployment(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParam> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
         {
             string postString = string.Format(APIHrefs.DeploymentServerArray, deploymentID);
             return createPost(postString, array_type, dataCenterPolicy, deploymentID, string.Empty, elasticityParams, cloudID, string.Empty, new List<Input>(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, new List<string>(), serverTemplateID, string.Empty, string.Empty, name, false, state);
@@ -292,7 +292,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>ID of the newly created ServerArray</returns>
-        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             return createPost(APIHrefs.ServerArray, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
         }
@@ -308,7 +308,7 @@ namespace RightScale.netClient
         /// <param name="name">name of the ServerArray</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>ID of the newly created ServerArray</returns>
-        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
+        public static string create(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParam> elasticityParams, string cloudID, string deploymentID, string serverTemplateID, string name, string state)
         {
             return createPost(APIHrefs.ServerArray, array_type, dataCenterPolicy, deploymentID, string.Empty, elasticityParams, cloudID, string.Empty, new List<Input>(), string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, new List<string>(), serverTemplateID, string.Empty, string.Empty, name, false, state);
         }
@@ -338,7 +338,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>ID of the newly created ServerArray</returns>
-        private static string createPost(string postHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        private static string createPost(string postHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             validateRequiredServerArrayCreateInputs(array_type, dataCenterPolicy, elasticityParams, cloudID, serverTemplateID, name, state);
 
@@ -359,9 +359,11 @@ namespace RightScale.netClient
         /// <param name="serverTemplateID"></param>
         /// <param name="name">name of the ServerArray</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
-        private static void validateRequiredServerArrayCreateInputs(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParams> elasticityParams, string cloudID, string serverTemplateID, string name, string state)
+        private static void validateRequiredServerArrayCreateInputs(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParam> elasticityParams, string cloudID, string serverTemplateID, string name, string state)
         {
+            List<string> validArrayTypes = new List<string>() { "alert", "queue" };
             Utility.CheckStringHasValue(array_type);
+            Utility.CheckStringInput("array_type", validArrayTypes, array_type);
 
             if (dataCenterPolicy != null && dataCenterPolicy.Count > 0)
             {
@@ -428,7 +430,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>Collection of KeyValuePairs to be passed to the RightScale API to create or update a ServerArray</returns>
-        private static List<KeyValuePair<string, string>> serverArrayParams(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        private static List<KeyValuePair<string, string>> serverArrayParams(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
             List<string> validArrayTypes = new List<string>() { "alert", "queue" };
@@ -504,6 +506,8 @@ namespace RightScale.netClient
                     }
                 }
             }
+
+            Utility.addParameter(Utility.cloudHref(cloudID), "server_array[instance][cloud_href]", retVal);
             
             Utility.addParameter(Utility.datacenterHref(cloudID, dataCenterID), "server_array[instance][datacenter_href]", retVal);
 
@@ -581,7 +585,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>True if updated, false if not</returns>
-        public static bool update(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        public static bool update(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             string putHref = string.Format(APIHrefs.ServerArrayById, serverArrayID);
             return updatePut(putHref, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
@@ -612,7 +616,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>True if updated, false if not</returns>
-        public static bool update_deployment(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        public static bool update_deployment(string serverArrayID, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             string putHref = string.Format(APIHrefs.DeploymentServerArrayByID, deploymentID, serverArrayID);
             return updatePut(putHref, array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
@@ -643,7 +647,7 @@ namespace RightScale.netClient
         /// <param name="optimized">boolean indicating if this server is to utilized optimized IO features if available on the cloud being deployed to</param>
         /// <param name="state">State of the server (enabled/disabled)</param>
         /// <returns>True if updated, false if not</returns>
-        private static bool updatePut(string putHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParams> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
+        private static bool updatePut(string putHref, string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             List<KeyValuePair<string,string>> putParams = serverArrayParams(array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
             return Core.APIClient.Instance.Put(putHref, putParams);
@@ -725,7 +729,7 @@ namespace RightScale.netClient
         /// <returns>true if successful, false if not</returns>
         public static bool destroy(string serverArrayID)
         {
-            string deleteHref = string.Format(APIHrefs.ServerArrayDestroy, serverArrayID);
+            string deleteHref = string.Format(APIHrefs.ServerArrayById, serverArrayID);
             return Core.APIClient.Instance.Delete(deleteHref);
         }
 
