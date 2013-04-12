@@ -40,10 +40,31 @@ namespace RightScale.netClient
         /// <summary>
         /// Method refreshes this instance of Task with the latest status
         /// </summary>
-        public void Refresh()
+        public bool Refresh()
         {
-            //TODO: need to implement object instance-based update process
-            throw new NotImplementedException();
+            return Refresh("default");
+        }
+
+        public bool Refresh(string view)
+        {
+            bool retVal = false;
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "extended" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string queryString = string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getLinkValue("self"), queryString);
+            Newtonsoft.Json.JsonConvert.PopulateObject(jsonString, this);
+            retVal = true;
+
+            return retVal;
         }
 
         #endregion

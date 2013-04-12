@@ -13,13 +13,21 @@ namespace RightScale.netClient.Test
         private string cloudID;
         private string serverArrayID;
         private string filterListString;
+        private string apiRefreshToken;
+        private string runExecServerID;
+        private string execRunScriptID;
+        private string execRunScriptName;
 
         public InstanceTest()
         {
             deploymentID = ConfigurationManager.AppSettings["InstanceTest_deploymentID"].ToString();
+            apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             cloudID = ConfigurationManager.AppSettings["InstanceTest_cloudID"].ToString();
             serverArrayID = ConfigurationManager.AppSettings["InstanceTest_serverArrayID"].ToString();
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InstanceTest_filterListString"].ToString());
+            runExecServerID = ConfigurationManager.AppSettings["InstanceTest_runExecTestServer"].ToString();
+            execRunScriptID = ConfigurationManager.AppSettings["InstanceTest_execScriptID"].ToString();
+            execRunScriptName = ConfigurationManager.AppSettings["InstanceTest_execScriptName"].ToString();
         }
 
         #region Instance relationship tests
@@ -308,6 +316,45 @@ namespace RightScale.netClient.Test
         }
         #endregion
 
+        [TestMethod]
+        public void runExecutableByIDSimpleTest()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
+
+            Server serverInfo = Server.show(runExecServerID);
+            Instance currentInst = serverInfo.currentInstance;
+
+            Task taskVal = Instance.run_executable(currentInst.cloud.ID, currentInst.ID, string.Empty, execRunScriptID, new List<Input>(), true);
+
+            while (taskVal.summary.ToLower().StartsWith("complete"))
+            {
+                System.Threading.Thread.Sleep(10000);
+                taskVal.Refresh();
+            }
+
+            netClient.Core.APIClient.Instance.InitWebClient();
+        }
+
+        //[TestMethod]
+        public void runExecutableByNameSimpleTest()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
+
+            Server serverInfo = Server.show(runExecServerID);
+            Instance currentInst = serverInfo.currentInstance;
+
+            Task taskVal = Instance.run_executable(currentInst.cloud.ID, currentInst.ID, execRunScriptName, string.Empty, new List<Input>(), true);
+
+            while (taskVal.summary.ToLower().StartsWith("complete"))
+            {
+                System.Threading.Thread.Sleep(10000);
+                taskVal.Refresh();
+            }
+
+            netClient.Core.APIClient.Instance.InitWebClient();
+        }
 
     }
 }

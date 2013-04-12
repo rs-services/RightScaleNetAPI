@@ -6,5 +6,5 @@
   xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description><!--_locID_text="Description1"-->These are default test settings for a local test run.</Description>
   <Deployment enabled="false" />
-  <Execution parallelTestCount="0"/>
+  <Execution parallelTestCount="1"/>
 </TestSettings>

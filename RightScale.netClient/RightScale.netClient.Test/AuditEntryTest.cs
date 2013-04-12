@@ -11,12 +11,14 @@ namespace RightScale.netClient.Test
         string auditEntryID;
         string serverID;
         string serverArrayID;
+        string deploymentID;
 
         public AuditEntryTest()
         {
             auditEntryID = ConfigurationManager.AppSettings["AuditEntryTest_auditEntryID"].ToString();
             serverID = ConfigurationManager.AppSettings["AuditEntryTest_serverID"].ToString();
             serverArrayID = ConfigurationManager.AppSettings["AuditEntryTest_serverArrayID"].ToString();
+            deploymentID = ConfigurationManager.AppSettings["AuditEntryTest_deploymentID"].ToString();
         }
 
         #region AuditEntry.show tests
@@ -47,6 +49,13 @@ namespace RightScale.netClient.Test
         public void createTest()
         {
             string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, serverArrayID), "this is a summary");
+            Assert.IsNotNull(auditEntryID);
+        }
+
+        [TestMethod]
+        public void createDeploymentAuditEntryTest()
+        {
+            string auditEntryID = AuditEntry.create(Utility.deploymentHref(deploymentID), "this is an audit entry " + DateTime.Now.ToString());
             Assert.IsNotNull(auditEntryID);
         }
 

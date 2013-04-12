@@ -318,8 +318,10 @@ namespace RightScale.netClient
         /// Creates a new server and configures its corresponding "next" instane with the received parameters
         /// </summary>
         /// <param name="deploymentID">ID of the deployment which the server will be added</param>
-        /// <param name="description">The Server Description</param>
         /// <param name="cloudID">ID of the cloud that the server should be added to</param>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <param name="serverName">The name of the server</param>
+        /// <param name="description">The Server Description</param>
         /// <param name="datacenterID">ID of the Datacenter/zone</param>
         /// <param name="imageID">ID of the image to use</param>
         /// <param name="inputs">collection of inputs in name/value format</param>
@@ -328,24 +330,22 @@ namespace RightScale.netClient
         /// <param name="multiCloudImageID">ID of the multiCloudImage to use</param>
         /// <param name="ramdiskImageID">ID of the ramdisk image</param>
         /// <param name="securityGroupIDs">collection of security group IDs</param>
-        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
         /// <param name="sshKeyID">ID of the SSH key to use</param>
         /// <param name="userData">USer data that RightScale automaticall passes to your instanece at boot time</param>
-        /// <param name="name">The name of the server</param>
         /// <param name="optimized">A flag indicating whether instances of this Server should support optimized Volumes</param>
         /// <returns>ID of the newly created server</returns>
-        public static string create_deployment(string deploymentID, string description, string cloudID, string datacenterID, string imageID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized)
+        public static string create_deployment(string deploymentID, string cloudID, string serverTemplateID, string serverName, string description, string datacenterID, string imageID, List<Input> inputs, string instanceTypeID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string sshKeyID, string userData, bool optimized)
         {
-            return create(cloudID, deploymentID, serverTemplateID, name, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, sshKeyID, userData, optimized);
+            return create(cloudID, deploymentID, serverTemplateID, serverName, description, cloudID, datacenterID, imageID, inputs, instanceTypeID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, sshKeyID, userData, optimized);
         }
 
         /// <summary>
         /// Creates a new server, and configures its corresponding "next" instance with only the required parameters.
         /// </summary>
-        /// <param name="deploymentID"></param>
-        /// <param name="cloudID"></param>
-        /// <param name="serverTemplateID"></param>
-        /// <param name="serverName"></param>
+        /// <param name="deploymentID">ID of the deployment which the server will be added</param>
+        /// <param name="cloudID">ID of the cloud that the server should be added to</param>
+        /// <param name="serverTemplateID">ID of the ServerTemplate</param>
+        /// <param name="serverName">The name of the server</param>
         /// <returns>ID of the newly created server</returns>
         public static string create_deployment(string deploymentID, string cloudID, string serverTemplateID, string serverName)
         {

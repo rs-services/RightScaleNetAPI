@@ -59,21 +59,23 @@ namespace RightScale.netClient
         public static bool CheckStringInput(string inputName, List<string> validViews, string actualValue)
         {
             bool retVal = false;
-
-            if (!validViews.Contains(actualValue))
+            if (validViews != null && !string.IsNullOrWhiteSpace(actualValue) && validViews.Count > 0)
             {
-                string validValueString = string.Empty;
-
-                foreach (string s in validViews)
+                if (!validViews.Contains(actualValue))
                 {
-                    validValueString += "'" + s + "', ";
+                    string validValueString = string.Empty;
+
+                    foreach (string s in validViews)
+                    {
+                        validValueString += "'" + s + "', ";
+                    }
+                    validValueString = validValueString.Trim().TrimEnd(',');
+                    throw new ArgumentException(string.Format(argumentExceptionFormat, inputName, validValueString, actualValue));
                 }
-                validValueString = validValueString.Trim().TrimEnd(',');
-                throw new ArgumentException(string.Format(argumentExceptionFormat, inputName, validValueString, actualValue));
-            }
-            else
-            {
-                retVal = true;
+                else
+                {
+                    retVal = true;
+                }
             }
             return retVal;
         }
@@ -115,7 +117,7 @@ namespace RightScale.netClient
             bool retVal = false;
 
             string filterErrorMessage = string.Empty;
-            if (actualFilters != null)
+            if (actualFilters != null && validFilters != null && actualFilters.Count > 0 && validFilters.Count > 0)
             {
                 foreach (var kvp in actualFilters)
                 {
@@ -148,9 +150,12 @@ namespace RightScale.netClient
         public static string BuildGetQueryString(List<KeyValuePair<string, string>> qsData)
         {
             string retVal = string.Empty;
-            foreach (var kvp in qsData)
+            if (qsData != null && qsData.Count > 0)
             {
-                retVal += string.Format("{0}={1}&", kvp.Key, kvp.Value);
+                foreach (var kvp in qsData)
+                {
+                    retVal += string.Format("{0}={1}&", kvp.Key, kvp.Value);
+                }
             }
             return retVal;
         }
@@ -163,11 +168,15 @@ namespace RightScale.netClient
         public static string BuildFilterString(List<Filter> filterSet)
         {
             string retVal = string.Empty;
-            if (filterSet != null)
+
+            if (filterSet != null && filterSet.Count > 0)
             {
-                foreach (Filter f in filterSet)
+                if (filterSet != null)
                 {
-                    retVal += f.ToString() + "&";
+                    foreach (Filter f in filterSet)
+                    {
+                        retVal += f.ToString() + "&";
+                    }
                 }
             }
             return retVal;
@@ -182,9 +191,12 @@ namespace RightScale.netClient
         {
             string retVal = string.Empty;
 
-            foreach (Input kvp in inputSet)
+            if (inputSet != null && inputSet.Count > 0)
             {
-                retVal += string.Format("inputs[][name]={0}&inputs[][value]={1}&", kvp.name, kvp.value);
+                foreach (Input kvp in inputSet)
+                {
+                    retVal += string.Format("inputs[][name]={0}&inputs[][value]={1}&", kvp.name, kvp.value);
+                }
             }
 
             retVal = retVal.TrimEnd('&');
@@ -200,6 +212,7 @@ namespace RightScale.netClient
         public static List<KeyValuePair<string, string>> FormatInputCollection(List<Input> inputSet)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
+
             if (inputSet != null && inputSet.Count > 0)
             {
                 foreach (Input kvp in inputSet)
@@ -567,9 +580,12 @@ namespace RightScale.netClient
         {
             List<Input> retVal = new List<Input>();
 
-            foreach (string key in htToConvert.Keys)
+            if (htToConvert != null && htToConvert.Count > 0)
             {
-                retVal.Add(new Input(key, htToConvert[key].ToString()));
+                foreach (string key in htToConvert.Keys)
+                {
+                    retVal.Add(new Input(key, htToConvert[key].ToString()));
+                }
             }
 
             return retVal;
@@ -583,7 +599,7 @@ namespace RightScale.netClient
         /// <param name="parameterSet"></param>
         public static void addParameter(string inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
         {
-            if (!string.IsNullOrWhiteSpace(inputParameter) && parameterSet != null)
+            if (inputParameter != null && !string.IsNullOrWhiteSpace(inputParameter) && parameterSet != null)
             {
                 parameterSet.Add(new KeyValuePair<string, string>(parameterName, inputParameter));
             }
@@ -615,7 +631,7 @@ namespace RightScale.netClient
         public static List<KeyValuePair<string, string>> StringArrayToParameterSet(string[] paramStrings, string paramName)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
-            if (paramStrings != null)
+            if (paramStrings != null && paramStrings.Length > 0)
             {
                 foreach (string param in paramStrings)
                 {

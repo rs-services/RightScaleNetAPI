@@ -461,19 +461,25 @@ namespace RightScale.netClient
             List<string> validArrayTypes = new List<string>() { "alert", "queue" };
             List<string> validStateValues = new List<string>() { "enabled", "disabled" };
 
-            if (Utility.CheckStringInput("array_type", validArrayTypes, array_type))
+            if (!string.IsNullOrWhiteSpace(array_type))
             {
-                Utility.addParameter(array_type, "server_array[array_type]", retVal);
+                if (Utility.CheckStringInput("array_type", validArrayTypes, array_type))
+                {
+                    Utility.addParameter(array_type, "server_array[array_type]", retVal);
+                }
             }
 
             //datacenter policy section
-            if (dataCenterPolicy.Count > 1)
+            if (dataCenterPolicy != null)
             {
-                foreach (var dcp in dataCenterPolicy)
+                if (dataCenterPolicy.Count > 1)
                 {
-                    Utility.addParameter(Utility.datacenterHref(dcp.cloudID, dcp.dataCenterId), "server_array[datacenter_policy][][datacenter_href]", retVal);
-                    Utility.addParameter(dcp.max, "server_array[datacenter_policy][][max]", retVal);
-                    Utility.addParameter(dcp.weight, "server_array[datacenter_policy][][weight]", retVal);
+                    foreach (var dcp in dataCenterPolicy)
+                    {
+                        Utility.addParameter(Utility.datacenterHref(dcp.cloudID, dcp.dataCenterId), "server_array[datacenter_policy][][datacenter_href]", retVal);
+                        Utility.addParameter(dcp.max, "server_array[datacenter_policy][][max]", retVal);
+                        Utility.addParameter(dcp.weight, "server_array[datacenter_policy][][weight]", retVal);
+                    }
                 }
             }
             
@@ -573,7 +579,7 @@ namespace RightScale.netClient
 
             Utility.addParameter(optimized.ToString().ToLower(), "server_array[optimized]", retVal);
 
-            if (Utility.CheckStringInput("state", validStateValues, state))
+            if (state != null && !string.IsNullOrWhiteSpace(state) && Utility.CheckStringInput("state", validStateValues, state))
             {
                 Utility.addParameter(state, "server_array[state]", retVal);
             }
