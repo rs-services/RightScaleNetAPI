@@ -124,7 +124,7 @@ namespace RSPosh
         {
 
             List<DataCenterPolicy> lstdataCenterPolicy = new List<DataCenterPolicy>();
-            List<ElasticityParams> lstelasticityParams = new List<ElasticityParams>();
+            List<ElasticityParam> lstelasticityParams = new List<ElasticityParam>();
             List<Input> lstinputs = new List<Input>();
             List<string> lstsecurityGroupIDs = new List<string>();
 

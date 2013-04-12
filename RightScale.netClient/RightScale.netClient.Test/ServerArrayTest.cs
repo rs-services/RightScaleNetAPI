@@ -149,5 +149,11 @@ namespace RightScale.netClient.Test
             }
             Assert.IsTrue(i > 0);
         }
+
+        //[TestMethod]
+        public void ServerArrayUpdate()
+        {
+            bool isUpdated = ServerArray.update("220543001", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, false, "enabled");
+        }
     }
 }

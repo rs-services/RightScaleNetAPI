@@ -18,6 +18,16 @@ namespace RightScale.netClient
         #region ServerArray properties
 
         /// <summary>
+        /// List of valid values for the 'array type' property when creating or modifying a ServerArray object
+        /// </summary>
+        private static List<string> validArrayTypes = new List<string>() { "alert", "queue" };
+
+        /// <summary>
+        /// List of valid values for the 'state' property when creating or modifying a ServerArray object
+        /// </summary>
+        private static List<string> validStateValues = new List<string>() { "enabled", "disabled" };
+
+        /// <summary>
         /// Name of this server array
         /// </summary>
         public string name { get; set; }
@@ -386,7 +396,6 @@ namespace RightScale.netClient
         /// <param name="state">State of the server (enabled/disabled)</param>
         private static void validateRequiredServerArrayCreateInputs(string array_type, List<DataCenterPolicy> dataCenterPolicy, List<ElasticityParam> elasticityParams, string cloudID, string serverTemplateID, string name, string state)
         {
-            List<string> validArrayTypes = new List<string>() { "alert", "queue" };
             Utility.CheckStringHasValue(array_type);
             Utility.CheckStringInput("array_type", validArrayTypes, array_type);
 
@@ -458,8 +467,6 @@ namespace RightScale.netClient
         private static List<KeyValuePair<string, string>> serverArrayParams(string array_type, List<DataCenterPolicy> dataCenterPolicy, string deploymentID, string description, List<ElasticityParam> elasticityParams, string cloudID, string dataCenterID, List<Input> inputs, string instanceTypeID, string imageID, string kernelImageID, string multiCloudImageID, string ramdiskImageID, List<string> securityGroupIDs, string serverTemplateID, string sshKeyID, string userData, string name, bool optimized, string state)
         {
             List<KeyValuePair<string, string>> retVal = new List<KeyValuePair<string, string>>();
-            List<string> validArrayTypes = new List<string>() { "alert", "queue" };
-            List<string> validStateValues = new List<string>() { "enabled", "disabled" };
 
             if (!string.IsNullOrWhiteSpace(array_type))
             {
@@ -682,6 +689,44 @@ namespace RightScale.netClient
         {
             List<KeyValuePair<string,string>> putParams = serverArrayParams(array_type, dataCenterPolicy, deploymentID, description, elasticityParams, cloudID, dataCenterID, inputs, instanceTypeID, imageID, kernelImageID, multiCloudImageID, ramdiskImageID, securityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
             return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
+        #endregion
+
+        #region ServerArray.setEnabled and setDisabled methods
+
+        /// <summary>
+        /// Public method for enabling a specific ServerArray.  
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to enable</param>
+        /// <returns>true if script execution started successfully</returns>
+        public static bool setEnabled(string serverArrayID)
+        {
+            return setState(serverArrayID, "enabled");
+        }
+
+        /// <summary>
+        /// Public method for switching the enabled flag on a specific ServerArray.  Will set 'enabled' to the value passed in.
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to enable</param>
+        /// <param name="state">string representation of the ServerArray's state</param>
+        /// <returns>true if script execution started successfully</returns>
+        public static bool setState(string serverArrayID, string state)
+        {
+            string putHref = string.Format(APIHrefs.ServerArrayById, serverArrayID);
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(state, "server_array[state]", putParams);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
+        /// <summary>
+        /// Public method for disabling a specific ServerArray.
+        /// </summary>
+        /// <param name="serverArrayID">ID of ServerArray to disable</param>
+        /// <returns>true if script execution started successfully</returns>
+        public static bool setDisabled(string serverArrayID)
+        {
+            return setState(serverArrayID, "disabled");
         }
 
         #endregion
