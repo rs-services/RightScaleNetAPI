@@ -1140,6 +1140,33 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Base href for working with publications
+        /// </summary>
+        public static string Publication = @"/api/publications";
+
+        /// <summary>
+        /// href for working with a specific publication - takes one variable which si the publication id
+        /// </summary>
+        public static string PublicationByID
+        {
+            get
+            {
+                return Publication + ID0;
+            }
+        }
+
+        /// <summary>
+        /// href for importing a specific publication - takes one variable which is the publication id
+        /// </summary>
+        public static string PublicationImport
+        {
+            get
+            {
+                return PublicationByID + @"/import";
+            }
+        }
+
         #endregion
     }
 }

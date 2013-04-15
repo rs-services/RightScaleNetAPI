@@ -105,7 +105,14 @@ namespace RightScale.netClient.Core
         internal string getLinkIDValue (string linkName)
         {
             var idToReturn = getLinkValue(linkName);
-            return idToReturn.Split('/').Last<string>();
+            if (string.IsNullOrWhiteSpace(idToReturn))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return idToReturn.Split('/').Last<string>();
+            }
         }
 
         /// <summary>
@@ -115,11 +122,14 @@ namespace RightScale.netClient.Core
         /// <returns>href value for link</returns>
         internal string getLinkValue(string linkName)
         {
-            foreach (Link l in links)
+            if (links != null)
             {
-                if (l.rel == linkName)
+                foreach (Link l in links)
                 {
-                    return l.href;
+                    if (l.rel == linkName)
+                    {
+                        return l.href;
+                    }
                 }
             }
             return null;

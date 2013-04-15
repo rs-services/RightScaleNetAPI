@@ -107,12 +107,16 @@ namespace RightScale.netClient
         /// <param name="fullTagValue">full tag string value</param>
         private void parseTag(string fullTagValue)
         {
-            string[] scopeSplit = fullTagValue.Split(':');
-            if (scopeSplit.Length == 2)
+            int splitIndex1 = fullTagValue.IndexOf(':');
+            if (splitIndex1 > 0)
             {
-                string[] kvpSplit = scopeSplit[1].Split('=');
-                if (kvpSplit.Length == 2)
+                string[] scopeSplit = new string[2] { fullTagValue.Substring(0, splitIndex1), fullTagValue.Substring(splitIndex1, fullTagValue.Length - splitIndex1) };
+
+                string tagkvp = scopeSplit[1].Substring(1, scopeSplit[1].Length - 1);
+                int splitIndex2 = tagkvp.IndexOf('=');
+                if (splitIndex2 > 0)
                 {
+                    string[] kvpSplit = new string[2] { tagkvp.Substring(0, splitIndex2), tagkvp.Substring(splitIndex2 + 1, tagkvp.Length - splitIndex2 - 1) };
                     scope = scopeSplit[0];
                     tagName = kvpSplit[0];
                     tagValue = kvpSplit[1];
@@ -120,7 +124,7 @@ namespace RightScale.netClient
                 else
                 {
                     _name = fullTagValue;
-                }                
+                }
             }
             else
             {

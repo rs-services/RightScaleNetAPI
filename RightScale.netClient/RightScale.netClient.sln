@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Framework Settings", "
 		RightScale.netClient.vsmdi = RightScale.netClient.vsmdi
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightScale.netClient.ActivityLibrary", "RightScale.netClient.ActivityLibrary\RightScale.netClient.ActivityLibrary.csproj", "{98EC024C-6439-44B1-8B1E-29E457B2201F}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = RightScale.netClient.vsmdi
@@ -44,6 +46,10 @@ Global
 		{0D561A89-9775-4768-890C-321D8E50183E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D561A89-9775-4768-890C-321D8E50183E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D561A89-9775-4768-890C-321D8E50183E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98EC024C-6439-44B1-8B1E-29E457B2201F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98EC024C-6439-44B1-8B1E-29E457B2201F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98EC024C-6439-44B1-8B1E-29E457B2201F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98EC024C-6439-44B1-8B1E-29E457B2201F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
