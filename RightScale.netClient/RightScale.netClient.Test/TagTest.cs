@@ -19,6 +19,30 @@ namespace RightScale.netClient.Test
             serverhref = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["TagTest_serverHref"].ToString());
         }
 
+        #region Tag parse tests
+
+        [TestMethod]
+        public void simpleTagParse()
+        {
+            Tag t = new Tag("scope:key=value");
+            Assert.IsNotNull(t);
+            Assert.IsTrue(t.scope == "scope");
+            Assert.IsTrue(t.tagName == "key");
+            Assert.IsTrue(t.tagValue == "value");
+        }
+
+        [TestMethod]
+        public void colonTagParse()
+        {
+            Tag t = new Tag("scope:key:foo=value:bar");
+            Assert.IsNotNull(t);
+            Assert.IsTrue(t.scope=="scope");
+            Assert.IsTrue(t.tagName=="key:foo");
+            Assert.IsTrue(t.tagValue == "value:bar");
+        }
+
+        #endregion
+
         #region Tag.byresource tests
 
         [TestMethod]

@@ -17,11 +17,12 @@ namespace RightScale.netClient
         /// <summary>
         /// ID of associated account
         /// </summary>
-        public string AccountID
+        public Account ParentAccount
         {
             get
             {
-                return getLinkIDValue("account");
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("account"));
+                return Account.deserialize(jsonString);
             }
         }
 

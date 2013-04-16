@@ -154,7 +154,17 @@ namespace RightScale.netClient
         /// <summary>
         /// Shows the information of a single image.
         /// </summary>
-        /// <param name="serverid">ID of the image to be retrieved</param>
+        /// <param name="servertemplateid">ID of the image to be retrieved</param>
+        /// <returns>Populated Image object</returns>
+        public static ServerTemplate show(string servertemplateid)
+        {
+            return show(servertemplateid, "default");
+        }
+
+        /// <summary>
+        /// Shows the information of a single image.
+        /// </summary>
+        /// <param name="servertemplateid">ID of the image to be retrieved</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
         /// <returns>Populated Image object</returns>
         public static ServerTemplate show(string servertemplateid, string view)

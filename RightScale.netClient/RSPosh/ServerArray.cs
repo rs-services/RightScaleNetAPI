@@ -130,11 +130,11 @@ namespace RSPosh
 
 
             base.ProcessRecord();
-            string createArray = RightScale.netClient.ServerArray.create(arrayType, lstdataCenterPolicy, deploymentID, description, lstelasticityParams, cloudID, 
-                                                                            dataCenterID, lstinputs,instanceTypeID, imageID, kernelImageID, multiCloudImageID,
-                                                                            ramdiskImageID, lstsecurityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
+            //string createArray = RightScale.netClient.ServerArray.create(arrayType, lstdataCenterPolicy, deploymentID, description, lstelasticityParams, cloudID, 
+            //                                                                dataCenterID, lstinputs,instanceTypeID, imageID, kernelImageID, multiCloudImageID,
+             //                                                               ramdiskImageID, lstsecurityGroupIDs, serverTemplateID, sshKeyID, userData, name, optimized, state);
 
-            WriteObject(createArray);
+            //WriteObject(createArray);
 
         }
     }

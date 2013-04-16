@@ -75,21 +75,41 @@ namespace RightScale.netClient
         
         #region Publication.index methods
 
+        /// <summary>
+        /// Lists the publications available to this account. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <returns>List of RightScale publications</returns>
         public static List<Publication> index()
         {
             return index(null, null);
         }
 
+        /// <summary>
+        /// Lists the publications available to this account. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <param name="filter">List of filters to modify the return set from API</param>
+        /// <returns>List of RightScale publications</returns>
         public static List<Publication> index(List<Filter> filter)
         {
             return index(filter, null);
         }
 
+        /// <summary>
+        /// Lists the publications available to this account. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <param name="view">Specifies how many attributes and/or expanded nexted relationships to include.</param>
+        /// <returns>List of RightScale publications</returns>
         public static List<Publication> index(string view)
         {
             return index(null, view);
         }
 
+        /// <summary>
+        /// Lists the publications available to this account. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <param name="filter">List of filters to modify the return set from API</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nexted relationships to include.</param>
+        /// <returns>List of RightScale publications</returns>
         public static List<Publication> index(List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
@@ -105,10 +125,54 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "description", "name", "publisher", "revision" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement Publication.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+
+            if (filter != null && filter.Count > 0)
+            {
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+
+            queryString += string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.Publication, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
-		
+
+        #region Publication.show methods
+
+        /// <summary>
+        /// Show information about a single publication.  Only non-HEAD revisions are possible
+        /// </summary>
+        /// <param name="publicationID">ID of the publication to show</param>
+        /// <returns>Specific Publication object being queried</returns>
+        public static Publication show(string publicationID)
+        {
+            string getHref = string.Format(APIHrefs.PublicationByID, publicationID);
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region Publication.import methods
+
+        /// <summary>
+        /// Imports the given publication and its subordinates into this account.  Only non-HEAD revisions that are shared with the account can be imported.
+        /// </summary>
+        /// <param name="publicationID">ID of the publication to be imported</param>
+        /// <returns></returns>
+        public static ServerTemplate import(string publicationID)
+        {
+            string postHref = string.Format(APIHrefs.PublicationImport, publicationID);
+            string postContent = string.Empty;
+            string serverTemplateID = Core.APIClient.Instance.Post(postHref, new List<KeyValuePair<string, string>>(), "location", out postContent).Last<string>().Split('/').Last<string>();
+            return ServerTemplate.show(serverTemplateID);
+        }
+
+        #endregion
     }
 }
