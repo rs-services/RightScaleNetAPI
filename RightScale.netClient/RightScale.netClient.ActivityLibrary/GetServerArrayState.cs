@@ -28,15 +28,25 @@ namespace RightScale.netClient.ActivityLibrary
             bool retVal = false;
             int operationalCount = 0;
 
+            int minServers = 1;
+
+            if (this.minNumServers == null)
+            {
+                if(this.minNumServers.Get(context) > 0)
+                {
+                    minServers = this.minNumServers.Get(context);
+                }
+            }
+
             if (base.authClient(context))
             {
                 ServerArray array = ServerArray.show(this.serverArrayID.Get(context), "default");
                 foreach (Instance inst in array.currentInstances)
                 {
-                    if (inst.state == "operational")
+                    if (inst.state.ToLower().ToString() == "operational")
                     {
                         operationalCount++;
-                        if (operationalCount >= minNumServers.Get(context))
+                        if (operationalCount >= minServers)
                         {
                             retVal = true;
                             break;

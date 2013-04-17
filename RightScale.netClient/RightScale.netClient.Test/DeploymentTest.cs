@@ -150,14 +150,6 @@ namespace RightScale.netClient.Test
             bool isDestroyed = Deployment.destroy(newDeploymentID);
             Assert.IsTrue(isDestroyed);
         }
-        
-        [TestMethod]
-        public void deploymentTempDestroy()
-        {
-
-            bool isDestroyed = Deployment.destroy("385257001");
-            Assert.IsTrue(isDestroyed);
-        }
 
         [TestMethod]
         public void deploymentCreateFullDestroy()

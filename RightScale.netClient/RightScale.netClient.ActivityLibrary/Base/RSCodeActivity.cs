@@ -49,21 +49,21 @@ namespace RightScale.netClient.ActivityLibrary.Base
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
-            Trace.TraceInformation(sf.GetMethod().Name + ": " + message, categoryName);
+            Trace.TraceInformation(sf.GetMethod().Module.Name + "." + sf.GetMethod().Name + ": " + message, categoryName);
         }
 
         protected void LogError(string message)
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
-            Trace.TraceError(sf.GetMethod().Name + ": " + message, categoryName);
+            Trace.TraceError(sf.GetMethod().Module.Name + "." + sf.GetMethod().Name + ": " + message, categoryName);
         }
 
         protected void LogWarning(string message)
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
-            Trace.WriteLine(sf.GetMethod().Name + ": " + message, categoryName);
+            Trace.WriteLine(sf.GetMethod().Module.Name + "." + sf.GetMethod().Name + ": " + message, categoryName);
         }
 
         protected abstract override void Execute(CodeActivityContext context);

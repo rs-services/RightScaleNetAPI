@@ -11,8 +11,10 @@ namespace RightScale.netClient.ActivityLibrary
 {
     public sealed class UpdateInputs : Base.RSCodeActivity
     {
+        [RequiredArgument]
         public InArgument<string> serverID { get; set; }
 
+        [RequiredArgument]
         public InArgument<List<Input>> inputs { get; set; }
         
         public OutArgument<bool> isUpdated { get; set; }
