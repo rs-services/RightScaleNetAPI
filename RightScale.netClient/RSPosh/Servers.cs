@@ -213,7 +213,6 @@ namespace RSPosh
                     string inputName = inpTkns[0];
                     string inputVal = inpTkns[1] + ":" + inpTkns[2];
 
-                    //newInputs.Add(new Input("DB_NAME", "text:MileageStatsData"))
                     newInputs.Add(new Input(inputName, inputVal));
                 }
 

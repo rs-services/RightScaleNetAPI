@@ -4,7 +4,7 @@ using RightScale.netClient;
 
 namespace RSPosh
 {
-    #region servers cmdlets
+    #region servertemplates cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServerTemplates")]
     public class servertemplate : Cmdlet
     {
