@@ -22,7 +22,7 @@ namespace RightScale.netClient.ActivityLibrary
             if (base.authClient(context))
             {
                 ServerTemplate st = Publication.import(publicationID.Get(context));
-                this.serverTemplateID.Set(context, st);
+                this.serverTemplateID.Set(context, st.ID);
             }
             LogInformation("Completed call to import publication id: " + this.publicationID.Get(context) + " with serverTemplateID: " + this.serverTemplateID.Get(context));
         }
