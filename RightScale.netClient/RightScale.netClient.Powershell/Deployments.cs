@@ -76,8 +76,8 @@ namespace RightScale.netClient.Powershell
         }
     }
 
-    [Cmdlet(VerbsCommon.Remove, "RSDeployment")]
-    public class deployments_delete : Cmdlet
+    [Cmdlet("Destroy", "RSDeployment")]
+    public class deployments_destroy : Cmdlet
     {
 
         [Parameter(Position = 1, Mandatory = true)]
