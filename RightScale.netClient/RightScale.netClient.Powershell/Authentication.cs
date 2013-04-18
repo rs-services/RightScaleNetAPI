@@ -24,7 +24,31 @@ namespace RightScale.netClient.Powershell
 
         [Parameter(Position = 4, Mandatory = false)]
         public string oAuthToken;
-        
+
+        public System.Security.SecureString ReadLineAsSecureString()
+        {
+            SecureString secret = new SecureString();
+            ConsoleKeyInfo currentKey;
+            while ((currentKey = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+            {
+                if (currentKey.Key == ConsoleKey.Backspace)
+                {
+                    if (secret.Length > 0)
+                    {
+                        secret.RemoveAt(secret.Length - 1);
+                        Console.Write(currentKey.KeyChar);
+                    }
+                }
+                else
+                {
+                    secret.AppendChar(currentKey.KeyChar);
+                    Console.Write("*");
+                }
+            }
+            Console.WriteLine();
+            secret.MakeReadOnly();
+            return secret;
+        }
 
         protected override void ProcessRecord()
         {
@@ -34,11 +58,14 @@ namespace RightScale.netClient.Powershell
 
             if (string.IsNullOrEmpty(oAuthToken))
             {
+
+                if (string.IsNullOrEmpty(AccountID)) { Console.WriteLine("AccountID:");AccountID = Console.ReadLine();}
+                if (string.IsNullOrEmpty(Username)) { Console.WriteLine("Username:"); Username = Console.ReadLine(); }
+                if (Password == null) { Console.WriteLine("Paswsword:"); Password = ReadLineAsSecureString(); }
+
                 IntPtr stringPointer = Marshal.SecureStringToBSTR(Password);
                 string strPwd = Marshal.PtrToStringBSTR(stringPointer);
                 Marshal.ZeroFreeBSTR(stringPointer);
-
-                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(strPwd) || string.IsNullOrEmpty(AccountID)) { throw new System.Exception("Username, Password and AccountID required if not using token authentication"); }
 
                 auth = APIClient.Instance.Authenticate(Username, strPwd, AccountID);
 

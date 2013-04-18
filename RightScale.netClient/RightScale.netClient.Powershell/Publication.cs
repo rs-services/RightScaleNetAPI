@@ -82,7 +82,7 @@ namespace RightScale.netClient.Powershell
             catch(System.Exception ex)
             {
                 WriteObject("Error Importing Publication - publicationID");
-                WriteObject(ex.Message);
+                WriteObject(ex.Message);        
 
             }
             
