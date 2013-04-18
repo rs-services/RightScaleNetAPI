@@ -13,13 +13,13 @@ namespace RightScale.netClient.Powershell
     [Cmdlet(VerbsCommon.New, "RSSession")]
     public class authenticate : Cmdlet
     {
-        [Parameter(Position = 1, Mandatory = true)]
+        [Parameter(Position = 1, Mandatory = false)]
         public string AccountID;
 
-        [Parameter(Position = 3, Mandatory = true)]
+        [Parameter(Position = 3, Mandatory = false)]
         public string Username;
 
-        [Parameter(Position = 2, Mandatory = true)]
+        [Parameter(Position = 2, Mandatory = false)]
         public System.Security.SecureString Password;
 
         [Parameter(Position = 4, Mandatory = false)]
