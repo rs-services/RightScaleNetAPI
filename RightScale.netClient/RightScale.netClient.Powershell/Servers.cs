@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using RightScale.netClient;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
     #region servers index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServers")]

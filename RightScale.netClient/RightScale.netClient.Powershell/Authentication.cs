@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using RightScale.netClient;
 using RightScale.netClient.Core;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
     #region authenticate cmdlets
     [Cmdlet(VerbsCommon.New, "RSSession")]
