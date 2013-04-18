@@ -62,6 +62,7 @@
     <Compile Include="CreateServerArray.cs" />
     <Compile Include="EnableServerArray.cs" />
     <Compile Include="GetServerArrayState.cs" />
+    <Compile Include="GetServerCurrentInstanceInfo.cs" />
     <Compile Include="GetServerState.cs" />
     <Compile Include="ImportPublication.cs" />
     <Compile Include="LaunchServer.cs" />
