@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using RightScale.netClient;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
     #region deployments cmdlets
     [Cmdlet(VerbsCommon.Get, "RSDeployments")]
@@ -76,8 +76,8 @@ namespace RSPosh
         }
     }
 
-    [Cmdlet(VerbsCommon.Remove, "RSDeployment")]
-    public class deployments_delete : Cmdlet
+    [Cmdlet("Destroy", "RSDeployment")]
+    public class deployments_destroy : Cmdlet
     {
 
         [Parameter(Position = 1, Mandatory = true)]

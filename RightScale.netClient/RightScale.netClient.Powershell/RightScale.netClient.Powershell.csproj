@@ -8,8 +8,8 @@
     <ProjectGuid>{0D561A89-9775-4768-890C-321D8E50183E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RSPosh</RootNamespace>
-    <AssemblyName>RSPosh</AssemblyName>
+    <RootNamespace>RightScale.netClient.Powershell</RootNamespace>
+    <AssemblyName>RightScale.netClient.Powershell</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -61,6 +61,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="Cloud.cs" />
     <Compile Include="AuditEntry.cs" />
+    <Compile Include="Publication.cs" />
     <Compile Include="Tags.cs" />
     <Compile Include="Volume.cs" />
     <Compile Include="Input.cs" />

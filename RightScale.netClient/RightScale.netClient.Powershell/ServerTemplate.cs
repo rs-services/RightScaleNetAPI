@@ -2,9 +2,9 @@
 using System.Management.Automation;
 using RightScale.netClient;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
-    #region servers cmdlets
+    #region servertemplates cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServerTemplates")]
     public class servertemplate : Cmdlet
     {

@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using RightScale.netClient;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
     #region servers index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServers")]
@@ -106,7 +106,7 @@ namespace RSPosh
         }
     }
 
-    [Cmdlet(VerbsCommon.Remove, "RSServer")]
+    [Cmdlet("Destroy", "RSServer")]
     public class server_destroy : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = true)]
@@ -183,8 +183,51 @@ namespace RSPosh
         }
     }
     #endregion
+    #region server launch cmdlets
+    [Cmdlet("Terminate", "RSServer")]
+    public class server_terminate : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverID;
 
- #region server create / delete cmdlets
+        protected override void ProcessRecord()
+        {
+            Types.returnServerLaunch result = new Types.returnServerLaunch();
+
+            base.ProcessRecord();
+
+            try
+            {
+                bool rsLaunchServer = RightScale.netClient.Server.terminate(serverID);
+
+                if (rsLaunchServer == true)
+                {
+                    result.ServerID = serverID;
+                    result.Message = "Server Terminated";
+                    result.Result = true;
+
+                    WriteObject(result);
+                }
+                else
+                {
+                    result.ServerID = serverID;
+                    result.Message = "Error Terminating server";
+                    result.Result = false;
+
+                    WriteObject(result);
+
+                }
+            }
+            catch (RightScaleAPIException errLaunch)
+            {
+                WriteObject(errLaunch);
+                WriteObject(errLaunch.InnerException);
+            }
+
+        }
+    }
+    #endregion
+ #region server inputs
     [Cmdlet(VerbsCommon.Set, "RSServerInputs")]
     public class server_setinputs : Cmdlet
     {
@@ -213,7 +256,6 @@ namespace RSPosh
                     string inputName = inpTkns[0];
                     string inputVal = inpTkns[1] + ":" + inpTkns[2];
 
-                    //newInputs.Add(new Input("DB_NAME", "text:MileageStatsData"))
                     newInputs.Add(new Input(inputName, inputVal));
                 }
 

@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using RightScale.netClient;
 
-namespace RSPosh
+namespace RightScale.netClient.Powershell
 {
     #region input index cmdlets
     [Cmdlet(VerbsCommon.Get, "RSInputsDeployment")]
