@@ -157,5 +157,4 @@ namespace RightScale.netClient.Powershell
         }
     }
     #endregion
-
 }

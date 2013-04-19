@@ -36,15 +36,23 @@ namespace RightScale.netClient.ActivityLibrary
             if (base.authClient(context))
             {
                 Server svr = Server.show(this.serverID.Get(context));
-                Instance currentInstance = svr.currentInstance;
-                this.instanceID.Set(context, currentInstance.ID);
-                this.privateDNSNames.Set(context, currentInstance.private_dns_names);
-                this.privateIPAddresses.Set(context, currentInstance.private_ip_addresses);
-                this.publicDNSNames.Set(context, currentInstance.public_dns_names);
-                this.publicIPAddresses.Set(context, currentInstance.public_ip_addresses);
-                this.currentState.Set(context, currentInstance.state);
-                this.instanceName.Set(context, currentInstance.name);
-                this.osPlatform.Set(context, currentInstance.os_platform);
+                try
+                {
+                    Instance currentInstance = svr.currentInstance;
+                    this.instanceID.Set(context, string.IsNullOrWhiteSpace(currentInstance.ID) ? string.Empty : currentInstance.ID);
+                    this.privateDNSNames.Set(context, currentInstance.private_dns_names == null ? new List<string>() : currentInstance.private_dns_names);
+                    this.privateIPAddresses.Set(context, currentInstance.private_ip_addresses == null ? new List<string>() : currentInstance.private_ip_addresses);
+                    this.publicDNSNames.Set(context, currentInstance.public_dns_names == null ? new List<string>() : currentInstance.public_dns_names);
+                    this.publicIPAddresses.Set(context, currentInstance.public_ip_addresses == null ? new List<string>() : currentInstance.public_ip_addresses);
+                    this.currentState.Set(context, string.IsNullOrWhiteSpace(currentInstance.state) ? string.Empty : currentInstance.state);
+                    this.instanceName.Set(context, string.IsNullOrWhiteSpace(currentInstance.name) ? string.Empty : currentInstance.name);
+                    this.osPlatform.Set(context, string.IsNullOrWhiteSpace(currentInstance.os_platform) ? string.Empty : currentInstance.os_platform);
+                }
+                catch
+                {
+                    LogWarning("Server with ID " + serverID.Get(context) + " has no current instance");
+                }
+
             }
             LogInformation("Completed process of getting instance information");
         }

@@ -102,7 +102,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void serverCurrentInstanceExists()
         {
-            Server serverobj = Server.show_deployment(serverID, deploymentID);
+            Server serverobj = Server.show("785713001");
             Assert.IsNotNull(serverobj);
             Instance instance = serverobj.currentInstance;
             Assert.IsNotNull(instance);

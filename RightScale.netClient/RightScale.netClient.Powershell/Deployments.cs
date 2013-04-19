@@ -42,6 +42,7 @@ namespace RightScale.netClient.Powershell
         }
     }
     #endregion
+
     #region deployments create / delete cmdlets
     [Cmdlet(VerbsCommon.New, "RSDeployment")]
     public class deployments_create : Cmdlet
