@@ -35,10 +35,20 @@ namespace RightScale.netClient.Powershell
         protected override void ProcessRecord()
         {
             if (view == null) { view = "default"; }
-            base.ProcessRecord();
-            Server rsServer = RightScale.netClient.Server.show(serverID, view);
 
-            WriteObject(rsServer);
+            base.ProcessRecord();
+            try
+            {
+                Server rsServer = RightScale.netClient.Server.show(serverID, view);
+                WriteObject(rsServer);
+            }
+            catch(RightScaleAPIException rse)
+            {
+                WriteObject("Error Getting Server");
+                WriteObject(rse.Message);
+                WriteObject(rse.ErrorData);
+            }
+
 
         }
     }
@@ -84,9 +94,9 @@ namespace RightScale.netClient.Powershell
                 }
                 else
                 {
-                    result.ServerID = rsNewServerID;
                     result.Message = "Error creating server";
-                    result.Result = false;
+                    result.Result = false;                   
+                    result.ServerID = rsNewServerID;
                     result.DeploymentID = deploymentID;
                     result.ServerTemplateID = serverTemplateID;
 
@@ -95,6 +105,7 @@ namespace RightScale.netClient.Powershell
             }
             catch (RightScaleAPIException errCreate)
             {
+                result.ErrData = errCreate.ErrorData;
                 result.Message = errCreate.InnerException.Message;
                 result.Result = false;
                 result.DeploymentID = deploymentID;
@@ -117,25 +128,35 @@ namespace RightScale.netClient.Powershell
             Types.returnServer result = new Types.returnServer();
 
             base.ProcessRecord();
-            bool rsDestroyServer = RightScale.netClient.Server.destroy(serverID);
-
-            if (rsDestroyServer == true)
+            try
             {
-                result.ServerID = serverID;
-                result.Message = "Server destroyed";
-                result.Result = true;
+              bool rsDestroyServer = RightScale.netClient.Server.destroy(serverID);
 
-                WriteObject(result);
-            }
-            else
-            {
-                result.ServerID = serverID;
-                result.Message = "Error destroying server";
-                result.Result = false;
+              if (rsDestroyServer == true)
+              {
+                  result.ServerID = serverID;
+                  result.Message = "Server destroyed";
+                  result.Result = true;
 
-                WriteObject(result);
+                  WriteObject(result);
+              }
+              else
+              {
+                  result.ServerID = serverID;
+                  result.Message = "Error destroying server";
+                  result.Result = false;
 
-            }
+                  WriteObject(result);
+              }
+           }
+           catch(RightScaleAPIException rse)
+           {
+               result.Message = "Error destroying server";
+               result.ErrData = rse.ErrorData;
+               result.Result = false;
+
+               WriteObject(result);
+           }
         }
     }
     #endregion
