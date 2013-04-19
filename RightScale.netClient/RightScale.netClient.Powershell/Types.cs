@@ -24,6 +24,7 @@ namespace RightScale.netClient.Powershell
             public bool Result { get; set; }
             public string Message { get; set; }
             public string ErrData { get; set; }
+            public string APIHref { get; set; }
         }
 
         public class returnServerLaunch

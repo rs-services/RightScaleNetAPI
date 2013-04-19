@@ -106,6 +106,7 @@ namespace RightScale.netClient.Powershell
             catch (RightScaleAPIException errCreate)
             {
                 result.ErrData = errCreate.ErrorData;
+                result.APIHref = errCreate.APIHref;
                 result.Message = errCreate.InnerException.Message;
                 result.Result = false;
                 result.DeploymentID = deploymentID;
