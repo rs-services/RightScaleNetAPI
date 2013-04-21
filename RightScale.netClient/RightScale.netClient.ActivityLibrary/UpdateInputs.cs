@@ -9,6 +9,9 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to update inputs for a given Server within the RightScale system
+    /// </summary>
     public sealed class UpdateInputs : Base.RSCodeActivity
     {
         [RequiredArgument]

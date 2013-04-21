@@ -9,27 +9,61 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to get information about a specific Server's current instance within the RightScale system
+    /// </summary>
     public sealed class GetServerCurrentInstanceInfo : Base.RSCodeActivity
     {
+        /// <summary>
+        /// ID of the Server whose current instance's state will be returned
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> serverID { get; set; }
 
+        /// <summary>
+        /// Output parameter returns ID of current instance
+        /// </summary>
         public OutArgument<string> instanceID { get; set; }
 
+        /// <summary>
+        /// Output parameter returns list of private DNS names for the current instance
+        /// </summary>
         public OutArgument<List<string>> privateDNSNames { get; set; }
 
+        /// <summary>
+        /// Output parameter returns list of private IP addresses for the current instance
+        /// </summary>
         public OutArgument<List<string>> privateIPAddresses { get; set; }
 
+        /// <summary>
+        /// Output parameter returns list of public DNS names for the current instance
+        /// </summary>
         public OutArgument<List<string>> publicDNSNames { get; set; }
 
+        /// <summary>
+        /// Output parameter returns list of public IP addresses for the current instance
+        /// </summary>
         public OutArgument<List<string>> publicIPAddresses { get; set; }
 
+        /// <summary>
+        /// Output parameter returns the current state of the current instance
+        /// </summary>
         public OutArgument<string> currentState { get; set; }
 
+        /// <summary>
+        /// Output parameter returns the name of the server
+        /// </summary>
         public OutArgument<string> instanceName { get; set; }
 
+        /// <summary>
+        /// Output parameter returns the OS Platform of the current instance
+        /// </summary>
         public OutArgument<string> osPlatform { get; set; }
 
+        /// <summary>
+        /// Execute calls to the RightScale API and returns metadata related to the current instance of a given server
+        /// </summary>
+        /// <param name="context"></param>
         protected override void Execute(System.Activities.CodeActivityContext context)
         {
             LogInformation("Starting Process to get instance information");

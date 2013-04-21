@@ -9,6 +9,9 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to launch a given server within the RightScale system
+    /// </summary>
     public sealed class LaunchServer : Base.RSCodeActivity
     {
         public InArgument<string> serverID { get; set; }

@@ -9,23 +9,48 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to create a ServerArray within the RightScale System
+    /// </summary>
     public sealed class CreateServerArray : Base.ServerBasedCreateActivity
     {
+        /// <summary>
+        /// Type of array to be created - alert or queue
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> arrayType { get; set; }
 
+        /// <summary>
+        /// State to set the ServerArray to - enabled or disabled
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> state { get; set; }
 
+        /// <summary>
+        /// Elasticity parameters defining how the ServerArray will scale 
+        /// </summary>
         [RequiredArgument]
         public InArgument<List<ElasticityParam>> elasticityParams { get; set; }
 
+        /// <summary>
+        /// DataCenterPolicy object defining where instances will be launched under the context of this ServerArray
+        /// </summary>
         public InArgument<List<DataCenterPolicy>> dataCenterPolicies { get; set; }
 
+        /// <summary>
+        /// ID of the DataCenter to launch servers into
+        /// </summary>
         public InArgument<string> dataCenterID { get; set; }
 
+        /// <summary>
+        /// Output parameter returns the ID of the newly created ServerArray   
+        /// </summary>
         public OutArgument<string> serverArrayID { get; set; }
 
+        /// <summary>
+        /// Execute method creates a ServerArray based on the inputs provided
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Creating ServerArray for ServerTemplateID: " + this.serverTemplateID.Get(context));

@@ -9,6 +9,9 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Enumeration determining which type of object will be audited
+    /// </summary>
     public enum AuditableObject
     {
         Server,
@@ -16,19 +19,38 @@ namespace RightScale.netClient.ActivityLibrary
         Deployment
     }
 
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to create an Audit Entry within the RightScale system
+    /// </summary>
     public sealed class CreateAuditEntry : Base.RSCodeActivity
     {
+        /// <summary>
+        /// Type of object being audited
+        /// </summary>
         [RequiredArgument]
         public InArgument<AuditableObject> auditObjectType { get; set; }
 
+        /// <summary>
+        /// ID of object to be audited
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> auditObjectID { get; set; }
 
+        /// <summary>
+        /// Summary message for Audit Entry
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> auditObjectSummary { get; set; }
 
+        /// <summary>
+        /// Detail message for Audit Entry
+        /// </summary>
         public InArgument<string> auditObjectDetail { get; set; }
 
+        /// <summary>
+        /// Execute method performs process of calling to RightScale API to create an audit entry based on the inputs provided
+        /// </summary>
+        /// <param name="context">Code Activity Context from Windows Workflow runtime</param>
         protected override void Execute(CodeActivityContext context)
         {
             string apiHref = getAPIHref(context);
@@ -40,6 +62,11 @@ namespace RightScale.netClient.ActivityLibrary
             LogInformation("Completed creating Audit Record on " + auditObjectType.Get(context).ToString() + " with ID of " + auditObjectID.Get(context));
         }
 
+        /// <summary>
+        /// Private method to build proper href for calling out to the RightScale API based on the AuditObjectType provided
+        /// </summary>
+        /// <param name="context">Code Activity Context</param>
+        /// <returns>formatted href for creating an audit entry</returns>
         private string getAPIHref(CodeActivityContext context)
         {
             switch (auditObjectType.Get(context))

@@ -10,6 +10,9 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to run a specific RightScript or Recipe on a given Server's current instance within the RightScale system
+    /// </summary>
     public sealed class RunScriptOrRecipe : Base.RSCodeActivity
     {
         [RequiredArgument]

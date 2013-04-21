@@ -9,7 +9,10 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
-    public sealed class UpdateServerArray : Base.RSCodeActivity
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to update the information for a given ServerArray within the RightScale system
+    /// </summary>
+    public sealed class UpdateServerArray : Base.ServerBasedUpdateActivity
     {
         [RequiredArgument]
         public InArgument<string> serverArrayID { get; set; }
@@ -23,37 +26,7 @@ namespace RightScale.netClient.ActivityLibrary
         public InArgument<List<DataCenterPolicy>> dataCenterPolicies { get; set; }
 
         public InArgument<string> dataCenterID { get; set; }
-
-        public InArgument<string> cloudID { get; set; }
-
-        public InArgument<string> deploymentID { get; set; }
-
-        public InArgument<string> serverTemplateID { get; set; }
-
-        public InArgument<string> name { get; set; }
-
-        public InArgument<List<Input>> inputs { get; set; }
-
-        public InArgument<string> instanceTypeID { get; set; }
-
-        public InArgument<string> imageID { get; set; }
-
-        public InArgument<string> kernelImageID { get; set; }
-
-        public InArgument<string> multiCloudImageID { get; set; }
-
-        public InArgument<string> ramdiskImageID { get; set; }
-
-        public InArgument<List<string>> securityGroupIDs { get; set; }
-
-        public InArgument<string> sshKeyID { get; set; }
-
-        public InArgument<string> userData { get; set; }
-
-        public InArgument<bool> optimized { get; set; }
-
-        public InArgument<string> description { get; set; }
-
+        
         public OutArgument<bool> isUpdated { get; set; } 
 
         protected override void Execute(System.Activities.CodeActivityContext context)

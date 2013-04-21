@@ -9,13 +9,26 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to create a Server within the RightScale System
+    /// </summary>
     public sealed class CreateServer : Base.ServerBasedCreateActivity
     {
+        /// <summary>
+        /// Number of servers to be created for this Server configuration specified by inputs provided
+        /// </summary>
         [RequiredArgument]
         public InArgument<Int32> numberOfServers { get; set; }
 
+        /// <summary>
+        /// Output list of serverIDs that were created - will contain as many items as specified in <paramref name="numberOfServers"/>
+        /// </summary>
         public OutArgument<List<string>> serverIDs { get; set; }
 
+        /// <summary>
+        /// Execute method creates servers based on provided inputs
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Creating " + this.numberOfServers.Get(context).ToString() + " servers based on ServerTemplateID: " + this.serverTemplateID.Get(context));
@@ -82,6 +95,10 @@ namespace RightScale.netClient.ActivityLibrary
             LogInformation("Completed creating  " + this.numberOfServers.Get(context).ToString() + " servers based on ServerTemplateID: " + this.serverTemplateID.Get(context));
         }
 
+        /// <summary>
+        /// Private method creates a default description for a server at the time of creation
+        /// </summary>
+        /// <returns>String to use as a default description for a given Server object</returns>
         private string getDefaultDescription()
         {
             return "Server created by Windows 3 Tier Workflow project based on RightScale.netClient library at " + DateTime.Now.ToString();

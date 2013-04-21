@@ -8,16 +8,28 @@ using RightScale.netClient.Core;
 using RightScale.netClient;
 
 
-namespace RightScale.netClient.ActivityLibrary 
+namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to enable a given ServerArray within the RightScale system
+    /// </summary>
     public sealed class EnableServerArray : Base.RSCodeActivity
     {
-
+        /// <summary>
+        /// ID of the ServerArrray to enable
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> serverArrayID { get; set; }
 
+        /// <summary>
+        /// Boolean indicating success of call to RightScale API - showing that ServerArray is now active
+        /// </summary>
         public OutArgument<bool> isEnabled { get; set; }
 
+        /// <summary>
+        /// Execute method enables the specific ServerArray as defined by inputs
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Beginning call to enable ServerArray " + this.serverArrayID.Get(context));

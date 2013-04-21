@@ -71,7 +71,6 @@
     <Compile Include="RunScriptOrRecipe.cs" />
     <Compile Include="UpdateInputs.cs" />
     <Compile Include="UpdateServerArray.cs" />
-    <Compile Include="ValidateWebContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
