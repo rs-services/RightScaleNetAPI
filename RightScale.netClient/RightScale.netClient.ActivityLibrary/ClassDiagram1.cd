@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RightScale.netClient.ActivityLibrary.CreateServerArray">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAASAAAAAAAAAAAAAAEAEBAAAAAAABBA=</HashCode>
+      <FileName>CreateServerArray.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RightScale.netClient.ActivityLibrary.CreateServer">
+    <Position X="10.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>CreateServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RightScale.netClient.ActivityLibrary.Base.ServerBasedCreateActivity">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAQSAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\ServerBasedCreateActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RightScale.netClient.ActivityLibrary.Base.RSCodeActivity">
+    <Position X="4.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgAAAAAAAAAIAAQAAAACIAAAIAAAAIAAAgAAAAACAAA=</HashCode>
+      <FileName>Base\RSCodeActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RightScale.netClient.ActivityLibrary.Base.ServerBasedActivity">
+    <Position X="6.5" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAwAAQAAAAIAQAwAIAAgAAAAAAAAABACAAAAAAAAAQA=</HashCode>
+      <FileName>Base\ServerBasedActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -28,7 +28,7 @@ namespace RightScale.netClient.ActivityLibrary
         /// <summary>
         /// Exectute method launches the given server specified within the input variable collection
         /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime contextss</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Beginning call to launch Server id: " + this.serverID.Get(context));
