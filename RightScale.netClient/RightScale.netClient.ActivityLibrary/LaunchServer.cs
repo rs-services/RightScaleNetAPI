@@ -14,10 +14,21 @@ namespace RightScale.netClient.ActivityLibrary
     /// </summary>
     public sealed class LaunchServer : Base.RSCodeActivity
     {
+        /// <summary>
+        /// ID of the Server to launch
+        /// </summary>
+        [RequiredArgument]
         public InArgument<string> serverID { get; set; }
 
+        /// <summary>
+        /// Output argument identifying whether or not the specific server was launched
+        /// </summary>
         public OutArgument<bool> serverLaunched { get; set; }
 
+        /// <summary>
+        /// Exectute method launches the given server specified within the input variable collection
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Beginning call to launch Server id: " + this.serverID.Get(context));

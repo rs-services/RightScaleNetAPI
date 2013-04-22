@@ -14,21 +14,46 @@ namespace RightScale.netClient.ActivityLibrary
     /// </summary>
     public sealed class UpdateServerArray : Base.ServerBasedUpdateActivity
     {
+        /// <summary>
+        /// ID of the ServerArray to be udpated
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> serverArrayID { get; set; }
         
+        /// <summary>
+        /// Type of array - alert or queue
+        /// </summary>
         public InArgument<string> arrayType { get; set; }
 
+        /// <summary>
+        /// State of array - enabled or disabled
+        /// </summary>
         public InArgument<string> state { get; set; }
 
+        /// <summary>
+        /// Elasticity parameters defining how the ServerArray will scale up and down
+        /// </summary>
         public InArgument<List<ElasticityParam>> elasticityParams { get; set; }
 
+        /// <summary>
+        /// DataCenterPolicy objects defining where servers will be launched
+        /// </summary>
         public InArgument<List<DataCenterPolicy>> dataCenterPolicies { get; set; }
 
+        /// <summary>
+        /// ID of the DataCenter to launch servers into
+        /// </summary>
         public InArgument<string> dataCenterID { get; set; }
         
+        /// <summary>
+        /// Output argument identifying that the given ServerArray was updated
+        /// </summary>
         public OutArgument<bool> isUpdated { get; set; } 
 
+        /// <summary>
+        /// Execute method updates a ServerArray with all properties that contain values.  Properties that are set to null or string.empty will not be changed.
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(System.Activities.CodeActivityContext context)
         {
             LogInformation("Beginning update ServerArray id: " + this.serverArrayID.Get(context));
