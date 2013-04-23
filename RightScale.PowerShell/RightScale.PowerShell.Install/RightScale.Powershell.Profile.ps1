@@ -28,11 +28,11 @@ Function Set-RSConsole
 
  $host.UI.RawUI.BufferSize = $bufferSize
 
- $size = $Host.UI.RawUI.WindowSize 
- $size.Width = 150
- $size.Height = 50
+ $maxWS = $host.UI.RawUI.Get_MaxWindowSize()
+ $ws = $host.ui.RawUI.WindowSize
 
- $Host.UI.RawUI.WindowSize = $size
+ If($maxws.width -ge 85){$ws.width = 85}else{$ws.width = $maxws.width}
+ if($maxws.height -ge 42){$ws.height = 42}else{$ws.height = $maxws.height}
 
 }
 

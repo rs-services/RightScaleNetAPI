@@ -3,9 +3,18 @@
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="9b9ffe0d-6268-4c7a-9070-92d6186b3bdd" Name="RightScale.PowerShell.Install" Language="1033" Version="1.0.0.0" Manufacturer="RightScale Professional Services" UpgradeCode="13c4eea1-fe8b-48a6-bb06-588039ec4b86">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Icon Id="RightScale.Powershell.ico" SourceFile="RightScale.Powershell.ico" />
+    <Property Id="POWERSHELLVERSION3" Secure="yes">
+      <RegistrySearch Id="PowerShellVersion3Search" Root="HKLM" Key="SOFTWARE\Microsoft\PowerShell\3\PowerShellEngine" Name="PowerShellVersion" Type="raw" />
+    </Property>
+    <Property Id="ARPPRODUCTICON" Value="RightScale.Powershell.ico" />
     <PropertyRef Id="NETFRAMEWORK45"/>
+    <PropertyRef Id="POWERSHELLVERSION3"/>
     <Condition Message="This application requires .NET Framework 4.5.">
       <![CDATA[Installed or NETFRAMEWORK45]]>
+    </Condition>
+    <Condition Message="PowerShell 3.0 or greater is required">
+      <![CDATA[POWERSHELLVERSION3 >= "3.0"]]>
     </Condition>
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="RightScale.PowerShell.cab" EmbedCab="yes"/>
@@ -44,14 +53,14 @@
         <File Source="RightScale.Powershell.ico"/>
       </Component>
     </ComponentGroup>
-    <Icon Id="RightScale.Powershell.ico" SourceFile="RightScale.Powershell.ico" />
+    
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="3f96e17f-9707-4e49-93fa-bcdf080b58fe">
         <Shortcut Id="ApplicationStartMenuShortcut"
                   Name="RightScale PowerShell"
                   Description="PowerShell Launcher with RightScale Cmdlets imported"
                   Target="[PowerShellPath]"
-                  Arguments='-noexit -file .\rightscale.powershell.profile.ps1'
+                  Arguments= '-noexit -command "Import-Module ./RightScale.netClient.PowerShell.dll"'
                   WorkingDirectory="APPLICATIONROOTDIRECTORY"
                   Icon="RightScale.Powershell.ico"
                   />
