@@ -1141,12 +1141,28 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Base href for working with publication lineages
+        /// </summary>
+        public static string PublicationLineage = @"/api/publication_lineages";
+
+        /// <summary>
+        /// href for working with a specific publication lineage - takes one variable which is the publication lineage id
+        /// </summary>
+        public static string PublicationLineageByID
+        {
+            get
+            {
+                return PublicationLineage + ID0;
+            }
+        }
+
+        /// <summary>
         /// Base href for working with publications
         /// </summary>
         public static string Publication = @"/api/publications";
 
         /// <summary>
-        /// href for working with a specific publication - takes one variable which si the publication id
+        /// href for working with a specific publication - takes one variable which is the publication id
         /// </summary>
         public static string PublicationByID
         {
