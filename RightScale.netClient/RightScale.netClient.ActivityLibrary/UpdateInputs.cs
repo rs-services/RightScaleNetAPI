@@ -49,5 +49,14 @@ namespace RightScale.netClient.ActivityLibrary
 
             LogInformation("Completed Input update process for Server id: " + this.serverID.Get(context) + " with result of isUpdated = " + this.isUpdated.Get(context).ToString());
         }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Update Inputs";
+        }
     }
 }

@@ -103,5 +103,14 @@ namespace RightScale.netClient.ActivityLibrary
         {
             return "Server created by Windows 3 Tier Workflow project based on RightScale.netClient library at " + DateTime.Now.ToString();
         }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Create Server";
+        }
     }
 }

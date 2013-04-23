@@ -79,5 +79,14 @@ namespace RightScale.netClient.ActivityLibrary
 
             LogInformation("Completed query to get status of ServerArray id: " + this.serverArrayID.Get(context) + " with isOperational = " + retVal.ToString() + " and operationalCount = " + operationalCount.ToString());
         }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Get ServerArray State";
+        }
     }
 }

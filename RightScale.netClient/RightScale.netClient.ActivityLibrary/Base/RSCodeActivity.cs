@@ -35,6 +35,11 @@ namespace RightScale.netClient.ActivityLibrary.Base
         /// </summary>
         public InArgument<string> rsAccountID { get; set; }
 
+        public RSCodeActivity()
+        {
+            this.DisplayName = GetFriendlyName();
+        }
+
         /// <summary>
         /// Common method for authenticating to the RightScale API
         /// </summary>
@@ -87,5 +92,7 @@ namespace RightScale.netClient.ActivityLibrary.Base
         }
 
         protected abstract override void Execute(CodeActivityContext context);
+
+        protected abstract string GetFriendlyName();
     }
 }

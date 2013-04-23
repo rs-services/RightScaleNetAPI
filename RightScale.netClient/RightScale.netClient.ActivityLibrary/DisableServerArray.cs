@@ -4,43 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Activities;
+using System.ComponentModel;
 using RightScale.netClient.Core;
 using RightScale.netClient;
-
 
 namespace RightScale.netClient.ActivityLibrary
 {
     /// <summary>
-    /// Custom Windows Workflow Foundation CodeActivity to enable a given ServerArray within the RightScale system
+    /// Disable ServerArray custom CodeActivity disables a given ServerArray by ID
     /// </summary>
-    public sealed class EnableServerArray : Base.RSCodeActivity
+    public sealed class DisableServerArray : Base.RSCodeActivity
     {
         /// <summary>
-        /// ID of the ServerArrray to enable
+        /// ID of ServerArray to disable
         /// </summary>
         [RequiredArgument]
         public InArgument<string> serverArrayID { get; set; }
 
         /// <summary>
-        /// Boolean indicating success of call to RightScale API - showing that ServerArray is now active
+        /// Output variable indicating that the ServerArray was disabled
         /// </summary>
-        public OutArgument<bool> isEnabled { get; set; }
+        public OutArgument<bool> isDisabled { get; set; }
 
         /// <summary>
-        /// Execute method enables the specific ServerArray as defined by inputs
+        /// Execute method disables the specified ServerArray
         /// </summary>
         /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
-            LogInformation("Beginning call to enable ServerArray " + this.serverArrayID.Get(context));
-
             if (base.authClient(context))
             {
-                bool retVal = ServerArray.setEnabled(this.serverArrayID.Get(context));
-                this.isEnabled.Set(context, retVal);
+                bool retVal = ServerArray.setDisabled(this.serverArrayID.Get(context));
+                isDisabled.Set(context, retVal);
             }
-
-            LogInformation("Completed call to enable ServerArray " + this.serverArrayID.Get(context) + " with return value of " + this.isEnabled.Get(context).ToString());
         }
 
         /// <summary>
@@ -49,7 +45,7 @@ namespace RightScale.netClient.ActivityLibrary
         /// <returns>Friently Name of this custom CodeActivity</returns>
         protected override string GetFriendlyName()
         {
-            return "RightScale - Enable ServerArray";
+            return "RightScale - Disable ServerArray";
         }
     }
 }

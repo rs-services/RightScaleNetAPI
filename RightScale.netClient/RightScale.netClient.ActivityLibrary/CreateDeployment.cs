@@ -69,5 +69,13 @@ namespace RightScale.netClient.ActivityLibrary
             }
         }
 
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Create Deployment";
+        }
     }
 }

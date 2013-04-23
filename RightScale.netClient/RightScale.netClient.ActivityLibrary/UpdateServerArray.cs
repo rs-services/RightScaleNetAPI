@@ -66,5 +66,14 @@ namespace RightScale.netClient.ActivityLibrary
 
             LogInformation("Completed update ServerArray id: " + this.serverArrayID.Get(context) + " with isUpdated = " + this.isUpdated.Get(context));
         }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Update Server Array";
+        }
     }
 }

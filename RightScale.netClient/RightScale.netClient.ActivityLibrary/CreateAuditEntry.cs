@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Activities;
+using System.ComponentModel;    
 using RightScale.netClient.Core;
 using RightScale.netClient;
 
@@ -47,6 +48,11 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public InArgument<string> auditObjectDetail { get; set; }
 
+        public CreateAuditEntry()
+        {
+            this.DisplayName = "RightScale - Create Audit Entry";
+        }
+
         /// <summary>
         /// Execute method performs process of calling to RightScale API to create an audit entry based on the inputs provided
         /// </summary>
@@ -81,6 +87,15 @@ namespace RightScale.netClient.ActivityLibrary
                     LogWarning("Could not determine api href for " + context.ToString());
                     return string.Empty;
             }
+        }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Create Audit Entry";
         }
     }
 }

@@ -68,5 +68,14 @@ namespace RightScale.netClient.ActivityLibrary
 
             LogInformation("Completed query to get status of Server id: " + this.serverID.Get(context) + " with result of isComplete = " + this.isComplete.Get(context).ToString());
         }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Get Server State";
+        }
     }
 }
