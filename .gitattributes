@@ -23,4 +23,6 @@
 
 *.zip	merge=ours
 *.ZIP	merge=ours
-RightScale.netClient\Packages\RightScaleNetClient\*.dll	merge=ours
+RightScale.netClient/Packages/RightScaleNetClient/*.dll	merge=ours
+RightScale.netClient/Packages/RightScaleNetClient/*.xml	merge=ours
+RightScale.netClient/Packages/RightScaleNetClient.zip merge=ours

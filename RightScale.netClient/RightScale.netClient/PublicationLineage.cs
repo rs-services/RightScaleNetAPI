@@ -62,6 +62,45 @@ namespace RightScale.netClient
         }
 
         #endregion
-		
+
+        #region PublicationLineage.show method
+
+        /// <summary>
+        /// Show information about a single publication lineage. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <param name="publicationLineageID">ID of Publication Lineage to retrieve</param>
+        /// <returns>Instance of a PublicationLineage object for the ID passed in</returns>
+        public PublicationLineage show(string publicationLineageID)
+        {
+            return show(publicationLineageID, null);
+        }
+
+        /// <summary>
+        /// Show information about a single publication lineage. Only non-HEAD revisions are possible.
+        /// </summary>
+        /// <param name="publicationLineageID">ID of Publication Lineage to retrieve</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>Instance of a PublicationLineage object for the ID passed in</returns>
+        public PublicationLineage show(string publicationLineageID, string view)
+        {
+            string getHref = string.Format(APIHrefs.PublicationLineageByID, publicationLineageID);
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+            string queryString = string.Format("view={0}", view);
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
     }
 }

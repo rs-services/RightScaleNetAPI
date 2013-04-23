@@ -10,7 +10,9 @@ This project is focused on getting a fully-fledged API wrapper for .net built fo
 	  * Core to this release are the Server, Instance, Deployment and supporting classes
   * Phase 2 (v0.2.0.0) will fold in more classes as is appropriate based on perceived frequency of use
     * ServerArray, MultiCloudImage and other supporting classes are planned for this milestone
-  * Phase 3 (v0.3.0.0) will round out the rest of the object model 
+	* We'll push out a v0.3.0.0 revision for demo purposes and this is simply a milestone that we're adding to get us from v0.2.0.0 to a more polished set of assets
+	  * We added the [Publication](https://github.com/patrickmcclory/RightScaleNetAPI/blob/master/RightScale.netClient/RightScale.netClient/Publication.cs) class as well for this one--need it for the demo projects!
+  * Phase 3 (v0.4.0.0) will round out the rest of the object model 
   * Each phase/dev release will be pushed to nuget as a -pre package
   * Release v1.0.0.0 will be planned after v0.3.0.0 has been tested in the wild
   
@@ -36,9 +38,9 @@ If you opt to use your username/password/accountID, you'll need to add 3 keys in
  
  Long term there are a ton of cool ideas we've been kicking around, but we're happy to take some more input and add to it:
  
-   * building out either strong PowerShell examples of how to consume this library or a PowerShell wrapper to make it more PS friendly
-   * hooking this into TFS (actually another pet project of mine that can be found here) and using it to manage continuous deployment/automated deployment
-   * writing Windows Workflow Foundation processes around this object model for longer-running, automated deployments that are on the more complicated side of things
+   * building out either strong [PowerShell examples and Cmdlets](https://github.com/patrickmcclory/RightScaleNetAPI/tree/master/RightScale.netClient/RightScale.netClient.Powershell) of how to consume this library or a PowerShell wrapper to make it more PS friendly
+   * [hooking this into TFS](https://github.com/patrickmcclory/WinRSAssets/tree/master/MileageStats/BuildTasks.RightScaleAutomation) (actually another pet project of ours) and using it to manage continuous deployment/automated deployment
+   * writing [Windows Workflow Foundation processes](https://github.com/patrickmcclory/CodeDemos/tree/master/RightScale.3Tier.Workflow) with a custom set of [workflow activities]() around this object model for longer-running, automated deployments that are on the more complicated side of things
    * LINQ-ifying it so that it's fully LINQ compatible (though, with the Lists all over the place, it's pretty close).
    
  Let us know know we're doing, if you're interested in contributing or have a cool idea for us to throw on the roadmap!

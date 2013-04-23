@@ -1,0 +1,4 @@
+﻿For a list of all cmdlets in the RightScale.netClient.PowerShell library type:
+get-command | where {$_.ModuleName -eq "RightScale.netClient.PowerShell"};
+
+for more information visit https://github.com/patrickmcclory/RightScaleNetAPI/tree/master/RightScale.netClient/RightScale.netClient.Powershell\

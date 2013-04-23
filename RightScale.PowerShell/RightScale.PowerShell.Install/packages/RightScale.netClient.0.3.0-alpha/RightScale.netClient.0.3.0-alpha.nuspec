@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>RightScale.netClient</id>
+    <version>0.3.0-alpha</version>
+    <title>RightScale .net API Client</title>
+    <authors>Patrick McClory</authors>
+    <owners>Patrick McClory</owners>
+    <projectUrl>https://github.com/patrickmcclory/RightScaleNetAPI</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package contains an object-oriented .net wrapper for the RightScale API v. 1.5.</description>
+    <summary>Object model and client for RightScale API 1.5.  For more information on the API check out the RightScale Support site: http://support.rightscale.com/12-Guides/RightScale_API_1.5</summary>
+    <releaseNotes>v0.3.0 - adding publication class, fixing some bugs in tag parsing and getting ready for demos.  Also updating references internally for json.net.</releaseNotes>
+    <copyright />
+    <language>en-US</language>
+    <tags>RightScale</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="5.0.3" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Net" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+    </frameworkAssemblies>
+    <references>
+      <reference file="RightScale.netClient.dll" />
+    </references>
+  </metadata>
+</package>

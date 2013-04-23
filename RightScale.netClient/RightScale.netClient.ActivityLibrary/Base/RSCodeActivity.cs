@@ -10,20 +10,45 @@ using System.Diagnostics;
 
 namespace RightScale.netClient.ActivityLibrary.Base
 {
+    /// <summary>
+    /// Centralized base class containing common properties for authentication as well as authentnication checks and a shared logging mechanism
+    /// </summary>
     public abstract class RSCodeActivity : CodeActivity
     {
+        /// <summary>
+        /// OAuth refresh token used for authenticating to RightScale API
+        /// </summary>
         public InArgument<string> rsOAuthToken { get; set; }
 
+        /// <summary>
+        /// Username used for authenticating to RightScale API - when used, requires <paramref name="rsPassword"/> and <paramref name="rsAccountID"/>
+        /// </summary>
         public InArgument<string> rsUserName { get; set; }
 
+        /// <summary>
+        /// Password for authenticating to RightScale API - when used, requires <paramref name="rsUserName"/> and <paramref name="rsAccountID"/>
+        /// </summary>
         public InArgument<string> rsPassword { get; set; }
 
+        /// <summary>
+        /// Account ID for authenticating to RightScale API - when used, requires <paramref name="rsUserName"/> and <paramref name="rsPassword"/>
+        /// </summary>
         public InArgument<string> rsAccountID { get; set; }
 
+        public RSCodeActivity()
+        {
+            this.DisplayName = GetFriendlyName();
+        }
+
+        /// <summary>
+        /// Common method for authenticating to the RightScale API
+        /// </summary>
+        /// <param name="context">CodeActivityContext of the derived class</param>
+        /// <returns>true if authenticated, false if not, RightScaleAPIException if parameters are not set properly</returns>
         protected bool authClient(CodeActivityContext context)
         {
             LogInformation("Starting Auth Process");
-            
+
             bool isAuthed = false;
             if (!string.IsNullOrWhiteSpace(this.rsOAuthToken.Get(context)))
             {
@@ -67,5 +92,7 @@ namespace RightScale.netClient.ActivityLibrary.Base
         }
 
         protected abstract override void Execute(CodeActivityContext context);
+
+        protected abstract string GetFriendlyName();
     }
 }

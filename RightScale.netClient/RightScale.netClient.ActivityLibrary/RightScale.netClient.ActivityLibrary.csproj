@@ -60,6 +60,8 @@
     <Compile Include="CreateDeployment.cs" />
     <Compile Include="CreateServer.cs" />
     <Compile Include="CreateServerArray.cs" />
+    <Compile Include="DestroyDeployment.cs" />
+    <Compile Include="DisableServerArray.cs" />
     <Compile Include="EnableServerArray.cs" />
     <Compile Include="GetServerArrayState.cs" />
     <Compile Include="GetServerCurrentInstanceInfo.cs" />
@@ -69,11 +71,12 @@
     <Compile Include="LaunchServerArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunScriptOrRecipe.cs" />
+    <Compile Include="TerminateServer.cs" />
     <Compile Include="UpdateInputs.cs" />
     <Compile Include="UpdateServerArray.cs" />
-    <Compile Include="ValidateWebContent.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +84,9 @@
       <Project>{e59b78d0-4499-4d86-b538-6d1e92fbea12}</Project>
       <Name>RightScale.netClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

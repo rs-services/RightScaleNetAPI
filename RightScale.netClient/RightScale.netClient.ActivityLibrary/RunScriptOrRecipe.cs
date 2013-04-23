@@ -10,20 +10,42 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to run a specific RightScript or Recipe on a given Server's current instance within the RightScale system
+    /// </summary>
     public sealed class RunScriptOrRecipe : Base.RSCodeActivity
     {
+        /// <summary>
+        /// ID of the Server to run the given Recipe or RightScript
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> serverID { get; set; }
 
+        /// <summary>
+        /// Name of recipe or ID of RightScript to be run on the specified Server
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> scriptIdOrRecipeName { get; set; }
 
+        /// <summary>
+        /// Boolean indiciating if the script/recipe run should ignore any locks 
+        /// </summary>
         public InArgument<bool> ignoreLock { get; set; }
 
+        /// <summary>
+        /// Collection of inputs for this run of the given recipe or script
+        /// </summary>
         public InArgument<List<Input>> inputs { get; set; }
 
+        /// <summary>
+        /// ID of the Task object tracking the progress of the specific script run
+        /// </summary>
         public OutArgument<string> taskID { get; set; }
 
+        /// <summary>
+        /// Execute method runs a script or recipe on the specified Server
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(System.Activities.CodeActivityContext context)
         {
             LogInformation("Beginning RunScriptOrRecipe Process for " + scriptIdOrRecipeName.Get(context));
@@ -63,5 +85,13 @@ namespace RightScale.netClient.ActivityLibrary
             return true;
         }
 
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Run Script or Recipe";
+        }
     }
 }

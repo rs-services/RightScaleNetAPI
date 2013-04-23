@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="9b9ffe0d-6268-4c7a-9070-92d6186b3bdd" Name="RightScale.PowerShell.Install" Language="1033" Version="1.0.0.0" Manufacturer="RightScale Professional Services" UpgradeCode="13c4eea1-fe8b-48a6-bb06-588039ec4b86">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message="This application requires .NET Framework 4.5.">
+      <![CDATA[Installed or NETFRAMEWORK45]]>
+    </Condition>
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="RightScale.PowerShell.cab" EmbedCab="yes"/>
+    <Property Id="PowerShellPath" Value="C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="RightScaleFolder" Name="RightScale" >
+          <Directory Id="APPLICATIONROOTDIRECTORY" Name="PowerShell"/>
+        </Directory>
+        <Directory Id="ProgramMenuFolder">
+          <Directory Id="ApplicationProgramsFolder" Name="RightScale">
+            <Component Id="ProgramMenuDir" Guid="326af350-d083-4e6a-95dc-2e396060a5ac">
+              <RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+              <RegistryValue Root="HKCU" Key="Software\RightScale\PowerShell\WixSetup" Type="integer" Value="1" Name="installed" KeyPath="yes"/>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <ComponentGroup Id="InstallGroup" Directory="APPLICATIONROOTDIRECTORY">
+      <Component Id="Newtonsoft.Json.net" Guid="4c9ad0a3-edc7-4453-ba35-23bb3642a15a">
+        <File Source="../../RightScale.PowerShell.LibManager/bin/debug/Newtonsoft.Json.dll" KeyPath="yes" Checksum="yes" />
+        <File Source="../../RightScale.PowerShell.LibManager/bin/debug/Newtonsoft.Json.xml" Checksum="yes" />
+      </Component>
+      <Component Id="RightScale.netClient" Guid="7eda05be-0985-4d5d-bb0f-407a25c2b62c">
+        <File Source="../../RightScale.PowerShell.LibManager/bin/debug/RightScale.netClient.dll" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Id="RightScale.netClient.Powershell" Guid="2a391ec4-2618-46d5-8fdc-495e4cc8d6d1">
+        <File Source="../../RightScale.PowerShell.LibManager/bin/debug/RightScale.netClient.Powershell.dll" KeyPath="yes" Checksum="yes" />
+        <File Source="RightScale.PowerShell.ps1"/>
+        <File Source="WelcomeFile.txt"/>
+      </Component>
+    </ComponentGroup>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="3f96e17f-9707-4e49-93fa-bcdf080b58fe">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="RightScale PowerShell"
+                  Description="PowerShell Launcher with RightScale Cmdlets imported"
+                  Target="[PowerShellPath]"
+                  Arguments='-noexit -command "Import-Module ./RightScale.netClient.PowerShell.dll"'
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\RightScale\PowerShell" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    
+		<Feature Id="RightScaleMainApplication" Title="RightScale.PowerShell.Install" Level="1">
+      <ComponentGroupRef Id="InstallGroup"/>
+      <ComponentRef Id="ProgramMenuDir"/>
+      <ComponentRef Id="ApplicationShortcut"/>
+    </Feature>
+    
+    <UI>
+      <UIRef Id="WixUI_Minimal"/>
+    </UI>
+	</Product>
+</Wix>

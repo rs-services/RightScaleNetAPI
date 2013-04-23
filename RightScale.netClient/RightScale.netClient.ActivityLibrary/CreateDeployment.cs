@@ -9,19 +9,41 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity creates a Deployment within the RightScale system
+    /// </summary>
     public sealed class CreateDeployment : Base.RSCodeActivity
     {
+        /// <summary>
+        /// Name to be used when creating the deployment
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> DeploymentName { get; set; }
 
+        /// <summary>
+        /// Description to be used when creating the deployment
+        /// </summary>
         public InArgument<string> DeploymentDescription { get; set; }
 
+        /// <summary>
+        /// Tag scope to assign to the newly created deployment
+        /// </summary>
         public InArgument<string> DeploymentTagScope { get; set; }
 
+        /// <summary>
+        /// Inputs to be set for the newly created deployment
+        /// </summary>
         public InArgument<List<Input>> inputs { get; set; }
 
+        /// <summary>
+        /// Output containing the ID of the newly created deployment
+        /// </summary>
         public OutArgument<string> DeploymentID { get; set; }
 
+        /// <summary>
+        /// Execute method creates a new deployment based on the inputs provided
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Beginning Create Deployment process for new deployment [" + this.DeploymentName.Get(context) + "]");
@@ -47,5 +69,13 @@ namespace RightScale.netClient.ActivityLibrary
             }
         }
 
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Create Deployment";
+        }
     }
 }

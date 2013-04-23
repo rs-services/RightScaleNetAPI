@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Dynamic;
 using Newtonsoft.Json;
+using System.Timers;
 
 namespace RightScale.netClient.Core
 {
@@ -19,6 +20,7 @@ namespace RightScale.netClient.Core
     /// </summary>
     public sealed class APIClient : IDisposable
     {
+        Timer authTimer;
 
         private string apiVersion = "1.5";
 
@@ -90,9 +92,14 @@ namespace RightScale.netClient.Core
         HttpClientHandler clientHandler;
 
         /// <summary>
-        /// private member to hold the api base address
+        /// public property to hold the api base address - must be changed when connecting to an account on a specific RigthScale shard
         /// </summary>
-        internal string apiBaseAddress;
+        public string apiBaseAddress;
+
+        /// <summary>
+        /// Authentication timeout in minutes - determines when API Client will reset its WebClient object proactively to force another authentication attempt
+        /// </summary>
+        public int authTimeoutMins;
 
         #endregion
 
@@ -106,11 +113,20 @@ namespace RightScale.netClient.Core
             InitWebClient();
             if (ConfigurationManager.AppSettings["RightScaleAPI_BaseAddress"] != null)
             {
-                apiBaseAddress = ConfigurationManager.AppSettings["RightScaleAPI_baseAddress"].ToString();
+                this.apiBaseAddress = ConfigurationManager.AppSettings["RightScaleAPI_baseAddress"].ToString();
             }
             else
             {
-                apiBaseAddress = @"https://my.rightscale.com";
+                this.apiBaseAddress = @"https://my.rightscale.com";
+            }
+
+            if (ConfigurationManager.AppSettings["RightScaleAPI_AuthTimeoutMins"] != null && Utility.CheckStringIsNumeric(ConfigurationManager.AppSettings["RightScaleAPI_AuthTimeoutMins"].ToString()))
+            {
+                this.authTimeoutMins = int.Parse(ConfigurationManager.AppSettings["RightScaleAPI_AuthTimeoutMins"].ToString());
+            }
+            else
+            {
+                this.authTimeoutMins = 118;
             }
         }
 
@@ -126,6 +142,16 @@ namespace RightScale.netClient.Core
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
             this.webClient = new HttpClient(this.clientHandler);
             this.webClient.DefaultRequestHeaders.Add("X_API_Version", this.apiVersion);
+        }
+
+        /// <summary>
+        /// Public method to initialize the API caller specifically for an account that's on a specific RightScale shard
+        /// </summary>
+        /// <param name="shardBaseUrl">base url of the shard the account is associated with</param>
+        public void InitShardAccount(string shardBaseUrl)
+        {
+            InitWebClient();
+            this.apiBaseAddress = shardBaseUrl.TrimEnd('/');
         }
 
         /// <summary>
@@ -402,6 +428,8 @@ namespace RightScale.netClient.Core
         {
             if (!this.isAuthenticated)
             {
+                bool authSuccessful = false;
+
                 if (string.IsNullOrWhiteSpace(this.oauthRefreshToken) && ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"] != null)
                 {
                     this.oauthRefreshToken = ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"].ToString();
@@ -415,18 +443,45 @@ namespace RightScale.netClient.Core
 
                 if (!string.IsNullOrWhiteSpace(this.oauthRefreshToken))
                 {
-                    return Authenticate(this.oauthRefreshToken);
+                    authSuccessful = Authenticate(this.oauthRefreshToken);
                 }
                 else if (!string.IsNullOrWhiteSpace(this.userName) && !string.IsNullOrWhiteSpace(this.password) && !string.IsNullOrWhiteSpace(this.accountId))
                 {
-                    return Authenticate(this.userName, this.password, this.accountId);
+                    authSuccessful = Authenticate(this.userName, this.password, this.accountId);
                 }
                 else
                 {
                     throw new RightScaleAPIException("API Credentials were not found in the application configuration file.  The default/no parameter authentication method can only be used if authentication credentials are set within the aplications app.config or web.config.");
                 }
+                if (authSuccessful)
+                {
+                    InitAuthTimer();
+                }
             }
             return this.isAuthenticated;
+        }
+
+        /// <summary>
+        /// Method manages centralized logic for initializing the proactive authentication timeout process
+        /// </summary>
+        private void InitAuthTimer()
+        {
+            authTimer = new Timer((double)(authTimeoutMins * 60 * 1000)); // 118 mins to account for a 120 min session timeout
+            authTimer.AutoReset = false;
+            authTimer.Elapsed += authTimer_Elapsed;
+            authTimer.Start();
+        }
+
+        /// <summary>
+        /// Tick method for AuthTimer resets authentication state of singleton api caller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void authTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            authTimer.Stop();
+            this.InitWebClient();
+            authTimer.Dispose();
         }
 
         /// <summary>
@@ -454,6 +509,7 @@ namespace RightScale.netClient.Core
                 {
                     this.isAuthenticated = true;
                     this.isInstanceAuthenticated = true;
+                    InitAuthTimer();
                 }
             }
             else
@@ -496,6 +552,7 @@ namespace RightScale.netClient.Core
                             webClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", result["access_token"].ToString()));
                             this.oauthBearerToken = result["access_token"].ToString();
                             this.isAuthenticated = true;
+                            InitAuthTimer();
                         }
                     }
                     else
@@ -536,6 +593,7 @@ namespace RightScale.netClient.Core
                         if (this.cookieContainer.Count > 1)
                         {
                             this.isAuthenticated = true;
+                            InitAuthTimer();
                         }
                     }
                     else

@@ -88,10 +88,19 @@ namespace RightScale.netClient
         /// </summary>
         private static string multiUpdateSegment = "/multi_update";
 
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to perform start actions
+        /// </summary>
         private static string startSegment = "/start";
 
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to perform a stop action
+        /// </summary>
         private static string stopSegment = "/stop";
 
+        /// <summary>
+        /// Segment that's tacked on to the end of a href to perform a multiadd action
+        /// </summary>
         private static string multiAddSegment = "/multi_add";
 
         /// <summary>
@@ -1141,12 +1150,28 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Base href for working with publication lineages
+        /// </summary>
+        public static string PublicationLineage = @"/api/publication_lineages";
+
+        /// <summary>
+        /// href for working with a specific publication lineage - takes one variable which is the publication lineage id
+        /// </summary>
+        public static string PublicationLineageByID
+        {
+            get
+            {
+                return PublicationLineage + ID0;
+            }
+        }
+
+        /// <summary>
         /// Base href for working with publications
         /// </summary>
         public static string Publication = @"/api/publications";
 
         /// <summary>
-        /// href for working with a specific publication - takes one variable which si the publication id
+        /// href for working with a specific publication - takes one variable which is the publication id
         /// </summary>
         public static string PublicationByID
         {
@@ -1164,6 +1189,32 @@ namespace RightScale.netClient
             get
             {
                 return PublicationByID + @"/import";
+            }
+        }
+
+        /// <summary>
+        /// Base href for working with user objects
+        /// </summary>
+        public static string User = @"/api/users";
+
+        /// <summary>
+        /// href for working with a specific user obect - takes one variable which is the User id
+        /// </summary>
+        public static string UserByID
+        {
+            get
+            {
+                return User + ID0;
+            }
+        }
+
+        public static string IdentityProvider = @"/api/identity_providers";
+
+        public static string IdentityProviderByID
+        {
+            get
+            {
+                return IdentityProvider + ID0;
             }
         }
 

@@ -9,17 +9,36 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
 {
+    /// <summary>
+    /// Custom Windows Workflow Foundation CodeActivity to get the current state of a given Server within the RightScale system
+    /// </summary>
     public sealed class GetServerState : Base.RSCodeActivity
     {
+        /// <summary>
+        /// Input argument that defines which state should be considered a successful running state - defaults to 'operational'
+        /// </summary>
         public InArgument<string> successSate { get; set; }
 
+        /// <summary>
+        /// ID of the server to query to get the current state
+        /// </summary>
         [RequiredArgument]
         public InArgument<string> serverID { get; set; }
 
+        /// <summary>
+        /// Output argument defining the server's current state
+        /// </summary>
         public OutArgument<string> serverState { get; set; }
 
+        /// <summary>
+        /// Output argument indicating whether or not the current state is deemed to be comletely launched as defined by <paramref name="successState"/>
+        /// </summary>
         public OutArgument<bool> isComplete { get; set; }
 
+        /// <summary>
+        /// Execute method calls to RightScale API to get current state of a given Server and evaluates whether or not that server has launched successfully
+        /// </summary>
+        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
             LogInformation("Beginning query to get status of Server id: " + this.serverID.Get(context));
@@ -48,6 +67,15 @@ namespace RightScale.netClient.ActivityLibrary
             }
 
             LogInformation("Completed query to get status of Server id: " + this.serverID.Get(context) + " with result of isComplete = " + this.isComplete.Get(context).ToString());
+        }
+
+        /// <summary>
+        /// Override to GetFriendlyName sets the name of the objet in the designer
+        /// </summary>
+        /// <returns>Friently Name of this custom CodeActivity</returns>
+        protected override string GetFriendlyName()
+        {
+            return "RightScale - Get Server State";
         }
     }
 }
