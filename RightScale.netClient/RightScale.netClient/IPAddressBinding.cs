@@ -51,5 +51,81 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region IPAddressBinding.index methods
+
+        /// <summary>
+        /// Lists the ip address bindings available to this account
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to look for IPAddressBinding objects</param>
+        /// <returns>list of IPAddressBinding objects</returns>
+        public static List<IPAddressBinding> index(string cloudID)
+        {
+            return index(cloudID, new List<Filter>());
+        }
+
+        /// <summary>
+        /// Lists the ip address bindings available to this account
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to look for IPAddressBinding objects</param>
+        /// <param name="filter">Set of filters for getting specific IPAddressBinding objects</param>
+        /// <returns>list of IPAddressBinding objects</returns>
+        public static List<IPAddressBinding> index(string cloudID, List<Filter> filter)
+        {
+            string getHref = string.Format(@"/api/clouds/{0}/ip_address_bindings", cloudID);
+            return indexGet(filter, getHref);
+        }
+
+        /// <summary>
+        /// Lists the ip address bindings available to this account
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to look for IPAddressBinding objects</param>
+        /// <param name="ipAddressID">ID of the IPAddress to find IPAddressBindings for</param>
+        /// <returns>list of IPAddressBinding objects</returns>
+        public static List<IPAddressBinding> index(string cloudID, string ipAddressID)
+        {
+            return index(cloudID, ipAddressID, null);
+        }
+
+        /// <summary>
+        /// Lists the ip address bindings available to this account
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to look for IPAddressBinding objects</param>
+        /// <param name="ipAddressID">ID of the IPAddress to find IPAddressBindings for</param>
+        /// <param name="filter">Set of filters for getting specific IPAddressBinding objects</param>
+        /// <returns>list of IPAddressBinding objects</returns>
+        public static List<IPAddressBinding> index(string cloudID, string ipAddressID, List<Filter> filter)
+        {
+            string getHref = string.Format(@"/api/clouds/{0}/ip_addresses/{1}/ip_address_bindings", cloudID, ipAddressID);
+            return indexGet(filter, getHref);
+        }
+
+        /// <summary>
+        /// internal method to handle GET call to RightScale API for IPAddressBindings
+        /// </summary>
+        /// <param name="filter">Collection of filters</param>
+        /// <param name="getHref">HREF for api GET call</param>
+        /// <returns>list of IPAddressBinding objects</returns>
+        private static List<IPAddressBinding> indexGet(List<Filter> filter, string getHref)
+        {
+
+            string queryString = string.Empty;
+
+            if (filter != null && filter.Count > 0)
+            {
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+
+            queryString = queryString.TrimEnd('&');
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
+        }
+        #endregion
+
+
     }
 }
