@@ -128,19 +128,6 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
 
-        private static string checkValidView(string view)
-        {
-            if (string.IsNullOrWhiteSpace(view))
-            {
-                view = "default";
-            }
-            else
-            {
-                List<string> validViews = new List<string>() { "default", "tiny" };
-                Utility.CheckStringInput("view", validViews, view);
-            }
-            return view;
-        }
         #endregion
 
         #region SecurityGroup.show methods
@@ -173,5 +160,56 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region SecurityGroup.create methods
+
+        /// <summary>
+        /// Creates a new Security Group in the specified cloud
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Security Group will be created</param>
+        /// <param name="name">Name of the Security Group to be created</param>
+        /// <returns>ID of the newly created Security Group</returns>
+        public string create(string cloudID, string name)
+        {
+            return create(cloudID, name, null);
+        }
+
+        /// <summary>
+        /// Creates a new Security Group in the specified cloud
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Security Group will be created</param>
+        /// <param name="name">Name of the Security Group to be created</param>
+        /// <param name="description">Description for the newly created security group</param>
+        /// <returns>ID of the newly created Security Group</returns>
+        public string create(string cloudID, string name, string description)
+        {
+            string postHref = string.Format(APIHrefs.SecurityGroup, cloudID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.CheckStringHasValue(name);
+            Utility.addParameter(name, "security_group[name]", postParams);
+            Utility.addParameter(description, "security_group[description]", postParams);
+            return Core.APIClient.Instance.Post(postHref, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Private helper method handles checking for and returning a valid view value for calls for SecutiryGroup info from the RS API
+        /// </summary>
+        /// <param name="view">view value to check</param>
+        /// <returns>string representing the view itself or a valid value if null was passed in</returns>
+        private static string checkValidView(string view)
+        {
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "tiny" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+            return view;
+        }
     }
 }
