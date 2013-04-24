@@ -66,44 +66,69 @@ namespace RightScale.netClient
 
         #endregion
 	
-        #region object.index methods
+        #region SecurityGroup.index methods
 
         /// <summary>
         /// Lists Security Groups
         /// </summary>
         /// <returns>List of SecurityGroup objects</returns>
-        public static List<SecurityGroup> index()
+        public static List<SecurityGroup> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
         }
 
         /// <summary>
         /// Lists Security Groups
         /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
         /// <param name="filter">Filter for searching for Security Groups</param>
         /// <returns>List of SecurityGroup objects</returns>
-        public static List<SecurityGroup> index(List<Filter> filter)
+        public static List<SecurityGroup> index(string cloudID, List<Filter> filter)
         {
-            return index(filter, null);
+            return index(cloudID, filter, null);
         }
 
         /// <summary>
         /// Lists Security Groups
         /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>List of SecurityGroup objects</returns>
-        public static List<SecurityGroup> index(string view)
+        public static List<SecurityGroup> index(string cloudID, string view)
         {
-            return index(null, view);
+            return index(cloudID, null, view);
         }
 
         /// <summary>
         /// Lists Security Groups
         /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
         /// <param name="filter">Filter for searching for Security Groups</param>
         /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
         /// <returns>List of SecurityGroup objects</returns>
-        public static List<SecurityGroup> index(List<Filter> filter, string view)
+        public static List<SecurityGroup> index(string cloudID, List<Filter> filter, string view)
+        {
+            string getHref = string.Format(APIHrefs.SecurityGroup, cloudID);
+            
+            view = checkValidView(view);
+
+            List<string> validFilters = new List<string>() { "name", "resource_uid" };
+            Utility.CheckFilterInput("filter", validFilters, filter);
+
+            string queryString = string.Empty;
+            if(filter != null && filter.Count > 0)
+            {
+                foreach(Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+            queryString += string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
+        }
+
+        private static string checkValidView(string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -114,22 +139,39 @@ namespace RightScale.netClient
                 List<string> validViews = new List<string>() { "default", "tiny" };
                 Utility.CheckStringInput("view", validViews, view);
             }
-
-            List<string> validFilters = new List<string>() { "name", "resource_uid" };
-            Utility.CheckFilterInput("filter", validFilters, filter);
-
-            string queryString = string;
-            if(filter != null && filter.Count > 0)
-            {
-                foreach(Filter f in filter)
-                {
-                    queryString += f.ToString() + "&";
-                }
-            }
-            queryString += string.Format("view={0}", view);
-            string jsonString = Core.APIClient.Instance.Get(APIHrefs.SecurityGroup);
-            return deserializeList(jsonString);
+            return view;
         }
+        #endregion
+
+        #region SecurityGroup.show methods
+
+        /// <summary>
+        /// Displays information about a single Security Group.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
+        /// <param name="securityGroupID">ID of the Security Group to return</param>
+        /// <returns>populated SecurityGroup object</returns>
+        public static SecurityGroup show(string cloudID, string securityGroupID)
+        {
+            return show(cloudID, securityGroupID, null);
+        }
+
+        /// <summary>
+        /// Displays information about a single Security Group.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud to query</param>
+        /// <param name="securityGroupID">ID of the Security Group to return</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include.</param>
+        /// <returns>populated SecurityGroup object</returns>
+        public static SecurityGroup show(string cloudID, string securityGroupID, string view)
+        {
+            view = checkValidView(view);
+            string getHref = string.Format(APIHrefs.SecurityGroupByID, cloudID, securityGroupID);
+            string queryString = string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
         #endregion
     }
 }
