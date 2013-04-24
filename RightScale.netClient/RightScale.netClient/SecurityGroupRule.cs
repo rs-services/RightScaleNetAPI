@@ -67,13 +67,25 @@ namespace RightScale.netClient
 		        
         #region SecurityGroupRule.index methods
 
-        public static List<SecurityGroupRule> index()
+        /// <summary>
+        /// Lists SecurityGroupRules
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the SecurityGroup belongs</param>
+        /// <param name="securityGroupID">ID of the SecurityGroup where the rules belong</param>
+        /// <returns>List of SecurityGroupRule objects</returns>
+        public static List<SecurityGroupRule> index(string cloudID, string securityGroupID)
         {
-            return index(null);
+            return index(cloudID, securityGroupID, null);
         }
 
-
-        public static List<SecurityGroupRule> index(string view)
+        /// <summary>
+        /// Lists SecurityGroupRules
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the SecurityGroup belongs</param>
+        /// <param name="securityGroupID">ID of the SecurityGroup where the rules belong</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of SecurityGroupRule objects</returns>
+        public static List<SecurityGroupRule> index(string cloudID, string securityGroupID, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -85,8 +97,11 @@ namespace RightScale.netClient
                 Utility.CheckStringInput("view", validViews, view);
             }
 
-            //TODO: implement SecurityGroupRule.index
-            throw new NotImplementedException();
+            string getHref = string.Format(APIHrefs.SecurityGroupRule, cloudID, securityGroupID);
+
+            string queryString = string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		

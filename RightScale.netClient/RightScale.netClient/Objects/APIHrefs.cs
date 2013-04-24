@@ -348,6 +348,28 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Base Security Group Rule href takes two parameters - the Cloud ID and the Security Group ID
+        /// </summary>
+        public static string SecurityGroupRule
+        {
+            get
+            {
+                return SecurityGroupByID + "/security_group_rules";
+            }
+        }
+
+        /// <summary>
+        /// SecurityGroupRule href for working with a specific SecurityGroupRule takes three parameters - the Cloud ID. the Security Group ID and the Security Group Rule ID
+        /// </summary>
+        public static string SecurityGroupRuleByID
+        {
+            get
+            {
+                return SecurityGroupRule + ID2;
+            }
+        }
+
+        /// <summary>
         /// Base href for working with MultiCloud Image objects - takes no parameters
         /// </summary>
         public static string MultiCloudImage = "/api/multi_cloud_images";
