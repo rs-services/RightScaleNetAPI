@@ -68,22 +68,42 @@ namespace RightScale.netClient
 	
         #region object.index methods
 
-        public static List<object> index()
+        /// <summary>
+        /// Lists Security Groups
+        /// </summary>
+        /// <returns>List of SecurityGroup objects</returns>
+        public static List<SecurityGroup> index()
         {
             return index(null, null);
         }
 
-        public static List<object> index(List<Filter> filter)
+        /// <summary>
+        /// Lists Security Groups
+        /// </summary>
+        /// <param name="filter">Filter for searching for Security Groups</param>
+        /// <returns>List of SecurityGroup objects</returns>
+        public static List<SecurityGroup> index(List<Filter> filter)
         {
             return index(filter, null);
         }
 
-        public static List<object> index(string view)
+        /// <summary>
+        /// Lists Security Groups
+        /// </summary>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of SecurityGroup objects</returns>
+        public static List<SecurityGroup> index(string view)
         {
             return index(null, view);
         }
 
-        public static List<object> index(List<Filter> filter, string view)
+        /// <summary>
+        /// Lists Security Groups
+        /// </summary>
+        /// <param name="filter">Filter for searching for Security Groups</param>
+        /// <param name="view">Specifies how many attributes and/or expanded nested relationships to include</param>
+        /// <returns>List of SecurityGroup objects</returns>
+        public static List<SecurityGroup> index(List<Filter> filter, string view)
         {
             if (string.IsNullOrWhiteSpace(view))
             {
@@ -98,8 +118,17 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "name", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement object.index
-            throw new NotImplementedException();
+            string queryString = string;
+            if(filter != null && filter.Count > 0)
+            {
+                foreach(Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+            queryString += string.Format("view={0}", view);
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.SecurityGroup);
+            return deserializeList(jsonString);
         }
         #endregion
     }
