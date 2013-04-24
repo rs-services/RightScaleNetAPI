@@ -6,12 +6,31 @@ using System.Threading.Tasks;
 
 namespace RightScale.netClient
 {
+    /// <summary>
+    /// An IpAddressBinding represents an abstraction for binding an IpAddress to an instance. The IpAddress is bound immediately for a current instance, or on launch for a next instance. It also allows specifying port forwarding rules for that particular IpAddress and Instance pair.
+    /// MediaType reference: http://reference.rightscale.com/api1.5/media_types/MediaTypeIpAddressBinding.html
+    /// Resource reference: http://reference.rightscale.com/api1.5/resources/ResourceIpAddressBindings.html
+    /// </summary>
     public class IPAddressBinding:Core.RightScaleObjectBase<IPAddressBinding>
     {
+        /// <summary>
+        /// Private port for NAT rule on this instance of an IP Address Binding
+        /// </summary>
         public int private_port { get; set; }
-        public string created_at { get; set; }
+
+        /// <summary>
+        /// Public port for NAT rule on this instance of an IP Address Binding
+        /// </summary>
         public int public_port { get; set; }
+
+        /// <summary>
+        /// Protocol (TCP or UDP) for this Load Balancing rules
+        /// </summary>
         public string protocol { get; set; }
+
+        /// <summary>
+        /// Indiciates whether this is a recurring attachment or not
+        /// </summary>
         public bool recurring { get; set; }
 
 		#region IPAddressBinding.ctor
