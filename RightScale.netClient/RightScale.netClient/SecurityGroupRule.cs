@@ -280,6 +280,44 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region SecurityGroupRule.destroy methods
+
+        /// <summary>
+        /// Delete a security group rule
+        /// </summary>
+        /// <param name="securityGroupRuleID">ID of SecurityGroupRule to delete</param>
+        /// <returns>true if deleted, false if not</returns>
+        public static bool destroy(string securityGroupRuleID)
+        {
+            string deleteHref = string.Format("/api/security_group_rules/{0}", securityGroupRuleID);
+            return destroyDelete(deleteHref);
+        }
+
+        /// <summary>
+        /// Delete a secuirty group rule
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the security group exists</param>
+        /// <param name="securityGroupID">ID of the security group that the security group rule belongs to</param>
+        /// <param name="securityGroupRuleID">ID of the security group rule to delete</param>
+        /// <returns>true if deleted, false if not</returns>
+        public static bool destroy(string cloudID, string securityGroupID, string securityGroupRuleID)
+        {
+            string deleteHref = string.Format(APIHrefs.SecurityGroupRuleByID, cloudID, securityGroupID, securityGroupRuleID);
+            return destroyDelete(deleteHref);
+        }
+
+        /// <summary>
+        /// Internal call to RightScale API to delete SecurityGroupRules
+        /// </summary>
+        /// <param name="securityGroupRuleHref">SecurityGroupRule delete href</param>
+        /// <returns>true if deleted, false if not</returns>
+        private static bool destroyDelete(string securityGroupRuleHref)
+        {
+            return Core.APIClient.Instance.Delete(securityGroupRuleHref);
+        }
+
+        #endregion
+
         /// <summary>
         /// Helper method to return a valid view value for SecurityGroupRule api calls
         /// </summary>
