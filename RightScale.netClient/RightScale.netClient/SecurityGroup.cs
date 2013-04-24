@@ -193,6 +193,22 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region SecurityGroup.destroy methods
+
+        /// <summary>
+        /// Destroys the specified Security Group
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Security Group can be found</param>
+        /// <param name="securityGroupID">ID of the Security Group to be destroyed</param>
+        /// <returns>true if destroyed, false if not</returns>
+        public bool destroy(string cloudID, string securityGroupID)
+        {
+            string deleteHref = string.Format(APIHrefs.SecurityGroupByID, cloudID, securityGroupID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        #endregion 
+
         /// <summary>
         /// Private helper method handles checking for and returning a valid view value for calls for SecutiryGroup info from the RS API
         /// </summary>
