@@ -175,7 +175,7 @@ namespace RightScale.netClient
             }
             else
             {
-                List<string> validViews = new List<string>() { "default" };
+                List<string> validViews = new List<string>() { "default", "inputs", "inputs_2_0" };
                 Utility.CheckStringInput("view", validViews, view);
             }
 

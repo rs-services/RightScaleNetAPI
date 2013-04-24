@@ -38,7 +38,9 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RightScale.Powershell.Profile.ps1" />
     <Content Include="RightScale.PowerShell.ps1" />
+    <Content Include="RightScale.Powershell.ico" />
     <Content Include="WelcomeFile.txt" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
