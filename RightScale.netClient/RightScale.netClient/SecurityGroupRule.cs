@@ -173,6 +173,113 @@ namespace RightScale.netClient
         }
         #endregion
 
+        #region SecurityGroupRule.create methods
+
+        /// <summary>
+        /// Create a security group rule for a security group
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where Security Group is located</param>
+        /// <param name="securityGroupID">ID of Security Group to create the Security Group Rule in</param>
+        /// <param name="protocol">Security Group Rule protocol</param>
+        /// <param name="sourceType">Security Group Rule source type</param>
+        /// <returns>ID of newly created security group rule</returns>
+        public static string create(string cloudID, string securityGroupID, string protocol, string sourceType)
+        {
+            return create(cloudID, securityGroupID, protocol, sourceType, null, null, null, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Create a security group rule for a security group
+        /// </summary>
+        /// <param name="cloudID">ID of cloud where Security Group is located</param>
+        /// <param name="securityGroupID">ID of Security Group to create the Security Group Rule in</param>
+        /// <param name="protocol">Security Group Rule protocol</param>
+        /// <param name="sourceType">Security Group Rule source type</param>
+        /// <param name="cidrIPs">Security Group Rule CIDR ips</param>
+        /// <param name="groupName">Security Group Rule group name</param>
+        /// <param name="groupOwner">Security Group Rule group owner</param>
+        /// <param name="startPort">Security Group Rule start port</param>
+        /// <param name="endPort">Security Group Rule end port</param>
+        /// <param name="icmpCode">Security Group Rule icmp code</param>
+        /// <param name="icmpType">Security Group Rule icmp type</param>
+        /// <returns>ID of newly created security group rule</returns>
+        public static string create(string cloudID, string securityGroupID, string protocol, string sourceType, string cidrIPs, string groupName, string groupOwner, string startPort, string endPort, string icmpCode, string icmpType)
+        {
+            string postHref = string.Format(APIHrefs.SecurityGroupRule, cloudID, securityGroupID);
+            string securityGroupHref = string.Format(APIHrefs.SecurityGroupByID, cloudID, securityGroupID);
+            return createPost(protocol, sourceType, cidrIPs, groupName, groupOwner, startPort, endPort, icmpCode, icmpType, postHref, securityGroupHref);
+        }
+
+        /// <summary>
+        /// Create a security group rule for a security group
+        /// </summary>
+        /// <param name="securityGroupHref">Security group HREF</param>
+        /// <param name="protocol">Security Group Rule protocol</param>
+        /// <param name="sourceType">Security Group Rule source type</param>
+        /// <returns>ID of newly created security group rule</returns>
+        public static string create(string securityGroupHref, string protocol, string sourceType)
+        {
+            return create(securityGroupHref, protocol, sourceType, null, null, null, null, null, null, null,null);
+        }
+
+        /// <summary>
+        /// Create a security group rule for a security group
+        /// </summary>
+        /// <param name="securityGroupHref">Security group HREF</param>
+        /// <param name="protocol">Security Group Rule protocol</param>
+        /// <param name="sourceType">Security Group Rule source type</param>
+        /// <param name="cidrIPs">Security Group Rule CIDR ips</param>
+        /// <param name="groupName">Security Group Rule group name</param>
+        /// <param name="groupOwner">Security Group Rule group owner</param>
+        /// <param name="startPort">Security Group Rule start port</param>
+        /// <param name="endPort">Security Group Rule end port</param>
+        /// <param name="icmpCode">Security Group Rule icmp code</param>
+        /// <param name="icmpType">Security Group Rule icmp type</param>
+        /// <returns>ID of newly created security group rule</returns>
+        public static string create(string securityGroupHref, string protocol, string sourceType, string cidrIPs, string groupName, string groupOwner, string startPort, string endPort, string icmpCode, string icmpType)
+        {
+            string postHref = "/api/security_group_rules";
+            return createPost(protocol, sourceType, cidrIPs, groupName, groupOwner, startPort, endPort, icmpCode, icmpType, postHref, securityGroupHref);
+        }
+
+        /// <summary>
+        /// Internal process to manage Post for creating a SecurityGroupRule
+        /// </summary>
+        /// <param name="protocol">Security Group Rule protocol</param>
+        /// <param name="sourceType">Security Group Rule source type</param>
+        /// <param name="cidrIPs">Security Group Rule CIDR ips</param>
+        /// <param name="groupName">Security Group Rule group name</param>
+        /// <param name="groupOwner">Security Group Rule group owner</param>
+        /// <param name="startPort">Security Group Rule start port</param>
+        /// <param name="endPort">Security Group Rule end port</param>
+        /// <param name="icmpCode">Security Group Rule icmp code</param>
+        /// <param name="icmpType">Security Group Rule icmp type</param>
+        /// <param name="postHref">Post HREF for api call</param>
+        /// <param name="securityGroupHref">Security group HREF</param>
+        /// <returns>ID of newly created security group rule</returns>
+        private static string createPost(string protocol, string sourceType, string cidrIPs, string groupName, string groupOwner, string startPort, string endPort, string icmpCode, string icmpType, string postHref, string securityGroupHref)
+        {
+            List<string> validSourceTypes = new List<string>() { "cidr_ips", "group" };
+            List<String> validProtocols = new List<string>() { "tcp", "udp", "icmp" };
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.CheckStringHasValue(protocol);
+            Utility.CheckStringHasValue(sourceType);
+            Utility.addParameter(cidrIPs, "security_group_rule[cidr_ips]", postParams);
+            Utility.addParameter(groupName, "security_group_rule[group_name]", postParams);
+            Utility.addParameter(groupOwner, "security_group_rule[group_owner]", postParams);
+            Utility.addParameter(protocol, "security_group_rule[protocol]", postParams);
+            Utility.addParameter(endPort, "security_group_rule[protocol_details][end_port]", postParams);
+            Utility.addParameter(icmpCode, "security_group_rule[protocol_details][icmp_code]", postParams);
+            Utility.addParameter(icmpType, "security_group_rule[protocol_details][icmp_type]", postParams);
+            Utility.addParameter(startPort, "security_group_rule[protocol_details][start_port]", postParams);
+            Utility.addParameter(securityGroupHref, "security_group_rule[security_group_href]", postParams);
+            Utility.addParameter(sourceType, "security_group_rule[source_type]", postParams);
+
+            return Core.APIClient.Instance.Post(postHref, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
         /// <summary>
         /// Helper method to return a valid view value for SecurityGroupRule api calls
         /// </summary>

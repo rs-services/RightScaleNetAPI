@@ -15,7 +15,7 @@ namespace RightScale.netClient.Test
         public PublicationTest()
         {
             servicesOAuthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
-            publicationID = ConfigurationSettings.AppSettings["PublicationTest_publicationID"].ToString();
+            publicationID = ConfigurationManager.AppSettings["PublicationTest_publicationID"].ToString();
         }
 
         #region Publication.index() tests
