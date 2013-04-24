@@ -68,18 +68,38 @@ namespace RightScale.netClient
         
         #region Permission.index methods
 
+        /// <summary>
+        /// List all permissions for all users of the current account
+        /// </summary>
+        /// <returns>List of Permission objects</returns>
         public static List<Permission> index()
         {
             return index(null);
         }
 
+        /// <summary>
+        /// List all permissions for all users of the current account
+        /// </summary>
+        /// <param name="filter">List of filters for query to RightScale API</param>
+        /// <returns>List of Permission objects</returns>
         public static List<Permission> index(List<Filter> filter)
         {     
             List<string> validFilters = new List<string>() { "user_href" };
             Utility.CheckFilterInput("filter", validFilters, filter);
+            string queryString = string.Empty;
 
-            //TODO: implement Permission.index
-            throw new NotImplementedException();
+            if (filter != null && filter.Count > 0)
+            {
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+
+            queryString = queryString.TrimEnd('&');
+
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.Permission, queryString);
+            return deserializeList(jsonString);
         }
         #endregion
 		

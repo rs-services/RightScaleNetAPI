@@ -1240,6 +1240,16 @@ namespace RightScale.netClient
             }
         }
 
+
+        public static string Permission = @"/api/permissions";
+
+        public static string PermissionByID
+        {
+            get
+            {
+                return Permission + ID0;
+            }
+        }
         #endregion
     }
 }
