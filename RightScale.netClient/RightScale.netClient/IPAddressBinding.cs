@@ -126,6 +126,44 @@ namespace RightScale.netClient
         }
         #endregion
 
+        #region IPAddressBinding.show methods
 
+        /// <summary>
+        /// Show information about a single IP Address Binding
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud where the IPAddressBinding can be found</param>
+        /// <param name="ipAddressBindingID">ID of IPAddressBinding to return</param>
+        /// <returns>populated instance of IPAddressBinding object</returns>
+        public static IPAddressBinding show(string cloudID, string ipAddressBindingID)
+        {
+            string getHref = string.Format(@"/api/clouds/{0}/ip_addresses_bindings/{1}", cloudID, ipAddressBindingID);
+            return showGet(getHref);
+        }
+
+        /// <summary>
+        /// Show information about a single IP Address Binding
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud where the IPAddressBinding can be found</param>
+        /// <param name="ipAddressBindingID">ID of IPAddressBinding to return</param>
+        /// <param name="ipAddressID">ID of IPAddress belonging to IPAddressBinding</param>
+        /// <returns>populated instance of IPAddressBinding object</returns>
+        public static IPAddressBinding show(string cloudID, string ipAddressBindingID, string ipAddressID)
+        {
+            string getHref = string.Format(@"/api/clouds/{0}/ip_addresses/{1}/ip_address_bindings/{2}", cloudID, ipAddressID, ipAddressBindingID);
+            return showGet(getHref);
+        }
+
+        /// <summary>
+        /// Internal method to manage api GET call to retrieve IPAddressBinding 
+        /// </summary>
+        /// <param name="getHref">HREF for GET call to RS API</param>
+        /// <returns>populated instance of IPAddressBinding object</returns>
+        private static IPAddressBinding showGet(string getHref)
+        {
+            string jsonString = Core.APIClient.Instance.Get(getHref);
+            return deserialize(jsonString);
+        }
+
+        #endregion
     }
 }
