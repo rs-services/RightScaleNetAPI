@@ -1250,6 +1250,16 @@ namespace RightScale.netClient
                 return Permission + ID0;
             }
         }
+
+        public static string CloudAccount = @"/api/cloud_accounts";
+
+        public static string CloudAccountByID
+        {
+            get
+            {
+                return CloudAccount + ID0;
+            }
+        }
         #endregion
     }
 }
