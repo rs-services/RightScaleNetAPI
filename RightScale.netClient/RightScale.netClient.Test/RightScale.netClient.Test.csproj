@@ -66,6 +66,7 @@
     <Compile Include="AuditEntryTest.cs" />
     <Compile Include="BackupTest.cs" />
     <Compile Include="CloudTest.cs" />
+    <Compile Include="TestBase\RSAPITestBase.cs" />
     <Compile Include="ServerTest.cs" />
     <Compile Include="InstanceTest.cs" />
     <Compile Include="InstanceTypeTest.cs" />

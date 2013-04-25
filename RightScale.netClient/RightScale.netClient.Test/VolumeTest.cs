@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class VolumeTest
+    public class VolumeTest : RSAPITestBase
     {
         private string cloudID;
         private string volumeID;
@@ -15,10 +15,10 @@ namespace RightScale.netClient.Test
         private string volumeTypeID;
         private string childVolumeID;
 
-        public VolumeTest()
+        public VolumeTest():base()
         {
 
-            cloudID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_cloudID"].ToString());
+            cloudID = this.rackSpaceOpenCloudID;
             volumeID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeTest_volumeID"].ToString());
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             volumeTypeID = ConfigurationManager.AppSettings["VolumeTest_volumeTypeID"].ToString();

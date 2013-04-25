@@ -7,17 +7,16 @@ using System.Web;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class ImageTest
+    public class ImageTest : RSAPITestBase
     {
 
         private string cloudID;
         private string filterListString;
         private string imageid;
 
-        public ImageTest()
+        public ImageTest():base()
         {
-
-            cloudID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_cloudid"].ToString());
+            cloudID = this.azureCloudID;
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_filterListString"].ToString());
             imageid = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["ImageTest_imageid"].ToString());
         }

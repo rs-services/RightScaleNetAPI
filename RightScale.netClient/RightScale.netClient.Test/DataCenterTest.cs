@@ -6,7 +6,7 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class DataCenterTest
+    public class DataCenterTest : RSAPITestBase
     {
         string cloudID;
         string datacenterID;

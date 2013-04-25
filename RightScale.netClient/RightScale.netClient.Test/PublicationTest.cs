@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class PublicationTest
+    public class PublicationTest : RSAPITestBase
     {
         string servicesOAuthToken;
         string publicationID;

@@ -7,7 +7,7 @@ using System.Web;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class MultiCloudImageTest
+    public class MultiCloudImageTest : RSAPITestBase
     {
         private string filterListString;
         private string multicloudimageid;

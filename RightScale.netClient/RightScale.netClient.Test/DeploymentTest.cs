@@ -6,13 +6,12 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class DeploymentTest
+    public class DeploymentTest : RSAPITestBase
     {
-        string deploymentID;
-
+        
         public DeploymentTest()
         {
-            deploymentID = ConfigurationManager.AppSettings["DeploymentTest_deploymentID"].ToString();
+            
         }
 
         #region Deployment relationship tests
@@ -20,7 +19,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void DeploymentTag()
         {
-            Deployment dep = Deployment.show(deploymentID, "inputs");
+            Deployment dep = Deployment.show(liveTestDeploymentID, "inputs");
             Assert.IsNotNull(dep);
             List<Tag> tags = dep.tags;
             Assert.IsTrue(true);//no exception
@@ -29,7 +28,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void DeploymentServerArray()
         {
-            Deployment dep = Deployment.show(deploymentID);
+            Deployment dep = Deployment.show(liveTestDeploymentID);
             Assert.IsNotNull(dep);
             List<ServerArray> sas = dep.serverArrays;
             Assert.IsNotNull(sas);
@@ -39,7 +38,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void DeploymentServer()
         {
-            Deployment dep = Deployment.show(deploymentID);
+            Deployment dep = Deployment.show(liveTestDeploymentID);
             Assert.IsNotNull(dep);
             List<Server> sv = dep.servers;
             Assert.IsNotNull(sv);
@@ -126,14 +125,14 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void showDeploymentSimple()
         {
-            Deployment testDeployment = Deployment.show(deploymentID);
+            Deployment testDeployment = Deployment.show(liveTestDeploymentID);
             Assert.IsNotNull(testDeployment);
         }
 
         [TestMethod]
         public void showDeploymentView()
         {
-            Deployment testDeployment = Deployment.show(deploymentID, "inputs");
+            Deployment testDeployment = Deployment.show(liveTestDeploymentID, "inputs");
             Assert.IsNotNull(testDeployment);
             Assert.IsTrue(testDeployment.inputs.Count > 0);
         }
@@ -190,7 +189,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void deploymentCloneDestroyTest()
         {
-            string newDeploymentID = Deployment.clone(deploymentID);
+            string newDeploymentID = Deployment.clone(liveTestDeploymentID);
             Assert.IsNotNull(newDeploymentID);
             bool isDestroyed = Deployment.destroy(newDeploymentID);
             Assert.IsTrue(isDestroyed);
@@ -203,7 +202,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void deploymentServersStatic()
         {
-            List<Server> listOfDeploymentServers = Deployment.getServers(deploymentID);
+            List<Server> listOfDeploymentServers = Deployment.getServers(liveTestDeploymentID);
             Assert.IsNotNull(listOfDeploymentServers);
             Assert.IsTrue(listOfDeploymentServers.Count > 0);
         }
@@ -211,9 +210,9 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void deploymentServersInstance()
         {
-            Deployment deploymentInstance = Deployment.show(deploymentID);
+            Deployment deploymentInstance = Deployment.show(liveTestDeploymentID);
             Assert.IsNotNull(deploymentInstance);
-            List<Server> serverList = Deployment.getServers(deploymentID);
+            List<Server> serverList = Deployment.getServers(liveTestDeploymentID);
             Assert.IsNotNull(serverList);
             Assert.IsTrue(serverList.Count > 0);
         }

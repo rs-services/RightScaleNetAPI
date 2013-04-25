@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class IdentityProviderTest
+    public class IdentityProviderTest : RSAPITestBase
     {
     }
 }

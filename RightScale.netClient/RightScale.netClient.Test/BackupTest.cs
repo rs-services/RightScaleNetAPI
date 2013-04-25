@@ -5,7 +5,7 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class BackupTest
+    public class BackupTest : RSAPITestBase
     {
         string backupID;
 

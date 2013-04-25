@@ -6,7 +6,7 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class MultiCloudImageSettingTest
+    public class MultiCloudImageSettingTest : RSAPITestBase
     {
         public string multiCloudImageID;
         private string multiCloudImageSettingID;

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class ServerTemplateTest
+    public class ServerTemplateTest : RSAPITestBase
     {
         private string filterListString;
         private string servertemplateid;

@@ -7,17 +7,13 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class InputTest
+    public class InputTest : RSAPITestBase
     {
-
-        private string deploymentID;
         private string servertemplateID;
         private string serverID;
 
         public InputTest()
         {
-           
-            deploymentID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InputTest_deploymentid"].ToString());
             servertemplateID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InputTest_servertemplateid"].ToString());
             serverID = ConfigurationManager.AppSettings["InputTest_serverid"].ToString();
         }
@@ -28,7 +24,7 @@ namespace RightScale.netClient.Test
         public void index_deploymentSimpleTest()
         {
 
-            List<Input> inputlist = Input.index_deployment(deploymentID,string.Empty);
+            List<Input> inputlist = Input.index_deployment(liveTestDeploymentID,string.Empty);
             Assert.IsNotNull(inputlist);
             Assert.IsTrue(inputlist.Count > 0);
 
@@ -55,7 +51,7 @@ namespace RightScale.netClient.Test
             newInputs.Add(new Input("DB_NAME", "text:MileageStatsData"));
             newInputs.Add(new Input("DB_NEW_LOGIN_NAME", "text:patrick"));
             newInputs.Add(new Input("DB_NEW_LOGIN_PASSWORD", "text:P@ssword1"));
-            bool retval = Input.multi_update_deployment(deploymentID, newInputs);
+            bool retval = Input.multi_update_deployment(liveTestDeploymentID, newInputs);
             Assert.IsTrue(retval);
         }
 

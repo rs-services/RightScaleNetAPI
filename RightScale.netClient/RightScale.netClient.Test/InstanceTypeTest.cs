@@ -7,14 +7,14 @@ using RightScale.netClient;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class InstanceTypeTest
+    public class InstanceTypeTest : RSAPITestBase
     {
         string cloudID;
         string instanceTypeID;
 
         public InstanceTypeTest()
         {
-            cloudID = ConfigurationManager.AppSettings["InstanceTypeTest_cloudID"].ToString();
+            cloudID = this.azureCloudID;
             instanceTypeID = ConfigurationManager.AppSettings["InstanceTypeTest_instanceID"].ToString();
         }
 

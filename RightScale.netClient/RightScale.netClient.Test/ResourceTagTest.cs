@@ -6,7 +6,7 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class ResourceTagTest
+    public class ResourceTagTest : RSAPITestBase
     {
         private string serverID;
         string deploymentID;
@@ -14,9 +14,8 @@ namespace RightScale.netClient.Test
 
         public ResourceTagTest()
         {
-
-            serverID = ConfigurationManager.AppSettings["ServerTest_serverID"].ToString();
-            deploymentID = ConfigurationManager.AppSettings["DeploymentTest_deploymentID"].ToString();
+            serverID = this.liveTestServerID;
+            deploymentID = this.liveTestDeploymentID;
             multiCloudImageID = ConfigurationManager.AppSettings["ResourceTagTest_MultiCloudImage"].ToString();
         }
 

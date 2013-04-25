@@ -6,19 +6,19 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class VolumeTypeTest
+    public class VolumeTypeTest : RSAPITestBase
     {
         string servicesOAuthToken;
         string cloudStackID;
         string cloudStackVTID;
         string raxCloudID;
 
-        public VolumeTypeTest()
+        public VolumeTypeTest():base()
         {
             servicesOAuthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
-            cloudStackID = ConfigurationManager.AppSettings["VolumeType_cloudStackID"].ToString();
+            cloudStackID = this.cloudStackCloudID;
             cloudStackVTID = ConfigurationManager.AppSettings["VolumeType_cloudStackVTID"].ToString();
-            raxCloudID = ConfigurationManager.AppSettings["VolumeType_raxID"].ToString();
+            raxCloudID = this.rackSpaceOpenCloudID;
         }
 
         #region VolumeType Relationships

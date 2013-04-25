@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class AccountGroupTest
+    public class AccountGroupTest : RSAPITestBase
     {
         string accountGroupID;
 

@@ -7,11 +7,9 @@ using System.Web;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class InstanceTest
+    public class InstanceTest : RSAPITestBase
     {
-        private string deploymentID;
         private string cloudID;
-        private string serverArrayID;
         private string filterListString;
         private string apiRefreshToken;
         private string runExecServerID;
@@ -20,10 +18,8 @@ namespace RightScale.netClient.Test
 
         public InstanceTest()
         {
-            deploymentID = ConfigurationManager.AppSettings["InstanceTest_deploymentID"].ToString();
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
-            cloudID = ConfigurationManager.AppSettings["InstanceTest_cloudID"].ToString();
-            serverArrayID = ConfigurationManager.AppSettings["InstanceTest_serverArrayID"].ToString();
+            cloudID = this.azureCloudID;
             filterListString = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["InstanceTest_filterListString"].ToString());
             runExecServerID = ConfigurationManager.AppSettings["InstanceTest_runExecTestServer"].ToString();
             execRunScriptID = ConfigurationManager.AppSettings["InstanceTest_execScriptID"].ToString();
@@ -207,7 +203,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void indexInstanceServerArrayTest()
         {
-            List<Instance> instanceList = Instance.index_serverArray(serverArrayID);
+            List<Instance> instanceList = Instance.index_serverArray(liveTestServerArrayID);
             Assert.IsNotNull(instanceList);
         }
 
@@ -215,7 +211,7 @@ namespace RightScale.netClient.Test
         public void indexInstanceDeploymentTest()
         {
             List<Filter> filters = new List<Filter>();
-            filters.Add(new Filter("deployment_href", FilterOperator.Equal, Utility.deploymentHref(deploymentID)));
+            filters.Add(new Filter("deployment_href", FilterOperator.Equal, Utility.deploymentHref(liveTestDeploymentID)));
             List<Instance> instanceList = Instance.index(cloudID, filters);
             Assert.IsNotNull(instanceList);
             Assert.IsTrue(instanceList.Count > 0);

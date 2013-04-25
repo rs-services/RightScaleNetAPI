@@ -8,15 +8,15 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class TagTest
+    public class TagTest : RSAPITestBase
     {
-        private string deploymenthref;
-        private string serverhref;
+        private string deploymentHref;
+        private string serverHref;
 
-        public TagTest()
+        public TagTest():base()
         {
-            deploymenthref = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["TagTest_deploymentHref"].ToString());
-            serverhref = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["TagTest_serverHref"].ToString());
+            deploymentHref = string.Format(APIHrefs.DeploymentByID, liveTestDeploymentID);
+            serverHref = string.Format(APIHrefs.ServerByID, liveTestServerID);
         }
 
         #region Tag parse tests
@@ -48,7 +48,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void TagbyResourceTest()
         {
-            List<string> arrHrefs = new List<string>() { serverhref, deploymenthref };
+            List<string> arrHrefs = new List<string>() { serverHref, deploymentHref };
             
             List<Resource> resHref = Tag.byResource(arrHrefs);
 
@@ -118,7 +118,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void TagMultiAddMultiDeleteTest()
         {
-            List<string> resourceHrefs = new List<string>() { deploymenthref, serverhref };
+            List<string> resourceHrefs = new List<string>() { deploymentHref, serverHref };
             List<Tag> tags = new List<Tag>();
             Tag testTag = new Tag("test:unittest=true"); //arbitrary tag value
             Tag unitTestTag = new Tag("unittest:fromvisualstudio=true"); //arbitrary tag value
@@ -129,19 +129,19 @@ namespace RightScale.netClient.Test
             List<Resource> testTagServer = Tag.byTag(string.Empty, false, "servers", new List<Tag>() { testTag });
             Assert.IsNotNull(testTagServer);
             Assert.IsTrue(testTagServer.Count == 1);
-            Assert.IsTrue(testTagServer[0].links[0].href == serverhref);
+            Assert.IsTrue(testTagServer[0].links[0].href == serverHref);
             List<Resource> unitTestTagServer = Tag.byTag(string.Empty, false, "servers", new List<Tag>() { unitTestTag });
             Assert.IsNotNull(unitTestTagServer);
             Assert.IsTrue(unitTestTagServer.Count == 1);
-            Assert.IsTrue(unitTestTagServer[0].links[0].href == serverhref);
+            Assert.IsTrue(unitTestTagServer[0].links[0].href == serverHref);
             List<Resource> testTagDeployment = Tag.byTag(string.Empty, false, "deployments", new List<Tag>() { testTag });
             Assert.IsNotNull(testTagDeployment);
             Assert.IsTrue(testTagDeployment.Count == 1);
-            Assert.IsTrue(testTagDeployment[0].links[0].href == deploymenthref);
+            Assert.IsTrue(testTagDeployment[0].links[0].href == deploymentHref);
             List<Resource> unitTestTagDeployment = Tag.byTag(string.Empty, false, "deployments", new List<Tag>() { unitTestTag });
             Assert.IsNotNull(unitTestTagDeployment);
             Assert.IsTrue(unitTestTagDeployment.Count == 1);
-            Assert.IsTrue(unitTestTagDeployment[0].links[0].href == deploymenthref);
+            Assert.IsTrue(unitTestTagDeployment[0].links[0].href == deploymentHref);
             bool successDelete = Tag.multiDelete(resourceHrefs, tags);
             List<Resource> testTagServerDeleted = Tag.byTag(string.Empty, false, "servers", new List<Tag>() { testTag });
             Assert.IsNotNull(testTagServerDeleted);

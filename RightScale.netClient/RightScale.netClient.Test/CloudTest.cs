@@ -6,17 +6,11 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class CloudTest
+    public class CloudTest : RSAPITestBase
     {
-        string awsCloudID;
-        string azureCloudID;
-        string openstackCloudID;
-
         public CloudTest()
         {
-            awsCloudID = ConfigurationManager.AppSettings["CloudTest_awsCloudID"].ToString();
-            azureCloudID = ConfigurationManager.AppSettings["CloudTest_azureCloudID"].ToString();
-            openstackCloudID = ConfigurationManager.AppSettings["CloudTest_openstackCloudID"].ToString();
+            
         }
 
         #region Cloud Relationships tests
@@ -74,7 +68,7 @@ namespace RightScale.netClient.Test
         //[TestMethod]
         public void OpenStackSSHKeys()
         {
-            Cloud openStackCloud = Cloud.show(openstackCloudID);
+            Cloud openStackCloud = Cloud.show(openStackCloudID);
             Assert.IsNotNull(openStackCloud);
             List<SshKey> sshs = openStackCloud.sshKeys;
             Assert.IsNotNull(sshs);
@@ -121,7 +115,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void OpenStackIPAddressBindings()
         {
-            Cloud openStackCloud = Cloud.show(openstackCloudID);
+            Cloud openStackCloud = Cloud.show(openStackCloudID);
             Assert.IsNotNull(openStackCloud);
             List<IPAddressBinding> ipab = openStackCloud.ipAddressBindings;
             Assert.IsNotNull(ipab);
@@ -161,7 +155,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void OpenStackIPAddresses()
         {
-            Cloud openStackCloud = Cloud.show(openstackCloudID);
+            Cloud openStackCloud = Cloud.show(openStackCloudID);
             Assert.IsNotNull(openStackCloud);
             List<IPAddress> ipad = openStackCloud.ipAddresses;
             Assert.IsNotNull(ipad);
@@ -182,7 +176,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void OpenStackCloudShowTest()
         {
-            Cloud openstackCloud = Cloud.show(openstackCloudID);
+            Cloud openstackCloud = Cloud.show(openStackCloudID);
             Assert.IsNotNull(openstackCloud);
         }
 

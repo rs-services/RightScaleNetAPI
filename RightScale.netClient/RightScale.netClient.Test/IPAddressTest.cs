@@ -6,13 +6,13 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class IPAddressTest
+    public class IPAddressTest : RSAPITestBase
     {
         string cloudID;
 
         public IPAddressTest()
         {
-            cloudID = ConfigurationManager.AppSettings["IPAdressTest_cloudID"].ToString();
+            cloudID = this.openStackCloudID;
         }
 
         [TestMethod]

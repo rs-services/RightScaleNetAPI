@@ -6,19 +6,13 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class AuditEntryTest
+    public class AuditEntryTest : RSAPITestBase
     {
         string auditEntryID;
-        string serverID;
-        string serverArrayID;
-        string deploymentID;
 
         public AuditEntryTest()
         {
             auditEntryID = ConfigurationManager.AppSettings["AuditEntryTest_auditEntryID"].ToString();
-            serverID = ConfigurationManager.AppSettings["AuditEntryTest_serverID"].ToString();
-            serverArrayID = ConfigurationManager.AppSettings["AuditEntryTest_serverArrayID"].ToString();
-            deploymentID = ConfigurationManager.AppSettings["AuditEntryTest_deploymentID"].ToString();
         }
 
         #region AuditEntry.show tests
@@ -48,28 +42,28 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void createTest()
         {
-            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, serverArrayID), "this is a summary");
+            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, liveTestServerArrayID), "this is a summary");
             Assert.IsNotNull(auditEntryID);
         }
 
         [TestMethod]
         public void createDeploymentAuditEntryTest()
         {
-            string auditEntryID = AuditEntry.create(Utility.deploymentHref(deploymentID), "this is an audit entry " + DateTime.Now.ToString());
+            string auditEntryID = AuditEntry.create(Utility.deploymentHref(liveTestDeploymentID), "this is an audit entry " + DateTime.Now.ToString());
             Assert.IsNotNull(auditEntryID);
         }
 
         [TestMethod]
         public void createDetailedTest()
         {
-            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, serverArrayID), "this is a summary, fool!", "here are the deets...");
+            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, liveTestServerArrayID), "this is a summary, fool!", "here are the deets...");
             Assert.IsNotNull(auditEntryID);
         }
 
         [TestMethod]
         public void createAndUpdateTest()
         {
-            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, serverArrayID), "this is a summary");
+            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, liveTestServerArrayID), "this is a summary");
             Assert.IsNotNull(auditEntryID);
             AuditEntry ae1 = AuditEntry.show(auditEntryID);
             Assert.IsNotNull(ae1);
@@ -83,7 +77,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void createAndAppendTest()
         {
-            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, serverArrayID), "this is a summary", "here are some details");
+            string auditEntryID = AuditEntry.create(string.Format(APIHrefs.ServerArrayById, liveTestServerArrayID), "this is a summary", "here are some details");
             Assert.IsNotNull(auditEntryID);
             string detailResults1 = AuditEntry.detail(auditEntryID);
             Assert.IsNotNull(detailResults1);

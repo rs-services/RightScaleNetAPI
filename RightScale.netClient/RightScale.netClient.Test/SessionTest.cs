@@ -7,21 +7,12 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class SessionTest
+    public class SessionTest : RSAPITestBase
     {
-
-        private string refreshToken = "";
-        private string userName = "";
-        private string password = "";
-        private string accountID = "";
         private string instanceToken = "";
 
         public SessionTest()
         {
-            refreshToken = ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"].ToString();
-            accountID = ConfigurationManager.AppSettings["RightScaleAPIAccountId"].ToString();
-            password = ConfigurationManager.AppSettings["RightScaleAPIPassword"].ToString();
-            userName = ConfigurationManager.AppSettings["RightScaleAPIUserName"].ToString();
             instanceToken = ConfigurationManager.AppSettings["RightScaleInstanceAPIToken"].ToString();
         }
         
@@ -30,7 +21,7 @@ namespace RightScale.netClient.Test
         public void SessionIndexSimple()
         {
             APIClient.Instance.InitWebClient();
-            bool result = APIClient.Instance.Authenticate(userName, password, accountID);
+            bool result = APIClient.Instance.Authenticate(authUserName, authPassword, authAccountID);
             Assert.IsTrue(result, "RSAPI Failed to authenticate with username, password and account ID");
 
             Session sessionList = Session.index();
@@ -45,7 +36,7 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void SessionAccounts()
         {
-            List<Account> accounts = Session.accounts(userName, password);
+            List<Account> accounts = Session.accounts(authUserName, authPassword);
             Assert.IsNotNull(accounts);
             Assert.IsTrue(accounts.Count > 0);
         }

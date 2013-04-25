@@ -9,7 +9,7 @@ using System.Threading;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class VolumeAttachmentTest
+    public class VolumeAttachmentTest : RSAPITestBase
     {
         private string cloudID;
         private string apiRefreshToken;
@@ -18,9 +18,9 @@ namespace RightScale.netClient.Test
         private string volumeTypeID;
         private int waitInterval;
 
-        public VolumeAttachmentTest()
+        public VolumeAttachmentTest():base()
         {
-            cloudID = HttpUtility.UrlDecode(ConfigurationManager.AppSettings["VolumeAttachmentTest_cloudID"].ToString());
+            cloudID = this.rackSpaceOpenCloudID;
             apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
             serverID = ConfigurationManager.AppSettings["VolumeAttachmentTest_serverID"].ToString();
             volumeTypeID = ConfigurationManager.AppSettings["VolumeAttachmentTest_volumeTypeID"].ToString();

@@ -430,15 +430,15 @@ namespace RightScale.netClient.Core
             {
                 bool authSuccessful = false;
 
-                if (string.IsNullOrWhiteSpace(this.oauthRefreshToken) && ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"] != null)
+                if (string.IsNullOrWhiteSpace(this.oauthRefreshToken) && ConfigurationManager.AppSettings["RightScaleAPI_AuthRefreshToken"] != null)
                 {
-                    this.oauthRefreshToken = ConfigurationManager.AppSettings["RightScaleAPIRefreshToken"].ToString();
+                    this.oauthRefreshToken = ConfigurationManager.AppSettings["RightScaleAPI_AuthRefreshToken"].ToString();
                 }
-                else if (string.IsNullOrWhiteSpace(this.userName) && string.IsNullOrWhiteSpace(this.password) && string.IsNullOrWhiteSpace(this.accountId) && ConfigurationManager.AppSettings["RightScaleAPIUserName"] != null && ConfigurationManager.AppSettings["RightScaleAPIPassword"] != null && ConfigurationManager.AppSettings["RightScaleAPIAccountId"] != null)
+                else if (string.IsNullOrWhiteSpace(this.userName) && string.IsNullOrWhiteSpace(this.password) && string.IsNullOrWhiteSpace(this.accountId) && ConfigurationManager.AppSettings["RightScaleAPI_AuthUserName"] != null && ConfigurationManager.AppSettings["RightScaleAPI_AuthPassword"] != null && ConfigurationManager.AppSettings["RightScaleAPI_AuthAccountId"] != null)
                 {
-                    string apiUserName = ConfigurationManager.AppSettings["RightScaleAPIUserName"].ToString();
-                    string apiPassword = ConfigurationManager.AppSettings["RightScaleAPIPassword"].ToString();
-                    string apiAccountId = ConfigurationManager.AppSettings["RightScaleAPIAccountId"].ToString();
+                    string apiUserName = ConfigurationManager.AppSettings["RightScaleAPI_AuthUserName"].ToString();
+                    string apiPassword = ConfigurationManager.AppSettings["RightScaleAPI_AuthPassword"].ToString();
+                    string apiAccountId = ConfigurationManager.AppSettings["RightScaleAPI_AuthAccountId"].ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(this.oauthRefreshToken))
