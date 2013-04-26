@@ -235,5 +235,62 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region Backup.destroy()
+
+        /// <summary>
+        /// Deletes a given backup by deleting all of its snapshots, this call will succeed even if the backup has not completed.
+        /// </summary>
+        /// <param name="backupID">ID of the backup to delete</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool destroy(string backupID)
+        {
+            string deleteHref = string.Format(APIHrefs.BackupByID, backupID);
+            return Core.APIClient.Instance.Delete(deleteHref);
+        }
+
+        #endregion
+
+        #region Backup.restore()
+
+        /// <summary>
+        /// Restores the given Backup
+        /// </summary>
+        /// <param name="backupID">ID of the backup to restore</param>
+        /// <param name="instanceID">ID of the instance that the backup will be restored to</param>
+        /// <returns>ID of the Task to follow the status</returns>
+        public static string restore(string backupID, string instanceID)
+        {
+            return restore(backupID, instanceID, null, null, -1, null, -1);
+        }
+
+        /// <summary>
+        /// Restores the given Backup
+        /// </summary>
+        /// <param name="backupID">ID of the backup to restore</param>
+        /// <param name="instanceID">ID of the instance that the backup will be restored to</param>
+        /// <param name="name">Each volume is created with this name instead of the volume snapshot's name</param>
+        /// <param name="description">Each volume is created with this description instead of the volume snapshot's description</param>
+        /// <param name="size">Each volume is created with this size in gigabytes (GB) instead of the volume snapshot's size (must be equal or larger). Some volume types have predefined sizes and do not allow selecting a custom size on volume creation</param>
+        /// <param name="volumeTypeID">The ID of the volume type. Each volume is created with this volume type instead of the default volume type for the cloud. A Name, Resource UID and optional Size is associated with a volume type</param>
+        /// <param name="iops">The number of IOPS (I/O Operations Per Second) each volume should support. Only available on clouds supporting performance provisioning</param>
+        /// <returns>ID of the Task to follow the status</returns>
+        public static string restore(string backupID, string instanceID, string name, string description, int size, string volumeTypeID, int iops)
+        {
+            Utility.CheckStringHasValue(instanceID);
+            Utility.CheckStringHasValue(backupID);
+
+            string postHref = string.Format(APIHrefs.BackupByID, backupID);
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(description, "backup[description]", postParams);
+            Utility.addParameter(iops, "backup[iops]", postParams);
+            Utility.addParameter(name, "backup[name]", postParams);
+            Utility.addParameter(size, "backup[size]", postParams);
+            Utility.addParameter(string.Format(APIHrefs.VolumeTypeByID, volumeTypeID), "backup[volume_type_href]", postParams);
+            Utility.addParameter(string.Format(APIHrefs.InstanceByID, instanceID), "instance_href", postParams);
+            return Core.APIClient.Instance.Post(postHref, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
     }
 }
