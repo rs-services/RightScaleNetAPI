@@ -176,6 +176,22 @@ namespace RightScale.netClient
 
         #endregion
 
+        #region Backup.update() methods
 
+        /// <summary>
+        /// Updates the committed tag for all of the VolumeSnapshots in the given Backup to the given value.
+        /// </summary>
+        /// <param name="backupID">ID of the backup to be updated</param>
+        /// <param name="committed">Setting this to 'true' will update the 'rs_backup:committed=false' tag to 'rs_backup:committed=true' on all the snapshots</param>
+        /// <returns>true if updated, false if not</returns>
+        public static bool update(string backupID, bool committed)
+        {
+            string putHref = string.Format(APIHrefs.BackupByID, backupID);
+            List<KeyValuePair<string, string>> putParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(committed.ToString().ToLower(), "backup[committed]", putParams);
+            return Core.APIClient.Instance.Put(putHref, putParams);
+        }
+
+        #endregion
     }
 }
