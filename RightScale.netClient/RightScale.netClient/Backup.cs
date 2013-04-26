@@ -46,33 +46,59 @@ namespace RightScale.netClient
 
         #region Backup.index methods
 
+        /// <summary>
+        /// Lists all of the backups with the given lineage tag. Filters can be used to search for a particular backup. If the 'latest_before' filter is set, only one backup is returned (the latest backup before the given timestamp).
+        /// To get the latest completed backup, the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to the current timestamp. The format of the timestamp must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000.
+        /// To get the latest completed backup just before, say 25 June 2009, then the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to 2009/06/25 00:00:00 +0000.
+        /// </summary>
+        /// <returns>Collection of Backup objects</returns>
         public static List<Backup> index()
         {
             return index(null, null);
         }
 
+        /// Lists all of the backups with the given lineage tag. Filters can be used to search for a particular backup. If the 'latest_before' filter is set, only one backup is returned (the latest backup before the given timestamp).
+        /// To get the latest completed backup, the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to the current timestamp. The format of the timestamp must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000.
+        /// To get the latest completed backup just before, say 25 June 2009, then the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to 2009/06/25 00:00:00 +0000.
+        /// <param name="filter">Filters limiting the return set from the API</param>
+        /// <returns>Collection of Backup objects</returns>
         public static List<Backup> index(List<Filter> filter)
         {
             return index(filter, null);
         }
 
-        public static List<Backup> index(string view)
+        /// Lists all of the backups with the given lineage tag. Filters can be used to search for a particular backup. If the 'latest_before' filter is set, only one backup is returned (the latest backup before the given timestamp).
+        /// To get the latest completed backup, the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to the current timestamp. The format of the timestamp must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000.
+        /// To get the latest completed backup just before, say 25 June 2009, then the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to 2009/06/25 00:00:00 +0000.
+        /// <param name="lineage">Backups belonging to this lineage</param>
+        /// <returns>Collection of Backup objects</returns>
+        public static List<Backup> index(string lineage)
         {
-            return index(null, view);
+            return index(null, lineage);
         }
 
+        /// Lists all of the backups with the given lineage tag. Filters can be used to search for a particular backup. If the 'latest_before' filter is set, only one backup is returned (the latest backup before the given timestamp).
+        /// To get the latest completed backup, the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to the current timestamp. The format of the timestamp must be YYYY/MM/DD HH:MM:SS [+/-]ZZZZ e.g. 2011/07/11 00:00:00 +0000.
+        /// To get the latest completed backup just before, say 25 June 2009, then the 'completed' filter should be set to 'true' and the 'latest_before' filter should be set to 2009/06/25 00:00:00 +0000.
+        /// <param name="filter">Filters limiting the return set from the API</param>
+        /// <param name="lineage">Backups belonging to this lineage</param>
+        /// <returns>Collection of Backup objects</returns>
         public static List<Backup> index(List<Filter> filter, string lineage)
         {
-            if(string.IsNullOrWhiteSpace(lineage))
-            {
-                throw new ArgumentException("Input 'lineage' is requred for api calls to gather information about a given backup");
-            }
-			
+            Utility.CheckStringHasValue(lineage);			
             List<string> validFilters = new List<string>() { "cloud_href", "committed", "completed", "from_master", "latest_before" };
             Utility.CheckFilterInput("filter", validFilters, filter);
-
-            //TODO: implement Backup.index
-            throw new NotImplementedException();
+            string queryString = string.Empty;
+            if (filter != null && filter.Count > 0)
+            {
+                foreach (Filter f in filter)
+                {
+                    queryString += f.ToString() + "&";
+                }
+            }
+            queryString += string.Format("lineage={0}", lineage);
+            string jsonString = Core.APIClient.Instance.Get(APIHrefs.Backup, queryString);
+            return deserializeList(jsonString);
         }
 		#endregion
 		

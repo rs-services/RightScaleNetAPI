@@ -1,48 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph DataVirtualized="True" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="@10" Category="CodeSchema_Assembly" Bounds="-6.68126388953766,288.167700166934,188.876666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Configuration.dll" Group="Collapsed" Label="System.Configuration.dll">
+    <Node Id="@10" Category="CodeSchema_Assembly" Bounds="-377.669924235678,306.164881543397,188.876666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Configuration.dll" Group="Collapsed" Label="System.Configuration.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@12" Category="CodeSchema_Assembly" Bounds="-6.68126388953766,232.207600166934,163.036666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(VsSolution)\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll" Group="Collapsed" Label="Newtonsoft.Json.dll">
+    <Node Id="@12" Category="CodeSchema_Assembly" Bounds="-377.669924235678,250.204781543397,163.036666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(VsSolution)\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll" Group="Collapsed" Label="Newtonsoft.Json.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@14" Category="CodeSchema_Assembly" Bounds="186.35540277713,232.207600166934,166.383333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\Microsoft.CSharp.dll" Group="Collapsed" Label="Microsoft.CSharp.dll">
+    <Node Id="@14" Category="CodeSchema_Assembly" Bounds="-184.63325756901,250.204738686266,166.383333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\Microsoft.CSharp.dll" Group="Collapsed" Label="Microsoft.CSharp.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@16" Category="CodeSchema_Assembly" Bounds="164.262069443796,176.247500166934,161.66,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Net.Http.dll" Group="Collapsed" Label="System.Net.Http.dll">
+    <Node Id="@16" Category="CodeSchema_Assembly" Bounds="-206.726590902345,194.244681543397,161.66,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Net.Http.dll" Group="Collapsed" Label="System.Net.Http.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@18" Category="CodeSchema_Assembly" AssemblyTimestamp="03/08/2013 16:35:39" Bounds="-485.329244148785,-155.740255212881,229.817079333333,144.4639345" CodeSchemaProperty_StrongName="RightScale.netClient, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="2" FilePath="$(e59b78d0-4499-4d86-b538-6d1e92fbea12.OutputPath)" Group="Expanded" Label="RightScale.netClient.dll" UseManualLocation="True">
+    <Node Id="@18" Category="CodeSchema_Assembly" AssemblyTimestamp="03/08/2013 16:35:39" Bounds="-485.329244148785,-127.740255212881,229.817079333333,144.5677" CodeSchemaProperty_StrongName="RightScale.netClient, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="2" FilePath="$(e59b78d0-4499-4d86-b538-6d1e92fbea12.OutputPath)" Group="Expanded" Label="RightScale.netClient.dll" UseManualLocation="True">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="136.752069443796,400.087900166934,120.523333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\mscorlib.dll" Group="Collapsed" Label="mscorlib.dll">
+    <Node Id="@2" Category="CodeSchema_Assembly" Bounds="-234.236590902344,138.284581543397,120.523333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\mscorlib.dll" Group="Collapsed" Label="mscorlib.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@20" Category="CodeSchema_Assembly" AssemblyTimestamp="03/08/2013 16:36:15" Bounds="507.323147863598,-165.636784114136,267.216666666667,198.8404" CodeSchemaProperty_StrongName="RightScale.netClient.Test, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="3" FilePath="$(60319ceb-b63f-4813-836e-43251aeb8155.OutputPath)" Group="Expanded" Label="RightScale.netClient.Test.dll" UseManualLocation="True">
+    <Node Id="@20" Category="CodeSchema_Assembly" AssemblyTimestamp="03/08/2013 16:36:15" Bounds="-144.676852136403,-149.186784114137,267.216666666667,198.8404" CodeSchemaProperty_StrongName="RightScale.netClient.Test, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Fetched" DelayedCrossGroupLinksState="Fetched" FetchedChildrenCount="3" FilePath="$(60319ceb-b63f-4813-836e-43251aeb8155.OutputPath)" Group="Expanded" Label="RightScale.netClient.Test.dll" UseManualLocation="True">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@21" Category="CodeSchema_Namespace" Bounds="-451.599003148785,-57.2364207128813,162.323333333333,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient" />
-    <Node Id="@22" Category="CodeSchema_Namespace" Bounds="-465.329244148785,-114.780155212881,189.817079333333,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Core" />
-    <Node Id="@23" Category="CodeSchema_Namespace" Bounds="527.323147863598,-124.676584114136,186.646666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test" />
-    <Node Id="@24" Category="CodeSchema_Namespace" Bounds="527.323147863598,-68.7165841141364,214.156666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test‎.Core" />
-    <Node Id="@25" Category="CodeSchema_Namespace" Bounds="527.323147863598,-12.7565841141363,227.216666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test‎.objects" />
-    <Node Id="@4" Category="CodeSchema_Assembly" Bounds="-6.68126388953705,176.247500166934,140.943333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Core.dll" Group="Collapsed" Label="System.Core.dll">
+    <Node Id="@21" Category="CodeSchema_Namespace" Bounds="-451.582371148785,-86.7801552128811,162.323333333333,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient" />
+    <Node Id="@22" Category="CodeSchema_Namespace" Bounds="-465.329244148785,-29.132655212881,189.817079333333,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Core" />
+    <Node Id="@23" Category="CodeSchema_Namespace" Bounds="-124.676852136403,-108.226684114137,186.646666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test" />
+    <Node Id="@24" Category="CodeSchema_Namespace" Bounds="-124.676852136402,-52.2665841141368,214.156666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test‎.Core" />
+    <Node Id="@25" Category="CodeSchema_Namespace" Bounds="-124.676852136403,3.69351588586325,227.216666666667,25.96" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="RightScale‎.netClient‎.Test‎.objects" />
+    <Node Id="@4" Category="CodeSchema_Assembly" Bounds="-377.669924235677,194.244681543397,140.943333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.Core.dll" Group="Collapsed" Label="System.Core.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@6" Category="CodeSchema_Assembly" Bounds="-6.68126388953775,344.127800166934,367.446666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(app)\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll" Group="Collapsed" Label="Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll">
+    <Node Id="@6" Category="CodeSchema_Assembly" Bounds="-377.669924235678,362.124981543397,367.446666666667,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(app)\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll" Group="Collapsed" Label="Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="@8" Category="CodeSchema_Assembly" Bounds="-6.68126388953699,400.087900166934,113.433333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.dll" Group="Collapsed" Label="System.dll">
+    <Node Id="@8" Category="CodeSchema_Assembly" Bounds="-377.669924235677,138.284581543397,113.433333333333,25.96" CodeSchemaProperty_IsExternal="True" CodeSchemaProperty_StrongName="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(FxReferenceAssemblies)\.NETFramework\v4.5\System.dll" Group="Collapsed" Label="System.dll">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
-    <Node Id="_standardGraphExternalsGroup" Category="Externals" Bounds="-26.6699242356783,135.324481543397,407.446666666667,310.7606" Group="Expanded" Label="Externals" UseManualLocation="True" />
+    <Node Id="_standardGraphExternalsGroup" Category="Externals" Bounds="-397.669924235678,97.324481543397,407.446666666667,310.7606" Group="Expanded" Label="Externals" UseManualLocation="True" />
   </Nodes>
   <Links>
-    <Link Source="@18" Target="@2" Category="CodeSchema_AttributeUse" Bounds="-287.881696553107,-11.2763207128812,463.290499559433,405.437199102201" IsTargetVirtualized="True" Weight="14" />
+    <Link Source="@18" Target="@2" Category="CodeSchema_AttributeUse" Bounds="-308.023807994419,16.827444787119,98.9633268918945,114.644328151238" IsTargetVirtualized="True" Weight="14" />
     <Link Source="@18" Target="@21" Category="Contains" FetchingParent="@18" />
     <Link Source="@18" Target="@22" Category="Contains" FetchingParent="@18" />
-    <Link Source="@20" Target="@2" Category="CodeSchema_AttributeUse" Bounds="215.15161238767,33.2036158858637,333.695955293372,360.281371064159" IsTargetVirtualized="True" Weight="14" />
+    <Link Source="@20" Target="@2" Category="CodeSchema_AttributeUse" Bounds="75.4838059714577,49.6536158858632,104.331766144527,119.842939903272" IsTargetVirtualized="True" Weight="14" />
     <Link Source="@20" Target="@23" Category="Contains" FetchingParent="@20" />
     <Link Source="@20" Target="@24" Category="Contains" FetchingParent="@20" />
     <Link Source="@20" Target="@25" Category="Contains" FetchingParent="@20" />
@@ -53,7 +53,7 @@
       <Category Ref="CodeSchema_ReturnTypeLink" />
       <Category Ref="InheritsFrom" />
     </Link>
-    <Link Source="@21" Target="@22" Category="InheritsFrom" Bounds="-367.43359375,-79.8201522827148,0.00653076171875,22.5837326049805" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="339">
+    <Link Source="@21" Target="@22" Category="InheritsFrom" Bounds="-367.420715332031,-60.8201560974121,0,22.6875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="339">
       <Category Ref="CodeSchema_Calls" />
     </Link>
     <Link Source="@21" Target="@4" Category="CodeSchema_Calls" Bounds="-346.297446958479,-31.2764207128812,378.02119931089,203.261707649914" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="16" />
@@ -71,7 +71,7 @@
       <Category Ref="Implements" />
       <Category Ref="InheritsFrom" />
     </Link>
-    <Link Source="@22" Target="@21" Category="References" Bounds="-373.430969238281,-88.8201522827148,0.006500244140625,22.5837326049805" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
+    <Link Source="@22" Target="@21" Category="References" Bounds="-373.420715332031,-51.8201560974121,0,22.6875" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
       <Category Ref="CodeSchema_Calls" />
     </Link>
     <Link Source="@22" Target="@4" Category="References" Bounds="-351.05464057706,-88.8201552128812,388.002895401527,260.056850323422" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="60">
@@ -316,8 +316,8 @@
   <Paths>
     <Path Id="60319ceb-b63f-4813-836e-43251aeb8155.OutputPath" Value="D:\dev\patrickmcclory.github.com\RightScaleNetAPI\RightScale.netClient\RightScale.netClient.Test\bin\Debug\RightScale.netClient.Test.dll" />
     <Path Id="60319ceb-b63f-4813-836e-43251aeb8155.OutputPathUri" Value="file:///D:/dev/patrickmcclory.github.com/RightScaleNetAPI/RightScale.netClient/RightScale.netClient.Test/bin/Debug/RightScale.netClient.Test.dll" />
-    <Path Id="app" Value="D:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7" />
-    <Path Id="appUri" Value="file:///D:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7" />
+    <Path Id="app" Value="C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7" />
+    <Path Id="appUri" Value="file:///C:/Program Files (x86)/Microsoft Visual Studio 11.0/Common7" />
     <Path Id="e59b78d0-4499-4d86-b538-6d1e92fbea12.OutputPath" Value="D:\dev\patrickmcclory.github.com\RightScaleNetAPI\RightScale.netClient\RightScale.netClient\bin\Debug\RightScale.netClient.dll" />
     <Path Id="e59b78d0-4499-4d86-b538-6d1e92fbea12.OutputPathUri" Value="file:///D:/dev/patrickmcclory.github.com/RightScaleNetAPI/RightScale.netClient/RightScale.netClient/bin/Debug/RightScale.netClient.dll" />
     <Path Id="FxReferenceAssemblies" Value="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework" />

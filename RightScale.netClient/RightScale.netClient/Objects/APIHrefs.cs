@@ -1260,6 +1260,16 @@ namespace RightScale.netClient
                 return CloudAccount + ID0;
             }
         }
+
+        public static string Backup = @"/api/bakups";
+
+        public static string BackupByID
+        {
+            get
+            {
+                return Backup + ID0;
+            }
+        }
         #endregion
     }
 }
