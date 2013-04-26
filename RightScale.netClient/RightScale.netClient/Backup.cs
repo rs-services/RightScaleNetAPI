@@ -31,14 +31,16 @@ namespace RightScale.netClient
 
         #region Backup.show() methods
 
+        /// <summary>
+        /// Lists the attributes of a given backup
+        /// </summary>
+        /// <param name="backupID">ID of the backup to return</param>
+        /// <returns>populated instance of Backup object specified</returns>
         public static Backup show(string backupID)
         {
             Utility.CheckStringIsNumeric(backupID);
-
             string getURL = string.Format("/api/backups/{0}", backupID);
-
             string jsonString = Core.APIClient.Instance.Get(getURL);
-
             return deserialize(jsonString);
         }
 
@@ -101,6 +103,79 @@ namespace RightScale.netClient
             return deserializeList(jsonString);
         }
 		#endregion
-		
+
+        #region Backup.create() methods
+
+        /// <summary>
+        /// Takes in an array of volumeattachment IDs and takes a snapshot of each. The volumeattachment IDs must belong to the same instance.
+        /// </summary>
+        /// <param name="name">The name to be set on each of the volume snapshots</param>
+        /// <param name="volumeAttachmentIDs">Array of volume attachment IDs that are to be backed-up</param>
+        /// <param name="lineage">A unique value to create backups belonging to a particular system. This will be used to set the tag e.g. 'rs_backup:lineage=prod_mysqldb'</param>
+        /// <returns>ID of the newly created Backup object</returns>
+        public static string create(string name, string[] volumeAttachmentIDs, string lineage)
+        {
+            return create(name, volumeAttachmentIDs.ToList<string>(), lineage);
+        }
+
+        /// <summary>
+        /// Takes in an array of volumeattachment IDs and takes a snapshot of each. The volumeattachment IDs must belong to the same instance.
+        /// </summary>
+        /// <param name="name">The name to be set on each of the volume snapshots</param>
+        /// <param name="volumeAttachmentIDs">List of volume attachment IDs that are to be backed-up</param>
+        /// <param name="lineage">A unique value to create backups belonging to a particular system. This will be used to set the tag e.g. 'rs_backup:lineage=prod_mysqldb'</param>
+        /// <returns>ID of the newly created Backup object</returns>
+        public static string create(string name, List<string> volumeAttachmentIDs, string lineage)
+        {
+            return create(name, volumeAttachmentIDs, lineage, null, true);
+        }
+
+        /// <summary>
+        /// Takes in an array of volumeattachment IDs and takes a snapshot of each. The volumeattachment IDs must belong to the same instance.
+        /// </summary>
+        /// <param name="name">The name to be set on each of the volume snapshots</param>
+        /// <param name="volumeAttachmentIDs">Array of volume attachment IDs that are to be backed-up</param>
+        /// <param name="lineage">A unique value to create backups belonging to a particular system. This will be used to set the tag e.g. 'rs_backup:lineage=prod_mysqldb'</param>
+        /// <param name="description">The description to be set on each of the volume snapshots</param>
+        /// <param name="fromMaster">Setting this to 'true' will create a tag 'rs_backup:from_master=true' on the snapshots so that one can filter them later</param>
+        /// <returns>ID of the newly created Backup object</returns>
+        public static string create(string name, string[] volumeAttachmentIDs, string lineage, string description, bool fromMaster)
+        {
+            return create(name, volumeAttachmentIDs.ToList<string>(), lineage, description, fromMaster);
+        }
+
+        /// <summary>
+        /// Takes in an array of volumeattachment IDs and takes a snapshot of each. The volumeattachment IDs must belong to the same instance.
+        /// </summary>
+        /// <param name="name">The name to be set on each of the volume snapshots</param>
+        /// <param name="volumeAttachmentIDs">List of volume attachment IDs that are to be backed-up</param>
+        /// <param name="lineage">A unique value to create backups belonging to a particular system. This will be used to set the tag e.g. 'rs_backup:lineage=prod_mysqldb'</param>
+        /// <param name="description">The description to be set on each of the volume snapshots</param>
+        /// <param name="fromMaster">Setting this to 'true' will create a tag 'rs_backup:from_master=true' on the snapshots so that one can filter them later</param>
+        /// <returns>ID of the newly created Backup object</returns>
+        public static string create(string name, List<string> volumeAttachmentIDs, string lineage, string description, bool fromMaster)
+        {
+            Utility.CheckStringHasValue(name);
+            Utility.CheckStringHasValue(lineage);
+            if (volumeAttachmentIDs == null || volumeAttachmentIDs.Count == 0)
+            {
+                throw new ArgumentException("VolumeAttachmentID collection did not contain any VolumeAttachment IDs");
+            }
+
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(name, "backup[name]", postParams);
+            Utility.addParameter(lineage, "backup[lineage]", postParams);
+            foreach (string vaid in volumeAttachmentIDs)
+            {
+                Utility.addParameter("backup[volume_attachment_hrefs]", string.Format(APIHrefs.VolumeAttachmentByID, vaid), postParams);
+            }
+            Utility.addParameter(description, "backup[description]", postParams);
+            Utility.addParameter(fromMaster.ToString().ToLower(), "backup[from_master]", postParams);
+            return Core.APIClient.Instance.Post(APIHrefs.Backup, postParams, "location").Last<string>().Split('/').Last<string>();
+        }
+
+        #endregion
+
+
     }
 }
