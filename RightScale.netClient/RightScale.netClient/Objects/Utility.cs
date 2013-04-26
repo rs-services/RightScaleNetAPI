@@ -606,6 +606,20 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Helper method performs null/empty check on inputParameter and adds to parameterSet
+        /// </summary>
+        /// <param name="inputParameter"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterSet"></param>
+        public static void addParameter(int inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
+        {
+            if (inputParameter != null && inputParameter > 0 && parameterSet != null)
+            {
+                parameterSet.Add(new KeyValuePair<string, string>(parameterName, inputParameter.ToString()));
+            }
+        }
+
+        /// <summary>
         /// Private method to translate filter lists to convert to a parameter set 
         /// </summary>
         /// <param name="filterList">list of filters to push to a parameter set</param>

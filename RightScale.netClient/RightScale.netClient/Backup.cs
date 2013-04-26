@@ -193,5 +193,47 @@ namespace RightScale.netClient
         }
 
         #endregion
+
+        #region Backup.cleanup() methods
+
+        /// <summary>
+        /// Deletes old backups that meet the given criteria. For example, if a user calls cleanup with keep monthlies set to 12, then the latest backup for each month, for 12 months, will be kept.
+        /// </summary>
+        /// <param name="lineage">The lineage of the backups that are to be cleaned-up</param>
+        /// <param name="keepLast">The number of backups that should be kept</param>
+        /// <returns>true if successful, false if not</returns>
+        public static bool cleanup(string lineage, int keepLast)
+        {
+            return cleanup(lineage, keepLast, null, -1, -1, -1, -1);
+        }
+
+        /// <summary>
+        /// Deletes old backups that meet the given criteria. For example, if a user calls cleanup with keep monthlies set to 12, then the latest backup for each month, for 12 months, will be kept.
+        /// </summary>
+        /// <param name="lineage">The lineage of the backups that are to be cleaned-up</param>
+        /// <param name="keepLast">The number of backups that should be kept</param>
+        /// <param name="cloudID">Backups belonging to only this cloud are considered for cleanup. Otherwise, all backups in the account with the same lineage will be considered</param>
+        /// <param name="dailies">The number of daily backups(the latest one in each day) that should be kept</param>
+        /// <param name="weeklies">The number of weekly backups(the latest one in each week) that should be kept</param>
+        /// <param name="monthlies">The number of monthly backups(the latest one in each month) that should be kept</param>
+        /// <param name="yearlies">The number of yearly backups(the latest one in each year) that should be kept</param>
+        /// <returns>true if succesful, false if not</returns>
+        public static bool cleanup(string lineage, int keepLast, string cloudID, int dailies, int weeklies, int monthlies, int yearlies)
+        {
+            Utility.CheckStringHasValue(lineage);
+
+            List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
+            Utility.addParameter(keepLast, "keep_last", postParams);
+            Utility.addParameter(string.Format(APIHrefs.CloudByID, cloudID), "cloud_href", postParams);
+            Utility.addParameter(dailies, "dailies", postParams);
+            Utility.addParameter(lineage, "lineage", postParams);
+            Utility.addParameter(monthlies, "monthlies", postParams);
+            Utility.addParameter(weeklies, "weeklies", postParams);
+            Utility.addParameter(yearlies, "yearlies", postParams);
+
+            return Core.APIClient.Instance.Post(APIHrefs.BackupCleanup, postParams);
+        }
+
+        #endregion
     }
 }

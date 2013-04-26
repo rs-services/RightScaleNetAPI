@@ -1270,6 +1270,14 @@ namespace RightScale.netClient
                 return Backup + ID0;
             }
         }
+
+        public static string BackupCleanup
+        {
+            get
+            {
+                return Backup + "/cleanup";
+            }
+        }
         #endregion
     }
 }
