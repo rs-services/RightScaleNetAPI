@@ -1278,6 +1278,16 @@ namespace RightScale.netClient
                 return Backup + "/cleanup";
             }
         }
+
+        public static string ChildAccount = @"/api/child_accounts";
+
+        public static string ChildAccountByID
+        {
+            get
+            {
+                return ChildAccount + ID0;
+            }
+        }
         #endregion
     }
 }
