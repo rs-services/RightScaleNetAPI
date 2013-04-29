@@ -13,9 +13,12 @@ namespace RightScale.netClient.Powershell
         public string cloudID;
 
         [Parameter(Position = 2, Mandatory = false)]
-        public string filter;
+        public string instanceID;
 
         [Parameter(Position = 3, Mandatory = false)]
+        public string filter;
+
+        [Parameter(Position = 4, Mandatory = false)]
         public string view;
 
         protected override void ProcessRecord()
@@ -28,38 +31,56 @@ namespace RightScale.netClient.Powershell
                 lstFilter.Add(fltFilter);
             }
 
-                base.ProcessRecord();
-                List<Instance> rsInstances = RightScale.netClient.Instance.index(cloudID, lstFilter, view);
-
-                WriteObject(rsInstances);
-          
-
-        }
-    }
-
-    [Cmdlet(VerbsCommon.Get, "RSInstance")]
-    public class instance_show : Cmdlet
-    {
-
-        [Parameter(Position = 1, Mandatory = true)]
-        public string cloudID;
-
-        [Parameter(Position = 2, Mandatory = true)]
-        public string instanceID;
-
-        [Parameter(Position = 3, Mandatory = false)]
-        public string view;
-
-        protected override void ProcessRecord()
-        {
             if (view == null) { view = "default"; }
-            base.ProcessRecord();
-            Instance rsInstance = RightScale.netClient.Instance.show(cloudID,instanceID,view);
 
-            WriteObject(rsInstance);
+            base.ProcessRecord();
+
+            try
+            {
+                if (instanceID != null)
+                {
+                    Instance rsInstance = RightScale.netClient.Instance.show(cloudID, instanceID, view);
+                    WriteObject(rsInstance);
+                }
+                else
+                {
+                    List<Instance> rsInstances = RightScale.netClient.Instance.index(cloudID, lstFilter, view);
+                    WriteObject(rsInstances);
+                }
+            }
+            catch (RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+            }
 
         }
     }
+
+    //Moved to single get instance method
+    //[Cmdlet(VerbsCommon.Get, "RSInstance")]
+    //public class instance_show : Cmdlet
+    //{
+    //
+    //    [Parameter(Position = 1, Mandatory = true)]
+    //    public string cloudID;
+    //
+    //    [Parameter(Position = 2, Mandatory = true)]
+    //    public string instanceID;
+    //
+    //    [Parameter(Position = 3, Mandatory = false)]
+    //    public string view;
+    //
+    //    protected override void ProcessRecord()
+    //    {
+    //        if (view == null) { view = "default"; }
+    //        base.ProcessRecord();
+    //        Instance rsInstance = RightScale.netClient.Instance.show(cloudID,instanceID,view);
+    //
+    //        WriteObject(rsInstance);
+    //
+    //    }
+    //}
     #endregion
 
     #region Instance run executable rightscripts chef cmdlets
