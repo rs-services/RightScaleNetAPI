@@ -12,7 +12,7 @@ namespace RightScale.netClient.Powershell
         public string deploymentID;
 
         [Parameter(Position = 2, Mandatory = false)]
-        public List<RightScale.netClient.Filter> filter;
+        public string filter;
 
         [Parameter(Position = 3, Mandatory = false)]
         public string view;
@@ -30,7 +30,15 @@ namespace RightScale.netClient.Powershell
                 }
                 else
                 {
-                    List<Deployment> rsDeployments = RightScale.netClient.Deployment.index(filter, view);
+                    List<Filter> lstFilter = new List<Filter>();
+
+                    if (filter != null)
+                    {
+                        Filter fltFilter = Filter.parseFilter(filter);
+                        lstFilter.Add(fltFilter);
+                    }
+
+                    List<Deployment> rsDeployments = RightScale.netClient.Deployment.index(lstFilter, view);
 
                     WriteObject(rsDeployments);
                 }
