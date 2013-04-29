@@ -19,6 +19,8 @@ namespace RightScale.netClient.Powershell
 
         protected override void ProcessRecord()
         {
+            base.ProcessRecord();
+
             try
             {
                 if (deploymentID != null)
@@ -28,7 +30,6 @@ namespace RightScale.netClient.Powershell
                 }
                 else
                 {
-                    base.ProcessRecord();
                     List<Deployment> rsDeployments = RightScale.netClient.Deployment.index(filter, view);
 
                     WriteObject(rsDeployments);

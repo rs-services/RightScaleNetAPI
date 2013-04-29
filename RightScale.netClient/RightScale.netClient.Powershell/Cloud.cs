@@ -16,6 +16,8 @@ namespace RightScale.netClient.Powershell
 
         protected override void ProcessRecord()
         {
+            base.ProcessRecord();
+
             try
             {
                 if (cloudID != null)
@@ -31,15 +33,13 @@ namespace RightScale.netClient.Powershell
                         List<Filter> lstFilter = new List<Filter>();
 
                         lstFilter.Add(fltFilter);
-
-                        base.ProcessRecord();
+                                               
                         List<Cloud> rsClouds = RightScale.netClient.Cloud.index(lstFilter);
 
                         WriteObject(rsClouds);
                     }
                     else
                     {
-                        base.ProcessRecord();
                         List<Cloud> rsClouds = RightScale.netClient.Cloud.index();
 
                         WriteObject(rsClouds);
