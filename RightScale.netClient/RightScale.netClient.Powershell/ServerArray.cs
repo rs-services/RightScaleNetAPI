@@ -6,50 +6,70 @@ namespace RightScale.netClient.Powershell
 {
     #region server array index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServerArrays")]
-    public class serverarray_index : Cmdlet
+    public class serverarray_index_show : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = false)]
-        public string filter;
-
-        [Parameter(Position = 2, Mandatory = false)]
-        public string view;
-        protected override void ProcessRecord()
-        {
-            List<Filter> lstFilter = new List<Filter>();
-
-            if (filter != null)
-            {
-                Filter fltFilter = Filter.parseFilter(filter);
-                lstFilter.Add(fltFilter);
-            }
-
-            base.ProcessRecord();
-            List<ServerArray> rsServerArrays = RightScale.netClient.ServerArray.index(lstFilter, view);
-
-            WriteObject(rsServerArrays);
-
-        }
-    }
-
-    [Cmdlet(VerbsCommon.Get, "RSServerArray")]
-    public class serverarray_show : Cmdlet
-    {
-
-        [Parameter(Position = 1, Mandatory = true)]
         public string serverarrayID;
 
         [Parameter(Position = 2, Mandatory = false)]
+        public string filter;
+
+        [Parameter(Position = 3, Mandatory = false)]
         public string view;
 
         protected override void ProcessRecord()
-        {
+        {            
             base.ProcessRecord();
-            ServerArray rsServerArray = RightScale.netClient.ServerArray.show(serverarrayID, view);
 
-            WriteObject(rsServerArray);
+            try
+            {
+                if (serverarrayID != null)
+                {
+                    ServerArray rsServerArray = RightScale.netClient.ServerArray.show(serverarrayID, view);
+                    WriteObject(rsServerArray);
+                }
+                else
+                {
+                    List<Filter> lstFilter = new List<Filter>();
 
+                    if (filter != null)
+                    {
+                        Filter fltFilter = Filter.parseFilter(filter);
+                        lstFilter.Add(fltFilter);
+                    }
+
+                    List<ServerArray> rsServerArrays = RightScale.netClient.ServerArray.index(lstFilter, view);
+                    WriteObject(rsServerArrays);
+                }
+            }
+            catch(RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+            }
         }
     }
+
+    //move index show to single method
+    //[Cmdlet(VerbsCommon.Get, "RSServerArray")]
+    //public class serverarray_show : Cmdlet
+    //{
+    //
+    //    [Parameter(Position = 1, Mandatory = true)]
+    //    public string serverarrayID;
+    //
+    //    [Parameter(Position = 2, Mandatory = false)]
+    //    public string view;
+    //
+    //    protected override void ProcessRecord()
+    //    {
+    //        base.ProcessRecord();
+    //        ServerArray rsServerArray = RightScale.netClient.ServerArray.show(serverarrayID, view);
+    //
+    //        WriteObject(rsServerArray);
+    //
+    //    }
+    //}
     #endregion
 
 #region server array create cmdlets
