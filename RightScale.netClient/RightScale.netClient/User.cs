@@ -89,7 +89,7 @@ namespace RightScale.netClient
             {
                 foreach (Filter f in filter)
                 {
-                    queryStringValue += f.ToString();
+                    queryStringValue += f.ToString() + "&";
                 }
             }
 
