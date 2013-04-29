@@ -49,6 +49,7 @@ namespace RightScale.netClient.Powershell
             catch (RightScaleAPIException rex)
             {
                 WriteObject(rex);
+                WriteObject(rex.ErrorData);
             }
         }
 

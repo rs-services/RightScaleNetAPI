@@ -6,41 +6,59 @@ namespace RightScale.netClient.Powershell
 {
     #region deployments cmdlets
     [Cmdlet(VerbsCommon.Get, "RSDeployments")]
-    public class deployments_index : Cmdlet
+    public class deployments_index_show : Cmdlet
     {
-
         [Parameter(Position = 1, Mandatory = false)]
-        public List<RightScale.netClient.Filter> filter;
+        public string deploymentID;
 
         [Parameter(Position = 2, Mandatory = false)]
+        public List<RightScale.netClient.Filter> filter;
+
+        [Parameter(Position = 3, Mandatory = false)]
         public string view;
 
         protected override void ProcessRecord()
         {
-            base.ProcessRecord();
-            List<Deployment> rsDeployments = RightScale.netClient.Deployment.index(filter,view);
+            try
+            {
+                if (deploymentID != null)
+                {
+                    Deployment rsDeployment = RightScale.netClient.Deployment.show(deploymentID);
+                    WriteObject(rsDeployment);
+                }
+                else
+                {
+                    base.ProcessRecord();
+                    List<Deployment> rsDeployments = RightScale.netClient.Deployment.index(filter, view);
 
-            WriteObject(rsDeployments);
-
+                    WriteObject(rsDeployments);
+                }
+            }
+            catch(RightScaleAPIException rex)
+            {
+                WriteObject(rex);
+                WriteObject(rex.ErrorData);
+            }
         }
     }
 
-    [Cmdlet(VerbsCommon.Get, "RSDeployment")]
-    public class deployments_show : Cmdlet
-    {
-
-        [Parameter(Position = 1, Mandatory = true )]
-        public string deploymentID;
-
-        protected override void ProcessRecord()
-        {
-            base.ProcessRecord();
-            Deployment rsDeployment = RightScale.netClient.Deployment.show(deploymentID);
-
-            WriteObject(rsDeployment);
-
-        }
-    }
+    //Consolidate to single index show method
+    //[Cmdlet(VerbsCommon.Get, "RSDeployment")]
+    //public class deployments_show : Cmdlet
+    //{
+    //
+    //    [Parameter(Position = 1, Mandatory = true )]
+    //    public string deploymentID;
+    //
+    //    protected override void ProcessRecord()
+    //    {
+    //        base.ProcessRecord();
+    //        Deployment rsDeployment = RightScale.netClient.Deployment.show(deploymentID);
+    //
+    //        WriteObject(rsDeployment);
+    //
+    //    }
+    //}
     #endregion
 
     #region deployments create / delete cmdlets
