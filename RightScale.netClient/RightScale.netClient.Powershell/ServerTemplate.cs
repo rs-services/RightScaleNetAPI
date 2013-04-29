@@ -4,10 +4,13 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.Powershell
 {
-    #region servertemplates cmdlets
+    #region servertemplates index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServerTemplates")]
-    public class servertemplate : Cmdlet
+    public class servertemplate_index_show : Cmdlet
     {
+        [Parameter(Position = 1, Mandatory = false)]
+        public string servertemplateID;
+
         [Parameter(Position = 1, Mandatory = false)]
         public string filter;
 
@@ -25,31 +28,47 @@ namespace RightScale.netClient.Powershell
             }
 
             base.ProcessRecord();
-            List<ServerTemplate> rsServerTemplates = RightScale.netClient.ServerTemplate.index(lstFilter, view);
 
-            WriteObject(rsServerTemplates);
-
-        }
-
-        [Cmdlet(VerbsCommon.Get, "RSServerTemplate")]
-        public class servertemplate_show : Cmdlet
-        {
-
-            [Parameter(Position = 1, Mandatory = true)]
-            public string servertemplateID;
-
-            [Parameter(Position = 2, Mandatory = false)]
-            public string view;
-
-            protected override void ProcessRecord()
+            try
             {
-                base.ProcessRecord();
-                ServerTemplate rsServerTemplate = RightScale.netClient.ServerTemplate.show(servertemplateID,view);
-
-                WriteObject(rsServerTemplate);
-
+                if (servertemplateID != null)
+                {
+                    ServerTemplate rsServerTemplate = RightScale.netClient.ServerTemplate.show(servertemplateID, view);
+                    WriteObject(rsServerTemplate);
+                }
+                else
+                {
+                    List<ServerTemplate> rsServerTemplates = RightScale.netClient.ServerTemplate.index(lstFilter, view);
+                    WriteObject(rsServerTemplates);
+                }
             }
+            catch (RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+            }
+
         }
+
+        //[Cmdlet(VerbsCommon.Get, "RSServerTemplate")]
+        //public class servertemplate_show : Cmdlet
+        //{
+        //
+        //    [Parameter(Position = 1, Mandatory = true)]
+        //    public string servertemplateID;
+        //
+        //    [Parameter(Position = 2, Mandatory = false)]
+        //    public string view;
+        //
+        //    protected override void ProcessRecord()
+        //    {
+        //        base.ProcessRecord();
+        //        ServerTemplate rsServerTemplate = RightScale.netClient.ServerTemplate.show(servertemplateID,view);
+        //
+        //        WriteObject(rsServerTemplate);
+        //
+        //    }
+        //}
     }
     #endregion
 
