@@ -6,52 +6,74 @@ namespace RightScale.netClient.Powershell
 {
     #region servers index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServers")]
-    public class server_index : Cmdlet
+    public class server_index_show : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = false)]
-        public List<RightScale.netClient.Filter> filter;
-
-        [Parameter(Position = 2, Mandatory = false)]
-        public string view;
-        protected override void ProcessRecord()
-        {
-            base.ProcessRecord();
-            List<Server> rsServers = RightScale.netClient.Server.index(filter, view);
-
-            WriteObject(rsServers);
-
-        }
-    }
-
-    [Cmdlet(VerbsCommon.Get, "RSServer")]
-    public class server_show : Cmdlet
-    {
-        [Parameter(Position = 1, Mandatory = true)]
         public string serverID;
 
         [Parameter(Position = 2, Mandatory = false)]
+        public List<RightScale.netClient.Filter> filter;
+
+        [Parameter(Position = 3, Mandatory = false)]
         public string view;
 
         protected override void ProcessRecord()
         {
-            if (view == null) { view = "default"; }
-
             base.ProcessRecord();
+
             try
             {
-                Server rsServer = RightScale.netClient.Server.show(serverID, view);
-                WriteObject(rsServer);
+                if (serverID != null)
+                {
+                    Server rsServer = RightScale.netClient.Server.show(serverID, view);
+                    WriteObject(rsServer);
+                }
+                else
+                {
+                    List<Server> rsServers = RightScale.netClient.Server.index(filter, view);
+                    WriteObject(rsServers);
+                }
             }
-            catch(RightScaleAPIException rse)
+            catch (RightScaleAPIException rex)
             {
                 WriteObject("Error Getting Server");
-                WriteObject(rse.Message);
-                WriteObject(rse.ErrorData);
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
             }
-
-
         }
     }
+
+
+    //moved to single index show method
+    //[Cmdlet(VerbsCommon.Get, "RSServer")]
+    //public class server_show : Cmdlet
+    //{
+    //   [Parameter(Position = 1, Mandatory = true)]
+    //    public string serverID;
+    //
+    //    [Parameter(Position = 2, Mandatory = false)]
+    //    public string view;
+    //
+    //    protected override void ProcessRecord()
+    //    {
+    //        if (view == null) { view = "default"; }
+    //
+    //        base.ProcessRecord();
+    //        try
+    //        {
+    //            Server rsServer = RightScale.netClient.Server.show(serverID, view);
+    //            WriteObject(rsServer);
+    //        }
+    //        catch(RightScaleAPIException rse)
+    //        {
+    //            WriteObject("Error Getting Server");
+    //            WriteObject(rse.Message);
+    //            WriteObject(rse.ErrorData);
+    //        }
+    //
+     //       
+     //   }
+    //}
     #endregion
     #region server create / delete cmdlets
     [Cmdlet(VerbsCommon.New, "RSServer")]

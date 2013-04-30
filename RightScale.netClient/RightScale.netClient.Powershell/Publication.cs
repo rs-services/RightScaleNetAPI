@@ -6,19 +6,20 @@ namespace RightScale.netClient.Powershell
 {
     #region publication index cmdlets
     [Cmdlet(VerbsCommon.Get, "RSPublications")]
-    public class publication_index : Cmdlet
+    public class publication_index_show : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = false)]
-        public string filter;
+        public string publicationID;
 
         [Parameter(Position = 2, Mandatory = false)]
+        public string filter;
+
+        [Parameter(Position = 3, Mandatory = false)]
         public string view = "default";
 
         protected override void ProcessRecord()
         {
         
-            base.ProcessRecord();
-
             List<Filter> lstFilter = new List<Filter>();
 
             if (filter != null)
@@ -27,34 +28,50 @@ namespace RightScale.netClient.Powershell
                 lstFilter.Add(fltFilter);
             }
 
-            List<Publication> rsPublications = RightScale.netClient.Publication.index(lstFilter,view);
-
-            WriteObject(rsPublications);
-
-        }
-    }
-
-
-    #endregion
-    #region publication index cmdlets
-    [Cmdlet(VerbsCommon.Get, "RSPublication")]
-    public class publication_show : Cmdlet
-    {
-        [Parameter(Position = 1, Mandatory = true)]
-        public string publicationID;
-
-        protected override void ProcessRecord()
-        {
-
             base.ProcessRecord();
 
-            Publication rsPublication = RightScale.netClient.Publication.show(publicationID);
-
-            WriteObject(rsPublication);
-
+            try
+            {
+                if (publicationID != null)
+                {
+                    Publication rsPublication = RightScale.netClient.Publication.show(publicationID);
+                    WriteObject(rsPublication);
+                }
+                else
+                {
+                    List<Publication> rsPublications = RightScale.netClient.Publication.index(lstFilter, view);
+                    WriteObject(rsPublications);
+                }
+            }
+            catch (RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+            }
         }
     }
+
+
     #endregion
+    //#region publication index cmdlets
+    //[Cmdlet(VerbsCommon.Get, "RSPublication")]
+    //public class publication_show : Cmdlet
+    //{
+    //    [Parameter(Position = 1, Mandatory = true)]
+    //    public string publicationID;
+    //
+    //    protected override void ProcessRecord()
+    //    {
+    //
+    //        base.ProcessRecord();
+    //
+    //        Publication rsPublication = RightScale.netClient.Publication.show(publicationID);
+    //
+    //        WriteObject(rsPublication);
+    //
+    //    }
+    //}
+    //#endregion
 
     #region publication import cmdlets
     [Cmdlet("Import", "RSPublication")]
