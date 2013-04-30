@@ -1230,8 +1230,14 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Base href for working with identity providers
+        /// </summary>
         public static string IdentityProvider = @"/api/identity_providers";
 
+        /// <summary>
+        /// href for working with a specific identity provider - takes one variable which is the Identity Provider ID
+        /// </summary>
         public static string IdentityProviderByID
         {
             get
@@ -1240,9 +1246,14 @@ namespace RightScale.netClient
             }
         }
 
-
+        /// <summary>
+        /// Base href for working with permission objects
+        /// </summary>
         public static string Permission = @"/api/permissions";
 
+        /// <summary>
+        /// href for working with a specific permission object - takes one variable which is the Permission ID
+        /// </summary>
         public static string PermissionByID
         {
             get
@@ -1251,8 +1262,14 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Base href for working with Cloud Account objects
+        /// </summary>
         public static string CloudAccount = @"/api/cloud_accounts";
 
+        /// <summary>
+        /// href for working with a specific Cloud Account - takes one variable which is the Cloud Account ID
+        /// </summary>
         public static string CloudAccountByID
         {
             get
@@ -1261,8 +1278,14 @@ namespace RightScale.netClient
             }
         }
 
-        public static string Backup = @"/api/bakups";
+        /// <summary>
+        /// Base href for working with Backup objects
+        /// </summary>
+        public static string Backup = @"/api/backups";
 
+        /// <summary>
+        /// href for working with a specific Backup object - takes one variable which is the Backup ID
+        /// </summary>
         public static string BackupByID
         {
             get
@@ -1271,6 +1294,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// href for cleanup process for Backup objects - takes one variable which is the Backup ID
+        /// </summary>
         public static string BackupCleanup
         {
             get
@@ -1279,8 +1305,14 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Base href for working with Child Accounts
+        /// </summary>
         public static string ChildAccount = @"/api/child_accounts";
 
+        /// <summary>
+        /// href for working with a specific Child Account - takes one variable which is the child account id
+        /// </summary>
         public static string ChildAccountByID
         {
             get

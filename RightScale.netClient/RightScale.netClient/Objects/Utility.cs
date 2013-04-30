@@ -392,6 +392,23 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Helper method returns properly formatted identity_provider_href
+        /// </summary>
+        /// <param name="objectID">ID of the Identity Provider being referenced</param>
+        /// <returns>Formatted identity_provider_href</returns>
+        public static string identityProviderHref(string objectID)
+        {
+            if (!string.IsNullOrWhiteSpace(objectID))
+            {
+                return string.Format(APIHrefs.IdentityProviderByID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Helper method returns properly formatted kernel_image_href 
         /// </summary>
         /// <param name="cloudID">Cloud ID where Kernel Image can be found</param>

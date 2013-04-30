@@ -126,12 +126,13 @@ namespace RightScale.netClient
         /// <param name="email">Email of user</param>
         /// <param name="firstName">First name of user</param>
         /// <param name="lastName">Last name of user</param>
+        /// <param name="company">User's company name</param>
         /// <param name="phone">Phone number for user</param>
         /// <param name="password">The password of this user. Required to create a password-authenticated user</param>
         /// <returns>ID of newly created User</returns>
-        public static string create(string email, string firstName, string lastName, string phone,string password)
+        public static string create(string email, string firstName, string lastName, string company, string phone,string password)
         {
-            return create(email, firstName, lastName, phone, null, password, null);
+            return create(email, firstName, lastName, company, phone, password, null, null);
         }
 
         /// <summary>
@@ -149,12 +150,13 @@ namespace RightScale.netClient
         /// <param name="password">The password of this user. Required to create a password-authenticated user</param>
         /// <param name="principalUid">The principal identifier (SAML NameID or OpenID identity URL) of this user. Required to create an SSO-authenticated user</param>
         /// <returns></returns>
-        public static string create(string email, string firstName, string lastName, string phone, string identityProviderID, string password, string principalUid)
+        public static string create(string email, string firstName, string lastName, string company, string phone, string password, string identityProviderID, string principalUid)
         {
             Utility.CheckStringHasValue(email);
             Utility.CheckStringHasValue(firstName);
             Utility.CheckStringHasValue(lastName);
             Utility.CheckStringHasValue(phone);
+            Utility.CheckStringHasValue(company);
             List<KeyValuePair<string, string>> paramSet = new List<KeyValuePair<string, string>>();
             if (!string.IsNullOrWhiteSpace(phone))
             {
@@ -163,13 +165,14 @@ namespace RightScale.netClient
             }
             Utility.addParameter(email, "user[email]", paramSet);
             Utility.addParameter(firstName, "user[first_name]", paramSet);
+            Utility.addParameter(company, "user[company]", paramSet);
             Utility.addParameter(lastName, "user[last_name]", paramSet);
             Utility.addParameter(phone, "user[phone]", paramSet);
             Utility.addParameter(string.Format(APIHrefs.IdentityProviderByID, identityProviderID), "user[identity_provider_href]", paramSet);
             Utility.addParameter(password, "user[password]", paramSet);
             Utility.addParameter(principalUid, "user[principal_uid]", paramSet);
 
-            return Core.APIClient.Instance.Post(APIHrefs.IdentityProvider, paramSet, "location").Last<string>().Split('/').Last<string>();
+            return Core.APIClient.Instance.Post(APIHrefs.User, paramSet, "location").Last<string>().Split('/').Last<string>();
         }
         
         #endregion
@@ -191,7 +194,7 @@ namespace RightScale.netClient
         /// <returns></returns>
         public static bool update(string userID, string currentEmail, string newEmail, string firstName, string lastName, string phone, string identityProviderID, string password, string principalUid)
         {
-            string putHref = string.Format(APIHrefs.IdentityProviderByID, userID);
+            string putHref = string.Format(APIHrefs.UserByID, userID);
             List<KeyValuePair<string, string>> paramSet = new List<KeyValuePair<string, string>>();
             Utility.CheckStringHasValue(currentEmail);
             Utility.addParameter(currentEmail, "user[current_email]", paramSet);
@@ -199,7 +202,7 @@ namespace RightScale.netClient
             Utility.addParameter(firstName, "user[first_name]", paramSet);
             Utility.addParameter(lastName, "user[last_name]", paramSet);
             Utility.addParameter(phone, "user[phone]", paramSet);
-            Utility.addParameter(string.Format(APIHrefs.IdentityProviderByID, identityProviderID), "user[identity_provider_href]", paramSet);
+            Utility.addParameter(Utility.identityProviderHref(identityProviderID), "user[identity_provider_href]", paramSet);
             Utility.addParameter(password, "user[password]", paramSet);
             Utility.addParameter(principalUid, "user[principal_uid]", paramSet);
             return Core.APIClient.Instance.Put(putHref, paramSet);
