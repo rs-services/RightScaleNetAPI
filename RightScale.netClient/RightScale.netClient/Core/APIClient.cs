@@ -20,11 +20,41 @@ namespace RightScale.netClient.Core
     /// </summary>
     public sealed class APIClient : IDisposable
     {
-        Timer authTimer;
+        private Timer authTimer;
 
-        private string apiVersion = "1.5";
+        /// <summary>
+        /// Valid API Version values
+        /// </summary>
+        private List<string> validAPIVersions = new List<string>() { "1.0", "1.5" };
 
         #region APIClient Properties 
+        
+        /// <summary>
+        /// private variable to hold value of this.apiVersion 
+        /// </summary>
+        private string _apiVersion;
+
+        /// <summary>
+        /// API Version being accessed - default is 1.5
+        /// </summary>
+        public string apiVersion
+        {
+            get
+            {
+                return _apiVersion;
+            }
+            set
+            {
+                if (validAPIVersions.Contains(value))
+                {
+                    this._apiVersion = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Value for apiVersion is not a valid string");
+                }
+            }
+        }
 
         /// <summary>
         /// Boolean indicating that this session is an instance-facing session rather than a fully-fledged session.  Instance sessions can only utilize a limited portion of the API.
@@ -79,27 +109,27 @@ namespace RightScale.netClient.Core
         /// <summary>
         /// System.Net.HttpClient object used for executing all HTTP calls to RightScale API
         /// </summary>
-        HttpClient webClient;
+        private HttpClient webClient;
 
         /// <summary>
         /// CookieContainer to be added to webClient object for ease of accessibility to determine authentication status in username/password/accountid authenticated users
         /// </summary>
-        CookieContainer cookieContainer;
+        private CookieContainer cookieContainer;
         
         /// <summary>
         /// ClientHandler manages persisting headers from request to request and is used to hold default API header as well as oAuth authentication headers
         /// </summary>
-        HttpClientHandler clientHandler;
+        private HttpClientHandler clientHandler;
 
         /// <summary>
         /// public property to hold the api base address - must be changed when connecting to an account on a specific RigthScale shard
         /// </summary>
-        public string apiBaseAddress;
-
+        private string apiBaseAddress;
+        
         /// <summary>
         /// Authentication timeout in minutes - determines when API Client will reset its WebClient object proactively to force another authentication attempt
         /// </summary>
-        public int authTimeoutMins;
+        public int authTimeoutMins { get; set; }
 
         #endregion
 
@@ -111,6 +141,7 @@ namespace RightScale.netClient.Core
         private APIClient()
         {
             InitWebClient();
+            
             if (ConfigurationManager.AppSettings["RightScaleAPI_BaseAddress"] != null)
             {
                 this.apiBaseAddress = ConfigurationManager.AppSettings["RightScaleAPI_baseAddress"].ToString();
@@ -128,6 +159,15 @@ namespace RightScale.netClient.Core
             {
                 this.authTimeoutMins = 118;
             }
+
+            if (ConfigurationManager.AppSettings["RightScaleAPI_ApiVersion"] != null)
+            {
+                this.apiVersion = ConfigurationManager.AppSettings["RightScaleAPI_ApiVersion"].ToString();
+            }
+            else
+            {
+                this.apiVersion = "1.5";
+            }
         }
 
         /// <summary>
@@ -140,15 +180,16 @@ namespace RightScale.netClient.Core
             this.isInstanceAuthenticated = false;
             this.cookieContainer = new CookieContainer();
             this.clientHandler = new HttpClientHandler() { CookieContainer = this.cookieContainer };
+            this.clientHandler.AllowAutoRedirect = false;
             this.webClient = new HttpClient(this.clientHandler);
             this.webClient.DefaultRequestHeaders.Add("X_API_Version", this.apiVersion);
         }
 
         /// <summary>
-        /// Public method to initialize the API caller specifically for an account that's on a specific RightScale shard
+        /// Public method to initialize the API caller specifically for an account that's on a distinct RightScale shard
         /// </summary>
         /// <param name="shardBaseUrl">base url of the shard the account is associated with</param>
-        public void InitShardAccount(string shardBaseUrl)
+        public void InitWebClient(string shardBaseUrl)
         {
             InitWebClient();
             this.apiBaseAddress = shardBaseUrl.TrimEnd('/');
@@ -540,7 +581,7 @@ namespace RightScale.netClient.Core
                     postData.Add(new KeyValuePair<string, string>("refresh_token", oAuthRefreshToken));
                     HttpContent postContent = new FormUrlEncodedContent(postData);
 
-                    HttpResponseMessage  responseMessage = webClient.PostAsync(@"https://my.rightscale.com/api/oauth2", postContent).Result;
+                    HttpResponseMessage  responseMessage = webClient.PostAsync(this.apiBaseAddress + @"/api/oauth2", postContent).Result;
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         string content = responseMessage.Content.ReadAsStringAsync().Result;
@@ -566,6 +607,29 @@ namespace RightScale.netClient.Core
             return this.isAuthenticated;
         }
 
+        public void setAPIBaseAddress(string apiBaseUrl)
+        {
+            if (this.apiBaseAddress != null && this.apiBaseAddress != apiBaseUrl.Trim('/'))
+            {
+                InitWebClient(apiBaseUrl);
+            }
+        }
+
+        /// <summary>
+        /// Legacy authentication method using username, password and accountID for authenticating to RightScale API
+        /// </summary>
+        /// <param name="userName">RightScale login user name</param>
+        /// <param name="password">RightScale login password</param>
+        /// <param name="accountID">RightScale Account ID to be programmatically accessed</param>
+        /// <param name="baseUrl">Distinct base URL for calling RightScale API</param>
+        /// <returns>True if authenticated successfully, false if not</returns>
+        public bool Authenticate(string userName, string password, string accountID, string baseUrl)
+        {
+            setAPIBaseAddress(baseUrl);
+            return Authenticate(userName, password, accountID);
+        }
+
+
         /// <summary>
         /// Legacy authentication method using username, password and accountID for authenticating to RightScale API
         /// </summary>
@@ -587,8 +651,24 @@ namespace RightScale.netClient.Core
                     postData.Add(new KeyValuePair<string, string>("account_href", string.Format(@"/api/accounts/{0}", accountID)));
                     HttpContent postContent = new FormUrlEncodedContent(postData);
 
-                    HttpResponseMessage response = webClient.PostAsync("https://my.rightscale.com/api/session", postContent).Result;
-                    if (response.IsSuccessStatusCode)
+                    string requestHref = this.apiBaseAddress + @"/api/session";
+                    HttpResponseMessage response = webClient.PostAsync(requestHref, postContent).Result;
+                    if (response.StatusCode == HttpStatusCode.Found)
+                    {
+                        if (response.Headers.Contains("location"))
+                        {
+                            List<string> locations = response.Headers.GetValues("location").ToList<string>();
+                            response.Dispose();
+                            this.isAuthenticating = false;
+                            if (locations.Count == 1)
+                            {
+                                Uri newBaseUri = new Uri(locations[0]);
+                                string newBaseUrl = newBaseUri.AbsoluteUri.Replace(newBaseUri.AbsolutePath, string.Empty);
+                                Authenticate(userName, password, accountID, newBaseUrl);
+                            }
+                        }
+                    }
+                    else if (response.IsSuccessStatusCode)
                     {
                         if (this.cookieContainer.Count > 1)
                         {

@@ -630,7 +630,7 @@ namespace RightScale.netClient
         /// <param name="parameterSet"></param>
         public static void addParameter(int inputParameter, string parameterName, List<KeyValuePair<string, string>> parameterSet)
         {
-            if (inputParameter != null && inputParameter > 0 && parameterSet != null)
+            if (inputParameter > 0 && parameterSet != null)
             {
                 parameterSet.Add(new KeyValuePair<string, string>(parameterName, inputParameter.ToString()));
             }

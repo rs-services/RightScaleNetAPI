@@ -33,6 +33,14 @@ namespace RightScale.netClient.Test.Core
         }
 
         [TestMethod]
+        public void UsernamePasswordAccountIDShardAuthenticationTest()
+        {
+            APIClient.Instance.InitWebClient();
+            bool result = APIClient.Instance.Authenticate(authUserName, authPassword, "60604");
+
+        }
+
+        [TestMethod]
         public void DefaultAuthenticationTest()
         {
             APIClient.Instance.InitWebClient();
