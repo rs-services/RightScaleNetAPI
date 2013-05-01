@@ -55,6 +55,7 @@ namespace RightScale.netClient.Powershell
     //[Cmdlet(VerbsCommon.Get, "RSDeployment")]
     //public class deployments_show : Cmdlet
     //{
+    //    4-30-2013
     //
     //    [Parameter(Position = 1, Mandatory = true )]
     //    public string deploymentID;
