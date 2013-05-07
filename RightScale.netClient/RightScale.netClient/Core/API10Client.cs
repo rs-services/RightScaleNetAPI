@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 namespace RightScale.netClient.Core
 {
     /// <summary>
-    /// Singleton class for accessing RightScale 1.5 API
+    /// Singleton class for calling RightScale 1.0 API
     /// </summary>
-    public sealed class APIClient : APIClientBase
+    public sealed class API10Client : APIClientBase
     {
         #region APIClient Singleton Implementation
 
         /// <summary>
         /// Singleton instance implementation of APIClient
         /// </summary>
-        private static APIClient instance;
+        private static API10Client instance;
 
         /// <summary>
         /// Public instance for singleton access
         /// </summary>
-        public static APIClient Instance
+        public static API10Client Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new APIClient();
+                    instance = new API10Client();
                 }
                 return instance;
             }
@@ -36,9 +36,9 @@ namespace RightScale.netClient.Core
         /// <summary>
         /// Base constructor initialies http client objects and initializes base url for RightScale API
         /// </summary>
-        private APIClient()
+        private API10Client()
         {
-            setAPIVersion("1.5");
+            setAPIVersion("1.0");
         }
 
         #endregion

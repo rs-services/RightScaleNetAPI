@@ -47,12 +47,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountGroup.cs" />
+    <Compile Include="Core\API10Client.cs" />
+    <Compile Include="Core\APIClient.cs" />
     <Compile Include="Core\ITaggableResource.cs" />
+    <Compile Include="Core\RightScaleAPI10ObjectBase.cs" />
     <Compile Include="Core\TaggableResourceBase.cs" />
+    <Compile Include="Credential.cs" />
     <Compile Include="Objects\CommitMessage.cs" />
     <Compile Include="Objects\Description.cs" />
     <Compile Include="Objects\ItemAge.cs" />
@@ -82,7 +87,7 @@
     <Compile Include="Backup.cs" />
     <Compile Include="ChildAccount.cs" />
     <Compile Include="Cloud.cs" />
-    <Compile Include="Core\APIClient.cs" />
+    <Compile Include="Core\APIClientBase.cs" />
     <Compile Include="Objects\Link.cs" />
     <Compile Include="Objects\Pacing.cs" />
     <Compile Include="Objects\QueueSize.cs" />
@@ -96,6 +101,7 @@
     <Compile Include="RecurringVolumeAttachment.cs" />
     <Compile Include="Objects\ScheduleEntry.cs" />
     <Compile Include="Objects\APIHrefs.cs" />
+    <Compile Include="RightScript.cs" />
     <Compile Include="SecurityGroup.cs" />
     <Compile Include="Objects\SerializationExtensions.cs" />
     <Compile Include="Server.cs" />

@@ -1320,6 +1320,10 @@ namespace RightScale.netClient
                 return ChildAccount + ID0;
             }
         }
+
+        public static string OAuthAPI15 = @"/api/oauth2";
+
+        public static string OAuthAPI10 = @"/api/acct/{0}/oauth2";
         #endregion
     }
 }
