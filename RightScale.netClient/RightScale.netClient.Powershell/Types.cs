@@ -14,6 +14,42 @@ namespace RightScale.netClient.Powershell
             public string DeploymentID { get; set; }
             public bool Result { get; set; }
             public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
+        public class returnDeploymentClone
+        {
+            public string DeploymentID { get; set; }
+            public string CloneID { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+        
+        public class returnDeploymentUpdate
+        {
+            public string DeploymentID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string ServerTagScope { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
+        public class returnDeploymentServers
+        {
+            public string DeploymentID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string ServerTagScope { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
         }
 
         public class returnServer

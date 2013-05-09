@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 using RightScale.netClient;
 
@@ -227,7 +228,7 @@ namespace RightScale.netClient.Powershell
         }
     }
     #endregion
-    #region server launch cmdlets
+    #region server terminate cmdlets
     [Cmdlet("Terminate", "RSServer")]
     public class server_terminate : Cmdlet
     {
@@ -271,7 +272,68 @@ namespace RightScale.netClient.Powershell
         }
     }
     #endregion
- #region server inputs
+    #region server update cmdlets
+    [Cmdlet("Update", "RSServer")]
+    public class server_update : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverID;
+
+        [Parameter(Position = 2, Mandatory = false)]
+        public string description;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        public string name;
+
+        [Parameter(Position = 4, Mandatory = false)]
+        public bool optimizedvolumes;
+
+        protected override void ProcessRecord()
+        {
+            Types.returnServer result = new Types.returnServer();
+
+            base.ProcessRecord();
+
+            try
+            {
+                bool rsUpdateServer = RightScale.netClient.Server.update(serverID,description,name,optimizedvolumes);
+
+                if (rsUpdateServer == true)
+                {
+                    result.ServerID = serverID;
+                    result.Message = "Server Updated";
+                    result.Result = true;
+
+                    WriteObject(result);
+                }
+                else
+                {
+                    result.ServerID = serverID;
+                    result.Message = "Error Updating server";
+                    result.Result = false;
+
+                    WriteObject(result);
+
+                }
+            }
+            catch (RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+                WriteObject(rex.APIHref);
+            }
+            catch (Exception ex)
+            {
+                WriteObject(ex.Message);
+            }
+
+        }
+    }
+
+
+
+    #endregion
+    #region server inputs
     [Cmdlet(VerbsCommon.Set, "RSServerInputs")]
     public class server_setinputs : Cmdlet
     {
@@ -313,17 +375,15 @@ namespace RightScale.netClient.Powershell
                 
 
             }
-            catch (RightScaleAPIException errInputUpdate)
+            catch (RightScaleAPIException rex)
             {
-
-                WriteObject("Error setting inputs");
-                WriteObject(errInputUpdate);
-                WriteObject(errInputUpdate.InnerException);
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+                WriteObject(rex.APIHref);
             }
             catch (System.Exception excp)
             {
-
-                WriteObject("Generic Error setting inputs");
+                WriteObject("Exception setting inputs");
                 WriteObject(excp);
                 WriteObject(excp.InnerException);
             }
@@ -331,5 +391,38 @@ namespace RightScale.netClient.Powershell
         }
     }
 #endregion
+
+    #region server clone
+    [Cmdlet("Clone", "RSServer")]
+    public class server_clone : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverID;
+
+        protected override void ProcessRecord()
+        {
+            base.ProcessRecord();
+
+            try
+            {
+                string rsCloneServer = RightScale.netClient.Server.clone(serverID);          
+                WriteObject("Server Cloned - Clone ID " + rsCloneServer);
+            }
+            catch (RightScaleAPIException rex)
+            {
+                WriteObject(rex.Message);
+                WriteObject(rex.ErrorData);
+                WriteObject(rex.APIHref);
+            }
+            catch (System.Exception excp)
+            {
+                WriteObject("Exception cloning server");
+                WriteObject(excp.Message);
+                WriteObject(excp.InnerException);
+            }
+
+        }
+    }
+    #endregion
 
 }

@@ -52,6 +52,7 @@ namespace RightScale.netClient.Powershell
             {
                 WriteObject(rex.Message);
                 WriteObject(rex.ErrorData);
+                WriteObject(rex.APIHref);
             }
 
         }
