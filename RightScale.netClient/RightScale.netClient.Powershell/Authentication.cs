@@ -16,10 +16,10 @@ namespace RightScale.netClient.Powershell
         [Parameter(Position = 1, Mandatory = false)]
         public string AccountID;
 
-        [Parameter(Position = 3, Mandatory = false)]
+        [Parameter(Position = 2, Mandatory = false)]
         public string Username;
 
-        [Parameter(Position = 2, Mandatory = false)]
+        [Parameter(Position = 3, Mandatory = false)]
         public System.Security.SecureString Password;
 
         [Parameter(Position = 4, Mandatory = false)]
