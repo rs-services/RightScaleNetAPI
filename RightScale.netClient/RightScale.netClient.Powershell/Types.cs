@@ -111,5 +111,25 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string MessageData { get; set; }
         }
+
+
+        public class returnRebootServer
+        {
+            public string ServerID { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
+        public class returnRebootInstance
+        {
+            public string CloudID { get; set; }
+            public string InstanceID { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
     }
 }
