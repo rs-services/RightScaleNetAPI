@@ -773,21 +773,38 @@ namespace RightScale.netClient.Core
         #endregion
 
         /// <summary>
-        /// Dispose handles dispose of custom objects before disposing of the remainder of the objcet
+        /// Dispose handles dispose of custom objects before disposing of the remainder of the object
         /// </summary>
         public void Dispose()
         {
-            if (this.webClient != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);            
+        }
+
+        /// <summary>
+        /// IDisposable implementation guts
+        /// </summary>
+        /// <param name="disposing">determines that call is to dispose of resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                this.webClient.Dispose();
-                this.webClient = null;
+                if (this.webClient != null)
+                {
+                    this.webClient.Dispose();
+                    this.webClient = null;
+                }
+                if (this.clientHandler != null)
+                {
+                    this.clientHandler.Dispose();
+                    this.clientHandler = null;
+                }
+                if (this.authTimer != null)
+                {
+                    this.authTimer.Dispose();
+                    this.authTimer = null;
+                }
             }
-            if (this.clientHandler != null)
-            {
-                this.clientHandler.Dispose();
-                this.clientHandler = null;
-            }
-            this.Dispose();
         }
     }
 }
