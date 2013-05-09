@@ -1338,7 +1338,7 @@ namespace RightScale.netClient
             }
         }
 
-        public static string CredentalByID
+        public static string CredentialByID
         {
             get
             {
