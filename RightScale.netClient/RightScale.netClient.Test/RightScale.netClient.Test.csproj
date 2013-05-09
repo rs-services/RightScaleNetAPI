@@ -86,6 +86,7 @@
     <Compile Include="PublicationTest.cs" />
     <Compile Include="RightScriptTest.cs" />
     <Compile Include="TaskTest.cs" />
+    <Compile Include="CredentialTest.cs" />
     <Compile Include="UserUnitTest.cs" />
     <Compile Include="VolumeAttachmentTest.cs" />
     <Compile Include="VolumeTypeTest.cs" />

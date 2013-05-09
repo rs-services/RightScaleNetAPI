@@ -8,12 +8,15 @@ namespace RightScale.netClient
 {
     public class Credential : Core.RightScaleAPI10ObjectBase<Credential>
     {
-        /*
-        public static List<Credential> index()
+        
+        public static void index()
         {
+            string xmlString = Core.API10Client.Instance.Get(string.Format(APIHrefs.Credential, Core.API10Client.Instance.accountId));
 
         }
 
+
+        /*
         public static Credential show(string credentialID)
         {
             
