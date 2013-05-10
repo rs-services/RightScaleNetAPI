@@ -163,6 +163,26 @@ namespace RightScale.netClient.Core
                 this.authTimeoutMins = 118;
             }
 
+            if (string.IsNullOrEmpty(this.oauthRefreshToken) && ConfigurationManager.AppSettings["RightScaleAPI_AuthRefreshToken"] != null)
+            {
+                this.oauthRefreshToken = ConfigurationManager.AppSettings["RightScaleAPI_AuthRefreshToken"].ToString();
+            }
+            
+            if (string.IsNullOrEmpty(this.userName) && ConfigurationManager.AppSettings["RightScaleAPI_AuthUserName"] != null)
+            {
+                this.userName = ConfigurationManager.AppSettings["RightScaleAPI_AuthUserName"].ToString();
+            }
+            
+            if (string.IsNullOrEmpty(this.password) && ConfigurationManager.AppSettings["RightScaleAPI_AuthPassword"] != null)
+            {
+                this.password = ConfigurationManager.AppSettings["RightScaleAPI_AuthPassword"].ToString();
+            }
+            
+            if (string.IsNullOrEmpty(this.accountId) && ConfigurationManager.AppSettings["RightScaleAPI_AuthAccountId"] != null)
+            {
+                this.accountId = ConfigurationManager.AppSettings["RightScaleAPI_AuthAccountId"].ToString();
+            }
+
             if (string.IsNullOrWhiteSpace(this.apiVersion) && ConfigurationManager.AppSettings["RightScaleAPI_ApiVersion"] != null)
             {
                 this.apiVersion = ConfigurationManager.AppSettings["RightScaleAPI_ApiVersion"].ToString();
@@ -676,14 +696,31 @@ namespace RightScale.netClient.Core
                 {
                     this.isAuthenticating = true;
 
-                    var postData = new List<KeyValuePair<string, string>>();
-                    postData.Add(new KeyValuePair<string, string>("email", userName));
-                    postData.Add(new KeyValuePair<string, string>("password", password));
-                    postData.Add(new KeyValuePair<string, string>("account_href", string.Format(@"/api/accounts/{0}", accountID)));
-                    HttpContent postContent = new FormUrlEncodedContent(postData);
+                    this.userName = userName;
+                    this.password = password;
+                    this.accountId = accountID;
 
-                    string requestHref = this.apiBaseAddress + @"/api/session";
-                    HttpResponseMessage response = webClient.PostAsync(requestHref, postContent).Result;
+                    var postData = new List<KeyValuePair<string, string>>();
+                    HttpResponseMessage response;
+                    switch (this.apiVersion)
+                    {
+                        case "1.0":
+                            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, this.apiBaseAddress + string.Format(APIHrefs.API10Login, this.accountId));
+                            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", this.userName, this.password))));
+                            response = webClient.SendAsync(requestMessage).Result;
+                            break;
+                        case "1.5":
+                            postData.Add(new KeyValuePair<string, string>("email", userName));
+                            postData.Add(new KeyValuePair<string, string>("password", password));
+                            postData.Add(new KeyValuePair<string, string>("account_href", string.Format(@"/api/accounts/{0}", accountID)));
+                            HttpContent postContent = new FormUrlEncodedContent(postData);
+                            response = webClient.PostAsync(this.apiBaseAddress + APIHrefs.Session, postContent).Result;
+                            break;
+                        default:
+                            throw new NotImplementedException("API Version " + this.apiVersion + " does not exist or has not yet been implemented");
+                    }
+
+                    
                     if (response.StatusCode == HttpStatusCode.Found)
                     {
                         if (response.Headers.Contains("location"))
@@ -736,21 +773,38 @@ namespace RightScale.netClient.Core
         #endregion
 
         /// <summary>
-        /// Dispose handles dispose of custom objects before disposing of the remainder of the objcet
+        /// Dispose handles dispose of custom objects before disposing of the remainder of the object
         /// </summary>
         public void Dispose()
         {
-            if (this.webClient != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);            
+        }
+
+        /// <summary>
+        /// IDisposable implementation guts
+        /// </summary>
+        /// <param name="disposing">determines that call is to dispose of resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                this.webClient.Dispose();
-                this.webClient = null;
+                if (this.webClient != null)
+                {
+                    this.webClient.Dispose();
+                    this.webClient = null;
+                }
+                if (this.clientHandler != null)
+                {
+                    this.clientHandler.Dispose();
+                    this.clientHandler = null;
+                }
+                if (this.authTimer != null)
+                {
+                    this.authTimer.Dispose();
+                    this.authTimer = null;
+                }
             }
-            if (this.clientHandler != null)
-            {
-                this.clientHandler.Dispose();
-                this.clientHandler = null;
-            }
-            this.Dispose();
         }
     }
 }

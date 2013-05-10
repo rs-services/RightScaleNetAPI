@@ -120,7 +120,7 @@ namespace RightScale.netClient
 
         #endregion
 
-        #region string.format templates for RightScale API hrefs
+        #region string.format templates for RightScale API 1.5 hrefs
 
         /// <summary>
         /// Base account href that takes no parameters
@@ -1324,6 +1324,44 @@ namespace RightScale.netClient
         public static string OAuthAPI15 = @"/api/oauth2";
 
         public static string OAuthAPI10 = @"/api/acct/{0}/oauth2";
+
+        public static string MonitoringMetric
+        {
+            get
+            {
+                return InstanceByID + "/monitoring_metrics";
+            }
+        }
+        #endregion
+
+        #region string.format templates for RightScale API 1.0 hrefs
+
+        public static string API10Base = @"/api/acct/{0}";
+
+        public static string Credential
+        {
+            get
+            {
+                return API10Base + "/credentials";
+            }
+        }
+
+        public static string CredentialByID
+        {
+            get
+            {
+                return Credential + ID1;
+            }
+        }
+
+        public static string API10Login
+        {
+            get
+            {
+                return API10Base + "/login?api_version=1.0";
+            }
+        }
+
         #endregion
     }
 }

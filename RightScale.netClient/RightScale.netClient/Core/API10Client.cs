@@ -36,7 +36,7 @@ namespace RightScale.netClient.Core
         /// <summary>
         /// Base constructor initialies http client objects and initializes base url for RightScale API
         /// </summary>
-        private API10Client()
+        private API10Client():base()
         {
             setAPIVersion("1.0");
         }
