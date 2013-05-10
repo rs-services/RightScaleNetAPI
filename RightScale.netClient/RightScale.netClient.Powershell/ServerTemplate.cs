@@ -343,7 +343,7 @@ namespace RightScale.netClient.Powershell
     }
     #endregion
 
-    #region servertemplates commit
+    #region servertemplates Publish
     [Cmdlet("Publish", "RSServerTemplate")]
     public class servertemplate_publish : Cmdlet
     {
@@ -356,7 +356,7 @@ namespace RightScale.netClient.Powershell
         [Parameter(Position = 2, Mandatory = false)]
         public SwitchParameter allowComments;
 
-        [Parameter(Position = 4, Mandatory = false)]
+        [Parameter(Position = 4, Mandatory = true)]
         public string longDescription;
 
         [Parameter(Position = 5, Mandatory = false)]
