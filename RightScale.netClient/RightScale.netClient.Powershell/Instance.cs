@@ -106,4 +106,87 @@ namespace RightScale.netClient.Powershell
     }
     #endregion
 
+    #region Instance reboot server
+    [Cmdlet("Reboot", "RSServer")]
+    public class instance_rebootServer : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string serverID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnRebootServer resRebootServer = new Types.returnRebootServer();
+            try
+            {
+                bool rsRebootServer = RightScale.netClient.Instance.reboot_server(serverID);
+
+                resRebootServer.ServerID = serverID;
+                resRebootServer.Result = rsRebootServer;
+                resRebootServer.Message = "Success";
+                resRebootServer.Details = "Server rebooted successfully";
+                resRebootServer.APIHref = null;
+
+                WriteObject(resRebootServer);
+            }
+
+            catch (RightScaleAPIException rex)
+            {
+
+                resRebootServer.ServerID = serverID;
+                resRebootServer.Message = "Fail";
+                resRebootServer.Details = rex.ErrorData;
+                resRebootServer.APIHref = rex.APIHref;
+                resRebootServer.Result = false;
+
+                WriteObject(resRebootServer);
+            }
+        }
+    }
+    #endregion
+
+
+    #region Instance reboot Instance
+    [Cmdlet("Reboot", "RSInstance")]
+    public class instance_rebootInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnRebootInstance retRebootInstance = new Types.returnRebootInstance();
+            try
+            {
+                bool resRebootInstance = RightScale.netClient.Instance.reboot(cloudID, instanceID);
+
+                retRebootInstance.CloudID = cloudID;
+                retRebootInstance.InstanceID = instanceID;
+                retRebootInstance.Result = resRebootInstance;
+                retRebootInstance.Message = "Success";
+                retRebootInstance.Details = "Server rebooted successfully";
+                retRebootInstance.APIHref = null;
+
+                WriteObject(retRebootInstance);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retRebootInstance.CloudID = cloudID;
+                retRebootInstance.InstanceID = instanceID;
+                retRebootInstance.Result = false;
+                retRebootInstance.Message = "Fail";
+                retRebootInstance.Details = rex.ErrorData;
+                retRebootInstance.APIHref = rex.APIHref;
+
+                WriteObject(retRebootInstance);
+            }
+        }
+    }
+    #endregion
+
 }
