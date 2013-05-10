@@ -4,16 +4,7 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.Powershell
 {
-
-    //index x
-    //show x
-    //create x
-    //update x
-    //clone x
-    //commit x
-    //destroy x
-    //publish
-
+        
     #region servertemplates index show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSServerTemplates")]
     public class servertemplate_index_show : Cmdlet
