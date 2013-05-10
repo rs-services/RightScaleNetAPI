@@ -15,9 +15,7 @@ namespace RightScale.netClient.Test
         {
             testCredentialID = ConfigurationManager.AppSettings["CredentialTest_credentialID"].ToString();
         }
-
-
-
+        
         [TestMethod]
         public void credentialIndexSimple()
         {
