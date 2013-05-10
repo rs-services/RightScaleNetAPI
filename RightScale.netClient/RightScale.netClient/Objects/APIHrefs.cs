@@ -1324,6 +1324,14 @@ namespace RightScale.netClient
         public static string OAuthAPI15 = @"/api/oauth2";
 
         public static string OAuthAPI10 = @"/api/acct/{0}/oauth2";
+
+        public static string MonitoringMetric
+        {
+            get
+            {
+                return InstanceByID + "/monitoring_metrics";
+            }
+        }
         #endregion
 
         #region string.format templates for RightScale API 1.0 hrefs

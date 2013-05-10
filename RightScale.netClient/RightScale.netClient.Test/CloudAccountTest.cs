@@ -6,7 +6,7 @@ using System.Configuration;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class CloudAccountTest
+    public class CloudAccountTest : RSAPITestBase
     {
         string cloudAccountID;
 
