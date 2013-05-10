@@ -165,5 +165,16 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
+
+        public class returnTagAction
+        {
+            public string tagAction { get; set; }
+            public string href { get; set; }
+            public string tag { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        } 
     }
 }
