@@ -410,7 +410,7 @@ namespace RightScale.netClient
             {
                 foreach (string accountGroupID in accountGroupIDs)
                 {
-                    Utility.addParameter(Utility.accountGroupHrefByID(accountGroupID), "account_group_hrefs", postParams);
+                    Utility.addParameter(Utility.accountGroupHrefByID(accountGroupID), "account_group_hrefs[]", postParams);
                 }
             }
             

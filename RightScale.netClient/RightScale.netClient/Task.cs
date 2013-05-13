@@ -140,10 +140,10 @@ namespace RightScale.netClient
                 List<string> validViews = new List<string>() { "default", "extended" };
                 Utility.CheckStringInput("view", validViews, view);
             }
+
             queryString += string.Format("view={0}", view);
 
             string jsonString = Core.APIClient.Instance.Get(getUrl, queryString);
-
             return deserializeList(jsonString);
         }
     }
