@@ -238,7 +238,7 @@ namespace RightScale.netClient
         /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
         public static MonitoringMetric show(Instance instance, string metricID, string period, string size, string title, string tz)
         {
-            return show(instance.cloud.ID, instance.ID, period, size, title, tz);
+            return show(instance.cloud.ID, instance.ID, metricID, period, size, title, tz);
         }
 
         /// <summary>
