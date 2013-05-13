@@ -102,6 +102,40 @@ namespace RightScale.netClient.Powershell
             public string MessageData { get; set; }
         }
 
+        public class returnServerTemplateUpdate
+        {
+            public string ServerTemplateID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
+        public class returnServerTemplateCommit
+        {
+            public string ServerTemplateID { get; set; }
+            public string ServerTemplateCommittedID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
+        public class returnServerTemplatePublish
+        {
+            public string ServerTemplateID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
+
         public class returnServerTemplateDestroy
         {
             public string ServerTemplateID { get; set; }
@@ -131,5 +165,16 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
+
+        public class returnTagAction
+        {
+            public string tagAction { get; set; }
+            public string href { get; set; }
+            public string tag { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        } 
     }
 }
