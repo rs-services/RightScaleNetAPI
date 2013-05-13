@@ -13,6 +13,11 @@ namespace RightScale.netClient
     /// </summary>
     public class MonitoringMetric:Core.RightScaleObjectBase<MonitoringMetric>
     {
+        /// <summary>
+        /// Private constant holding the regex validation pattern for MonitoringMetric data calls
+        /// </summary>
+        private const string monitoringMetricTimeRegex = @"^(-\d+)|0$";
+
         #region MonitoringMetric Properties
 
         /// <summary>
@@ -272,6 +277,63 @@ namespace RightScale.netClient
 
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region MonitoringMetric.data methods
+
+        /// <summary>
+        /// Gives the raw monitoring data for a particular metric. The response will include different variables associated with that metric and the data points for each of those variables.
+        /// To get the data for a certain duration, for e.g. for the last 10 minutes(600 secs), provide the variables start="-600" and end="0".
+        /// </summary>
+        /// <param name="instance">Instance to gather MonitoringMetric data for</param>
+        /// <param name="metricID">Name/ID of the MonitoringMetric whose data is to be retrieved</param>
+        /// <param name="endRefSecs">An integer number of seconds from current time e.g. -150 or 0</param>
+        /// <param name="startRefSecs">An integer number of seconds from current time e.g. -300</param>
+        /// <returns>Data for specific monitoring metric for the given instance between the reference times</returns>
+        public static MonitoringMetricData data(Instance instance, string metricID, string endRefSecs, string startRefSecs)
+        {
+            return data(instance.cloud.ID, instance.ID, metricID, endRefSecs, startRefSecs);
+        }
+
+        /// <summary>
+        /// Gives the raw monitoring data for a particular metric. The response will include different variables associated with that metric and the data points for each of those variables.
+        /// To get the data for a certain duration, for e.g. for the last 10 minutes(600 secs), provide the variables start="-600" and end="0".
+        /// </summary>
+        /// <param name="serverID">ID of the server whose current instance should be queried for the specified MonitoringMetric Data</param>
+        /// <param name="metricID">Name/ID of the MonitoringMetric whose data is to be retrieved</param>
+        /// <param name="endRefSecs">An integer number of seconds from current time e.g. -150 or 0</param>
+        /// <param name="startRefSecs">An integer number of seconds from current time e.g. -300</param>
+        /// <returns>Data for specific monitoring metric for the given instance between the reference times</returns>
+        public static MonitoringMetricData data(string serverID, string metricID, string endRefSecs, string startRefSecs)
+        {
+            Instance instance = Server.show(serverID).currentInstance;
+            return data(instance.cloud.ID, instance.ID, metricID, endRefSecs, startRefSecs);
+        }
+
+        /// <summary>
+        /// Gives the raw monitoring data for a particular metric. The response will include different variables associated with that metric and the data points for each of those variables.
+        /// To get the data for a certain duration, for e.g. for the last 10 minutes(600 secs), provide the variables start="-600" and end="0".
+        /// </summary>
+        /// <param name="cloudID">ID of the Cloud where the Instance can be found to gather MonitoringMetric data from</param>
+        /// <param name="instanceID">ID of the Instance from which to gather MonitoringMetric data</param>
+        /// <param name="metricID">Name/ID of the MonitoringMetric whose data is to be retrieved</param>
+        /// <param name="endRefSecs">An integer number of seconds from current time e.g. -150 or 0</param>
+        /// <param name="startRefSecs">An integer number of seconds from current time e.g. -300</param>
+        /// <returns>Data for specific monitoring metric for the given instance between the reference times</returns>
+        public static MonitoringMetricData data(string cloudID, string instanceID, string metricID, string endRefSecs, string startRefSecs)
+        {
+            string getHref = string.Format(APIHrefs.MonitoringMetricData, cloudID, instanceID, metricID);
+            Utility.CheckStringHasValue(startRefSecs);
+            Utility.CheckStringRegex("startRefSecs", monitoringMetricTimeRegex, startRefSecs);
+            Utility.CheckStringHasValue(endRefSecs);
+            Utility.CheckStringRegex("endRefSecs", monitoringMetricTimeRegex, endRefSecs);
+            string queryString = string.Empty;
+            queryString += string.Format("end={0}&", endRefSecs);
+            queryString += string.Format("start={0}", startRefSecs);
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return MonitoringMetricData.deserialize(jsonString);
         }
 
         #endregion

@@ -14,6 +14,7 @@ namespace RightScale.netClient.Test
         string testTimeZone;
 
         string monitoringMetricID;
+        string monitoringMetricOverviewID;
 
         public MonitoringMetricTest()
         {
@@ -25,7 +26,8 @@ namespace RightScale.netClient.Test
             this.testPeriod = "now";
             this.testTitle = "This is a title";
             this.testSize = "large";
-            this.monitoringMetricID = "cpu-0:cpu_overview"; //this should be present on all servers.. hopefully
+            this.monitoringMetricID = "cpu-0:cpu-idle"; //this should be present on all servers.. hopefully
+            this.monitoringMetricOverviewID = "cpu-0:cpu_overview"; //this should be present on all servers.. hopefully
         }
 
         #region MontioringMetric.index tests
@@ -185,6 +187,22 @@ namespace RightScale.netClient.Test
             MonitoringMetric metric = MonitoringMetric.show(this.currentInstance.cloud.ID, this.currentInstance.ID, this.monitoringMetricID, this.testPeriod, this.testSize, this.testTitle, this.testTimeZone);
             Assert.IsNotNull(metric);
             Assert.IsTrue(metric.ID == this.monitoringMetricID);
+        }
+
+        #endregion
+
+        #region MonitoringMetric.data tests
+
+        [TestMethod]
+        public void MonitoringMetricDataInstance()
+        {
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+            RightScale.netClient.Core.APIClient.Instance.Authenticate(this.authUserName, this.authPassword, this.authAccountID);
+
+            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance, this.monitoringMetricOverviewID, "0", "-3600");
+            Assert.IsNotNull(data);
+
+            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
 
         #endregion
