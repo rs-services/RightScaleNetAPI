@@ -189,4 +189,99 @@ namespace RightScale.netClient.Powershell
     }
     #endregion
 
+    #region Instance start Instance
+    [Cmdlet("Start", "RSInstance")]
+    public class instance_startInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStart = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStart = RightScale.netClient.Instance.start(cloudID, instanceID);
+
+                retInstanceActionStart.ActionType = "start";
+                retInstanceActionStart.CloudID = cloudID;
+                retInstanceActionStart.InstanceID = instanceID;
+                retInstanceActionStart.Result = resInstanceActionStart;
+                retInstanceActionStart.Message = "Success";
+                retInstanceActionStart.Details = "Server started successfully";
+                retInstanceActionStart.APIHref = null;
+
+                WriteObject(retInstanceActionStart);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStart.ActionType = "start";
+                retInstanceActionStart.CloudID = cloudID;
+                retInstanceActionStart.InstanceID = instanceID;
+                retInstanceActionStart.Result = false;
+                retInstanceActionStart.Message = "Fail";
+                retInstanceActionStart.Details = rex.ErrorData;
+                retInstanceActionStart.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStart);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+    #region Instance start Instance
+    [Cmdlet("Stop", "RSInstance")]
+    public class instance_stopInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStop = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStop = RightScale.netClient.Instance.stop(cloudID, instanceID);
+
+                retInstanceActionStop.ActionType = "stop";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = resInstanceActionStop;
+                retInstanceActionStop.Message = "Success";
+                retInstanceActionStop.Details = "Server stopped successfully";
+                retInstanceActionStop.APIHref = null;
+
+                WriteObject(retInstanceActionStop);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStop.ActionType = "stop";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = false;
+                retInstanceActionStop.Message = "Fail";
+                retInstanceActionStop.Details = rex.ErrorData;
+                retInstanceActionStop.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStop);
+            }
+        }
+    }
+    #endregion
+
+
+
 }
