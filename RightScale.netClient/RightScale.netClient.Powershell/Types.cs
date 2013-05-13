@@ -166,15 +166,37 @@ namespace RightScale.netClient.Powershell
             public string APIHref { get; set; }
         }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        public class returnInstanceAction
+        {
+            public string ActionType { get; set; }
+            public string CloudID { get; set; }
+            public string InstanceID { get; set; }
+=======
+=======
+>>>>>>> fbeadda360db9bf487b3aedbf368ee86c4541581
         public class returnTagAction
         {
             public string tagAction { get; set; }
             public string href { get; set; }
             public string tag { get; set; }
+<<<<<<< HEAD
+>>>>>>> fbeadda360db9bf487b3aedbf368ee86c4541581
+=======
+>>>>>>> fbeadda360db9bf487b3aedbf368ee86c4541581
             public bool Result { get; set; }
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
+<<<<<<< HEAD
+<<<<<<< HEAD
+        }
+=======
         } 
+>>>>>>> fbeadda360db9bf487b3aedbf368ee86c4541581
+=======
+        } 
+>>>>>>> fbeadda360db9bf487b3aedbf368ee86c4541581
     }
 }
