@@ -133,5 +133,18 @@ namespace RightScale.netClient.Test
         }
 
         #endregion
+
+        #region MonitoringMetric.show tests
+
+        [TestMethod]
+        public void monitoringMetricShowSimple()
+        {
+            List<MonitoringMetric> mmListFull = MonitoringMetric.index(azureCloudID, currentInstance.ID);
+            Assert.IsNotNull(mmListFull);
+            Assert.IsTrue(mmListFull.Count > 0);
+            //List<MonitoringMetricData> data = mmListFull[0].monitoringMetricData;
+        }
+
+        #endregion
     }
 }

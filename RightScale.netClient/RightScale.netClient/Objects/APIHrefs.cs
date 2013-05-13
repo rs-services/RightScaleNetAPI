@@ -1321,10 +1321,19 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Base href for calling to authenticate via OAuth for API 1.5
+        /// </summary>
         public static string OAuthAPI15 = @"/api/oauth2";
 
+        /// <summary>
+        /// Base href for calling to authenticate via OAuth for API 1.0
+        /// </summary>
         public static string OAuthAPI10 = @"/api/acct/{0}/oauth2";
 
+        /// <summary>
+        /// Base href for working with MonitoringMetrics, takes two parameters which are the Cloud and the Instance ID
+        /// </summary>
         public static string MonitoringMetric
         {
             get
@@ -1332,12 +1341,29 @@ namespace RightScale.netClient
                 return InstanceByID + "/monitoring_metrics";
             }
         }
+
+        /// <summary>
+        /// href for working with a specific MonitoringMetric-takes three parameters which are the Cloud, Instance and MonitoringMetric ID
+        /// </summary>
+        public static string MonitoringMetricByID
+        {
+            get
+            {
+                return MonitoringMetric + ID2;
+            }
+        }
         #endregion
 
         #region string.format templates for RightScale API 1.0 hrefs
 
+        /// <summary>
+        /// Base href for working with API 1.0 objects - takes one parameter which is the AccountID
+        /// </summary>
         public static string API10Base = @"/api/acct/{0}";
 
+        /// <summary>
+        /// Base href for working with a credential via API 1.0 - takes one parameter which is the AccountID 
+        /// </summary>
         public static string Credential
         {
             get
@@ -1346,6 +1372,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Href for working with a specific credential via API 1.0 - takes two parameters which are the AccountID and the Credential ID
+        /// </summary>
         public static string CredentialByID
         {
             get
@@ -1354,6 +1383,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Login href for standard username/password login - takes one parameter which is the AccountID
+        /// </summary>
         public static string API10Login
         {
             get

@@ -52,7 +52,10 @@ namespace RightScale.netClient
         {
             get
             {
-                string jsonString = Core.APIClient.Instance.Get(getLinkValue("data"));
+                string queryString = string.Empty;
+                queryString += "end=0&";
+                queryString += string.Format("start={0}&", (-3600).ToString());
+                string jsonString = Core.APIClient.Instance.Get(getLinkValue("data") + "?" + queryString);
                 return MonitoringMetricData.deserializeList(jsonString);
             }
         }
@@ -86,6 +89,16 @@ namespace RightScale.netClient
         /// <summary>
         /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
         /// </summary>
+        /// <param name="instance">Instance object to be queried for MonitoringMetrics</param>
+        /// <returns>Collection of MonitoringMetrics based on input parameters and filters</returns>
+        public static List<MonitoringMetric> index(Instance instance)
+        {
+            return index(instance.cloud.ID, instance.ID, null, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
         /// <param name="serverID">ID of the server whose current instance will be queried to gather MonitoringMetrics</param>
         /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
         /// <returns>Collection of MonitoringMetrics based on input parameters and filters</returns>
@@ -110,6 +123,17 @@ namespace RightScale.netClient
         /// <summary>
         /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
         /// </summary>
+        /// <param name="instance">Instance object to be queried for MonitoringMetrics</param>
+        /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
+        /// <returns>Collection of MonitoringMetrics based on input parameters and filters</returns>
+        public static List<MonitoringMetric> index(Instance instance, List<Filter> filter)
+        {
+            return index(instance.cloud.ID, instance.ID, filter, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
         /// <param name="serverID">ID of the server whose current instance will be queried to gather MonitoringMetrics</param>
         /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
         /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
@@ -126,6 +150,21 @@ namespace RightScale.netClient
         /// <summary>
         /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
         /// </summary>
+        /// <param name="instance">Instance object to be queried for MonitoringMetrics</param>
+        /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
+        /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
+        /// <param name="size">The size of the graph to be generated. Default is 'small'.</param>
+        /// <param name="title">The title of the graph.</param>
+        /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
+        /// <returns>Collection of MonitoringMetrics based on input parameters and filters</returns>
+        public static List<MonitoringMetric> index(Instance instance, List<Filter> filter, string period, string size, string title, string tz)
+        {
+            return index(instance.cloud.ID, instance.ID, filter, period, size, title, tz);
+        }
+
+        /// <summary>
+        /// Lists the monitoring metrics available for the instance and their corresponding graph hrefs. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
         /// <param name="cloudID">ID of the cloud where the Instance to be queried can be found</param>
         /// <param name="instanceID">ID of the Instance to queried to gather MonitoringMetrics</param>
         /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
@@ -135,6 +174,120 @@ namespace RightScale.netClient
         /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
         /// <returns>Collection of MonitoringMetrics based on input parameters and filters</returns>
         public static List<MonitoringMetric> index(string cloudID, string instanceID, List<Filter> filter, string period, string size, string title, string tz)
+        {
+
+            string getHref = string.Format(APIHrefs.MonitoringMetric, cloudID, instanceID);
+
+            string queryString = getMonitoringMetricQueryString(filter, ref period, ref size, title, ref tz);
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserializeList(jsonString);
+        }
+        #endregion
+
+        #region MonitoringMetric.show methods
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="serverID">ID of the server whose current instance will be queried to gather MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(string serverID, string metricID)
+        {
+            Instance instance = Server.show(serverID).currentInstance;
+            return show(instance.cloud.ID, instance.ID, metricID, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="serverID">ID of the server whose current instance will be queried to gather MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
+        /// <param name="size">The size of the graph to be generated. Default is 'small'.</param>
+        /// <param name="title">The title of the graph.</param>
+        /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(string serverID, string metricID, string period, string size, string title, string tz)
+        {
+            Instance instance = Server.show(serverID).currentInstance;
+            return show(instance.cloud.ID, instance.ID, metricID, period, size, title, tz);
+        }
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="instance">Instance object to be queried for MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(Instance instance, string metricID)
+        {
+            return show(instance.cloud.ID, instance.ID, metricID, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="instance">Instance object to be queried for MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
+        /// <param name="size">The size of the graph to be generated. Default is 'small'.</param>
+        /// <param name="title">The title of the graph.</param>
+        /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(Instance instance, string metricID, string period, string size, string title, string tz)
+        {
+            return show(instance.cloud.ID, instance.ID, period, size, title, tz);
+        }
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Instance to be queried can be found</param>
+        /// <param name="instanceID">ID of the Instance to queried to gather MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(string cloudID, string instanceID, string metricID)
+        {
+            return show(cloudID, instanceID, metricID, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Shows attributes of a single monitoring metric. Making a request to the graph_href will return a png image corresponding to that monitoring metric.
+        /// </summary>
+        /// <param name="cloudID">ID of the cloud where the Instance to be queried can be found</param>
+        /// <param name="instanceID">ID of the Instance to queried to gather MonitoringMetrics</param>
+        /// <param name="metricID">ID of the specific metric to be returned</param>
+        /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
+        /// <param name="size">The size of the graph to be generated. Default is 'small'.</param>
+        /// <param name="title">The title of the graph.</param>
+        /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
+        /// <returns>Returns specific MonitoringMetric as specified by inputs</returns>
+        public static MonitoringMetric show(string cloudID, string instanceID, string metricID, string period, string size, string title, string tz)
+        {
+            string getHref = string.Format(APIHrefs.MonitoringMetricByID, cloudID, instanceID, metricID); 
+            
+            string queryString = getMonitoringMetricQueryString(null, ref period, ref size, title, ref tz);
+
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+            return deserialize(jsonString);
+        }
+
+        #endregion
+
+        #region MonitoringMetric helper methods
+
+        /// <summary>
+        /// Private method builds query string for index and show calls for MonitoringMetric requests
+        /// </summary>
+        /// <param name="filter">Set of filters to limit the set of MonitoringMetrics returned</param>
+        /// <param name="period">The time scale for which the graph is generated. Default is 'day'</param>
+        /// <param name="size">The size of the graph to be generated. Default is 'small'.</param>
+        /// <param name="title">The title of the graph.</param>
+        /// <param name="tz">The time zone in which the graph will be displayed. Default will be 'America/Los_Angeles'. For more zones, see User Settings -> Preferences.</param>
+        /// <returns></returns>
+        private static string getMonitoringMetricQueryString(List<Filter> filter, ref string period, ref string size, string title, ref string tz)
         {
             if (string.IsNullOrWhiteSpace(period))
             {
@@ -155,8 +308,8 @@ namespace RightScale.netClient
                 List<string> validSizes = new List<string>() { "thumb", "tiny", "small", "large", "xlarge" };
                 Utility.CheckStringInput("size", validSizes, size);
             }
-            
-            if(string.IsNullOrWhiteSpace(tz))
+
+            if (string.IsNullOrWhiteSpace(tz))
             {
                 tz = "America/Los_Angeles";
             }
@@ -164,7 +317,6 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "plugin", "view" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            string getHref = string.Format(APIHrefs.MonitoringMetric, cloudID, instanceID);
             string queryString = string.Empty;
 
             if (filter != null && filter.Count > 0)
@@ -192,11 +344,9 @@ namespace RightScale.netClient
                 queryString += "tz=" + tz;
             }
             queryString = queryString.TrimEnd('&');
-
-            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
-            return deserializeList(jsonString);
+            return queryString;
         }
+
         #endregion
-	
     }
 }
