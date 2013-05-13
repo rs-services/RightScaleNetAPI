@@ -196,13 +196,24 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void MonitoringMetricDataInstance()
         {
-            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
-            RightScale.netClient.Core.APIClient.Instance.Authenticate(this.authUserName, this.authPassword, this.authAccountID);
-
-            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance, this.monitoringMetricOverviewID, "0", "-3600");
+            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance, this.monitoringMetricID, "0", "-3600");
             Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
+        }
 
-            RightScale.netClient.Core.APIClient.Instance.InitWebClient();
+        [TestMethod]
+        public void MonitoringMetricDataServer()
+        {
+            MonitoringMetricData data = MonitoringMetric.data(this.liveTestServerID, this.monitoringMetricID, "0", "-3600");
+            Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
+        }
+        [TestMethod]
+        public void MonitoringMetricDataSimple()
+        {
+            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance.cloud.ID, this.currentInstance.ID, this.monitoringMetricID, "0", "-3600");
+            Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
         }
 
         #endregion

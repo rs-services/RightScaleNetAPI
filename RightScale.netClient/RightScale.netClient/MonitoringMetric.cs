@@ -332,6 +332,7 @@ namespace RightScale.netClient
             string queryString = string.Empty;
             queryString += string.Format("end={0}&", endRefSecs);
             queryString += string.Format("start={0}", startRefSecs);
+            
             string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
             return MonitoringMetricData.deserialize(jsonString);
         }
