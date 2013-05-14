@@ -28,7 +28,7 @@ namespace RightScale.netClient
         /// <summary>
         /// href property for assigning an href value when using the 'tiny' view of SecurityGroup objects
         /// </summary>
-        private string href
+        public string href
         {
             get
             {
