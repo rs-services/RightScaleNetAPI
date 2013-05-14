@@ -1051,7 +1051,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the Instance is running</param>
         /// <param name="instanceID">Instance ID to be terminated</param>
         /// <returns></returns>
-        public bool terminate(string cloudID, string instanceID)
+        public static bool terminate(string cloudID, string instanceID)
         {
             string postHref = string.Format(APIHrefs.InstanceTerminate, cloudID, instanceID);
             return Core.APIClient.Instance.Post(postHref);
