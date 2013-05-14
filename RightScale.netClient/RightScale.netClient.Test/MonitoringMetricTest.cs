@@ -14,6 +14,7 @@ namespace RightScale.netClient.Test
         string testTimeZone;
 
         string monitoringMetricID;
+        string monitoringMetricOverviewID;
 
         public MonitoringMetricTest()
         {
@@ -25,7 +26,8 @@ namespace RightScale.netClient.Test
             this.testPeriod = "now";
             this.testTitle = "This is a title";
             this.testSize = "large";
-            this.monitoringMetricID = "cpu-0:cpu_overview"; //this should be present on all servers.. hopefully
+            this.monitoringMetricID = "cpu-0:cpu-idle"; //this should be present on all servers.. hopefully
+            this.monitoringMetricOverviewID = "cpu-0:cpu_overview"; //this should be present on all servers.. hopefully
         }
 
         #region MontioringMetric.index tests
@@ -185,6 +187,33 @@ namespace RightScale.netClient.Test
             MonitoringMetric metric = MonitoringMetric.show(this.currentInstance.cloud.ID, this.currentInstance.ID, this.monitoringMetricID, this.testPeriod, this.testSize, this.testTitle, this.testTimeZone);
             Assert.IsNotNull(metric);
             Assert.IsTrue(metric.ID == this.monitoringMetricID);
+        }
+
+        #endregion
+
+        #region MonitoringMetric.data tests
+
+        [TestMethod]
+        public void MonitoringMetricDataInstance()
+        {
+            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance, this.monitoringMetricID, "0", "-3600");
+            Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
+        }
+
+        [TestMethod]
+        public void MonitoringMetricDataServer()
+        {
+            MonitoringMetricData data = MonitoringMetric.data(this.liveTestServerID, this.monitoringMetricID, "0", "-3600");
+            Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
+        }
+        [TestMethod]
+        public void MonitoringMetricDataSimple()
+        {
+            MonitoringMetricData data = MonitoringMetric.data(this.currentInstance.cloud.ID, this.currentInstance.ID, this.monitoringMetricID, "0", "-3600");
+            Assert.IsNotNull(data);
+            Assert.IsTrue(data.variables_data.Count > 0);
         }
 
         #endregion

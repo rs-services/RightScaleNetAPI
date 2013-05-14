@@ -1352,6 +1352,14 @@ namespace RightScale.netClient
                 return MonitoringMetric + ID2;
             }
         }
+
+        public static string MonitoringMetricData
+        {
+            get
+            {
+                return MonitoringMetricByID + @"/data";
+            }
+        }
         #endregion
 
         #region string.format templates for RightScale API 1.0 hrefs

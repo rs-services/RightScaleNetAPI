@@ -114,6 +114,7 @@
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Objects\Utility.cs" />
+    <Compile Include="Objects\VariablesData.cs" />
     <Compile Include="Volume.cs" />
     <Compile Include="VolumeAttachment.cs" />
     <Compile Include="VolumeSnapshot.cs" />
