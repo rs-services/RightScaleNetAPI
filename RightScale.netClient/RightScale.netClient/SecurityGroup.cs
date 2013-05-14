@@ -24,6 +24,46 @@ namespace RightScale.netClient
         /// RightScale Resource UID of this Security Group
         /// </summary>
         public string resource_uid { get; set; }
+
+        /// <summary>
+        /// href property for assigning an href value when using the 'tiny' view of SecurityGroup objects
+        /// </summary>
+        private string href
+        {
+            get
+            {
+                if (links != null)
+                {
+                    foreach (Link l in links)
+                    {
+                        if (l.rel == "href")
+                        {
+                            return l.href;
+                        }
+                    }
+                }
+                return null;
+            }
+            set
+            {
+                if (links == null)
+                {
+                    links = new List<Link>();
+                    links.Add(new Link("href", value));
+                }
+                else
+                {
+                    foreach (Link l in links)
+                    {
+                        if (l.rel == "href")
+                        {
+                            links.Remove(l);
+                        }
+                    }
+                    links.Add(new Link("href", value));
+                }
+            }
+        }
         
         #endregion
 

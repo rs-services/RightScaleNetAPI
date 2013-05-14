@@ -110,7 +110,7 @@ namespace RightScale.netClient.Test
         }
         
         [TestMethod]
-        public void serverArrayCreateDestroy()
+        public void serverArrayCreateDestroyAlert()
         {
             string array_type = "alert";
             List<ElasticityParam> elasticityParams = new List<ElasticityParam>();

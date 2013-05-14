@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace RightScale.netClient.Test
 {
     [TestClass]
-    public class PermissionUnitTest
+    public class PermissionUnitTest : RSAPITestBase
     {
         Permission testPermission;
 
