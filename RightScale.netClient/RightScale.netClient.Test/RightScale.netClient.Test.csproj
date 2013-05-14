@@ -89,6 +89,7 @@
     <Compile Include="CredentialTest.cs" />
     <Compile Include="CloudAccountTest.cs" />
     <Compile Include="MonitoringMetricTest.cs" />
+    <Compile Include="PermissionUnitTest.cs" />
     <Compile Include="UserUnitTest.cs" />
     <Compile Include="VolumeAttachmentTest.cs" />
     <Compile Include="VolumeTypeTest.cs" />
