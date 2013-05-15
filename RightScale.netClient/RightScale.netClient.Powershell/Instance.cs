@@ -4,6 +4,20 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.Powershell
 {
+
+/*    index
+show - done
+update
+launch
+multi_run_executable
+multi_terminate
+reboot - done
+run_executable
+set_custom_lodgement
+start - done
+stop - done
+terminate*/
+
     #region Instance index / show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSInstances")]
     public class instance : Cmdlet
@@ -237,7 +251,7 @@ namespace RightScale.netClient.Powershell
 
 
 
-    #region Instance start Instance
+    #region Instance stop Instance
     [Cmdlet("Stop", "RSInstance")]
     public class instance_stopInstance : Cmdlet
     {
@@ -269,6 +283,52 @@ namespace RightScale.netClient.Powershell
             {
 
                 retInstanceActionStop.ActionType = "stop";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = false;
+                retInstanceActionStop.Message = "Fail";
+                retInstanceActionStop.Details = rex.ErrorData;
+                retInstanceActionStop.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStop);
+            }
+        }
+    }
+    #endregion
+
+
+    #region Instance Terminate Instance
+    [Cmdlet("terminate", "RSInstance")]
+    public class instance_terminateInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStop = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStop = RightScale.netClient.Instance.terminate(cloudID, instanceID);
+
+                retInstanceActionStop.ActionType = "terminate";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = resInstanceActionStop;
+                retInstanceActionStop.Message = "Success";
+                retInstanceActionStop.Details = "Server terminated successfully";
+                retInstanceActionStop.APIHref = null;
+
+                WriteObject(retInstanceActionStop);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStop.ActionType = "terminate";
                 retInstanceActionStop.CloudID = cloudID;
                 retInstanceActionStop.InstanceID = instanceID;
                 retInstanceActionStop.Result = false;
