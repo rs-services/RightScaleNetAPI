@@ -388,6 +388,9 @@ terminate*/
         [Parameter(Position = 13, Mandatory = false)]
         public string userData;
 
+        [Parameter(Position = 14, Mandatory = false)]
+        public string[] subnetIDs;
+
         protected override void ProcessRecord()
         {
 
@@ -402,9 +405,21 @@ terminate*/
                 }
             }
 
+
+            // parsing subnetIDs and turning it into a list from array
+            List<string> lstSubnets = new List<string>();
+            if (subnetIDs != null)
+            {
+                foreach (string subnetID in subnetIDs)
+                {
+                    lstSubnets.Add(subnetID);
+                }
+            }
+
+
             try
             {
-                bool resInstanceAction = RightScale.netClient.Instance.update(cloudID, instanceID, name, instanceTypeID, serverTemplateID, multiCloudImageID, lstSecurityGroups, dataCenterID, imageID, kernelImageID, ramdiskImageID, sshKeyID, userData);
+                bool resInstanceAction = RightScale.netClient.Instance.update(cloudID, instanceID, name, instanceTypeID, serverTemplateID, multiCloudImageID, lstSecurityGroups, dataCenterID, imageID, kernelImageID, ramdiskImageID, sshKeyID, userData, lstSubnets);
 
                 retInstanceActionUpdate.ActionType = "update";
                 retInstanceActionUpdate.CloudID = cloudID;
