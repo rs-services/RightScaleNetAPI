@@ -644,6 +644,7 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.sshKeyHref(cloudID, sshKeyID), "instance[ssh_key_href]", putParameters);
             Utility.addParameter(userData, "instance[user_data]", putParameters);
             
+            
             return Core.APIClient.Instance.Put(putHref, putParameters);
         }
 

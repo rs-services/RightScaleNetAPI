@@ -165,7 +165,7 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
-
+        //consolidated the class for all instance actions
         public class returnInstanceAction
         {
             public string ActionType { get; set; }
@@ -175,6 +175,18 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
+       //The values below were added for "update" to work 
+            public string name { get; set; }
+            public string instanceTypeID { get; set; }
+            public string serverTemplateID { get; set; }
+            public string multiCloudImageID { get; set; }
+            public string[] securityGroupIDs { get; set; }
+            public string dataCenterID { get; set; }
+            public string imageID { get; set; }
+            public string kernelImageID { get; set; }
+            public string ramdiskImageID{ get; set; }
+            public string sshKeyID { get; set; }
+            public string userData { get; set; }
         }
 
         public class returnTagAction
@@ -186,6 +198,7 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
+
         }
 
 
