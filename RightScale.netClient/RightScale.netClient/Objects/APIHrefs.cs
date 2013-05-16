@@ -106,7 +106,7 @@ namespace RightScale.netClient
         /// <summary>
         /// Segment that's tacked on to the end of a href to work with subnets
         /// </summary>
-        private static string subnetSegment = @"/subnet";
+        private static string subnetSegment = @"/subnets";
 
         /// <summary>
         /// Segment that's included to accept index 0 replacement in a string.format operation
