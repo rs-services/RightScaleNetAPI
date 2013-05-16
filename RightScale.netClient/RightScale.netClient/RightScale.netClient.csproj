@@ -110,10 +110,12 @@
     <Compile Include="ServerTemplateMultiCloudImage.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SshKey.cs" />
+    <Compile Include="Subnet.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Objects\Utility.cs" />
+    <Compile Include="Objects\VariablesData.cs" />
     <Compile Include="Volume.cs" />
     <Compile Include="VolumeAttachment.cs" />
     <Compile Include="VolumeSnapshot.cs" />

@@ -29,5 +29,37 @@ namespace RightScale.netClient
         public string inherited_source { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// Default constructor for building new links
+        /// </summary>
+        public Link()
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor designed to take a rel and href value and build a corresponding instance of a Link object
+        /// </summary>
+        /// <param name="relVal">value to assign to rel property</param>
+        /// <param name="hrefVal">value to assign to href property</param>
+        public Link(string relVal, string hrefVal)
+        {
+            this.href = hrefVal;
+            this.rel = relVal;
+        }
+
+        /// <summary>
+        /// Constructor designed to take a rel, href and inherited source value and build a corresponding instance of a Link object
+        /// </summary>
+        /// <param name="relVal">value to assign to rel property</param>
+        /// <param name="hrefVal">value to assign to href property</param>
+        /// <param name="inheritedSourceVal">value to assign to inherited_source property</param>
+        public Link(string relVal, string hrefVal, string inheritedSourceVal)
+        {
+            this.href = hrefVal;
+            this.rel = relVal;
+            this.inherited_source = inheritedSourceVal;
+        }
     }
 }

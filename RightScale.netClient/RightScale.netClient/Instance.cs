@@ -619,8 +619,9 @@ namespace RightScale.netClient
         /// <param name="ramdiskImageID">Updated RamdiskImageID for Instance</param>
         /// <param name="sshKeyID">Updated SshKeyID for Instance</param>
         /// <param name="userData">Updated UserData for Instance</param>
+        /// <param name="subnetIDs">Updated list of SubnetID for Instance</param>
         /// <returns>True if successful, false if not</returns>
-        public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData)
+        public static bool update(string cloudID, string instanceID, string name, string instanceTypeID, string serverTemplateID, string multiCloudImageID, List<string> securityGroupIDs, string dataCenterID, string imageID, string kernelImageID, string ramdiskImageID, string sshKeyID, string userData, List<string> subnetIDs)
         {
             string putHref = string.Format(APIHrefs.InstanceByID, cloudID, instanceID);
 
@@ -643,6 +644,15 @@ namespace RightScale.netClient
             Utility.addParameter(Utility.ramdiskImageHref(cloudID, ramdiskImageID), "instance[ramdisk_image_href]", putParameters);
             Utility.addParameter(Utility.sshKeyHref(cloudID, sshKeyID), "instance[ssh_key_href]", putParameters);
             Utility.addParameter(userData, "instance[user_data]", putParameters);
+
+            if (subnetIDs != null && subnetIDs.Count > 0)
+            {
+                foreach (string subnetID in subnetIDs)
+                {
+                    Utility.addParameter(Utility.subnetHref(cloudID, subnetID), "instance[subnet_hrefs]", putParameters);
+                }
+            }
+            
             
             return Core.APIClient.Instance.Put(putHref, putParameters);
         }
@@ -1051,7 +1061,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the Instance is running</param>
         /// <param name="instanceID">Instance ID to be terminated</param>
         /// <returns></returns>
-        public bool terminate(string cloudID, string instanceID)
+        public static bool terminate(string cloudID, string instanceID)
         {
             string postHref = string.Format(APIHrefs.InstanceTerminate, cloudID, instanceID);
             return Core.APIClient.Instance.Post(postHref);

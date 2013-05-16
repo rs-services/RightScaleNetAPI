@@ -4,6 +4,20 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.Powershell
 {
+
+/*    index
+show - done
+update
+launch
+multi_run_executable
+multi_terminate
+reboot - done
+run_executable
+set_custom_lodgement
+start - done
+stop - done
+terminate*/
+
     #region Instance index / show cmdlets
     [Cmdlet(VerbsCommon.Get, "RSInstances")]
     public class instance : Cmdlet
@@ -188,5 +202,255 @@ namespace RightScale.netClient.Powershell
         }
     }
     #endregion
+
+    #region Instance start Instance
+    [Cmdlet("Start", "RSInstance")]
+    public class instance_startInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStart = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStart = RightScale.netClient.Instance.start(cloudID, instanceID);
+
+                retInstanceActionStart.ActionType = "start";
+                retInstanceActionStart.CloudID = cloudID;
+                retInstanceActionStart.InstanceID = instanceID;
+                retInstanceActionStart.Result = resInstanceActionStart;
+                retInstanceActionStart.Message = "Success";
+                retInstanceActionStart.Details = "Server started successfully";
+                retInstanceActionStart.APIHref = null;
+
+                WriteObject(retInstanceActionStart);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStart.ActionType = "start";
+                retInstanceActionStart.CloudID = cloudID;
+                retInstanceActionStart.InstanceID = instanceID;
+                retInstanceActionStart.Result = false;
+                retInstanceActionStart.Message = "Fail";
+                retInstanceActionStart.Details = rex.ErrorData;
+                retInstanceActionStart.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStart);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+    #region Instance stop Instance
+    [Cmdlet("Stop", "RSInstance")]
+    public class instance_stopInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStop = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStop = RightScale.netClient.Instance.stop(cloudID, instanceID);
+
+                retInstanceActionStop.ActionType = "stop";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = resInstanceActionStop;
+                retInstanceActionStop.Message = "Success";
+                retInstanceActionStop.Details = "Server stopped successfully";
+                retInstanceActionStop.APIHref = null;
+
+                WriteObject(retInstanceActionStop);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStop.ActionType = "stop";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = false;
+                retInstanceActionStop.Message = "Fail";
+                retInstanceActionStop.Details = rex.ErrorData;
+                retInstanceActionStop.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStop);
+            }
+        }
+    }
+    #endregion
+
+
+    #region Instance Terminate Instance
+    [Cmdlet("terminate", "RSInstance")]
+    public class instance_terminateInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionStop = new Types.returnInstanceAction();
+            try
+            {
+                bool resInstanceActionStop = RightScale.netClient.Instance.terminate(cloudID, instanceID);
+
+                retInstanceActionStop.ActionType = "terminate";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = resInstanceActionStop;
+                retInstanceActionStop.Message = "Success";
+                retInstanceActionStop.Details = "Server terminated successfully";
+                retInstanceActionStop.APIHref = null;
+
+                WriteObject(retInstanceActionStop);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionStop.ActionType = "terminate";
+                retInstanceActionStop.CloudID = cloudID;
+                retInstanceActionStop.InstanceID = instanceID;
+                retInstanceActionStop.Result = false;
+                retInstanceActionStop.Message = "Fail";
+                retInstanceActionStop.Details = rex.ErrorData;
+                retInstanceActionStop.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionStop);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+    #region Instance update Instance
+    [Cmdlet("update", "RSInstance")]
+    public class instance_updateInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        public string name;
+
+        [Parameter(Position = 4, Mandatory = false)]
+        public string instanceTypeID;
+
+        [Parameter(Position = 5, Mandatory = false)]
+        public string serverTemplateID;
+
+        [Parameter(Position = 6, Mandatory = false)]
+        public string multiCloudImageID;
+
+        [Parameter(Position = 7, Mandatory = false)]
+        public string[] securityGroupIDs;
+
+        [Parameter(Position = 8, Mandatory = false)]
+        public string dataCenterID;
+
+        [Parameter(Position = 9, Mandatory = false)]
+        public string imageID;
+
+        [Parameter(Position = 10, Mandatory = false)]
+        public string kernelImageID;
+
+        [Parameter(Position = 11, Mandatory = false)]
+        public string ramdiskImageID;
+
+        [Parameter(Position = 12, Mandatory = false)]
+        public string sshKeyID;
+
+        [Parameter(Position = 13, Mandatory = false)]
+        public string userData;
+
+        [Parameter(Position = 14, Mandatory = false)]
+        public string[] subnetIDs;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionUpdate = new Types.returnInstanceAction();
+            // parsing securitygroup id's and turning it into list from array
+            List<string> lstSecurityGroups = new List<string>();
+            if (securityGroupIDs != null)
+            {
+                foreach (string securityGroupID in securityGroupIDs)
+                {
+                    lstSecurityGroups.Add(securityGroupID);
+                }
+            }
+
+
+            // parsing subnetIDs and turning it into a list from array
+            List<string> lstSubnets = new List<string>();
+            if (subnetIDs != null)
+            {
+                foreach (string subnetID in subnetIDs)
+                {
+                    lstSubnets.Add(subnetID);
+                }
+            }
+
+
+            try
+            {
+                bool resInstanceAction = RightScale.netClient.Instance.update(cloudID, instanceID, name, instanceTypeID, serverTemplateID, multiCloudImageID, lstSecurityGroups, dataCenterID, imageID, kernelImageID, ramdiskImageID, sshKeyID, userData, lstSubnets);
+
+                retInstanceActionUpdate.ActionType = "update";
+                retInstanceActionUpdate.CloudID = cloudID;
+                retInstanceActionUpdate.InstanceID = instanceID;
+                retInstanceActionUpdate.Result = resInstanceAction;
+                retInstanceActionUpdate.Message = "Success";
+                retInstanceActionUpdate.Details = "Instance updated successfully";
+                retInstanceActionUpdate.APIHref = null;
+
+                WriteObject(retInstanceActionUpdate);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionUpdate.ActionType = "update";
+                retInstanceActionUpdate.CloudID = cloudID;
+                retInstanceActionUpdate.InstanceID = instanceID;
+                retInstanceActionUpdate.Result = false;
+                retInstanceActionUpdate.Message = "Fail";
+                retInstanceActionUpdate.Details = rex.ErrorData;
+                retInstanceActionUpdate.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionUpdate);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+
 
 }
