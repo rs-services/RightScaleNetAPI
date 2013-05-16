@@ -14,9 +14,9 @@ namespace RightScale.netClient.Test
 
         public DataCenterTest()
         {
-            cloudID = ConfigurationManager.AppSettings["DataCenter_cloudID"].ToString();
-            datacenterID = ConfigurationManager.AppSettings["DataCenter_datacenterID"].ToString();
-            servicesOauthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
+            this.cloudID = ConfigurationManager.AppSettings["DataCenter_cloudID"].ToString();
+            this.datacenterID = ConfigurationManager.AppSettings["DataCenter_datacenterID"].ToString();
+            this.servicesOauthToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
         }
 
         [TestMethod]

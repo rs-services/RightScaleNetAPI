@@ -104,6 +104,11 @@ namespace RightScale.netClient
         private static string multiAddSegment = "/multi_add";
 
         /// <summary>
+        /// Segment that's tacked on to the end of a href to work with subnets
+        /// </summary>
+        private static string subnetSegment = @"/subnets";
+
+        /// <summary>
         /// Segment that's included to accept index 0 replacement in a string.format operation
         /// </summary>
         private static string ID0 = "/{0}";
@@ -1353,6 +1358,9 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// Href for retrieving data for a specific MonitoringMetric - takes three parameters which are the Cloud, Instance and MonitoringMetric ID
+        /// </summary>
         public static string MonitoringMetricData
         {
             get
@@ -1360,6 +1368,51 @@ namespace RightScale.netClient
                 return MonitoringMetricByID + @"/data";
             }
         }
+
+        /// <summary>
+        /// Href for working with subnets in a given cloud - takes one parameter which is the CloudID
+        /// </summary>
+        public static string Subnet
+        {
+            get
+            {
+                return CloudByID + subnetSegment;
+            }
+        }
+
+        /// <summary>
+        /// Href for working with subnets in the context of an instance - takes two parameters which are the CloudID and the InstanceID
+        /// </summary>
+        public static string InstanceSubnet
+        {
+            get
+            {
+                return InstanceByID + subnetSegment;
+            }
+        }
+
+        /// <summary>
+        /// Href for working with a specific subnet within a cloud - takes two parameters which are the CloudID and the SubnetID
+        /// </summary>
+        public static string SubnetByID
+        {
+            get
+            {
+                return Subnet + ID1;
+            }
+        }
+
+        /// <summary>
+        /// Href for working with a subnet for a specific instance - takes three parameters which are the CloudID, InstanceID and SubnetID
+        /// </summary>
+        public static string InstanceSubnetByID
+        {
+            get
+            {
+                return InstanceSubnet + ID2;
+            }
+        }
+
         #endregion
 
         #region string.format templates for RightScale API 1.0 hrefs

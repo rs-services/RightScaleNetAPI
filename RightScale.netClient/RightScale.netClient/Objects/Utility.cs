@@ -517,6 +517,24 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// Helper method returns properly formatted subnet_href
+        /// </summary>
+        /// <param name="cloudID">Cloud ID where subnet can be found</param>
+        /// <param name="objectID">Subnet ID</param>
+        /// <returns>Formatted subnet_href</returns>
+        public static string subnetHref(string cloudID, string objectID)
+        {
+            if (!string.IsNullOrWhiteSpace(objectID) && !string.IsNullOrWhiteSpace(cloudID))
+            {
+                return string.Format(APIHrefs.SubnetByID, cloudID, objectID);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Helper method returns properly formatted datacenter_href
         /// </summary>
         /// <param name="cloudID">Cloud ID where datacenter can be found</param>
