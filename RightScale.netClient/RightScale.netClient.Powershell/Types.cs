@@ -175,6 +175,18 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
-        } 
+        }
+
+        public class returnVolume
+        {
+            public string VolumeID { get; set; }
+            public string CloudID { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string Details { get; set; }
+            public string APIHref { get; set; }
+        }
     }
 }
