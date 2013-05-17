@@ -26,17 +26,19 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isTerminated { get; set; }
 
-        /// <summary>
-        /// Execute method manages process of terminating a given server
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(System.Activities.CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
+            LogInformation("Beginning call to terminate server (" + this.serverID.Get(context) + ")");
+
             if (base.authClient(context))
             {
-                bool retVal = Server.terminate(this.serverID.Get(context));
+                retVal = Server.terminate(this.serverID.Get(context));
                 this.isTerminated.Set(context, retVal);
             }
+
+            LogInformation("Done with call to terminate server (" + this.serverID.Get(context) + ") with result of " + retVal.ToString());
+            return retVal;
         }
 
         /// <summary>

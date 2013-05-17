@@ -26,17 +26,28 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isDestroyed { get; set; }
 
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
+        {
+            LogInformation("Beginning Destroy Deployment process for deployment [" + this.deploymentID.Get(context) + "]");
+            bool retVal = false;
+
+            if (base.authClient(context))
+            {
+                bool setDestroyed = Deployment.destroy(this.deploymentID.Get(context));
+                this.isDestroyed.Set(context, setDestroyed);
+                retVal = true;
+            }
+
+            LogInformation("Completed Destroy Deployment process for deployment [" + this.deploymentID.Get(context) + "] with success = " + retVal.ToString());
+            return retVal;
+        }
+
         /// <summary>
         /// Execute method manages process of destroying a given Deployment based on the ID specified
         /// </summary>
         /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(System.Activities.CodeActivityContext context)
         {
-            if (base.authClient(context))
-            {
-                bool retVal = Deployment.destroy(this.deploymentID.Get(context));
-                this.isDestroyed.Set(context, retVal);
-            }
         }
 
         /// <summary>

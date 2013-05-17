@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Activities;
 using RightScale.netClient.Core;
+using System.Threading;
 using RightScale.netClient;
 
 namespace RightScale.netClient.ActivityLibrary
@@ -24,22 +25,27 @@ namespace RightScale.netClient.ActivityLibrary
         /// Output argument identifying whether or not the specific server was launched
         /// </summary>
         public OutArgument<bool> serverLaunched { get; set; }
-
+        
         /// <summary>
         /// Exectute method launches the given server specified within the input variable collection
         /// </summary>
         /// <param name="context">Windows Workflow Foundation CodeActivity runtime contextss</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
+
             LogInformation("Beginning call to launch Server id: " + this.serverID.Get(context));
 
             if (base.authClient(context))
             {
-                bool retVal = Server.launch(this.serverID.Get(context));
+                retVal = Server.launch(this.serverID.Get(context));
                 this.serverLaunched.Set(context, retVal);
             }
 
-            LogInformation("Completed call to launch Server id: " + this.serverID.Get(context) + " with result of serverLaunched = " + this.serverLaunched.Get(context));
+            string completeMessage = "Completed call to launch Server id: " + this.serverID.Get(context) + " with result of serverLaunched = " + this.serverLaunched.Get(context);
+            LogInformation(completeMessage);
+
+            return retVal;
         }
 
         /// <summary>

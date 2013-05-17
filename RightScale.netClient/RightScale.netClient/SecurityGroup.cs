@@ -28,7 +28,7 @@ namespace RightScale.netClient
         /// <summary>
         /// href property for assigning an href value when using the 'tiny' view of SecurityGroup objects
         /// </summary>
-        public string href
+        public new string href
         {
             get
             {
@@ -209,7 +209,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the Security Group will be created</param>
         /// <param name="name">Name of the Security Group to be created</param>
         /// <returns>ID of the newly created Security Group</returns>
-        public string create(string cloudID, string name)
+        public static string create(string cloudID, string name)
         {
             return create(cloudID, name, null);
         }
@@ -221,7 +221,7 @@ namespace RightScale.netClient
         /// <param name="name">Name of the Security Group to be created</param>
         /// <param name="description">Description for the newly created security group</param>
         /// <returns>ID of the newly created Security Group</returns>
-        public string create(string cloudID, string name, string description)
+        public static string create(string cloudID, string name, string description)
         {
             string postHref = string.Format(APIHrefs.SecurityGroup, cloudID);
             List<KeyValuePair<string, string>> postParams = new List<KeyValuePair<string, string>>();
@@ -241,7 +241,7 @@ namespace RightScale.netClient
         /// <param name="cloudID">ID of the cloud where the Security Group can be found</param>
         /// <param name="securityGroupID">ID of the Security Group to be destroyed</param>
         /// <returns>true if destroyed, false if not</returns>
-        public bool destroy(string cloudID, string securityGroupID)
+        public static bool destroy(string cloudID, string securityGroupID)
         {
             string deleteHref = string.Format(APIHrefs.SecurityGroupByID, cloudID, securityGroupID);
             return Core.APIClient.Instance.Delete(deleteHref);

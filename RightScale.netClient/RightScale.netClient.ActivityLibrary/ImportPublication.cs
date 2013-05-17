@@ -24,20 +24,22 @@ namespace RightScale.netClient.ActivityLibrary
         /// Output argument defining the serverTemplate ID corresponding to the newly imported object
         /// </summary>
         public OutArgument<string> serverTemplateID { get; set; }
-
-        /// <summary>
-        /// Execute method calls out to RightScale API and performs Import process for a given publication into the API User's RightScale account.
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             LogInformation("Beginning call to import publication id: " + this.publicationID.Get(context));
             if (base.authClient(context))
             {
                 ServerTemplate st = Publication.import(publicationID.Get(context));
-                this.serverTemplateID.Set(context, st.ID);
+                if (st != null && !string.IsNullOrWhiteSpace(st.ID))
+                {
+                    this.serverTemplateID.Set(context, st.ID);
+                    retVal = true;
+                }
             }
             LogInformation("Completed call to import publication id: " + this.publicationID.Get(context) + " with serverTemplateID: " + this.serverTemplateID.Get(context));
+            return retVal;
         }
 
         /// <summary>

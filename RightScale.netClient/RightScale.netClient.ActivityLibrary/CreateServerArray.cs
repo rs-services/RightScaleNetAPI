@@ -47,12 +47,9 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<string> serverArrayID { get; set; }
 
-        /// <summary>
-        /// Execute method creates a ServerArray based on the inputs provided
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             LogInformation("Creating ServerArray for ServerTemplateID: " + this.serverTemplateID.Get(context));
 
             if (base.authClient(context))
@@ -63,9 +60,11 @@ namespace RightScale.netClient.ActivityLibrary
                 }
                 string arrayID = RightScale.netClient.ServerArray.create(this.arrayType.Get(context), this.dataCenterPolicies.Get(context), this.elasticityParams.Get(context), this.cloudID.Get(context), this.deploymentID.Get(context), this.serverTemplateID.Get(context), this.name.Get(context), this.state.Get(context), this.description.Get(context), this.dataCenterID.Get(context), this.inputs.Get(context), this.instanceTypeID.Get(context), this.imageID.Get(context), this.kernelImageID.Get(context), this.multiCloudImageID.Get(context), this.ramdiskImageID.Get(context), this.securityGroupIDs.Get(context), this.sshKeyID.Get(context), this.userData.Get(context), this.optimized.Get(context));
                 this.serverArrayID.Set(context, arrayID);
+                retVal = true;
             }
 
             LogInformation("Completed creating ServerArray for ServerTemplateID: " + this.serverTemplateID.Get(context));
+            return retVal;
         }
 
         /// <summary>

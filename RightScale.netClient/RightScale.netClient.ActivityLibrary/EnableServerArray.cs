@@ -26,21 +26,29 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isEnabled { get; set; }
 
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
+        {
+            bool retVal = false;
+            LogInformation("Beginning call to enable ServerArray " + this.serverArrayID.Get(context));
+
+            if (base.authClient(context))
+            {
+                bool setEnabled = ServerArray.setEnabled(this.serverArrayID.Get(context));
+                this.isEnabled.Set(context, setEnabled);
+                retVal = true;
+            }
+
+            LogInformation("Completed call to enable ServerArray " + this.serverArrayID.Get(context) + " with return value of " + this.isEnabled.Get(context).ToString());
+            return retVal;
+        }
+
         /// <summary>
         /// Execute method enables the specific ServerArray as defined by inputs
         /// </summary>
         /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
         protected override void Execute(CodeActivityContext context)
         {
-            LogInformation("Beginning call to enable ServerArray " + this.serverArrayID.Get(context));
 
-            if (base.authClient(context))
-            {
-                bool retVal = ServerArray.setEnabled(this.serverArrayID.Get(context));
-                this.isEnabled.Set(context, retVal);
-            }
-
-            LogInformation("Completed call to enable ServerArray " + this.serverArrayID.Get(context) + " with return value of " + this.isEnabled.Get(context).ToString());
         }
 
         /// <summary>

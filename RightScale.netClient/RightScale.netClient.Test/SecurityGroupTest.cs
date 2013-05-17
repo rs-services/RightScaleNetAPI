@@ -10,11 +10,13 @@ namespace RightScale.netClient.Test
     {
         string cloudID;
         string apiRefreshToken;
+        string accountID;
 
         public SecurityGroupTest()
         {
-            cloudID = this.cloudStackCloudID;
-            apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
+            this.cloudID = this.cloudStackCloudID;
+            this.apiRefreshToken = ConfigurationManager.AppSettings["RightScaleServicesAPIRefreshToken"].ToString();
+            this.accountID = ConfigurationManager.AppSettings["SecurityGroupTest_accountID"].ToString();
         }
 
         [TestMethod]
@@ -53,7 +55,7 @@ namespace RightScale.netClient.Test
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public void securityGroupViewTest()
         {
             RightScale.netClient.Core.APIClient.Instance.InitWebClient();
             RightScale.netClient.Core.APIClient.Instance.Authenticate(this.apiRefreshToken);
@@ -68,5 +70,32 @@ namespace RightScale.netClient.Test
             
             RightScale.netClient.Core.APIClient.Instance.InitWebClient();
         }
+
+        [TestMethod]
+        public void securityGroupCreateDelete()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(this.authUserName, this.authPassword, this.accountID);
+            string sgID =string.Empty;
+            try
+            {
+                sgID = SecurityGroup.create(this.awsUSEastCloudID, Guid.NewGuid().ToString().Substring(0,10));
+                Assert.IsNotNull(sgID);
+                Assert.IsTrue(sgID.Length > 0);
+
+                bool isDeleted = SecurityGroup.destroy(this.awsUSEastCloudID, sgID);
+                Assert.IsTrue(isDeleted);
+                sgID = string.Empty;
+            }
+            finally
+            {
+                if (!string.IsNullOrWhiteSpace(sgID))
+                {
+                    SecurityGroup.destroy(this.cloudID, sgID);
+                }
+            }
+            netClient.Core.APIClient.Instance.InitWebClient();
+        }
+
     }
 }

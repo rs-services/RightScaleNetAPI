@@ -27,7 +27,7 @@ namespace RightScale.netClient.Test
             windowsLaunchTestServerID = ConfigurationManager.AppSettings["ServerTest_winLaunchTerminateServerID"].ToString();
             maxWaitLoops = 10;
         }
-        
+
         #region Server.index tests
 
         [TestMethod]

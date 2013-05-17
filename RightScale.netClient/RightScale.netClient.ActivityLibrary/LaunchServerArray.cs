@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Activities;
+using System.Threading;
 using RightScale.netClient.Core;
 using RightScale.netClient;
 
@@ -29,26 +30,31 @@ namespace RightScale.netClient.ActivityLibrary
         /// Output variable containing ID of the server launched within the given ServerArray
         /// </summary>
         public OutArgument<string> serverID { get; set; }
-
+        
         /// <summary>
-        /// Execute method launches a server within the specified ServerArray
+        /// 
         /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(System.Activities.CodeActivityContext context)
+        /// <param name="context"></param>
+        /// <returns></returns>
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
             LogInformation("Starting process of launching a single server in the array");
+         
+            bool retVal = false;
             if (base.authClient(context))
             {
-                bool retVal = false;
-                string serverID = ServerArray.launch(serverArrayID.Get(context));
-                this.serverID.Set(context, serverID);
-                if (!string.IsNullOrWhiteSpace(serverID))
+                string newServerID = ServerArray.launch(serverArrayID.Get(context));
+                this.serverID.Set(context, newServerID);
+                if (!string.IsNullOrWhiteSpace(newServerID))
                 {
                     retVal = true;
                 }
                 isLaunched.Set(context, retVal);
-            }
-            LogInformation("Completed process of launching a single server in the array id: " + this.serverArrayID.Get(context) + " with result of " + this.isLaunched.Get(context));
+            } 
+            string completeMessage = "Completed process of launching a single server in the array id: " + this.serverArrayID.Get(context) + " with result of " + this.isLaunched.Get(context);
+            LogInformation(completeMessage);
+            
+            return retVal;
         }
 
         /// <summary>
