@@ -35,7 +35,22 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void credentialCreateDeleteSimple()
         {
-            string credID = Credential.create("testCredential", DateTime.Now.ToString());
+            string testCredName = "testCredential SimpleTest";
+
+            List<Credential> credList = Credential.index();
+            Assert.IsNotNull(credList);
+            Assert.IsTrue(credList.Count > 0);
+
+            foreach (Credential c in credList)
+            {
+                if (c.name == testCredName)
+                {
+                    bool isDeleted = Credential.destroy(c.ID);
+                    break;
+                }
+            }
+
+            string credID = Credential.create(testCredName, DateTime.Now.ToString());
             Assert.IsNotNull(credID);
             Assert.IsTrue(credID.Length > 0);
             bool credDeleted = Credential.destroy(credID);
@@ -45,8 +60,24 @@ namespace RightScale.netClient.Test
         [TestMethod]
         public void credentialCreateUpdateDelete()
         {
+
+            string testCredName = "testCredential CRUD Test";
+
+            List<Credential> credList = Credential.index();
+            Assert.IsNotNull(credList);
+            Assert.IsTrue(credList.Count > 0);
+
+            foreach (Credential c in credList)
+            {
+                if (c.name == testCredName)
+                {
+                    bool isDeleted = Credential.destroy(c.ID);
+                    break;
+                }
+            }
+
             string firstCredValue = DateTime.Now.ToString();
-            string credID = Credential.create("testCredential", firstCredValue);
+            string credID = Credential.create(testCredName, firstCredValue);
             Assert.IsNotNull(credID);
             Assert.IsTrue(credID.Length > 0);
 
