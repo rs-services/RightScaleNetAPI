@@ -1133,6 +1133,17 @@ namespace RightScale.netClient
         }
 
         /// <summary>
+        /// href for working with volumes - takes one parameter which is the cloud ID
+        /// </summary>
+        public static string VolumeSnapshots
+        {
+            get
+            {
+                return CloudByID + "/volume_snapshots";
+            }
+        }
+
+        /// <summary>
         /// Href for working with volume snapshots
         /// </summary>
         public static string VolumeSnapshot

@@ -344,4 +344,113 @@ terminate*/
 
 
 
+
+    #region Instance update Instance
+    [Cmdlet("update", "RSInstance")]
+    public class instance_updateInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        public string name;
+
+        [Parameter(Position = 4, Mandatory = false)]
+        public string instanceTypeID;
+
+        [Parameter(Position = 5, Mandatory = false)]
+        public string serverTemplateID;
+
+        [Parameter(Position = 6, Mandatory = false)]
+        public string multiCloudImageID;
+
+        [Parameter(Position = 7, Mandatory = false)]
+        public string[] securityGroupIDs;
+
+        [Parameter(Position = 8, Mandatory = false)]
+        public string dataCenterID;
+
+        [Parameter(Position = 9, Mandatory = false)]
+        public string imageID;
+
+        [Parameter(Position = 10, Mandatory = false)]
+        public string kernelImageID;
+
+        [Parameter(Position = 11, Mandatory = false)]
+        public string ramdiskImageID;
+
+        [Parameter(Position = 12, Mandatory = false)]
+        public string sshKeyID;
+
+        [Parameter(Position = 13, Mandatory = false)]
+        public string userData;
+
+        [Parameter(Position = 14, Mandatory = false)]
+        public string[] subnetIDs;
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionUpdate = new Types.returnInstanceAction();
+            // parsing securitygroup id's and turning it into list from array
+            List<string> lstSecurityGroups = new List<string>();
+            if (securityGroupIDs != null)
+            {
+                foreach (string securityGroupID in securityGroupIDs)
+                {
+                    lstSecurityGroups.Add(securityGroupID);
+                }
+            }
+
+
+            // parsing subnetIDs and turning it into a list from array
+            List<string> lstSubnets = new List<string>();
+            if (subnetIDs != null)
+            {
+                foreach (string subnetID in subnetIDs)
+                {
+                    lstSubnets.Add(subnetID);
+                }
+            }
+
+
+            try
+            {
+                bool resInstanceAction = RightScale.netClient.Instance.update(cloudID, instanceID, name, instanceTypeID, serverTemplateID, multiCloudImageID, lstSecurityGroups, dataCenterID, imageID, kernelImageID, ramdiskImageID, sshKeyID, userData, lstSubnets);
+
+                retInstanceActionUpdate.ActionType = "update";
+                retInstanceActionUpdate.CloudID = cloudID;
+                retInstanceActionUpdate.InstanceID = instanceID;
+                retInstanceActionUpdate.Result = resInstanceAction;
+                retInstanceActionUpdate.Message = "Success";
+                retInstanceActionUpdate.Details = "Instance updated successfully";
+                retInstanceActionUpdate.APIHref = null;
+
+                WriteObject(retInstanceActionUpdate);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionUpdate.ActionType = "update";
+                retInstanceActionUpdate.CloudID = cloudID;
+                retInstanceActionUpdate.InstanceID = instanceID;
+                retInstanceActionUpdate.Result = false;
+                retInstanceActionUpdate.Message = "Fail";
+                retInstanceActionUpdate.Details = rex.ErrorData;
+                retInstanceActionUpdate.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionUpdate);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+
+
 }
