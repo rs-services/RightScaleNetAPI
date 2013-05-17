@@ -674,7 +674,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return SshKeyByID + ID1;
+                return SshKey + ID1;
             }
         }
 
