@@ -312,6 +312,34 @@ namespace RightScale.netClient.Test
         }
         #endregion
 
+        #region Instance.update tests
+
+        [TestMethod]
+        public void instanceNameUpdateTest()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate(apiRefreshToken);
+
+            Instance currInstance = Server.show("804947001").currentInstance;
+            Assert.IsNotNull(currInstance);
+            Assert.IsTrue(currInstance.ID.Length > 0);
+
+            string guidString = Guid.NewGuid().ToString() ;
+
+            bool isUpdated = Instance.update(currInstance.cloud.ID, currInstance.ID, "this is a new name " + guidString, null, null, null, null, null, null, null, null, null, null, null);
+            Assert.IsTrue(isUpdated);
+
+            Instance updatedInstance = Server.show("804947001").currentInstance;
+            Assert.IsNotNull(updatedInstance);
+            Assert.IsTrue(updatedInstance.ID.Length > 0);
+
+            Assert.IsTrue(currInstance.name != updatedInstance.name);
+
+            netClient.Core.APIClient.Instance.InitWebClient();
+        }
+
+        #endregion
+
         [TestMethod]
         public void runExecutableByIDSimpleTest()
         {
