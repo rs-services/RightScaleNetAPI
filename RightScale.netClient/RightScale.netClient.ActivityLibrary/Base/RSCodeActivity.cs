@@ -133,13 +133,13 @@ namespace RightScale.netClient.ActivityLibrary.Base
                 catch (Exception ex)
                 {
                     LogInformation("    RSAPI attempt #" + (i + 1).ToString() + " failed with exception " + ex.Message);
-                    errorMessage += "(" + (i + 1).ToString() + " of " + numRetries.Get<int>(context).ToString() + "): " + ex.Message + Environment.NewLine;
+                    errorMessage += "(" + (i + 1).ToString() + " of " + retries.ToString() + "): " + ex.Message + Environment.NewLine;
                 }
                 Thread.Sleep(retryTime);
             }
             if (!completed && !string.IsNullOrWhiteSpace(errorMessage))
             {
-                throw new RightScaleAPIException("Failed to perform RightScale API Call for " + GetFriendlyName() + " in " + numRetries.Get<int>(context).ToString() + " attempts", string.Empty, errorMessage);
+                throw new RightScaleAPIException("Failed to perform RightScale API Call for " + GetFriendlyName() + " in " + retries.ToString() + " attempts", string.Empty, errorMessage);
             }
         }
 
