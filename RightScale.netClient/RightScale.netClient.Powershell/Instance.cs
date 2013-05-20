@@ -451,6 +451,75 @@ terminate*/
 
 
 
+    #region Instance launch Instance
+    [Cmdlet("launch", "RSInstance")]
+    public class instance_launchInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        //gets parsed and set to a list of inputs
+        public string[] inputs;
+
+       
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionLaunch = new Types.returnInstanceAction();
+            
+            List<Input> strInputs = new List<Input>();
+            if (inputs != null)
+            {
+                foreach (string input in inputs)
+                {
+                    
+                    string inputName = input.Split(':')[0];
+                    string inputValue = input.Split(':')[1];
+
+                    Input varInput = new Input(inputName, inputValue);
+                    strInputs.Add(varInput);
+                }
+            }
+
+
+            try
+            {
+                string resInstanceActionlaunch = RightScale.netClient.Instance.launch(cloudID, instanceID, strInputs);
+
+                retInstanceActionLaunch.ActionType = "launch";
+                retInstanceActionLaunch.CloudID = cloudID;
+                retInstanceActionLaunch.InstanceID = instanceID;
+                retInstanceActionLaunch.Result = true;
+                retInstanceActionLaunch.Message = "Success";
+                retInstanceActionLaunch.Details = "Instance launched successfully";
+                retInstanceActionLaunch.APIHref = null;
+
+                WriteObject(retInstanceActionLaunch);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionLaunch.ActionType = "launch";
+                retInstanceActionLaunch.CloudID = cloudID;
+                retInstanceActionLaunch.InstanceID = instanceID;
+                retInstanceActionLaunch.Result = false;
+                retInstanceActionLaunch.Message = "Fail";
+                retInstanceActionLaunch.Details = rex.ErrorData;
+                retInstanceActionLaunch.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionLaunch);
+            }
+        }
+    }
+    #endregion
+
+
+
+
 
 
 }
