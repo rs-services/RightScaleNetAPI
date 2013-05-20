@@ -260,15 +260,26 @@ namespace RightScale.netClient.Core
         /// <returns>True if successful, false if not</returns>
         internal bool Put(string putHref, List<KeyValuePair<string,string>> putData)
         {
+            string responseContent = string.Empty;
+            HttpResponseMessage response = null;
+
             if (CheckAuthenticationStatus())
             {
                 string putUrl = apiBaseAddress.Trim('/') + putHref;
                 if (putData.Count > 0)
                 {
-                    HttpContent putContent = new FormUrlEncodedContent(putData);
-                    HttpResponseMessage response = webClient.PutAsync(putUrl, putContent).Result;
-                    response.EnsureSuccessStatusCode();
-                    return true;
+                    try
+                    {
+                        HttpContent putContent = new FormUrlEncodedContent(putData);
+                        response = webClient.PutAsync(putUrl, putContent).Result;
+                        responseContent = response.Content.ReadAsStringAsync().Result;
+                        response.EnsureSuccessStatusCode();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new RightScaleAPIException(responseContent, putHref, response.ReasonPhrase, ex);
+                    }
                 }
                 else
                 {

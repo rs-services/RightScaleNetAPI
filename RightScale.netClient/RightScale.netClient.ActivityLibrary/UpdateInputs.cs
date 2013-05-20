@@ -31,23 +31,22 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isUpdated { get; set; }
 
-        /// <summary>
-        /// Execute method updates the inputs of a given server
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
+
             LogInformation("Beginning Input Update Process for Server id: " + this.serverID.Get(context));
 
             this.isUpdated.Set(context, false);
             if (base.authClient(context))
             {
                 Instance nextInstance = Server.show(this.serverID.Get(context)).nextInstance;
-                bool updated = Input.multi_update_instance(nextInstance.cloud.ID, nextInstance.ID, inputs.Get(context));
-                this.isUpdated.Set(context, updated);
+                retVal = Input.multi_update_instance(nextInstance.cloud.ID, nextInstance.ID, inputs.Get(context));
+                this.isUpdated.Set(context, retVal);
             }
 
             LogInformation("Completed Input update process for Server id: " + this.serverID.Get(context) + " with result of isUpdated = " + this.isUpdated.Get(context).ToString());
+            return retVal;
         }
 
         /// <summary>

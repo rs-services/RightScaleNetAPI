@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6" />
+  <TestList name="Core API Tests" id="96d8a694-99c7-45a5-9d23-21d389603f4e" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <Description>API Core tests
+</Description>
+  </TestList>
+</TestLists>

@@ -69,10 +69,5 @@ namespace RightScale.netClient.ActivityLibrary.Base
         /// </summary>
         public InArgument<string> description { get; set; }
 
-        /// <summary>
-        /// Abstract override for Execute method to be implemented in derived classes
-        /// </summary>
-        /// <param name="context">Code Activity context</param>
-        protected abstract override void Execute(CodeActivityContext context);
     }
 }

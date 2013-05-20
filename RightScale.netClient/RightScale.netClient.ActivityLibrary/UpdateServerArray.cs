@@ -50,21 +50,20 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isUpdated { get; set; } 
 
-        /// <summary>
-        /// Execute method updates a ServerArray with all properties that contain values.  Properties that are set to null or string.empty will not be changed.
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(System.Activities.CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false; 
+
             LogInformation("Beginning update ServerArray id: " + this.serverArrayID.Get(context));
 
             if (base.authClient(context))
             {
-                bool retVal = ServerArray.update(serverArrayID.Get(context), arrayType.Get(context), dataCenterPolicies.Get(context), deploymentID.Get(context), description.Get(context), elasticityParams.Get(context), cloudID.Get(context), dataCenterID.Get(context), inputs.Get(context), instanceTypeID.Get(context), imageID.Get(context), kernelImageID.Get(context), multiCloudImageID.Get(context), ramdiskImageID.Get(context), securityGroupIDs.Get(context), serverTemplateID.Get(context), sshKeyID.Get(context), userData.Get(context), name.Get(context), optimized.Get(context), state.Get(context));
+                retVal = ServerArray.update(serverArrayID.Get(context), arrayType.Get(context), dataCenterPolicies.Get(context), deploymentID.Get(context), description.Get(context), elasticityParams.Get(context), cloudID.Get(context), dataCenterID.Get(context), inputs.Get(context), instanceTypeID.Get(context), imageID.Get(context), kernelImageID.Get(context), multiCloudImageID.Get(context), ramdiskImageID.Get(context), securityGroupIDs.Get(context), serverTemplateID.Get(context), sshKeyID.Get(context), userData.Get(context), name.Get(context), optimized.Get(context), state.Get(context));
                 this.isUpdated.Set(context, retVal);
             }
 
             LogInformation("Completed update ServerArray id: " + this.serverArrayID.Get(context) + " with isUpdated = " + this.isUpdated.Get(context));
+            return retVal;
         }
 
         /// <summary>

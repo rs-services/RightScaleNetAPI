@@ -35,12 +35,9 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isComplete { get; set; }
 
-        /// <summary>
-        /// Execute method calls to RightScale API to get current state of a given Server and evaluates whether or not that server has launched successfully
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             LogInformation("Beginning query to get status of Server id: " + this.serverID.Get(context));
 
             if (string.IsNullOrWhiteSpace(this.successSate.Get(context)))
@@ -55,10 +52,12 @@ namespace RightScale.netClient.ActivityLibrary
                 if (this.serverState.Get(context).ToLower() == this.successSate.Get(context).ToLower())
                 {
                     this.isComplete.Set(context, true);
+                    retVal = true;
                 }
                 else
                 {
                     this.isComplete.Set(context, false);
+                    retVal = true;
                 }
             }
             else
@@ -67,8 +66,9 @@ namespace RightScale.netClient.ActivityLibrary
             }
 
             LogInformation("Completed query to get status of Server id: " + this.serverID.Get(context) + " with result of isComplete = " + this.isComplete.Get(context).ToString());
+            return retVal;
         }
-
+        
         /// <summary>
         /// Override to GetFriendlyName sets the name of the objet in the designer
         /// </summary>

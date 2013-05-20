@@ -26,19 +26,22 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<bool> isDisabled { get; set; }
 
-        /// <summary>
-        /// Execute method disables the specified ServerArray
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
+            LogInformation("Beginning call to disable ServerArray " + this.serverArrayID.Get(context));
+            
             if (base.authClient(context))
             {
-                bool retVal = ServerArray.setDisabled(this.serverArrayID.Get(context));
-                isDisabled.Set(context, retVal);
+                bool setDisabled = ServerArray.setDisabled(this.serverArrayID.Get(context));
+                isDisabled.Set(context, setDisabled);
+                retVal = true;
             }
-        }
 
+            LogInformation("Completed call to disable ServerArray " + this.serverArrayID.Get(context) + " with return value of " + this.isDisabled.Get(context).ToString());
+            return retVal;
+        }
+        
         /// <summary>
         /// Override to GetFriendlyName sets the name of the objet in the designer
         /// </summary>

@@ -4,14 +4,9 @@ using RightScale.netClient;
 
 namespace RightScale.netClient.Powershell
 {
-
-    //index show
-    //create
-    //destroy
-    
-    #region volume index / show cmdlets
-    [Cmdlet(VerbsCommon.Get, "RSVolumes")]
-    public class volumes_index : Cmdlet
+    #region volumesnapshot index show cmdlets
+    [Cmdlet(VerbsCommon.Get, "RSVolumeSnapShots")]
+    public class volumesnapshots_index : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = true)]
         public string cloudID;
@@ -20,12 +15,10 @@ namespace RightScale.netClient.Powershell
         public string filter;
 
         [Parameter(Position = 3, Mandatory = false)]
-        public string view;
+        public string view = "default";
 
         protected override void ProcessRecord()
         {
-            if (view == null) { view = "default"; }
-
             List<Filter> lstFilter = new List<Filter>();
 
             if (filter != null)
@@ -36,43 +29,30 @@ namespace RightScale.netClient.Powershell
 
             base.ProcessRecord();
 
-            List<Volume> rsVolumes = RightScale.netClient.Volume.index(cloudID, lstFilter, view);
+            Types.returnVolume retResult = new Types.returnVolume();
 
-            WriteObject(rsVolumes);
-
-        }
-
-        [Cmdlet(VerbsCommon.Get, "RSVolume")]
-        public class volumes_show : Cmdlet
-        {
-            [Parameter(Position = 1, Mandatory = true)]
-            public string cloudID;
-
-            [Parameter(Position = 2, Mandatory = true)]
-            public string volumeID;
-
-            [Parameter(Position = 3, Mandatory = false)]
-            public string view;
-
-            protected override void ProcessRecord()
+            try
             {
-                if (view == null) { view = "default"; }
+                
+                    List<VolumeSnapshot> rsVolumeSnapshots = RightScale.netClient.VolumeSnapshot.index(cloudID, lstFilter, view);
+                    WriteObject(rsVolumeSnapshots);
+            }
+            catch (RightScaleAPIException rex)
+            {
+                retResult.Message = "Fail";
+                retResult.Details = rex.ErrorData;
+                retResult.APIHref = rex.APIHref;
+                retResult.Result = false;
 
-                base.ProcessRecord();
-
-                Volume rsVolume = RightScale.netClient.Volume.show(cloudID, volumeID, view);
-
-                WriteObject(rsVolume);
-
+                WriteObject(retResult);
             }
         }
-
     }
     #endregion
 
     #region volume create / destroy cmdlets
-    [Cmdlet(VerbsCommon.New, "RSVolume")]
-    public class volumes_create : Cmdlet
+    [Cmdlet(VerbsCommon.New, "RSVolumeSnapshot")]
+    public class volumesnapshots_create : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = true)]
         public string cloudID;

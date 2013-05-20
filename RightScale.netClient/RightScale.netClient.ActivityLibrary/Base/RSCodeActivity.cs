@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using RightScale.netClient.Core;
 using RightScale.netClient;
 using System.Activities;
@@ -34,6 +35,16 @@ namespace RightScale.netClient.ActivityLibrary.Base
         /// Account ID for authenticating to RightScale API - when used, requires <paramref name="rsUserName"/> and <paramref name="rsPassword"/>
         /// </summary>
         public InArgument<string> rsAccountID { get; set; }
+
+        /// <summary>
+        /// Number of retries this process should loop through when attempting to launch a server 
+        /// </summary>
+        public InArgument<int> numRetries { get; set; }
+
+        /// <summary>
+        /// Amount of time between retries - implemented as a thread.sleep after an unsuccessful attempt to call the RightScale API
+        /// </summary>
+        public InArgument<TimeSpan> retryWaitTime { get; set; }
 
         public RSCodeActivity()
         {
@@ -91,8 +102,49 @@ namespace RightScale.netClient.ActivityLibrary.Base
             Trace.WriteLine(sf.GetMethod().Module.Name + "." + sf.GetMethod().Name + ": " + message, categoryName);
         }
 
-        protected abstract override void Execute(CodeActivityContext context);
+        protected override void Execute(CodeActivityContext context)
+        {
+            int retries = 3;
+            TimeSpan retryTime = new TimeSpan(0, 1, 0);
+
+            if (numRetries != null && numRetries.Get<int>(context) > 0)
+            {
+                retries = numRetries.Get<int>(context);
+            }
+
+            if (retryWaitTime != null)
+            {
+                retryTime = retryWaitTime.Get<TimeSpan>(context);
+            }
+
+            bool completed = false;
+            string errorMessage = string.Empty;
+
+            for (int i = 0; i < retries; i++)
+            {
+                try
+                {
+                    if (PerformRightScaleTask(context))
+                    {
+                        completed = true;
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogInformation("    RSAPI attempt #" + (i + 1).ToString() + " failed with exception " + ex.Message);
+                    errorMessage += "(" + (i + 1).ToString() + " of " + retries.ToString() + "): " + ex.Message + Environment.NewLine;
+                }
+                Thread.Sleep(retryTime);
+            }
+            if (!completed && !string.IsNullOrWhiteSpace(errorMessage))
+            {
+                throw new RightScaleAPIException("Failed to perform RightScale API Call for " + GetFriendlyName() + " in " + retries.ToString() + " attempts", string.Empty, errorMessage);
+            }
+        }
 
         protected abstract string GetFriendlyName();
+
+        protected abstract bool PerformRightScaleTask(CodeActivityContext context);
     }
 }

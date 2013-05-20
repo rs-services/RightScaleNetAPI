@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -92,7 +93,7 @@
     <Compile Include="PermissionUnitTest.cs" />
     <Compile Include="SecurityGroupTest.cs" />
     <Compile Include="SecurityGroupRuleTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="SshKeyTest.cs" />
     <Compile Include="SubnetTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="VolumeAttachmentTest.cs" />
@@ -109,6 +110,9 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="TestSets\01_CoreTests.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Choose>

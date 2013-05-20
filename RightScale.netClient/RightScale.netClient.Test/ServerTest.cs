@@ -27,6 +27,15 @@ namespace RightScale.netClient.Test
             windowsLaunchTestServerID = ConfigurationManager.AppSettings["ServerTest_winLaunchTerminateServerID"].ToString();
             maxWaitLoops = 10;
         }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            netClient.Core.APIClient.Instance.InitWebClient();
+            netClient.Core.APIClient.Instance.Authenticate("patrick@rightscale.com", "fU4reqUD!", "58765");
+            Server.launch("815550001");
+            netClient.Core.APIClient.Instance.InitWebClient();
+        }
         
         #region Server.index tests
 

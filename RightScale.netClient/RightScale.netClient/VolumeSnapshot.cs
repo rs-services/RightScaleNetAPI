@@ -105,23 +105,30 @@ namespace RightScale.netClient
         
         #region VolumeSnapshot.index methods
 
-        public static List<VolumeSnapshot> index()
+        public static List<VolumeSnapshot> index(string cloudID)
         {
-            return index(null, null);
+            return index(cloudID, null, null);
         }
 
-        public static List<VolumeSnapshot> index(List<Filter> filter)
+        public static List<VolumeSnapshot> index(string cloudID, List<Filter> filter)
         {
-            return index(filter, null);
+            return index(cloudID, filter, null);
         }
 
-        public static List<VolumeSnapshot> index(string view)
+        public static List<VolumeSnapshot> index(string cloudID, string view)
         {
-            return index(null, view);
+            return index(cloudID, null, view);
         }
 
-        public static List<VolumeSnapshot> index(List<Filter> filter, string view)
+        public static List<VolumeSnapshot> index(string cloudID, List<Filter> filter, string view)
         {
+
+            //GET /api/clouds/:cloud_id/volumes/:volume_id/volume_snapshots
+            //GET /api/clouds/:cloud_id/volume_snapshots
+
+            string getHref = string.Format(APIHrefs.VolumeSnapshots, cloudID);
+            string queryString = string.Empty;
+
             if (string.IsNullOrWhiteSpace(view))
             {
                 view = "default";
@@ -135,8 +142,10 @@ namespace RightScale.netClient
             List<string> validFilters = new List<string>() { "description", "name", "parent_volume_href", "resource_uid" };
             Utility.CheckFilterInput("filter", validFilters, filter);
 
-            //TODO: implement VolumeSnapshot.index
-            throw new NotImplementedException();
+            string jsonString = Core.APIClient.Instance.Get(getHref, queryString);
+
+            return deserializeList(jsonString);
+
         }
         #endregion
 		

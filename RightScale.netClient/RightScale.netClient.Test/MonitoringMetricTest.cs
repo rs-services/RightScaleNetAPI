@@ -14,11 +14,10 @@ namespace RightScale.netClient.Test
         string testTimeZone;
 
         string monitoringMetricID;
-        string monitoringMetricOverviewID;
 
         public MonitoringMetricTest()
         {
-            currentInstance = Server.show(liveTestServerID).currentInstance;
+            currentInstance = Server.show(this.liveTestServerID).currentInstance;
             Assert.IsNotNull(currentInstance);
             Assert.IsTrue(currentInstance.ID.Length > 0);
 
@@ -27,7 +26,6 @@ namespace RightScale.netClient.Test
             this.testTitle = "This is a title";
             this.testSize = "large";
             this.monitoringMetricID = "cpu-0:cpu-idle"; //this should be present on all servers.. hopefully
-            this.monitoringMetricOverviewID = "cpu-0:cpu_overview"; //this should be present on all servers.. hopefully
         }
 
         #region MontioringMetric.index tests

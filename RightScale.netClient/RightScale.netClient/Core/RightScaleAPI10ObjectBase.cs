@@ -13,11 +13,28 @@ namespace RightScale.netClient.Core
     /// <typeparam name="T">Type of object - used for deserialization processes</typeparam>
     public class RightScaleAPI10ObjectBase<T>
     {
+        /// <summary>
+        /// Href of object 
+        /// </summary>
         [XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string href;
 
+        /// <summary>
+        /// Name of this object
+        /// </summary>
         [XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public string name;
+
+        /// <summary>
+        /// ID portion of href
+        /// </summary>
+        public string ID
+        {
+            get
+            {
+                return href.Split('/').Last<string>();
+            }
+        }
         
         #region serializer methods
 

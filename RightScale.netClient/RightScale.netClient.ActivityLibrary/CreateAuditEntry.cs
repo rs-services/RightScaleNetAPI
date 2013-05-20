@@ -53,21 +53,20 @@ namespace RightScale.netClient.ActivityLibrary
             this.DisplayName = "RightScale - Create Audit Entry";
         }
 
-        /// <summary>
-        /// Execute method performs process of calling to RightScale API to create an audit entry based on the inputs provided
-        /// </summary>
-        /// <param name="context">Code Activity Context from Windows Workflow runtime</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             string apiHref = getAPIHref(context);
             LogInformation("Starting call to create Audit Record on " + auditObjectType.Get(context).ToString() + " with ID of " + auditObjectID.Get(context));
             if (base.authClient(context))
             {
-                AuditEntry.create(apiHref, auditObjectSummary.Get(context), auditObjectDetail.Get(context)); 
+                AuditEntry.create(apiHref, auditObjectSummary.Get(context), auditObjectDetail.Get(context));
+                retVal = true;
             }
             LogInformation("Completed creating Audit Record on " + auditObjectType.Get(context).ToString() + " with ID of " + auditObjectID.Get(context));
+            return retVal;
         }
-
+        
         /// <summary>
         /// Private method to build proper href for calling out to the RightScale API based on the AuditObjectType provided
         /// </summary>

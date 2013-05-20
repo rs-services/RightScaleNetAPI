@@ -674,7 +674,7 @@ namespace RightScale.netClient
         {
             get
             {
-                return SshKeyByID + ID1;
+                return SshKey + ID1;
             }
         }
 
@@ -1129,6 +1129,17 @@ namespace RightScale.netClient
             get
             {
                 return Volume + ID1;
+            }
+        }
+
+        /// <summary>
+        /// href for working with volumes - takes one parameter which is the cloud ID
+        /// </summary>
+        public static string VolumeSnapshots
+        {
+            get
+            {
+                return CloudByID + "/volume_snapshots";
             }
         }
 

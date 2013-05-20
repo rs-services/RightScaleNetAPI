@@ -25,15 +25,11 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<List<string>> serverIDs { get; set; }
 
-        /// <summary>
-        /// Execute method creates servers based on provided inputs
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
             LogInformation("Creating " + this.numberOfServers.Get(context).ToString() + " servers based on ServerTemplateID: " + this.serverTemplateID.Get(context));
 
-            string retVal = string.Empty;
+            bool retVal = false;
 
             List<string> serverIDlist = new System.Collections.Generic.List<string>();
 
@@ -41,7 +37,7 @@ namespace RightScale.netClient.ActivityLibrary
             {
                 throw new ArgumentOutOfRangeException("numberOfServers must be greater than 0 to provision servers through this process.  Please check your inputs and try again.");
             }
-            
+
             if (base.authClient(context))
             {
                 if (this.numberOfServers.Get(context) > 1)
@@ -56,44 +52,48 @@ namespace RightScale.netClient.ActivityLibrary
                         LogInformation("Creating Server " + serverNum + " of " + ofServers);
 
                         string desc = this.description.Get(context);
-                        
+
                         if (string.IsNullOrWhiteSpace(desc))
                         {
                             desc = getDefaultDescription();
                         }
-                        
+
                         string srvName = this.name.Get(context) + " [" + serverNum + " of " + ofServers + "]";
                         string srvID = Server.create(this.cloudID.Get(context), this.deploymentID.Get(context), this.serverTemplateID.Get(context), srvName, desc, this.cloudID.Get(context), this.description.Get(context), this.imageID.Get(context), this.inputs.Get(context), this.instanceTypeID.Get(context), this.kernelImageID.Get(context), this.multiCloudImageID.Get(context), this.ramdiskImageID.Get(context), this.securityGroupIDs.Get(context), this.sshKeyID.Get(context), this.userData.Get(context), this.optimized.Get(context));
-                        
+
                         LogInformation("Server created with ID of: " + srvID);
 
                         serverIDlist.Add(srvID);
                     }
 
                     LogInformation("Completed creating multiple servers for ServerTemplateID: " + this.serverTemplateID.Get(context));
+                    retVal = true;
                 }
                 else
                 {
                     LogInformation("Creating single server for ServerTemplateID: " + this.serverTemplateID.Get(context));
 
                     string desc = this.description.Get(context);
-                    
+
                     if (string.IsNullOrWhiteSpace(desc))
                     {
                         desc = getDefaultDescription();
                     }
-                    
+
                     string srvID = Server.create(this.cloudID.Get(context), this.deploymentID.Get(context), this.serverTemplateID.Get(context), this.name.Get(context), desc, this.cloudID.Get(context), this.description.Get(context), this.imageID.Get(context), this.inputs.Get(context), this.instanceTypeID.Get(context), this.kernelImageID.Get(context), this.multiCloudImageID.Get(context), this.ramdiskImageID.Get(context), this.securityGroupIDs.Get(context), this.sshKeyID.Get(context), this.userData.Get(context), this.optimized.Get(context));
-                    
+
                     LogInformation("Server created with ID of: " + srvID);
 
                     serverIDlist.Add(srvID);
+                    retVal = true;
                 }
             }
             this.serverIDs.Set(context, serverIDlist);
-
+            
             LogInformation("Completed creating  " + this.numberOfServers.Get(context).ToString() + " servers based on ServerTemplateID: " + this.serverTemplateID.Get(context));
+            return retVal;
         }
+
 
         /// <summary>
         /// Private method creates a default description for a server at the time of creation

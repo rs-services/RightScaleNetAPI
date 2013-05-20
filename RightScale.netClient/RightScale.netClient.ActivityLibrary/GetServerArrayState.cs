@@ -36,22 +36,19 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<int> operationalCount { get; set; }
 
-        /// <summary>
-        /// Execute method calls to RightScale sytem to return information about current instances in a given ServerArray and returns data to caller indicating whether or not the ServerArray is to be considered active or not
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
-            LogInformation("Beginning query to get status of ServerArray id: " + this.serverArrayID.Get(context));
-
             bool retVal = false;
-            int operationalCount = 0;
+            bool isReady = false;
 
+            LogInformation("Beginning query to get status of ServerArray id: " + this.serverArrayID.Get(context));
+            
+            int operationalCount = 0;
             int minServers = 1;
 
             if (this.minNumServers == null)
             {
-                if(this.minNumServers.Get(context) > 0)
+                if (this.minNumServers.Get(context) > 0)
                 {
                     minServers = this.minNumServers.Get(context);
                 }
@@ -67,17 +64,19 @@ namespace RightScale.netClient.ActivityLibrary
                         operationalCount++;
                         if (operationalCount >= minServers)
                         {
+                            isReady = true;
                             retVal = true;
                             break;
                         }
                     }
                 }
             }
-            
-            this.isOperational.Set(context, retVal);
+
+            this.isOperational.Set(context, isReady);
             this.operationalCount.Set(context, operationalCount);
 
             LogInformation("Completed query to get status of ServerArray id: " + this.serverArrayID.Get(context) + " with isOperational = " + retVal.ToString() + " and operationalCount = " + operationalCount.ToString());
+            return retVal;
         }
 
         /// <summary>

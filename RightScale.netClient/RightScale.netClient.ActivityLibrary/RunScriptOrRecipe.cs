@@ -42,12 +42,9 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<string> taskID { get; set; }
 
-        /// <summary>
-        /// Execute method runs a script or recipe on the specified Server
-        /// </summary>
-        /// <param name="context">Windows Workflow Foundation CodeActivity runtime context</param>
-        protected override void Execute(System.Activities.CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             LogInformation("Beginning RunScriptOrRecipe Process for " + scriptIdOrRecipeName.Get(context));
 
             if (base.authClient(context))
@@ -72,7 +69,10 @@ namespace RightScale.netClient.ActivityLibrary
                 this.taskID.Set(context, executableRun.ID);
                 LogInformation("Completed call to execute " + this.scriptIdOrRecipeName.Get(context));
             }
+
+            return retVal;
         }
+
 
         static bool IsDigitsOnly(string str)
         {

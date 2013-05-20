@@ -60,12 +60,9 @@ namespace RightScale.netClient.ActivityLibrary
         /// </summary>
         public OutArgument<string> osPlatform { get; set; }
 
-        /// <summary>
-        /// Execute calls to the RightScale API and returns metadata related to the current instance of a given server
-        /// </summary>
-        /// <param name="context"></param>
-        protected override void Execute(System.Activities.CodeActivityContext context)
+        protected override bool PerformRightScaleTask(CodeActivityContext context)
         {
+            bool retVal = false;
             LogInformation("Starting Process to get instance information");
             if (base.authClient(context))
             {
@@ -81,14 +78,24 @@ namespace RightScale.netClient.ActivityLibrary
                     this.currentState.Set(context, string.IsNullOrWhiteSpace(currentInstance.state) ? string.Empty : currentInstance.state);
                     this.instanceName.Set(context, string.IsNullOrWhiteSpace(currentInstance.name) ? string.Empty : currentInstance.name);
                     this.osPlatform.Set(context, string.IsNullOrWhiteSpace(currentInstance.os_platform) ? string.Empty : currentInstance.os_platform);
+                    retVal = true;
                 }
                 catch
                 {
                     LogWarning("Server with ID " + serverID.Get(context) + " has no current instance");
+                    retVal = true;
                 }
-
             }
             LogInformation("Completed process of getting instance information");
+            return retVal;
+        }
+
+        /// <summary>
+        /// Execute calls to the RightScale API and returns metadata related to the current instance of a given server
+        /// </summary>
+        /// <param name="context"></param>
+        protected override void Execute(System.Activities.CodeActivityContext context)
+        {
         }
 
         /// <summary>
