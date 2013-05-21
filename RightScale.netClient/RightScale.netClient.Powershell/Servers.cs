@@ -223,8 +223,6 @@ namespace RightScale.netClient.Powershell
             {
                 WriteObject(errLaunch);
                 WriteObject(errLaunch.InnerException);
-
-                WriteObject(errLaunch.APIHref);
             }
 
         }
