@@ -128,4 +128,85 @@ namespace RightScale.netClient.Powershell
     }
     #endregion
 
+
+    #region auditentries update
+    [Cmdlet(VerbsCommon.New, "RSAuditEntry")]
+    public class auditentries_update : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string auditID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string summary;
+
+
+        protected override void ProcessRecord()
+        {
+            base.ProcessRecord();
+
+            try
+            {
+                bool rsNewAuditEntryUpdate = RightScale.netClient.AuditEntry.update (auditID, summary);
+
+                if (rsNewAuditEntryUpdate != false)
+                {
+                    WriteObject("Audit entry created:  " + rsNewAuditEntryUpdate);
+                }
+                else
+                {
+                    WriteObject("Error creating Audit entry");
+                }
+            }
+            catch (RightScaleAPIException errCreate)
+            {
+                WriteObject(errCreate);
+            }
+            catch (System.Exception xcpCreate)
+            {
+                WriteObject(xcpCreate);
+            }
+        }
+    }
+    #endregion
+
+
+
+
+
+
+    #region auditEntries detail
+     [Cmdlet("detail", "auditEntries")]
+    public class auditentries_detail : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string auditID;
+
+        protected override void ProcessRecord()
+        {
+            base.ProcessRecord();
+
+            try
+            {
+                string rsNewAuditEntryDetail = RightScale.netClient.AuditEntry.detail(auditID);
+
+                if (rsNewAuditEntryDetail != "")
+                {
+                    WriteObject("Audit entry created:  " + rsNewAuditEntryDetail);
+                }
+                else
+                {
+                    WriteObject("Error creating Audit entry");
+                }
+            }
+            catch (RightScaleAPIException errCreate)
+            {
+                WriteObject(errCreate);
+            }
+            catch (System.Exception xcpCreate)
+            {
+                WriteObject(xcpCreate);
+            }
+        }
+    }
+    #endregion
 }
