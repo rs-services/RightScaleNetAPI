@@ -178,7 +178,7 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
-       //The values below were added for "update" to work 
+            //The values below were added for "update" to work 
             public string name { get; set; }
             public string instanceTypeID { get; set; }
             public string serverTemplateID { get; set; }
@@ -190,6 +190,7 @@ namespace RightScale.netClient.Powershell
             public string ramdiskImageID{ get; set; }
             public string sshKeyID { get; set; }
             public string userData { get; set; }
+            public List<Filter> filter { get; set;}
         }
 
         public class returnTagAction
@@ -201,7 +202,7 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
-<<<<<<< HEAD
+
         }
 
         public class returnVolume
@@ -215,11 +216,10 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
-=======
+
 
         }
 
 
->>>>>>> 8c7d345c899d6b97161b928387c09b17e6da781a
     }
-}
+

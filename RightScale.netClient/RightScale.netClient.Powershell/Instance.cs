@@ -463,7 +463,7 @@ terminate*/
 
         [Parameter(Position = 3, Mandatory = false)]
         //gets parsed and set to a list of inputs
-        public string[] inputs;
+        public List<Filter> filters;
 
        
         protected override void ProcessRecord()
@@ -471,28 +471,29 @@ terminate*/
 
             Types.returnInstanceAction retInstanceActionLaunch = new Types.returnInstanceAction();
             
-            List<Input> strInputs = new List<Input>();
-            if (inputs != null)
+            /*List<Input> strInputs = new List<Input>();
+            if (strInputs != null)
             {
-                foreach (string input in inputs)
+                foreach (Input input in strInputs)
                 {
                     
-                    string inputName = input.Split(':')[0];
+                    string inputName = input.GetHashCode(':')[0];
                     string inputValue = input.Split(':')[1];
 
                     Input varInput = new Input(inputName, inputValue);
                     strInputs.Add(varInput);
                 }
-            }
+            }*/
 
 
             try
             {
-                string resInstanceActionlaunch = RightScale.netClient.Instance.launch(cloudID, instanceID, strInputs);
+                string resInstanceActionlaunch = RightScale.netClient.Instance.launch(cloudID, instanceID, filters);
 
                 retInstanceActionLaunch.ActionType = "launch";
                 retInstanceActionLaunch.CloudID = cloudID;
                 retInstanceActionLaunch.InstanceID = instanceID;
+                retInstanceActionLaunch.filter = filters;
                 retInstanceActionLaunch.Result = true;
                 retInstanceActionLaunch.Message = "Success";
                 retInstanceActionLaunch.Details = "Instance launched successfully";
@@ -506,6 +507,7 @@ terminate*/
                 retInstanceActionLaunch.ActionType = "launch";
                 retInstanceActionLaunch.CloudID = cloudID;
                 retInstanceActionLaunch.InstanceID = instanceID;
+                retInstanceActionLaunch.filter = filters;
                 retInstanceActionLaunch.Result = false;
                 retInstanceActionLaunch.Message = "Fail";
                 retInstanceActionLaunch.Details = rex.ErrorData;
@@ -516,6 +518,78 @@ terminate*/
         }
     }
     #endregion
+
+
+
+    #region Instance terminate multi_instance
+    [Cmdlet("terminate", "multi-Instance")]
+    public class instance_multiInstance : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = false)]
+        //gets parsed and set to a list of inputs
+        public List<Filter> filters;
+
+        [Parameter(Position = 3, Mandatory = true)]
+        //gets parsed and set to a list of inputs
+        public bool terminateAll;
+
+
+        protected override void ProcessRecord()
+        {
+
+            Types.returnInstanceAction retInstanceActionMulti_Terminate = new Types.returnInstanceAction();
+
+            /*
+             Commenting out parsing loop to test using List<Filter>
+             * List<Filter> strInputs = new List<Filter>();
+            if (strInputs != null)
+            {
+                foreach (Filter input in strInputs)
+                {
+
+                    string inputName = input.split(':')[0];
+                    string inputValue = input.Split(':')[1];
+
+                    Input varInput = new Input(inputName, inputValue);
+                    strInputs.Add(varInput);
+                }
+            }*/
+
+
+            try
+            {
+                List<Task> resInstanceActionlaunch = RightScale.netClient.Instance.multi_terminate(cloudID, terminateAll, filters);
+
+                retInstanceActionMulti_Terminate.ActionType = "launch";
+                retInstanceActionMulti_Terminate.CloudID = cloudID;
+                retInstanceActionMulti_Terminate.filter = filters;
+                retInstanceActionMulti_Terminate.Result = true;
+                retInstanceActionMulti_Terminate.Message = "Success";
+                retInstanceActionMulti_Terminate.Details = "Instance launched successfully";
+                retInstanceActionMulti_Terminate.APIHref = null;
+
+                WriteObject(retInstanceActionMulti_Terminate);
+            }
+            catch (RightScaleAPIException rex)
+            {
+
+                retInstanceActionMulti_Terminate.ActionType = "launch";
+                retInstanceActionMulti_Terminate.CloudID = cloudID;
+                retInstanceActionMulti_Terminate.filter = filters;
+                retInstanceActionMulti_Terminate.Result = false;
+                retInstanceActionMulti_Terminate.Message = "Fail";
+                retInstanceActionMulti_Terminate.Details = rex.ErrorData;
+                retInstanceActionMulti_Terminate.APIHref = rex.APIHref;
+
+                WriteObject(retInstanceActionMulti_Terminate);
+            }
+        }
+    }
+    #endregion
+
 
 
 
