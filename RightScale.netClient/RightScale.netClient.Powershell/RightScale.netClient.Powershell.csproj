@@ -61,6 +61,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="Cloud.cs" />
     <Compile Include="AuditEntry.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="SSHKeys.cs" />
     <Compile Include="VolumeSnapshot.cs" />
     <Compile Include="Publication.cs" />
