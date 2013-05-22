@@ -451,7 +451,7 @@ terminate*/
 
 
 
-<<<<<<< HEAD
+
     #region Instance launch Instance
     [Cmdlet("launch", "RSInstance")]
     public class instance_launchInstance : Cmdlet
@@ -593,10 +593,6 @@ terminate*/
 
 
 
-
-
-=======
->>>>>>> 6d26fc25d5e0480101abe25bb941b2cb57334196
 
 
 }
