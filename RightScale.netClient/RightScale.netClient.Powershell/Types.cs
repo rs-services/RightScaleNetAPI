@@ -66,7 +66,6 @@ namespace RightScale.netClient.Powershell
         public class returnServerLaunch
         {
             public string ServerID { get; set; }
-            public string APIHref { get; set; }
             public bool Result { get; set; }
             public string Message { get; set; }
         }
@@ -169,12 +168,10 @@ namespace RightScale.netClient.Powershell
         //consolidated the class for all instance actions
         public class returnInstanceAction
         {
-            public string ServerID { get; set; }
             public string ActionType { get; set; }
             public string CloudID { get; set; }
             public string InstanceID { get; set; }
             public bool Result { get; set; }
-            // Not necessary:  public string Result_String { get; set; }
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
@@ -202,7 +199,10 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6d26fc25d5e0480101abe25bb941b2cb57334196
         }
 
         public class returnVolume
@@ -216,10 +216,15 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
+<<<<<<< HEAD
 
 
         }
 
 
+=======
+
+        }
+>>>>>>> 6d26fc25d5e0480101abe25bb941b2cb57334196
     }
 

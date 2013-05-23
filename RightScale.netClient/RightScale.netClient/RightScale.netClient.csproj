@@ -57,6 +57,7 @@
     <Compile Include="Core\ITaggableResource.cs" />
     <Compile Include="Core\RightScaleAPI10ObjectBase.cs" />
     <Compile Include="Core\TaggableResourceBase.cs" />
+    <Compile Include="Core\TraceDebugCategory.cs" />
     <Compile Include="Credential.cs" />
     <Compile Include="Objects\CommitMessage.cs" />
     <Compile Include="Objects\Description.cs" />
