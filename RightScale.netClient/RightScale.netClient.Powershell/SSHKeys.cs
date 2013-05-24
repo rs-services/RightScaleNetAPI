@@ -54,6 +54,7 @@ namespace RightScale.netClient.Powershell
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             }
         }
 
@@ -93,12 +94,17 @@ namespace RightScale.netClient.Powershell
 >>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
 =======
 >>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
+=======
+>>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
                 WriteObject(rex.APIHref);
             }
         }
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
+=======
 >>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
 =======
 >>>>>>> 54db2f79947666cfdb663afbf63c3bb1b64e7ad4
