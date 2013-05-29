@@ -130,7 +130,7 @@ namespace RightScale.netClient.Powershell
 
 
     #region auditentries update
-    [Cmdlet(VerbsCommon.New, "RSAuditEntry")]
+    [Cmdlet("Update", "RSAuditEntry")]
     public class auditentries_update : Cmdlet
     {
         [Parameter(Position = 1, Mandatory = true)]
