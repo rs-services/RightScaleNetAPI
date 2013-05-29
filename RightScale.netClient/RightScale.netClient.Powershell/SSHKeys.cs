@@ -51,12 +51,45 @@ namespace RightScale.netClient.Powershell
             {
                 WriteObject(rex);
                 WriteObject(rex.ErrorData);
-                WriteObject(rex.APIHref);
+            }
+        }
+
+
+        //moved to single index show method
+        //[Cmdlet(VerbsCommon.Get, "RSServer")]
+        //public class server_show : Cmdlet
+        //{
+        //   [Parameter(Position = 1, Mandatory = true)]
+        //    public string serverID;
+        //
+        //    [Parameter(Position = 2, Mandatory = false)]
+        //    public string view;
+        //
+        //    protected override void ProcessRecord()
+        //    {
+        //        if (view == null) { view = "default"; }
+        //
+        //        base.ProcessRecord();
+        //        try
+        //        {
+        //            Server rsServer = RightScale.netClient.Server.show(serverID, view);
+        //            WriteObject(rsServer);
+        //        }
+        //        catch(RightScaleAPIException rse)
+        //        {
+        //            WriteObject("Error Getting Server");
+        //            WriteObject(rse.Message);
+        //            WriteObject(rse.ErrorData);
+        //        }
+        //
+        //       
+        //   }
+        //}
+        //        WriteObject(rex.APIHref);
             }
         }
 
     #endregion
 
 
-    }
-}
+    
