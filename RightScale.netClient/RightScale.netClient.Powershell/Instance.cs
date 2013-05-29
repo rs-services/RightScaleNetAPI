@@ -489,7 +489,7 @@ terminate*/
 
             try
             {
-                string resInstanceActionlaunch = RightScale.netClient.Instance.launch(cloudID, instanceID, filters);
+                string resInstanceActionlaunch = RightScale.netClient.Instance.launch(cloudID, instanceID);
 
                 retInstanceActionLaunch.ActionType = "launch";
                 retInstanceActionLaunch.CloudID = cloudID;

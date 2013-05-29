@@ -199,10 +199,6 @@ namespace RightScale.netClient.Powershell
             public string Message { get; set; }
             public string Details { get; set; }
             public string APIHref { get; set; }
-<<<<<<< HEAD
-
-=======
->>>>>>> 6d26fc25d5e0480101abe25bb941b2cb57334196
         }
 
         public class returnVolume
@@ -216,15 +212,11 @@ namespace RightScale.netClient.Powershell
             public string Details { get; set; }
             public string APIHref { get; set; }
         }
-<<<<<<< HEAD
 
 
-        }
-
-
-=======
 
         }
->>>>>>> 6d26fc25d5e0480101abe25bb941b2cb57334196
+
+
     }
 
