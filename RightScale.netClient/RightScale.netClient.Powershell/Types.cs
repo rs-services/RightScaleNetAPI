@@ -63,6 +63,16 @@ namespace RightScale.netClient.Powershell
             public string APIHref { get; set; }
         }
 
+        public class returnSecurityGroup
+        {
+            public string cloudID { get; set; }
+            public string SecurityGoupID { get; set; }
+            public bool Result { get; set; }
+            public string Message { get; set; }
+            public string ErrData { get; set; }
+            public string APIHref { get; set; }
+        }
+
         public class returnServerLaunch
         {
             public string ServerID { get; set; }

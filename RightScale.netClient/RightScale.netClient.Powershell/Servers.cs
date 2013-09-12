@@ -76,7 +76,7 @@ namespace RightScale.netClient.Powershell
      //   }
     //}
     #endregion
-    #region server create / delete cmdlets
+    #region server create / destroy cmdlets
     [Cmdlet(VerbsCommon.New, "RSServer")]
     public class server_create : Cmdlet
     {
