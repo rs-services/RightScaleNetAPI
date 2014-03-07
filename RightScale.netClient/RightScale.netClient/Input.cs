@@ -69,6 +69,32 @@ namespace RightScale.netClient
             }
 
             string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
+         
+            return deserializeList(jsonString);            
+        }
+
+        public static List<Input> index_instance(string cloudid, string instanceid, string view)
+        {
+            string getURL = string.Format(APIHrefs.InstanceInput, cloudid, instanceid);
+
+            if (string.IsNullOrWhiteSpace(view))
+            {
+                view = "default";
+            }
+            else
+            {
+                List<string> validViews = new List<string>() { "default", "inputs_2_0" };
+                Utility.CheckStringInput("view", validViews, view);
+            }
+
+            string queryString = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(view))
+            {
+                queryString += string.Format("view={0}", view);
+            }
+
+            string jsonString = Core.APIClient.Instance.Get(getURL, queryString);
 
             return deserializeList(jsonString);
         }

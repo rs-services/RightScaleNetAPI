@@ -33,6 +33,32 @@ namespace RightScale.netClient.Powershell
     }
     #endregion
 
+    #region input index instance cmdlets
+    [Cmdlet(VerbsCommon.Get, "RSInputsInstance")]
+    public class inputs_instanceindex : Cmdlet
+    {
+        [Parameter(Position = 1, Mandatory = true)]
+        public string cloudID;
+
+        [Parameter(Position = 2, Mandatory = true)]
+        public string instanceID;
+
+        [Parameter(Position = 3, Mandatory = false)]
+        public string view = "default";
+
+        protected override void ProcessRecord()
+        {
+
+            base.ProcessRecord();
+
+            List<Input> rsInputs = RightScale.netClient.Input.index_instance(cloudID, instanceID, view);
+
+            WriteObject(rsInputs);
+
+        }
+    }
+    #endregion
+
     #region input index server template cmdlets
     [Cmdlet(VerbsCommon.Get, "RSInputsServerTemplate")]
     public class inputs_servertemplateindex : Cmdlet

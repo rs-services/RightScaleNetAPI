@@ -445,6 +445,16 @@ namespace RightScale.netClient
             }
         }
 
+        /// <summary>
+        /// ServerTemplate href for working with RunnableBindings on a given ST
+        /// </summary>
+        public static string ServerTemplateRunnableBindings
+        {
+            get
+            {
+                return ServerTemplateByID + "/runnable_bindings";
+            }
+        }
         public static string ServerTemplateMultiCloudImageByID
         {
             get
@@ -844,6 +854,17 @@ namespace RightScale.netClient
             get
             {
                 return DeploymentByID + inputSegment;
+            }
+        }
+
+        /// <summary>
+        /// href for working with instance-level inputs - takes one parameter which is the Instance ID
+        /// </summary>
+        public static string InstanceInput
+        {
+            get
+            {
+                return InstanceByID + inputSegment;
             }
         }
 

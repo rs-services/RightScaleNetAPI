@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountGroup.cs" />
+    <Compile Include="RunnableBindings.cs" />
     <Compile Include="Core\API10Client.cs" />
     <Compile Include="Core\APIClient.cs" />
     <Compile Include="Core\ITaggableResource.cs" />
